@@ -25,14 +25,16 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
+    using Microsoft.Exchange.WebServices.Data;
     using System;
     using System.Collections.Generic;
-    using Microsoft.Exchange.WebServices.Data;
+    using System.Runtime.Versioning;
     using System.Threading.Tasks;
 
     /// <summary>
     /// Represents a GetUserSettings request.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     internal class GetUserSettingsRequest : AutodiscoverRequest
     {
         /// <summary>

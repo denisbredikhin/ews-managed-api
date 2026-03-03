@@ -25,19 +25,21 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
+    using Microsoft.Exchange.WebServices.Data;
     using System;
     using System.IO;
     using System.IO.Compression;
     using System.Net;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
-    using System.Threading.Tasks;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Runtime.Versioning;
+    using System.Threading.Tasks;
+    using System.Xml;
 
     /// <summary>
     /// Represents the base class for all requested made to the Autodiscover service.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     internal abstract class AutodiscoverRequest
     {
         private AutodiscoverService service;

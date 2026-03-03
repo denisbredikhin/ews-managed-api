@@ -27,6 +27,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    using Microsoft.Exchange.WebServices.Autodiscover;
+    using Microsoft.Exchange.WebServices.Data.Enumerations;
+    using Microsoft.Exchange.WebServices.Data.Groups;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -34,12 +37,10 @@ namespace Microsoft.Exchange.WebServices.Data
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Autodiscover;
-    using Microsoft.Exchange.WebServices.Data.Enumerations;
-    using Microsoft.Exchange.WebServices.Data.Groups;
-    using System.Threading.Tasks;
+    using System.Runtime.Versioning;
     using System.Threading;
+    using System.Threading.Tasks;
+    using System.Xml;
 
     /// <summary>
     /// Represents a binding to the Exchange Web Services.
@@ -4476,6 +4477,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// calling the Autodiscover service.
         /// </summary>
         /// <param name="emailAddress">The email address to use.</param>
+        [SupportedOSPlatform("windows")]
         public System.Threading.Tasks.Task AutodiscoverUrl(string emailAddress)
         {
             return this.AutodiscoverUrl(emailAddress, this.DefaultAutodiscoverRedirectionUrlValidationCallback);
@@ -4487,6 +4489,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="emailAddress">The email address to use.</param>
         /// <param name="validateRedirectionUrlCallback">The callback used to validate redirection URL.</param>
+        [SupportedOSPlatform("windows")]
         public async System.Threading.Tasks.Task AutodiscoverUrl(string emailAddress, AutodiscoverRedirectionUrlValidationCallback validateRedirectionUrlCallback)
         {
             Uri exchangeServiceUrl;
@@ -4555,6 +4558,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="requestedServerVersion">Exchange version.</param>
         /// <param name="validateRedirectionUrlCallback">The validate redirection URL callback.</param>
         /// <returns>Ews URL</returns>
+        [SupportedOSPlatform("windows")]
         private async Task<Uri> GetAutodiscoverUrl(
             string emailAddress,
             ExchangeVersion requestedServerVersion,

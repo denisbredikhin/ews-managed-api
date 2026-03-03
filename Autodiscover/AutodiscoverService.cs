@@ -25,20 +25,18 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
+    using Microsoft.Exchange.WebServices.Data;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Text.RegularExpressions;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
-    using System.Threading.Tasks;
     using System.Net.Http;
     using System.Net.Http.Headers;
-#if NETSTANDARD2_0
-    using System.Runtime.InteropServices;
-#endif
+    using System.Runtime.Versioning;
+    using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
+    using System.Xml;
 
     /// <summary>
     /// Defines a delegate that is used by the AutodiscoverService to ask whether a redirectionUrl can be used.
@@ -50,6 +48,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
     /// <summary>
     /// Represents a binding to the Exchange Autodiscover Service.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public sealed class AutodiscoverService : ExchangeServiceBase
     {
         #region Static members

@@ -25,17 +25,19 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
+    using Microsoft.Exchange.WebServices.Data;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.DirectoryServices;
     using System.DirectoryServices.ActiveDirectory;
     using System.Runtime.InteropServices;
-    using Microsoft.Exchange.WebServices.Data;
+    using System.Runtime.Versioning;
 
     /// <summary>
     /// Represents a set of helper methods for using Active Directory services.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     internal class DirectoryHelper
     {
         #region Static members

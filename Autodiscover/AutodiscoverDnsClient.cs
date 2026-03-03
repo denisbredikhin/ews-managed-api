@@ -25,15 +25,17 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security;
     using Microsoft.Exchange.WebServices.Data;
     using Microsoft.Exchange.WebServices.Dns;
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.Versioning;
+    using System.Security;
 
     /// <summary>
     /// Class that reads AutoDiscover configuration information from DNS.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     internal class AutodiscoverDnsClient
     {
         #region Constants

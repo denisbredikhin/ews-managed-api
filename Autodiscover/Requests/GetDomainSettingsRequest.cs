@@ -25,17 +25,19 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
+    using Microsoft.Exchange.WebServices.Data;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Runtime.Versioning;
     using System.Text;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
     using System.Threading.Tasks;
+    using System.Xml;
 
     /// <summary>
     /// Represents a GetDomainSettings request.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     internal class GetDomainSettingsRequest : AutodiscoverRequest
     {
         /// <summary>
