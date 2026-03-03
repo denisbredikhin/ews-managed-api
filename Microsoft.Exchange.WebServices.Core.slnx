@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="license.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Microsoft.Exchange.WebServices.Core.csproj" />
+</Solution>
