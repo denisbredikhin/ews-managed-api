@@ -74,29 +74,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.propertyDefinition = propertyDefinition;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.ServiceObjectPropertyException"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		protected ServiceObjectPropertyException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-			this.propertyDefinition = (PropertyDefinitionBase)info.GetValue("PropertyDefinition", typeof(PropertyDefinitionBase));
-		}
-
-		/// <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object with the parameter name and additional exception information.</summary>
-		/// <param name="info">The object that holds the serialized object data. </param>
-		/// <param name="context">The contextual information about the source or destination. </param>
-		/// <exception cref="T:System.ArgumentNullException">The <paramref name="info" /> object is a null reference (Nothing in Visual Basic). </exception>
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			EwsUtilities.Assert(info != null, "ServiceObjectPropertyException.GetObjectData", "info is null");
-
-			base.GetObjectData(info, context);
-
-			info.AddValue("PropertyDefinition", this.propertyDefinition, typeof(PropertyDefinitionBase));
-		}
 
 		/// <summary>
 		/// Gets the definition of the property that caused the exception.

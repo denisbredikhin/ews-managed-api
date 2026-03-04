@@ -49,35 +49,11 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.ServerBusyException"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		protected ServerBusyException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-			this.backOffMilliseconds = info.GetInt32("BackOffMilliseconds");
-		}
-
-		/// <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object with the parameter name and additional exception information.</summary>
-		/// <param name="info">The object that holds the serialized object data. </param>
-		/// <param name="context">The contextual information about the source or destination. </param>
-		/// <exception cref="T:System.ArgumentNullException">The <paramref name="info" /> object is a null reference (Nothing in Visual Basic). </exception>
-		public override void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			EwsUtilities.Assert(info != null, "ServerBusyException.GetObjectData", "info is null");
-
-			base.GetObjectData(info, context);
-
-			info.AddValue("BackOffMilliseconds", this.backOffMilliseconds);
-		}
-
-		/// <summary>
-		/// Suggested number of milliseconds to wait before attempting a request again. If zero, 
-		/// there is no suggested backoff time.
-		/// </summary>
-		public int BackOffMilliseconds
+        /// <summary>
+        /// Suggested number of milliseconds to wait before attempting a request again. If zero, 
+        /// there is no suggested backoff time.
+        /// </summary>
+        public int BackOffMilliseconds
         {
             get
             {
