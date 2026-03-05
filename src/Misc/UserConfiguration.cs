@@ -26,9 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -49,7 +46,7 @@ public class UserConfiguration
     private const UserConfigurationProperties NoProperties = (UserConfigurationProperties)0;
 
     // TODO: Consider using SimplePropertyBag class to store XmlData & BinaryData property values.
-    private ExchangeService service;
+    private readonly ExchangeService service;
     private string name;
     private FolderId parentFolderId = null;
     private ItemId itemId = null;

@@ -25,16 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a DeleteAttachment request.
 /// </summary>
 internal sealed class DeleteAttachmentRequest : MultiResponseServiceRequest<DeleteAttachmentResponse>
 {
-    private List<Attachment> attachments = new List<Attachment>();
+    private readonly List<Attachment> attachments = new List<Attachment>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DeleteAttachmentRequest"/> class.

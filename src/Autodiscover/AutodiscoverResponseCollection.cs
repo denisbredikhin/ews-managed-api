@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover;
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Xml;
 using Microsoft.Exchange.WebServices.Data;
 
@@ -39,7 +36,7 @@ using Microsoft.Exchange.WebServices.Data;
 public abstract class AutodiscoverResponseCollection<TResponse> : AutodiscoverResponse, IEnumerable<TResponse>
     where TResponse : AutodiscoverResponse
 {
-    private List<TResponse> responses;
+    private readonly List<TResponse> responses;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AutodiscoverResponseCollection&lt;TResponse&gt;"/> class.

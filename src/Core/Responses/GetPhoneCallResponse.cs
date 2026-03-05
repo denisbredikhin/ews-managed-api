@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to a GetPhoneCall operation.
 /// </summary>
 internal sealed class GetPhoneCallResponse : ServiceResponse
 {
-    private PhoneCall phoneCall;
+    private readonly PhoneCall phoneCall;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetPhoneCallResponse"/> class.

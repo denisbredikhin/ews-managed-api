@@ -26,10 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Xml;
 
 /// <summary>
 /// Represents a time zone in which a meeting is defined.

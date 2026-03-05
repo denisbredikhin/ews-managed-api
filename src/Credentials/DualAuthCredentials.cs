@@ -36,9 +36,9 @@ public sealed class DualAuthCredentials : ExchangeCredentials
     /// <summary>
     /// Collection of client certificates.
     /// </summary>
-    private X509CertificateCollection clientCertificates;
+    private readonly X509CertificateCollection clientCertificates;
 
-    private ICredentials credentials;
+    private readonly ICredentials credentials;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DualAuthCredentials"/> class.

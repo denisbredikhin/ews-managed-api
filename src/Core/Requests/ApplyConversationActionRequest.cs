@@ -25,16 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a request to a Apply Conversation Action operation
 /// </summary>
 internal sealed class ApplyConversationActionRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    private List<ConversationAction> conversationActions = new List<ConversationAction>();
+    private readonly List<ConversationAction> conversationActions = new List<ConversationAction>();
 
     public List<ConversationAction> ConversationActions
     {

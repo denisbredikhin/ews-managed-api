@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents an entry of an PhysicalAddressDictionary.
@@ -36,7 +34,7 @@ public sealed class PhysicalAddressEntry : DictionaryEntryProperty<PhysicalAddre
 {
     #region Fields
 
-    private SimplePropertyBag<string> propertyBag;
+    private readonly SimplePropertyBag<string> propertyBag;
 
     #endregion
 
@@ -284,7 +282,7 @@ public sealed class PhysicalAddressEntry : DictionaryEntryProperty<PhysicalAddre
         /// <summary>
         /// List of XML element names.
         /// </summary>
-        private static LazyMember<List<string>> xmlElementNames = new LazyMember<List<string>>(
+        private static readonly LazyMember<List<string>> xmlElementNames = new LazyMember<List<string>>(
             delegate()
             {
                 List<string> result = new List<string>();

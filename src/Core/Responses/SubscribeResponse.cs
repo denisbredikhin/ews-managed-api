@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the base response class to subscription creation operations.
 /// </summary>
@@ -36,7 +31,7 @@ using System.Text;
 internal sealed class SubscribeResponse<TSubscription> : ServiceResponse
     where TSubscription : SubscriptionBase
 {
-    private TSubscription subscription;
+    private readonly TSubscription subscription;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SubscribeResponse&lt;TSubscription&gt;"/> class.

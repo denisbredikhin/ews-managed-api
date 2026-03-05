@@ -27,10 +27,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Text;
-using System.Xml;
 
 /// <summary>
 /// XML reader.
@@ -39,7 +36,7 @@ internal class EwsServiceXmlReader : EwsXmlReader
 {
     #region Private members
 
-    private ExchangeService service;
+    private readonly ExchangeService service;
 
     #endregion
 

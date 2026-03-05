@@ -25,17 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the response to a meeting time suggestion availability request.
 /// </summary>
 internal sealed class SuggestionsResponse : ServiceResponse
 {
-    private Collection<Suggestion> daySuggestions = new Collection<Suggestion>();
+    private readonly Collection<Suggestion> daySuggestions = new Collection<Suggestion>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SuggestionsResponse"/> class.

@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 /// <summary>
@@ -39,9 +36,9 @@ internal sealed class FindItemResponse<TItem> : ServiceResponse
     where TItem : Item
 {
     private FindItemsResults<TItem> results;
-    private bool isGrouped;
+    private readonly bool isGrouped;
     private GroupedFindItemsResults<TItem> groupedFindResults;
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FindItemResponse&lt;TItem&gt;"/> class.

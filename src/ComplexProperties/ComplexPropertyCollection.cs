@@ -29,7 +29,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using System.Text;
 
 /// <summary>
 /// Represents a collection of properties that can be sent to and retrieved from EWS.
@@ -39,10 +38,10 @@ using System.Text;
 public abstract class ComplexPropertyCollection<TComplexProperty> : ComplexProperty, IEnumerable<TComplexProperty>, ICustomUpdateSerializer
     where TComplexProperty : ComplexProperty
 {
-    private List<TComplexProperty> items = new List<TComplexProperty>();
-    private List<TComplexProperty> addedItems = new List<TComplexProperty>();
-    private List<TComplexProperty> modifiedItems = new List<TComplexProperty>();
-    private List<TComplexProperty> removedItems = new List<TComplexProperty>();
+    private readonly List<TComplexProperty> items = new List<TComplexProperty>();
+    private readonly List<TComplexProperty> addedItems = new List<TComplexProperty>();
+    private readonly List<TComplexProperty> modifiedItems = new List<TComplexProperty>();
+    private readonly List<TComplexProperty> removedItems = new List<TComplexProperty>();
 
     /// <summary>
     /// Creates the complex property.

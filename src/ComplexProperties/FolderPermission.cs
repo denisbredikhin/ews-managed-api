@@ -34,7 +34,7 @@ public sealed class FolderPermission : ComplexProperty
 {
     #region Default permissions
 
-    private static LazyMember<Dictionary<FolderPermissionLevel, FolderPermission>> defaultPermissions = new LazyMember<Dictionary<FolderPermissionLevel, FolderPermission>>(
+    private static readonly LazyMember<Dictionary<FolderPermissionLevel, FolderPermission>> defaultPermissions = new LazyMember<Dictionary<FolderPermissionLevel, FolderPermission>>(
         delegate()
         {
             Dictionary<FolderPermissionLevel, FolderPermission> result = new Dictionary<FolderPermissionLevel, FolderPermission>();
@@ -179,7 +179,7 @@ public sealed class FolderPermission : ComplexProperty
     /// <summary>
     /// Variants of pre-defined permission levels that Outlook also displays with the same levels.
     /// </summary>
-    private static LazyMember<List<FolderPermission>> levelVariants = new LazyMember<List<FolderPermission>>(
+    private static readonly LazyMember<List<FolderPermission>> levelVariants = new LazyMember<List<FolderPermission>>(
         delegate()
         {
             List<FolderPermission> results = new List<FolderPermission>();

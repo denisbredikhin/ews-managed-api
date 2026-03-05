@@ -29,7 +29,6 @@ using Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -148,7 +147,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     private bool? isExternal = true;
     private Uri url;
     private AutodiscoverRedirectionUrlValidationCallback redirectionUrlValidationCallback;
-    private AutodiscoverDnsClient dnsClient;
+    private readonly AutodiscoverDnsClient dnsClient;
     private IPAddress dnsServerAddress;
     private bool enableScpLookup = true;
 

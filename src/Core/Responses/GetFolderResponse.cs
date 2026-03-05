@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the response to an individual folder retrieval operation.
@@ -35,7 +33,7 @@ using System.Text;
 public sealed class GetFolderResponse : ServiceResponse
 {
     private Folder folder;
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetFolderResponse"/> class.

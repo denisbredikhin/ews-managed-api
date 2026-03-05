@@ -27,15 +27,14 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a list of strings.
 /// </summary>
 public sealed class StringList : ComplexProperty, IEnumerable<string>
 {
-    private List<string> items = new List<string>();
-    private string itemXmlElementName = XmlElementNames.String;
+    private readonly List<string> items = new List<string>();
+    private readonly string itemXmlElementName = XmlElementNames.String;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="StringList"/> class.

@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-	using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents a remote service exception that can have multiple service responses.

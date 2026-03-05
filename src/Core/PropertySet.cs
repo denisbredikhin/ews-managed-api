@@ -51,7 +51,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     /// <summary>
     /// Maps BasePropertySet values to EWS's BaseShape values.
     /// </summary>
-    private static DefaultPropertySetDictionary defaultPropertySetMap = new DefaultPropertySetDictionary(
+    private static readonly DefaultPropertySetDictionary defaultPropertySetMap = new DefaultPropertySetDictionary(
         delegate()
         {
             Dictionary<BasePropertySet, string> result = new Dictionary<BasePropertySet, string>();
@@ -68,7 +68,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     /// <summary>
     /// The list of additional properties included in this property set.
     /// </summary>
-    private List<PropertyDefinitionBase> additionalProperties = new List<PropertyDefinitionBase>();
+    private readonly List<PropertyDefinitionBase> additionalProperties = new List<PropertyDefinitionBase>();
 
     /// <summary>
     /// The requested body type for get and find operations. If null, the "best body" is returned.

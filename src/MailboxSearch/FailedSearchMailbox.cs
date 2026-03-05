@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents failed mailbox to be searched

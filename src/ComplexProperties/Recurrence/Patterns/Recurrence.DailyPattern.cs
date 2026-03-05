@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <content>
 /// Contains nested type Recurrence.DailyPattern.

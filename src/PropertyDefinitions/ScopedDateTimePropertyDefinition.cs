@@ -26,9 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 /// <summary>
 /// Defines a callback method used to get a reference to a property definition.
@@ -41,7 +38,7 @@ internal delegate PropertyDefinition GetPropertyDefinitionCallback(ExchangeVersi
 /// </summary>
 internal class ScopedDateTimePropertyDefinition : DateTimePropertyDefinition
 {
-    private GetPropertyDefinitionCallback getPropertyDefinitionCallback;
+    private readonly GetPropertyDefinitionCallback getPropertyDefinitionCallback;
 
     /// <summary>
     /// Gets the time zone property to which to scope times.

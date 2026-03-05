@@ -24,9 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-
 /// <summary>
 /// Represents set hold on mailboxes parameters.
 /// </summary>

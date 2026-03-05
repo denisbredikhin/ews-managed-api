@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Defines e-mail address entries for a contact.
 /// </summary>

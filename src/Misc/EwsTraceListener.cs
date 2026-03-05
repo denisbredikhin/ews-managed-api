@@ -33,7 +33,7 @@ using System.IO;
 /// </summary>
 internal class EwsTraceListener : ITraceListener
 {
-    private TextWriter writer;
+    private readonly TextWriter writer;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EwsTraceListener"/> class.

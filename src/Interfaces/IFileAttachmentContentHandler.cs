@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 /// <summary>
 /// Defines a file attachment content handler. Application can implement IFileAttachmentContentHandler

@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a SyncFolderItems request.
@@ -38,7 +36,7 @@ internal class SyncFolderItemsRequest : MultiResponseServiceRequest<SyncFolderIt
     private FolderId syncFolderId;
     private SyncFolderItemsScope syncScope;
     private string syncState;
-    private ItemIdWrapperList ignoredItemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList ignoredItemIds = new ItemIdWrapperList();
     private int maxChangesReturned = 100;
     private int numberOfDays = 0;
 

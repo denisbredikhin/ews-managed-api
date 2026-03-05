@@ -26,15 +26,13 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml;
 
 /// <summary>
 /// Represents the response to a GetClientExtension operation.
 /// </summary>
 public sealed class GetClientExtensionResponse : ServiceResponse
 {
-    private Collection<ClientExtension> clientExtension = new Collection<ClientExtension>();
+    private readonly Collection<ClientExtension> clientExtension = new Collection<ClientExtension>();
 
     private string rawMasterTableXml;
 

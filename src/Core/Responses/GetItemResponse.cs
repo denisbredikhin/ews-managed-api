@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a response to an individual item retrieval operation.
@@ -35,7 +33,7 @@ using System.Text;
 public sealed class GetItemResponse : ServiceResponse
 {
     private Item item;
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetItemResponse"/> class.

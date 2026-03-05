@@ -24,18 +24,13 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a suggested name resolution.
 /// </summary>
 public sealed class NameResolution
 {
-    private NameResolutionCollection owner;
-    private EmailAddress mailbox = new EmailAddress();
+    private readonly NameResolutionCollection owner;
+    private readonly EmailAddress mailbox = new EmailAddress();
     private Contact contact;
 
     /// <summary>

@@ -25,11 +25,8 @@
 
 namespace Microsoft.Exchange.WebServices.Autodiscover;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
 using System.Xml;
 using Microsoft.Exchange.WebServices.Data;
 
@@ -40,8 +37,8 @@ public sealed class GetDomainSettingsResponse : AutodiscoverResponse
 {
     private string domain;
     private string redirectTarget;
-    private Dictionary<DomainSettingName, object> settings;
-    private Collection<DomainSettingError> domainSettingErrors;
+    private readonly Dictionary<DomainSettingName, object> settings;
+    private readonly Collection<DomainSettingError> domainSettingErrors;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDomainSettingsResponse"/> class.

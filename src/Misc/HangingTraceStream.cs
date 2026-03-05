@@ -23,13 +23,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace Microsoft.Exchange.WebServices.Data;
 
@@ -39,8 +33,8 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal class HangingTraceStream : Stream
 {
-    private Stream underlyingStream;
-    private ExchangeService service;
+    private readonly Stream underlyingStream;
+    private readonly ExchangeService service;
     private MemoryStream responseCopy;
 
     /// <summary>

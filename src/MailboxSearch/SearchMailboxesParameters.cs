@@ -24,9 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-
 /// <summary>
 /// Represents search mailbox parameters.
 /// </summary>

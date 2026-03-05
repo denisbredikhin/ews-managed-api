@@ -24,15 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System.Collections.ObjectModel;
-
 /// <summary>
 /// Represents the response to a GetConversationItems operation.
 /// </summary>
 public sealed class GetConversationItemsResponse : ServiceResponse
 {
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetConversationItemsResponse"/> class.

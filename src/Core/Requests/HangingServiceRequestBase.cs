@@ -27,11 +27,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.IO;
-using System.IO.Compression;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 
 /// <summary>
@@ -112,7 +108,7 @@ internal abstract class HangingServiceRequestBase : ServiceRequestBase
     /// <summary>
     /// Callback delegate to handle response objects
     /// </summary>
-    private HandleResponseObject responseHandler;
+    private readonly HandleResponseObject responseHandler;
 
     /// <summary>
     /// Response from the server.
@@ -132,7 +128,7 @@ internal abstract class HangingServiceRequestBase : ServiceRequestBase
     /// <summary>
     /// lock object
     /// </summary>
-    private object lockObject = new object();
+    private readonly object lockObject = new object();
 
     /// <summary>
     /// Delegate method to handle a hanging request disconnection.

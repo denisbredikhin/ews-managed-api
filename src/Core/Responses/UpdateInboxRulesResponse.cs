@@ -24,9 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System.Xml;
-
 /// <summary>
 /// Represents the response to a UpdateInboxRulesResponse operation.
 /// </summary>
@@ -35,7 +32,7 @@ internal sealed class UpdateInboxRulesResponse : ServiceResponse
     /// <summary>
     /// Rule operation error collection.
     /// </summary>
-    private RuleOperationErrorCollection errors;
+    private readonly RuleOperationErrorCollection errors;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdateInboxRulesResponse"/> class.

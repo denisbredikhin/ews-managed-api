@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <content>
 /// Contains nested type SearchFilter.SearchFilterCollection.
@@ -40,7 +39,7 @@ public abstract partial class SearchFilter
     /// </summary>
     public sealed class SearchFilterCollection : SearchFilter, IEnumerable<SearchFilter>
     {
-        private List<SearchFilter> searchFilters = new List<SearchFilter>();
+        private readonly List<SearchFilter> searchFilters = new List<SearchFilter>();
         private LogicalOperator logicalOperator = LogicalOperator.And;
 
         /// <summary>

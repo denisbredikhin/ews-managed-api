@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Core.UnitTests.Core;
 
 using System;
-using System.Globalization;
 
 using AwesomeAssertions;
 

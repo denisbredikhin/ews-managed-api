@@ -30,7 +30,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 /// <summary>
@@ -38,8 +37,8 @@ using System.Xml;
 /// </summary>
 internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
 {
-    private string windowsLiveId;
-    private string password;
+    private readonly string windowsLiveId;
+    private readonly string password;
     private Uri windowsLiveUrl;
     private bool isAuthenticated;
     private bool traceEnabled;

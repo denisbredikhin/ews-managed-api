@@ -25,17 +25,15 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the response to a subscription event retrieval operation.
 /// </summary>
 internal sealed class GetStreamingEventsResponse : ServiceResponse
 {
-    private GetStreamingEventsResults results = new GetStreamingEventsResults();
-    private HangingServiceRequestBase request;
+    private readonly GetStreamingEventsResults results = new GetStreamingEventsResults();
+    private readonly HangingServiceRequestBase request;
 
     /// <summary>
     /// Enumeration of ConnectionStatus that can be returned by the server.

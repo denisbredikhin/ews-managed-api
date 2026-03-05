@@ -27,8 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 
 internal delegate object CreateServiceObjectWithServiceParam(ExchangeService srv);
 
@@ -40,9 +38,9 @@ internal delegate object CreateServiceObjectWithAttachmentParam(ItemAttachment i
 /// </summary>
 internal class ServiceObjectInfo
 {
-    private Dictionary<string, Type> xmlElementNameToServiceObjectClassMap;
-    private Dictionary<Type, CreateServiceObjectWithServiceParam> serviceObjectConstructorsWithServiceParam;
-    private Dictionary<Type, CreateServiceObjectWithAttachmentParam> serviceObjectConstructorsWithAttachmentParam;
+    private readonly Dictionary<string, Type> xmlElementNameToServiceObjectClassMap;
+    private readonly Dictionary<Type, CreateServiceObjectWithServiceParam> serviceObjectConstructorsWithServiceParam;
+    private readonly Dictionary<Type, CreateServiceObjectWithAttachmentParam> serviceObjectConstructorsWithAttachmentParam;
 
     /// <summary>
     /// Default constructor

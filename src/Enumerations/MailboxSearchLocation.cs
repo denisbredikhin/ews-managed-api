@@ -23,8 +23,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Xml.Serialization;
-
 namespace Microsoft.Exchange.WebServices.Data;
 
 /// <summary>

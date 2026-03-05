@@ -26,9 +26,7 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents an availability time suggestion.
@@ -38,7 +36,7 @@ public sealed class TimeSuggestion : ComplexProperty
     private DateTime meetingTime;
     private bool isWorkTime;
     private SuggestionQuality quality;
-    private Collection<Conflict> conflicts = new Collection<Conflict>();
+    private readonly Collection<Conflict> conflicts = new Collection<Conflict>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TimeSuggestion"/> class.

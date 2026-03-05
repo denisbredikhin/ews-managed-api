@@ -25,10 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 /// <summary>
@@ -36,8 +32,8 @@ using System.Xml;
 /// </summary>
 public sealed class FindFolderResponse : ServiceResponse
 {
-    private FindFoldersResults results = new FindFoldersResults();
-    private PropertySet propertySet;
+    private readonly FindFoldersResults results = new FindFoldersResults();
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Reads response elements from XML.

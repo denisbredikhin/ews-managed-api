@@ -28,16 +28,15 @@ namespace Microsoft.Exchange.WebServices.Data;
 using Misc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a group of time zone period transitions.
 /// </summary>
 internal class TimeZoneTransitionGroup : ComplexProperty
 {
-    private TimeZoneDefinition timeZoneDefinition;
+    private readonly TimeZoneDefinition timeZoneDefinition;
     private string id;
-    private List<TimeZoneTransition> transitions = new List<TimeZoneTransition>();
+    private readonly List<TimeZoneTransition> transitions = new List<TimeZoneTransition>();
     private TimeZoneTransition transitionToStandard;
     private TimeZoneTransition transitionToDaylight;
 

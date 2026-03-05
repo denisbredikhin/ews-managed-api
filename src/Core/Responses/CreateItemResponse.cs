@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to an individual item creation operation.
 /// </summary>
 internal sealed class CreateItemResponse : CreateItemResponseBase
 {
-    private Item item;
+    private readonly Item item;
 
     /// <summary>
     /// Gets Item instance.

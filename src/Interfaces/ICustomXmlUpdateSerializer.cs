@@ -23,8 +23,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Collections.Generic;
-
 namespace Microsoft.Exchange.WebServices.Data;
 
 /// <summary>

@@ -25,16 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the GetUserRetentionPolicyTagsResponse response.
 /// </summary>
 public sealed class GetUserRetentionPolicyTagsResponse : ServiceResponse
 {
-    List<RetentionPolicyTag> retentionPolicyTags = new List<RetentionPolicyTag>();
+    readonly List<RetentionPolicyTag> retentionPolicyTags = new List<RetentionPolicyTag>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetUserRetentionPolicyTagsResponse"/> class.

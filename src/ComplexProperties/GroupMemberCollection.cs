@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 /// <summary>
 /// Represents a collection of members of GroupMember type.

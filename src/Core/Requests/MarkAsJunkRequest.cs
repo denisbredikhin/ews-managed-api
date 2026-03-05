@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Definition for MarkAsJunkRequest
 /// </summary>
 internal sealed class MarkAsJunkRequest : MultiResponseServiceRequest<MarkAsJunkResponse>
 {
-    private ItemIdWrapperList itemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList itemIds = new ItemIdWrapperList();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MarkAsJunkRequest"/> class.

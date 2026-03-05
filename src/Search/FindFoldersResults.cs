@@ -25,10 +25,8 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the results of a folder search operation.
@@ -38,7 +36,7 @@ public sealed class FindFoldersResults : IEnumerable<Folder>
     private int totalCount;
     private int? nextPageOffset;
     private bool moreAvailable;
-    private Collection<Folder> folders = new Collection<Folder>();
+    private readonly Collection<Folder> folders = new Collection<Folder>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FindFoldersResults"/> class.

@@ -28,10 +28,8 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Threading;
-using Microsoft.Exchange.WebServices.Data;
 
 /// <summary>
 /// Represents a request of a get user photo operation

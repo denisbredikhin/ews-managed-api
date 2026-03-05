@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Defines the type of free/busy information returned by a GetUserAvailability operation.
 /// </summary>

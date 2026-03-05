@@ -33,7 +33,7 @@ internal sealed class ExpandGroupResponse : ServiceResponse
     /// <summary>
     /// AD or store group members.
     /// </summary>
-    private ExpandGroupResults members = new ExpandGroupResults();
+    private readonly ExpandGroupResults members = new ExpandGroupResults();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExpandGroupResponse"/> class.

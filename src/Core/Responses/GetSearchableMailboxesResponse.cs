@@ -25,16 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the GetSearchableMailboxes response.
 /// </summary>
 public sealed class GetSearchableMailboxesResponse : ServiceResponse
 {
-    List<SearchableMailbox> searchableMailboxes = new List<SearchableMailbox>();
+    readonly List<SearchableMailbox> searchableMailboxes = new List<SearchableMailbox>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetSearchableMailboxesResponse"/> class.

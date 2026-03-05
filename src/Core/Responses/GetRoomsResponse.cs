@@ -25,17 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the response to a GetRooms operation.
 /// </summary>
 internal sealed class GetRoomsResponse : ServiceResponse
 {
-    private Collection<EmailAddress> rooms = new Collection<EmailAddress>();
+    private readonly Collection<EmailAddress> rooms = new Collection<EmailAddress>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetRoomsResponse"/> class.

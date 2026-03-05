@@ -24,16 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Text;
-
 /// <summary>
 /// Represents a response to a GetUserConfiguration request.
 /// </summary>
 internal sealed class GetUserConfigurationResponse : ServiceResponse
 {
-    private UserConfiguration userConfiguration;
+    private readonly UserConfiguration userConfiguration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetUserConfigurationResponse"/> class.

@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to an individual attachment deletion operation.
 /// </summary>
 public sealed class DeleteAttachmentResponse : ServiceResponse
 {
-    private Attachment attachment;
+    private readonly Attachment attachment;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DeleteAttachmentResponse"/> class.

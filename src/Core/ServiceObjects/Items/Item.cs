@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +37,7 @@ using System.Threading.Tasks;
 [ServiceObjectDefinition(XmlElementNames.Item)]
 public class Item : ServiceObject
 {
-    private ItemAttachment parentAttachment;
+    private readonly ItemAttachment parentAttachment;
 
     /// <summary>
     /// Initializes an unsaved local instance of <see cref="Item"/>. To bind to an existing item, use Item.Bind() instead.

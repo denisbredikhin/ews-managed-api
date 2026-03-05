@@ -27,7 +27,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents an error that occurs when an operation on a property fails.

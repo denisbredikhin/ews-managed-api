@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Dns;
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 /// <summary>

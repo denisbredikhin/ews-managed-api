@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to a PlayOnPhone operation
 /// </summary>
 internal sealed class PlayOnPhoneResponse : ServiceResponse
 {
-    private PhoneCallId phoneCallId;
+    private readonly PhoneCallId phoneCallId;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlayOnPhoneResponse"/> class.

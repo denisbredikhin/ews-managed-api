@@ -33,7 +33,7 @@ internal sealed class GetInboxRulesResponse : ServiceResponse
     /// <summary>
     /// Rule collection.
     /// </summary>
-    private RuleCollection ruleCollection;
+    private readonly RuleCollection ruleCollection;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetInboxRulesResponse"/> class.

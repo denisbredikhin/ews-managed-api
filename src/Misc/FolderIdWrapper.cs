@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a folder Id provided by a FolderId object.
 /// </summary>
@@ -37,7 +32,7 @@ internal class FolderIdWrapper : AbstractFolderIdWrapper
     /// <summary>
     /// The FolderId object providing the Id.
     /// </summary>
-    private FolderId folderId;
+    private readonly FolderId folderId;
 
     /// <summary>
     /// Initializes a new instance of FolderIdWrapper.

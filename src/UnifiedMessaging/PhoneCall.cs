@@ -25,8 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Text;
 using System.Threading;
 
 /// <summary>
@@ -37,12 +35,12 @@ public sealed class PhoneCall : ComplexProperty
     private const string SuccessfulResponseText = "OK";
     private const int SuccessfulResponseCode = 200;
 
-    private ExchangeService service;
+    private readonly ExchangeService service;
     private PhoneCallState state;
     private ConnectionFailureCause connectionFailureCause;
     private string sipResponseText;
     private int sipResponseCode;
-    private PhoneCallId id;
+    private readonly PhoneCallId id;
     
     /// <summary>
     /// PhoneCall Constructor.

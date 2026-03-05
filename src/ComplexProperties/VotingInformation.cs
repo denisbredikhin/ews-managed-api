@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.ObjectModel;
 
 /// <summary>
@@ -33,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class VotingInformation : ComplexProperty
 {
-    private Collection<VotingOptionData> userOptions = new Collection<VotingOptionData>();
+    private readonly Collection<VotingOptionData> userOptions = new Collection<VotingOptionData>();
     private string votingResponse;
 
     /// <summary>

@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a DeleteItem request.
 /// </summary>
 internal sealed class DeleteItemRequest : DeleteRequest<ServiceResponse>
 {
-    private ItemIdWrapperList itemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList itemIds = new ItemIdWrapperList();
     private AffectedTaskOccurrence? affectedTaskOccurrences;
     private SendCancellationsMode? sendCancellationsMode;
 

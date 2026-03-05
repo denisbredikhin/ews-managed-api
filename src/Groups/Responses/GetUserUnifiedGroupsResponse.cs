@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data.Groups;
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents a response to a GetUserUnifiedGroupsResponse operation
@@ -38,7 +35,7 @@ internal sealed class GetUserUnifiedGroupsResponse : ServiceResponse
     /// <summary>
     /// The UnifiedGroups Sets associated with this response
     /// </summary>
-    private Collection<UnifiedGroupsSet> groupsSets = new Collection<UnifiedGroupsSet>();
+    private readonly Collection<UnifiedGroupsSet> groupsSets = new Collection<UnifiedGroupsSet>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetUserUnifiedGroupsResponse"/> class.

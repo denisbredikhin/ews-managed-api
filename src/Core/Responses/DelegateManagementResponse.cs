@@ -33,8 +33,8 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal class DelegateManagementResponse : ServiceResponse
 {
-    private bool readDelegateUsers;
-    private List<DelegateUser> delegateUsers;
+    private readonly bool readDelegateUsers;
+    private readonly List<DelegateUser> delegateUsers;
     private Collection<DelegateUserResponse> delegateUserResponses;
 
     /// <summary>

@@ -33,7 +33,7 @@ using System.ComponentModel;
 [EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class SubscriptionBase
 {
-    private ExchangeService service;
+    private readonly ExchangeService service;
     private string id;
     private string watermark;
 

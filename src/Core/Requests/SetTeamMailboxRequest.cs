@@ -37,17 +37,17 @@ internal sealed class SetTeamMailboxRequest : SimpleServiceRequestBase
     /// <summary>
     /// TeamMailbox email address
     /// </summary>
-    private EmailAddress emailAddress;
+    private readonly EmailAddress emailAddress;
 
     /// <summary>
     /// SharePoint site URL
     /// </summary>
-    private Uri sharePointSiteUrl;
+    private readonly Uri sharePointSiteUrl;
 
     /// <summary>
     /// TeamMailbox lifecycle state
     /// </summary>
-    private TeamMailboxLifecycleState state;
+    private readonly TeamMailboxLifecycleState state;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SetTeamMailboxRequest"/> class.

@@ -24,16 +24,13 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-
 /// <summary>
 /// Represents the Id of a folder.
 /// </summary>
 public sealed class FolderId : ServiceId
 {
-    private WellKnownFolderName? folderName;
-    private Mailbox mailbox;
+    private readonly WellKnownFolderName? folderName;
+    private readonly Mailbox mailbox;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FolderId"/> class.

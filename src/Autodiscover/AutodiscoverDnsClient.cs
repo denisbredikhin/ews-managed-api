@@ -54,14 +54,14 @@ internal class AutodiscoverDnsClient
     /// <summary>
     /// Random selector in the case of ties.
     /// </summary>
-    private static Random randomTieBreakerSelector = new Random();
+    private static readonly Random randomTieBreakerSelector = new Random();
     #endregion
 
     #region Instance fields
     /// <summary>
     /// AutodiscoverService using this DNS reader.
     /// </summary>
-    private AutodiscoverService service;
+    private readonly AutodiscoverService service;
 
     #endregion
 

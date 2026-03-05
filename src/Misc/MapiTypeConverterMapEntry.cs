@@ -38,7 +38,7 @@ internal class MapiTypeConverterMapEntry
     /// <summary>
     /// Map CLR types used for MAPI properties to matching default values.
     /// </summary>
-    private static LazyMember<TypeToDefaultValueMap> defaultValueMap = new LazyMember<TypeToDefaultValueMap>(
+    private static readonly LazyMember<TypeToDefaultValueMap> defaultValueMap = new LazyMember<TypeToDefaultValueMap>(
         () =>
         {
             TypeToDefaultValueMap map = new TypeToDefaultValueMap();

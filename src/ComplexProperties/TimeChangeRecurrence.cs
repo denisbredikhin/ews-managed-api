@@ -24,12 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-
 /// <summary>
 /// Represents a recurrence pattern for a time change in a time zone.
 /// </summary>

@@ -27,8 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a custom time zone time change. 

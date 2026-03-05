@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -43,7 +42,7 @@ public sealed class ExpandGroupResults : IEnumerable<EmailAddress>
     /// <summary>
     /// DL members.
     /// </summary>
-    private Collection<EmailAddress> members = new Collection<EmailAddress>();
+    private readonly Collection<EmailAddress> members = new Collection<EmailAddress>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExpandGroupResults"/> class.

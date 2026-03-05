@@ -39,7 +39,7 @@ using System.Threading.Tasks;
 public abstract class ResponseObject<TMessage> : ServiceObject
     where TMessage : EmailMessage
 {
-    private Item referenceItem;
+    private readonly Item referenceItem;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponseObject&lt;TMessage&gt;"/> class.

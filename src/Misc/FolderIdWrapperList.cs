@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a list a abstracted folder Ids.
@@ -37,7 +35,7 @@ internal class FolderIdWrapperList : IEnumerable<AbstractFolderIdWrapper>
     /// <summary>
     /// List of <see cref="Microsoft.Exchange.WebServices.Data.AbstractFolderIdWrapper"/>.
     /// </summary>
-    private List<AbstractFolderIdWrapper> ids = new List<AbstractFolderIdWrapper>();
+    private readonly List<AbstractFolderIdWrapper> ids = new List<AbstractFolderIdWrapper>();
 
     /// <summary>
     /// Adds the specified folder.

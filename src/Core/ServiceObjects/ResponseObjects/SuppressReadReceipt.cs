@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,7 +35,7 @@ using System.Threading.Tasks;
 [ServiceObjectDefinition(XmlElementNames.SuppressReadReceipt, ReturnedByServer = false)]
 internal sealed class SuppressReadReceipt : ServiceObject
 {
-    private Item referenceItem;
+    private readonly Item referenceItem;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SuppressReadReceipt"/> class.

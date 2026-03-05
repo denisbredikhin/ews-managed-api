@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Defines the effective user rights associated with an item or folder.

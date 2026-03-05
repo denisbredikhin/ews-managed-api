@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-
-namespace Microsoft.Exchange.WebServices.Data;
+﻿namespace Microsoft.Exchange.WebServices.Data;
 
 class EwsHttpClientException: Exception
 {

@@ -27,8 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using Misc;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a time zone period transition that occurs on a relative day of a specific month.

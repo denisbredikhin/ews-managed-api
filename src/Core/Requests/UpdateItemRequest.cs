@@ -27,14 +27,13 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents an UpdateItem request.
 /// </summary>
 internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>
 {
-    private List<Item> items = new List<Item>();
+    private readonly List<Item> items = new List<Item>();
     private FolderId savedItemsDestinationFolder;
     private ConflictResolutionMode conflictResolutionMode;
     private MessageDisposition? messageDisposition;

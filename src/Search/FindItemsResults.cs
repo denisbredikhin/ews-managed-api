@@ -25,10 +25,8 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the results of an item search operation.
@@ -40,8 +38,8 @@ public sealed class FindItemsResults<TItem> : IEnumerable<TItem>
     private int totalCount;
     private int? nextPageOffset;
     private bool moreAvailable;
-    private Collection<TItem> items = new Collection<TItem>();
-    private Collection<HighlightTerm> highlightTerms = new Collection<HighlightTerm>();
+    private readonly Collection<TItem> items = new Collection<TItem>();
+    private readonly Collection<HighlightTerm> highlightTerms = new Collection<HighlightTerm>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FindItemsResults&lt;T&gt;"/> class.

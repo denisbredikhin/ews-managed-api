@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 // TODO : Do we want to include more information about what those levels actually allow users to do?
 
 /// <summary>

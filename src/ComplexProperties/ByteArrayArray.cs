@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
 /// <summary>
 /// Represents an array of byte arrays
@@ -36,7 +33,7 @@ using System.Text;
 public sealed class ByteArrayArray : ComplexProperty
 {
     private const string ItemXmlElementName = "Base64Binary";
-    private List<byte[]> content = new List<byte[]>();
+    private readonly List<byte[]> content = new List<byte[]>();
 
     #region Properties
 

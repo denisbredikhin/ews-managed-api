@@ -26,10 +26,8 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Text;
 
 /// <summary>
 /// Represents a suggestion for a specific date.
@@ -38,7 +36,7 @@ public sealed class Suggestion : ComplexProperty
 {
     private DateTime date;
     private SuggestionQuality quality;
-    private Collection<TimeSuggestion> timeSuggestions = new Collection<TimeSuggestion>();
+    private readonly Collection<TimeSuggestion> timeSuggestions = new Collection<TimeSuggestion>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Suggestion"/> class.

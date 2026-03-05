@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a list a abstracted item Ids.
@@ -37,7 +35,7 @@ internal class ItemIdWrapperList : IEnumerable<AbstractItemIdWrapper>
     /// <summary>
     /// List of <see cref="Microsoft.Exchange.WebServices.Data.Item"/>.
     /// </summary>
-    private List<AbstractItemIdWrapper> itemIds = new List<AbstractItemIdWrapper>();
+    private readonly List<AbstractItemIdWrapper> itemIds = new List<AbstractItemIdWrapper>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ItemIdWrapperList"/> class.

@@ -25,9 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,7 +33,7 @@ using System.Threading.Tasks;
 /// </summary>
 public sealed class UnifiedMessaging
 {
-    private ExchangeService service;
+    private readonly ExchangeService service;
 
     /// <summary>
     /// Constructor

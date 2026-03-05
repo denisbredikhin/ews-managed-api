@@ -52,7 +52,7 @@ internal sealed class OutlookProtocol
     /// Converters to translate common Outlook protocol settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookProtocol instance. 
     /// </summary>
-    private static LazyMember<ConverterDictionary> commonProtocolSettings = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> commonProtocolSettings = new LazyMember<ConverterDictionary>(
         () =>
         {
             var results = new ConverterDictionary();
@@ -76,7 +76,7 @@ internal sealed class OutlookProtocol
     /// Converters to translate internal (EXCH) Outlook protocol settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookProtocol instance. 
     /// </summary>
-    private static LazyMember<ConverterDictionary> internalProtocolSettings = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> internalProtocolSettings = new LazyMember<ConverterDictionary>(
         () =>
         {
             var results = new ConverterDictionary();
@@ -112,7 +112,7 @@ internal sealed class OutlookProtocol
     /// Converters to translate external (EXPR) Outlook protocol settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookProtocol instance. 
     /// </summary>
-    private static LazyMember<ConverterDictionary> externalProtocolSettings = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> externalProtocolSettings = new LazyMember<ConverterDictionary>(
         () =>
         {
             var results = new ConverterDictionary();
@@ -149,7 +149,7 @@ internal sealed class OutlookProtocol
     /// Merged converter dictionary for translating internal (EXCH) Outlook protocol settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookProtocol instance. 
     /// </summary>
-    private static LazyMember<ConverterDictionary> internalProtocolConverterDictionary = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> internalProtocolConverterDictionary = new LazyMember<ConverterDictionary>(
         () =>
         {
             var results = new ConverterDictionary();
@@ -162,7 +162,7 @@ internal sealed class OutlookProtocol
     /// Merged converter dictionary for translating external (EXPR) Outlook protocol settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookProtocol instance. 
     /// </summary>
-    private static LazyMember<ConverterDictionary> externalProtocolConverterDictionary = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> externalProtocolConverterDictionary = new LazyMember<ConverterDictionary>(
         () =>
         {
             var results = new ConverterDictionary();
@@ -175,7 +175,7 @@ internal sealed class OutlookProtocol
     /// Converters to translate Web (WEB) Outlook protocol settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookProtocol instance. 
     /// </summary>
-    private static LazyMember<ConverterDictionary> webProtocolConverterDictionary = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> webProtocolConverterDictionary = new LazyMember<ConverterDictionary>(
         () =>
         {
             var results = new ConverterDictionary();
@@ -187,7 +187,7 @@ internal sealed class OutlookProtocol
     /// <summary>
     /// The collection of available user settings for all OutlookProtocol types.
     /// </summary>
-    private static LazyMember<List<UserSettingName>> availableUserSettings = new LazyMember<List<UserSettingName>>(
+    private static readonly LazyMember<List<UserSettingName>> availableUserSettings = new LazyMember<List<UserSettingName>>(
         () =>
         {
             var results = new List<UserSettingName>();
@@ -201,7 +201,7 @@ internal sealed class OutlookProtocol
     /// <summary>
     /// Map Outlook protocol name to type.
     /// </summary>
-    private static LazyMember<Dictionary<string, OutlookProtocolType>> protocolNameToTypeMap = new LazyMember<Dictionary<string, OutlookProtocolType>>(
+    private static readonly LazyMember<Dictionary<string, OutlookProtocolType>> protocolNameToTypeMap = new LazyMember<Dictionary<string, OutlookProtocolType>>(
         delegate()
         {
             Dictionary<string, OutlookProtocolType> results = new Dictionary<string, OutlookProtocolType>();
@@ -246,8 +246,8 @@ internal sealed class OutlookProtocol
     private bool serverExclusiveConnect;
     private string certPrincipalName;
     private string groupingInformation;
-    private WebClientUrlCollection externalOutlookWebAccessUrls;
-    private WebClientUrlCollection internalOutlookWebAccessUrls;
+    private readonly WebClientUrlCollection externalOutlookWebAccessUrls;
+    private readonly WebClientUrlCollection internalOutlookWebAccessUrls;
     #endregion
 
     /// <summary>

@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Delegate called to perform the actual initialization of the member
 /// </summary>
@@ -46,8 +41,8 @@ internal delegate T InitializeLazyMember<T>();
 internal class LazyMember<T>
 {
     private T lazyMember;
-    private InitializeLazyMember<T> initializationDelegate;
-    private object lockObject = new object();
+    private readonly InitializeLazyMember<T> initializationDelegate;
+    private readonly object lockObject = new object();
     private bool initialized = false;
 
     /// <summary>

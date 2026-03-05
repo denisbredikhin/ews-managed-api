@@ -24,9 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data.Enumerations;
-
-using System;
-
 /// <summary>
 /// The consent states enumeration
 /// </summary>

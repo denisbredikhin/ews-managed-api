@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Net;
-using Microsoft.Exchange.WebServices.Data;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using System.Threading;

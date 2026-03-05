@@ -27,14 +27,13 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Net;
-using System.Xml;
 
 /// <summary>
 /// WebCredentials wraps an instance of ICredentials used for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.
 /// </summary>
 public sealed class WebCredentials : ExchangeCredentials
 {
-    private ICredentials credentials;
+    private readonly ICredentials credentials;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebCredentials"/> class to use

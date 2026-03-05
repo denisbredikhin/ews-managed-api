@@ -35,15 +35,15 @@ using System.Xml;
 /// </summary>
 internal class PropertyBag
 {
-    private ServiceObject owner;
+    private readonly ServiceObject owner;
     private bool isDirty;
     private bool loading;
     private bool onlySummaryPropertiesRequested;
-    private List<PropertyDefinition> loadedProperties = new List<PropertyDefinition>();
-    private Dictionary<PropertyDefinition, object> properties = new Dictionary<PropertyDefinition, object>();
-    private Dictionary<PropertyDefinition, object> deletedProperties = new Dictionary<PropertyDefinition, object>();
-    private List<PropertyDefinition> modifiedProperties = new List<PropertyDefinition>();
-    private List<PropertyDefinition> addedProperties = new List<PropertyDefinition>();
+    private readonly List<PropertyDefinition> loadedProperties = new List<PropertyDefinition>();
+    private readonly Dictionary<PropertyDefinition, object> properties = new Dictionary<PropertyDefinition, object>();
+    private readonly Dictionary<PropertyDefinition, object> deletedProperties = new Dictionary<PropertyDefinition, object>();
+    private readonly List<PropertyDefinition> modifiedProperties = new List<PropertyDefinition>();
+    private readonly List<PropertyDefinition> addedProperties = new List<PropertyDefinition>();
     private PropertySet requestedPropertySet;
 
     /// <summary>

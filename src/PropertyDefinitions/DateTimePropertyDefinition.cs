@@ -32,7 +32,7 @@ using System;
 /// </summary>
 internal class DateTimePropertyDefinition : PropertyDefinition
 {
-    private bool isNullable;
+    private readonly bool isNullable;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DateTimePropertyDefinition"/> class.

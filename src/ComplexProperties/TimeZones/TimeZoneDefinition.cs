@@ -28,8 +28,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 using Misc;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 /// <summary>
 /// Represents a time zone as defined by the EWS schema.
@@ -43,9 +41,9 @@ public class TimeZoneDefinition : ComplexProperty
 
     private string name;
     private string id;
-    private Dictionary<string, TimeZonePeriod> periods = new Dictionary<string, TimeZonePeriod>();
-    private Dictionary<string, TimeZoneTransitionGroup> transitionGroups = new Dictionary<string, TimeZoneTransitionGroup>();
-    private List<TimeZoneTransition> transitions = new List<TimeZoneTransition>();
+    private readonly Dictionary<string, TimeZonePeriod> periods = new Dictionary<string, TimeZonePeriod>();
+    private readonly Dictionary<string, TimeZoneTransitionGroup> transitionGroups = new Dictionary<string, TimeZoneTransitionGroup>();
+    private readonly List<TimeZoneTransition> transitions = new List<TimeZoneTransition>();
 
     /// <summary>
     /// Compares the transitions.

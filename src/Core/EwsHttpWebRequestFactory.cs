@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Net;
-using System.Net.Http;
 
 /// <summary>
 /// Represents an implementation of IEwsHttpWebRequestFactory using EwsHttpWebRequest.

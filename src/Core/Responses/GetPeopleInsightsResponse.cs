@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Xml;
 
 /// <summary>

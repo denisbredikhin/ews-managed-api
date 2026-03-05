@@ -26,9 +26,7 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 /// <summary>
 /// Represents a collection of notification events.
@@ -54,7 +52,7 @@ internal sealed class GetStreamingEventsResults
     /// <summary>
     /// Collection of notification events.
     /// </summary>
-    private Collection<NotificationGroup> events = new Collection<NotificationGroup>();
+    private readonly Collection<NotificationGroup> events = new Collection<NotificationGroup>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetStreamingEventsResults"/> class.

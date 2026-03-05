@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to an individual item update operation.
 /// </summary>
 public sealed class UpdateItemResponse : ServiceResponse
 {
-    private Item item;
+    private readonly Item item;
     private Item returnedItem;
     private int conflictCount;
 

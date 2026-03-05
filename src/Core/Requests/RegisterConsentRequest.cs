@@ -25,11 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
 using Microsoft.Exchange.WebServices.Data.Enumerations;
 using System.Threading.Tasks;
 using System.Threading;

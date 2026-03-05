@@ -35,12 +35,12 @@ public abstract class NotificationEvent
     /// <summary>
     /// Type of this event.
     /// </summary>
-    private EventType eventType;
+    private readonly EventType eventType;
 
     /// <summary>
     /// Date and time when the event occurred.
     /// </summary>
-    private DateTime timestamp;
+    private readonly DateTime timestamp;
 
     /// <summary>
     /// Id of parent folder of the item or folder this event applies to.

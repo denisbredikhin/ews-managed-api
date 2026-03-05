@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 using PropertyDefinitionSortDirectionPair = System.Collections.Generic.KeyValuePair<PropertyDefinitionBase, SortDirection>;
 
@@ -36,7 +35,7 @@ using PropertyDefinitionSortDirectionPair = System.Collections.Generic.KeyValueP
 /// </summary>
 public sealed class OrderByCollection : IEnumerable<PropertyDefinitionSortDirectionPair>
 {
-    private List<PropertyDefinitionSortDirectionPair> propDefSortOrderPairList;
+    private readonly List<PropertyDefinitionSortDirectionPair> propDefSortOrderPairList;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OrderByCollection"/> class.

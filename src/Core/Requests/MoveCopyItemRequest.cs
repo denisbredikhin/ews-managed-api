@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents an abstract Move/Copy Item request.
 /// </summary>
@@ -36,7 +31,7 @@ using System.Text;
 internal abstract class MoveCopyItemRequest<TResponse> : MoveCopyRequest<Item, TResponse>
     where TResponse : ServiceResponse
 {
-    private ItemIdWrapperList itemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList itemIds = new ItemIdWrapperList();
 
     /// <summary>
     /// Validates request.

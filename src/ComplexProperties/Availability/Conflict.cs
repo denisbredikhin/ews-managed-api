@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a conflict in a meeting time suggestion.
 /// </summary>
 public sealed class Conflict : ComplexProperty
 {
-    private ConflictType conflictType;
+    private readonly ConflictType conflictType;
     private int numberOfMembers;
     private int numberOfMembersAvailable;
     private int numberOfMembersWithConflict;

@@ -39,7 +39,7 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
     /// <summary>
     /// All user settings that are available from the Outlook provider.
     /// </summary>
-    private static LazyMember<List<UserSettingName>> allOutlookProviderSettings = new LazyMember<List<UserSettingName>>(
+    private static readonly LazyMember<List<UserSettingName>> allOutlookProviderSettings = new LazyMember<List<UserSettingName>>(
         () =>
         {
             List<UserSettingName> results = new List<UserSettingName>();
@@ -51,7 +51,7 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
     #endregion
 
     #region Private fields
-    private OutlookUser user;
+    private readonly OutlookUser user;
     private OutlookAccount account;
     #endregion
 

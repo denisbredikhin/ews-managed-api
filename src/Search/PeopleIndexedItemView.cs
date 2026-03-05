@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 public sealed class PeopleIndexedItemView : PagedView
 {
-    private OrderByCollection orderBy = new OrderByCollection();
+    private readonly OrderByCollection orderBy = new OrderByCollection();
     private ViewFilter? viewFilter;
 
     /// <summary>

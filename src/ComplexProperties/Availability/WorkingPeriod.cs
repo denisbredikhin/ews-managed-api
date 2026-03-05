@@ -26,16 +26,14 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents a working period.
 /// </summary>
 internal sealed class WorkingPeriod : ComplexProperty
 {
-    private Collection<DayOfTheWeek> daysOfWeek = new Collection<DayOfTheWeek>();
+    private readonly Collection<DayOfTheWeek> daysOfWeek = new Collection<DayOfTheWeek>();
     private TimeSpan startTime;
     private TimeSpan endTime;
 

@@ -27,14 +27,13 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents an UpdateFolder request.
 /// </summary>
 internal sealed class UpdateFolderRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    private List<Folder> folders = new List<Folder>();
+    private readonly List<Folder> folders = new List<Folder>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdateFolderRequest"/> class.

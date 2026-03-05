@@ -25,16 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a GetDelegate request.
 /// </summary>
 internal class GetDelegateRequest : DelegateManagementRequestBase<GetDelegateResponse>
 {
-    private List<UserId> userIds = new List<UserId>();
+    private readonly List<UserId> userIds = new List<UserId>();
     private bool includePermissions;
 
     /// <summary>

@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a ConvertId request.
@@ -35,7 +33,7 @@ using System.Text;
 internal sealed class ConvertIdRequest : MultiResponseServiceRequest<ConvertIdResponse>
 {
     private IdFormat destinationFormat = IdFormat.EwsId;
-    private List<AlternateIdBase> ids = new List<AlternateIdBase>();
+    private readonly List<AlternateIdBase> ids = new List<AlternateIdBase>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConvertIdRequest"/> class.

@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-	using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents an exception that is thrown when the Autodiscover service could not be contacted.

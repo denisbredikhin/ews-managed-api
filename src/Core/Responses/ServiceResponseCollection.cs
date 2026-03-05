@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a strogly typed list of service responses.
@@ -35,7 +34,7 @@ using System.Text;
 /// <typeparam name="TResponse">The type of response stored in the list.</typeparam>
 public sealed class ServiceResponseCollection<TResponse> : IEnumerable<TResponse> where TResponse : ServiceResponse
 {
-    private List<TResponse> responses = new List<TResponse>();
+    private readonly List<TResponse> responses = new List<TResponse>();
     private ServiceResult overallResult = ServiceResult.Success;
 
     /// <summary>

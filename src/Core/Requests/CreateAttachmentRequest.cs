@@ -25,10 +25,8 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 /// <summary>
 /// Represents a CreateAttachment request.
@@ -36,7 +34,7 @@ using System.Text;
 internal sealed class CreateAttachmentRequest : MultiResponseServiceRequest<CreateAttachmentResponse>
 {
     private string parentItemId;
-    private List<Attachment> attachments = new List<Attachment>();
+    private readonly List<Attachment> attachments = new List<Attachment>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateAttachmentRequest"/> class.

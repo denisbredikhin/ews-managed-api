@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Autodiscover;
 
 using System;
-using System.Runtime.Serialization;
 using Microsoft.Exchange.WebServices.Data;
 
 /// <summary>

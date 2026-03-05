@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -38,10 +37,10 @@ using System.ComponentModel;
 public abstract class DictionaryProperty<TKey, TEntry> : ComplexProperty, ICustomUpdateSerializer
     where TEntry : DictionaryEntryProperty<TKey>
 {
-    private Dictionary<TKey, TEntry> entries = new Dictionary<TKey, TEntry>();
-    private Dictionary<TKey, TEntry> removedEntries = new Dictionary<TKey, TEntry>();
-    private List<TKey> addedEntries = new List<TKey>();
-    private List<TKey> modifiedEntries = new List<TKey>();
+    private readonly Dictionary<TKey, TEntry> entries = new Dictionary<TKey, TEntry>();
+    private readonly Dictionary<TKey, TEntry> removedEntries = new Dictionary<TKey, TEntry>();
+    private readonly List<TKey> addedEntries = new List<TKey>();
+    private readonly List<TKey> modifiedEntries = new List<TKey>();
 
     /// <summary>
     /// Entry was changed.

@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Autodiscover;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Defines the types of response the Autodiscover service can return.
 /// </summary>

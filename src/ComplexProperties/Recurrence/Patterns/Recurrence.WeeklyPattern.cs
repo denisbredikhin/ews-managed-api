@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <content>
 /// Contains nested type Recurrence.WeeklyPattern.
@@ -39,7 +37,7 @@ public abstract partial class Recurrence
     /// </summary>
     public sealed class WeeklyPattern : IntervalPattern
     {
-        private DayOfTheWeekCollection daysOfTheWeek = new DayOfTheWeekCollection();
+        private readonly DayOfTheWeekCollection daysOfTheWeek = new DayOfTheWeekCollection();
         private DayOfWeek? firstDayOfWeek;
 
         /// <summary>

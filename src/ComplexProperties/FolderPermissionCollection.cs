@@ -25,19 +25,16 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
 
 /// <summary>
 /// Represents a collection of folder permissions.
 /// </summary>
 public sealed class FolderPermissionCollection : ComplexPropertyCollection<FolderPermission>
 {
-    private bool isCalendarFolder;
-    private Collection<string> unknownEntries = new Collection<string>();
+    private readonly bool isCalendarFolder;
+    private readonly Collection<string> unknownEntries = new Collection<string>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FolderPermissionCollection"/> class.

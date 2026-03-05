@@ -43,8 +43,8 @@ internal sealed class OutlookAccount
     #endregion
 
     #region Private fields
-    private Dictionary<OutlookProtocolType, OutlookProtocol> protocols;
-    private AlternateMailboxCollection alternateMailboxes;
+    private readonly Dictionary<OutlookProtocolType, OutlookProtocol> protocols;
+    private readonly AlternateMailboxCollection alternateMailboxes;
     #endregion
 
     /// <summary>

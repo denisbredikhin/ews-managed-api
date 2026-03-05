@@ -25,9 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
 /// <summary>
@@ -35,7 +32,7 @@ using System.Xml;
 /// </summary>
 public sealed class CreateAttachmentResponse : ServiceResponse
 {
-    private Attachment attachment;
+    private readonly Attachment attachment;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateAttachmentResponse"/> class.

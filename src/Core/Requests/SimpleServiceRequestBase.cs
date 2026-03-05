@@ -27,12 +27,9 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.IO;
-using System.IO.Compression;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 
 /// <summary>
 /// Represents an abstract, simple request-response service request.

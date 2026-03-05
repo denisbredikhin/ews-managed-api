@@ -151,7 +151,7 @@ public sealed class PersonaEmailAddress : ComplexProperty, ISearchStringProvider
     /// <summary>
     /// Email address details
     /// </summary>
-    private EmailAddress _emailAddress;
+    private readonly EmailAddress _emailAddress;
 
     /// <summary>
     /// Defines an implicit conversion from a string representing an SMTP address to PeronaEmailAddress.

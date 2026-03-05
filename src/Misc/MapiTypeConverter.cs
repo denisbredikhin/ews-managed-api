@@ -45,7 +45,7 @@ internal class MapiTypeConverter
     /// <summary>
     /// Map from MAPI property type to converter entry.
     /// </summary>
-    private static LazyMember<MapiTypeConverterMap> mapiTypeConverterMap = new LazyMember<MapiTypeConverterMap>(
+    private static readonly LazyMember<MapiTypeConverterMap> mapiTypeConverterMap = new LazyMember<MapiTypeConverterMap>(
         delegate()
         {
             MapiTypeConverterMap map = new MapiTypeConverterMap();

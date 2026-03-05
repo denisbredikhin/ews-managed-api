@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a meeting acceptance message.
 /// </summary>
 public sealed class AcceptMeetingInvitationMessage : CalendarResponseMessage<MeetingResponse>
 {
-    private bool tentative;
+    private readonly bool tentative;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AcceptMeetingInvitationMessage"/> class.

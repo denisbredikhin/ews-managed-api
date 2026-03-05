@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data.Groups;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a UnifiedGroupsSet
@@ -37,7 +36,7 @@ public class UnifiedGroupsSet : ComplexProperty
     /// <summary>
     /// The list of unifiedGroups in this set.
     /// </summary>
-    private List<UnifiedGroup> unifiedGroups = new List<UnifiedGroup>();
+    private readonly List<UnifiedGroup> unifiedGroups = new List<UnifiedGroup>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnifiedGroupsSet"/> class.

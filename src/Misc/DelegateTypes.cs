@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System.Net;
 using System.Net.Http.Headers;
 using System.Xml;
 

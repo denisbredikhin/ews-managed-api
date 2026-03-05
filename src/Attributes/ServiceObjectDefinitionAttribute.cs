@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// ServiceObjectDefinition attribute decorates classes that map to EWS service objects.
@@ -35,7 +33,7 @@ using System.Text;
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 internal sealed class ServiceObjectDefinitionAttribute : Attribute
 {
-    private string xmlElementName;
+    private readonly string xmlElementName;
     private bool returnedByServer;
 
     /// <summary>

@@ -28,7 +28,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the working hours for a specific time zone.
@@ -36,7 +35,7 @@ using System.Text;
 public sealed class WorkingHours : ComplexProperty
 {
     private TimeZoneInfo timeZone;
-    private Collection<DayOfTheWeek> daysOfTheWeek = new Collection<DayOfTheWeek>();
+    private readonly Collection<DayOfTheWeek> daysOfTheWeek = new Collection<DayOfTheWeek>();
     private TimeSpan startTime;
     private TimeSpan endTime;
 

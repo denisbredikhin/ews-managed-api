@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,7 +35,7 @@ using System.Threading.Tasks;
 internal abstract class MultiResponseServiceRequest<TResponse> : SimpleServiceRequestBase
     where TResponse : ServiceResponse
 {
-    private ServiceErrorHandling errorHandlingMode;
+    private readonly ServiceErrorHandling errorHandlingMode;
 
     /// <summary>
     /// Parses the response.

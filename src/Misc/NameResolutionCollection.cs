@@ -27,16 +27,15 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a list of suggested name resolutions.
 /// </summary>
 public sealed class NameResolutionCollection : IEnumerable<NameResolution>
 {
-    private ExchangeService service;
+    private readonly ExchangeService service;
     private bool includesAllResolutions;
-    private List<NameResolution> items = new List<NameResolution>();
+    private readonly List<NameResolution> items = new List<NameResolution>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NameResolutionCollection"/> class.

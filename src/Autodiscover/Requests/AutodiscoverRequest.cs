@@ -42,8 +42,8 @@ using System.Xml;
 [SupportedOSPlatform("windows")]
 internal abstract class AutodiscoverRequest
 {
-    private AutodiscoverService service;
-    private Uri url;
+    private readonly AutodiscoverService service;
+    private readonly Uri url;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AutodiscoverRequest"/> class.

@@ -23,13 +23,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Security.Cryptography;
-
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Text;
-
 /// <summary>
 /// Represents the MIME content of an item.
 /// </summary>

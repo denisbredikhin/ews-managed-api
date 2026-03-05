@@ -29,11 +29,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml;
 
 /// <summary>
 /// Represents a user configuration's Dictionary property.
@@ -42,7 +38,7 @@ using System.Xml;
 public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
 {
     // TODO: Consider implementing IsDirty mechanism in ComplexProperty.
-    private Dictionary<object, object> dictionary;
+    private readonly Dictionary<object, object> dictionary;
     private bool isDirty = false;
 
     /// <summary>

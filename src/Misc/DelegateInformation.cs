@@ -35,8 +35,8 @@ public sealed class DelegateInformation
 {
     #region Private members
 
-    private Collection<DelegateUserResponse> delegateUserResponses;
-    private MeetingRequestsDeliveryScope meetingReqestsDeliveryScope;
+    private readonly Collection<DelegateUserResponse> delegateUserResponses;
+    private readonly MeetingRequestsDeliveryScope meetingReqestsDeliveryScope;
 
     #endregion
 

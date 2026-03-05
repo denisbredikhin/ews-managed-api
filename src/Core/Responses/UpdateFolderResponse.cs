@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents response to UpdateFolder request.
 /// </summary>
 internal sealed class UpdateFolderResponse : ServiceResponse
 {
-    private Folder folder;
+    private readonly Folder folder;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdateFolderResponse"/> class.

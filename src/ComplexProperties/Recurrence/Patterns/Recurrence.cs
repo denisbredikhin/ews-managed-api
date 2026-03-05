@@ -26,10 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Text;
 
 /// <summary>
 /// Represents a recurrence pattern, as used by Appointment and Task items.

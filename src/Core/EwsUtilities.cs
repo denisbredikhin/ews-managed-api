@@ -32,7 +32,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
@@ -50,7 +49,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Map from XML element names to ServiceObject type and constructors. 
     /// </summary>
-    private static LazyMember<ServiceObjectInfo> serviceObjectInfo = new LazyMember<ServiceObjectInfo>(
+    private static readonly LazyMember<ServiceObjectInfo> serviceObjectInfo = new LazyMember<ServiceObjectInfo>(
         delegate()
         {
             return new ServiceObjectInfo();
@@ -59,7 +58,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Version of API binary.
     /// </summary>
-    private static LazyMember<string> buildVersion = new LazyMember<string>(
+    private static readonly LazyMember<string> buildVersion = new LazyMember<string>(
         delegate()
         {
             try
@@ -79,7 +78,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary of enum type to ExchangeVersion maps. 
     /// </summary>
-    private static LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>> enumVersionDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>>(
+    private static readonly LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>> enumVersionDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>>(
         () => new Dictionary<Type, Dictionary<Enum, ExchangeVersion>>()
         {
             { typeof(WellKnownFolderName), BuildEnumDict(typeof(WellKnownFolderName)) },
@@ -94,7 +93,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary of enum type to schema-name-to-enum-value maps.
     /// </summary>
-    private static LazyMember<Dictionary<Type, Dictionary<string, Enum>>> schemaToEnumDictionaries = new LazyMember<Dictionary<Type, Dictionary<string, Enum>>>(
+    private static readonly LazyMember<Dictionary<Type, Dictionary<string, Enum>>> schemaToEnumDictionaries = new LazyMember<Dictionary<Type, Dictionary<string, Enum>>>(
         () => new Dictionary<Type, Dictionary<string, Enum>>
         {
             { typeof(EventType), BuildSchemaToEnumDict(typeof(EventType)) },
@@ -107,7 +106,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary of enum type to enum-value-to-schema-name maps.
     /// </summary>
-    private static LazyMember<Dictionary<Type, Dictionary<Enum, string>>> enumToSchemaDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, string>>>(
+    private static readonly LazyMember<Dictionary<Type, Dictionary<Enum, string>>> enumToSchemaDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, string>>>(
         () => new Dictionary<Type, Dictionary<Enum, string>>
         {
             { typeof(EventType), BuildEnumToSchemaDict(typeof(EventType)) },
@@ -120,7 +119,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary to map from special CLR type names to their "short" names.
     /// </summary>
-    private static LazyMember<Dictionary<string, string>> typeNameToShortNameMap = new LazyMember<Dictionary<string, string>>(
+    private static readonly LazyMember<Dictionary<string, string>> typeNameToShortNameMap = new LazyMember<Dictionary<string, string>>(
         () => new Dictionary<string, string>
         {
             { "Boolean", "bool" },

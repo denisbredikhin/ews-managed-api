@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 public sealed class SearchFolderParameters : ComplexProperty
 {
     private SearchFolderTraversal traversal;
-    private FolderIdCollection rootFolderIds = new FolderIdCollection();
+    private readonly FolderIdCollection rootFolderIds = new FolderIdCollection();
     private SearchFilter searchFilter;
 
     /// <summary>

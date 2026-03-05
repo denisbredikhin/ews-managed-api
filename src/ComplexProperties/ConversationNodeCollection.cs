@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.ComponentModel;
 
 /// <summary>
@@ -34,7 +33,7 @@ using System.ComponentModel;
 [EditorBrowsable(EditorBrowsableState.Never)]
 public sealed class ConversationNodeCollection : ComplexPropertyCollection<ConversationNode>
 {
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConversationNodeCollection"/> class.

@@ -33,37 +33,37 @@ public sealed class RulePredicates : ComplexProperty
     /// <summary>
     /// The HasCategories predicate.
     /// </summary>
-    private StringList categories;
+    private readonly StringList categories;
 
     /// <summary>
     /// The ContainsBodyStrings predicate.
     /// </summary>
-    private StringList containsBodyStrings;
+    private readonly StringList containsBodyStrings;
 
     /// <summary>
     /// The ContainsHeaderStrings predicate.
     /// </summary>
-    private StringList containsHeaderStrings;
+    private readonly StringList containsHeaderStrings;
 
     /// <summary>
     /// The ContainsRecipientStrings predicate.
     /// </summary>
-    private StringList containsRecipientStrings;
+    private readonly StringList containsRecipientStrings;
 
     /// <summary>
     /// The ContainsSenderStrings predicate.
     /// </summary>
-    private StringList containsSenderStrings;
+    private readonly StringList containsSenderStrings;
 
     /// <summary>
     /// The ContainsSubjectOrBodyStrings predicate.
     /// </summary>
-    private StringList containsSubjectOrBodyStrings;
+    private readonly StringList containsSubjectOrBodyStrings;
 
     /// <summary>
     /// The ContainsSubjectStrings predicate.
     /// </summary>
-    private StringList containsSubjectStrings;
+    private readonly StringList containsSubjectStrings;
 
     /// <summary>
     /// The FlaggedForAction predicate.
@@ -73,12 +73,12 @@ public sealed class RulePredicates : ComplexProperty
     /// <summary>
     /// The FromAddresses predicate.
     /// </summary>
-    private EmailAddressCollection fromAddresses;
+    private readonly EmailAddressCollection fromAddresses;
 
     /// <summary>
     /// The FromConnectedAccounts predicate.
     /// </summary>
-    private StringList fromConnectedAccounts;
+    private readonly StringList fromConnectedAccounts;
 
     /// <summary>
     /// The HasAttachments predicate.
@@ -148,12 +148,12 @@ public sealed class RulePredicates : ComplexProperty
     /// <summary>
     /// ItemClasses predicate.
     /// </summary>
-    private StringList itemClasses;
+    private readonly StringList itemClasses;
 
     /// <summary>
     /// The MessageClassifications predicate.
     /// </summary>
-    private StringList messageClassifications;
+    private readonly StringList messageClassifications;
     
     /// <summary>
     /// The NotSentToMe predicate.
@@ -173,7 +173,7 @@ public sealed class RulePredicates : ComplexProperty
     /// <summary>
     /// The SentToAddresses predicate.
     /// </summary>
-    private EmailAddressCollection sentToAddresses;
+    private readonly EmailAddressCollection sentToAddresses;
 
     /// <summary>
     /// The SentToMe predicate.
@@ -193,12 +193,12 @@ public sealed class RulePredicates : ComplexProperty
     /// <summary>
     /// The Sensitivity predicate.
     /// </summary>
-    private RulePredicateDateRange withinDateRange;
+    private readonly RulePredicateDateRange withinDateRange;
 
     /// <summary>
     /// The Sensitivity predicate.
     /// </summary>
-    private RulePredicateSizeRange withinSizeRange;
+    private readonly RulePredicateSizeRange withinSizeRange;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RulePredicates"/> class.

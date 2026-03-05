@@ -41,7 +41,7 @@ using SchemaTypeList = LazyMember<System.Collections.Generic.List<System.Type>>;
 [EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
 {
-    private static object lockObject = new object();
+    private static readonly object lockObject = new object();
 
     /// <summary>
     /// List of all schema types.
@@ -50,7 +50,7 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     /// If you add a new ServiceObject subclass that has an associated schema, add the schema type
     /// to the list below.
     /// </remarks>
-    private static SchemaTypeList allSchemaTypes = new SchemaTypeList(
+    private static readonly SchemaTypeList allSchemaTypes = new SchemaTypeList(
         delegate()
         {
             List<Type> typeList = new List<Type>();
@@ -93,7 +93,7 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     /// <summary>
     /// Dictionary of all property definitions.
     /// </summary>
-    private static PropertyDefinitionDictionary allSchemaProperties = new PropertyDefinitionDictionary(
+    private static readonly PropertyDefinitionDictionary allSchemaProperties = new PropertyDefinitionDictionary(
         delegate()
         {
             Dictionary<string, PropertyDefinitionBase> propDefDictionary = new Dictionary<string, PropertyDefinitionBase>();
@@ -231,11 +231,11 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
             ExchangeVersion.Exchange2007_SP1,
             delegate() { return new ExtendedPropertyCollection(); });
 
-    private Dictionary<string, PropertyDefinition> properties = new Dictionary<string, PropertyDefinition>();
-    private List<PropertyDefinition> visibleProperties = new List<PropertyDefinition>();
-    private List<PropertyDefinition> firstClassProperties = new List<PropertyDefinition>();
-    private List<PropertyDefinition> firstClassSummaryProperties = new List<PropertyDefinition>();
-    private List<IndexedPropertyDefinition> indexedProperties = new List<IndexedPropertyDefinition>();
+    private readonly Dictionary<string, PropertyDefinition> properties = new Dictionary<string, PropertyDefinition>();
+    private readonly List<PropertyDefinition> visibleProperties = new List<PropertyDefinition>();
+    private readonly List<PropertyDefinition> firstClassProperties = new List<PropertyDefinition>();
+    private readonly List<PropertyDefinition> firstClassSummaryProperties = new List<PropertyDefinition>();
+    private readonly List<IndexedPropertyDefinition> indexedProperties = new List<IndexedPropertyDefinition>();
 
     /// <summary>
     /// Registers a schema property.

@@ -65,17 +65,17 @@ public sealed class Rule : ComplexProperty
     /// <summary>
     /// The rule conditions. 
     /// </summary>
-    private RulePredicates conditions;
+    private readonly RulePredicates conditions;
 
     /// <summary>
     /// The rule actions. 
     /// </summary>
-    private RuleActions actions;
+    private readonly RuleActions actions;
     
     /// <summary>
     /// The rule exceptions. 
     /// </summary>
-    private RulePredicates exceptions;
+    private readonly RulePredicates exceptions;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Rule"/> class.

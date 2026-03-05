@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the view settings in a folder search operation.
@@ -38,7 +36,7 @@ public sealed class SeekToConditionItemView : ViewBase
     private ItemTraversal traversal;
     private SearchFilter condition;
     private OffsetBasePoint offsetBasePoint = OffsetBasePoint.Beginning;
-    private OrderByCollection orderBy = new OrderByCollection();
+    private readonly OrderByCollection orderBy = new OrderByCollection();
     private ServiceObjectType serviceObjType;
 
     /// <summary>

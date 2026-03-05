@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Microsoft.Exchange.WebServices.Data.Misc;
+﻿namespace Microsoft.Exchange.WebServices.Data.Misc;
 
 public static class TimeZoneExtensions
 {

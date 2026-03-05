@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Defines the result of a call to an EWS method. Values in this enumeration have to
 /// be ordered from lowest to highest severity.

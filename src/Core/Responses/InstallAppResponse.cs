@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml;
-
 /// <summary>
 /// Represents the response to a InstallApp operation.
 /// Today this class doesn't add extra functionality. Keep this class here so future

@@ -24,18 +24,13 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the view settings in a folder search operation.
 /// </summary>
 public sealed class ItemView : PagedView
 {
     private ItemTraversal traversal;
-    private OrderByCollection orderBy = new OrderByCollection();
+    private readonly OrderByCollection orderBy = new OrderByCollection();
 
     /// <summary>
     /// Gets the name of the view XML element.

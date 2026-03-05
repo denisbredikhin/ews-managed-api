@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,7 +35,7 @@ using System.Threading.Tasks;
 /// </summary>
 public abstract class Attachment : ComplexProperty
 {
-    private Item owner;
+    private readonly Item owner;
     private string id;
     private string name;
     private string contentType;
@@ -45,7 +44,7 @@ public abstract class Attachment : ComplexProperty
     private int size;
     private DateTime lastModifiedTime;
     private bool isInline;
-    private ExchangeService service;
+    private readonly ExchangeService service;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Attachment"/> class.

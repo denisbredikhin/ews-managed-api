@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// <typeparam name="TComplexProperty">The type of the complex property.</typeparam>
 internal class ContainedPropertyDefinition<TComplexProperty> : ComplexPropertyDefinition<TComplexProperty> where TComplexProperty : ComplexProperty, new()
 {
-    private string containedXmlElementName;
+    private readonly string containedXmlElementName;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ContainedPropertyDefinition&lt;TComplexProperty&gt;"/> class.

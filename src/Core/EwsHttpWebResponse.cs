@@ -41,7 +41,7 @@ internal class EwsHttpWebResponse : IEwsHttpWebResponse
     /// <summary>
     /// Underlying HttpWebRequest.
     /// </summary>
-    private HttpResponseMessage response;
+    private readonly HttpResponseMessage response;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EwsHttpWebResponse"/> class.

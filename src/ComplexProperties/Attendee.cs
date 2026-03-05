@@ -26,9 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 
 /// <summary>
 /// Represents an attendee to a meeting.

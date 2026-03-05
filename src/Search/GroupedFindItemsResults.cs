@@ -25,10 +25,8 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the results of an item search operation.
@@ -44,7 +42,7 @@ public sealed class GroupedFindItemsResults<TItem> : IEnumerable<ItemGroup<TItem
     /// <summary>
     /// List of ItemGroups.
     /// </summary>
-    private Collection<ItemGroup<TItem>> itemGroups = new Collection<ItemGroup<TItem>>();
+    private readonly Collection<ItemGroup<TItem>> itemGroups = new Collection<ItemGroup<TItem>>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GroupedFindItemsResults&lt;TItem&gt;"/> class.

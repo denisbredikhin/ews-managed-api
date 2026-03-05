@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Defines if/how meeting invitations or cancellations should be sent to attendees when an appointment is updated.
 /// </summary>

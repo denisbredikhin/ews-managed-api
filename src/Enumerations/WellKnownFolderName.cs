@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 // The values in this enumeration must match the values of the
 // DistinguishedFolderIdNameType type in the schema.
 

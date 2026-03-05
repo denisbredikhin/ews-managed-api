@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 
 /// <summary>
 /// Represents the response to a GetClientAccessToken operation.

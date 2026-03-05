@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 /// <summary>
 /// Represents the results of an Persona search operation.

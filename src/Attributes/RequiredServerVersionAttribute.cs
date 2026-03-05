@@ -37,7 +37,7 @@ internal sealed class RequiredServerVersionAttribute : Attribute
     /// <summary>
     /// Exchange version.
     /// </summary>
-    private ExchangeVersion version;
+    private readonly ExchangeVersion version;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequiredServerVersionAttribute"/> class.

@@ -24,10 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-
 /// <summary>
 /// 
 /// </summary>
@@ -36,7 +32,7 @@ public sealed class ConversationResponse : ComplexProperty
     /// <summary>
     /// Property set used to fetch items in the conversation.
     /// </summary>
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConversationResponse"/> class.

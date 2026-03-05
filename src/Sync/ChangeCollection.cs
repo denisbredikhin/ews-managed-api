@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents a collection of changes as returned by a synchronization operation.
@@ -36,7 +35,7 @@ using System.Text;
 public sealed class ChangeCollection<TChange> : IEnumerable<TChange>
     where TChange : Change
 {
-    private List<TChange> changes = new List<TChange>();
+    private readonly List<TChange> changes = new List<TChange>();
     private string syncState;
     private bool moreChangesAvailable;
 

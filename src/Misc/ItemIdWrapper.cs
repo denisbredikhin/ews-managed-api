@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents an item Id provided by a ItemId object.
 /// </summary>
@@ -37,7 +32,7 @@ internal class ItemIdWrapper : AbstractItemIdWrapper
     /// <summary>
     /// The ItemId object providing the Id.
     /// </summary>
-    private ItemId itemId;
+    private readonly ItemId itemId;
 
     /// <summary>
     /// Initializes a new instance of ItemIdWrapper.

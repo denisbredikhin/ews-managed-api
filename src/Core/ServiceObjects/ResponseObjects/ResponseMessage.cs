@@ -24,18 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-
 /// <summary>
 /// Represents the base class for e-mail related responses (Reply, Reply all and Forward).
 /// </summary>
 public sealed class ResponseMessage : ResponseObject<EmailMessage>
 {
-    private ResponseMessageType responseType;
+    private readonly ResponseMessageType responseType;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResponseMessage"/> class.

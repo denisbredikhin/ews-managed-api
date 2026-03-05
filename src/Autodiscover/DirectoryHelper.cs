@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Autodiscover;
 
 using Microsoft.Exchange.WebServices.Data;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.ActiveDirectory;
@@ -66,7 +65,7 @@ internal class DirectoryHelper
 
     #region Private members
 
-    private ExchangeServiceBase service;
+    private readonly ExchangeServiceBase service;
 
     #endregion
 

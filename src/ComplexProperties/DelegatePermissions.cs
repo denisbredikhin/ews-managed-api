@@ -33,7 +33,7 @@ using System.Linq;
 /// </summary>
 public sealed class DelegatePermissions : ComplexProperty
 {
-    private Dictionary<string, DelegateFolderPermission> delegateFolderPermissions;
+    private readonly Dictionary<string, DelegateFolderPermission> delegateFolderPermissions;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DelegatePermissions"/> class.

@@ -42,7 +42,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <summary>
     /// connection lifetime, in minutes
     /// </summary>
-    private int connectionTimeout;
+    private readonly int connectionTimeout;
 
     /// <summary>
     /// ExchangeService instance used to make the EWS call.
@@ -62,7 +62,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <summary>
     /// Lock object
     /// </summary>
-    private object lockObject = new object();
+    private readonly object lockObject = new object();
 
     /// <summary>
     /// Represents a delegate that is invoked when notifications are received from the server

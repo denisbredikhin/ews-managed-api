@@ -79,9 +79,9 @@ internal abstract class ServiceRequestBase
     /// <summary>
     /// Maintains the collection of client side statistics for requests already completed
     /// </summary>
-    private static List<string> clientStatisticsCache = new List<string>();
+    private static readonly List<string> clientStatisticsCache = new List<string>();
 
-    private ExchangeService service;
+    private readonly ExchangeService service;
 
     /// <summary>
     /// Gets the response stream (may be wrapped with GZip/Deflate stream to decompress content)

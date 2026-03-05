@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Net;
 
 /// <summary>
 /// Defines a factory interface for creating IEwsHttpWebRequest and IEwsHttpWebResponse instances.

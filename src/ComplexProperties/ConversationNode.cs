@@ -26,14 +26,13 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 /// <summary>
 /// Represents the response to a GetConversationItems operation.
 /// </summary>
 public sealed class ConversationNode : ComplexProperty
 {
-    private PropertySet propertySet;
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConversationNode"/> class.

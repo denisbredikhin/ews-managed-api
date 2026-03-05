@@ -24,13 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.IO;
-using Microsoft.Exchange.WebServices.Data.Enumerations;
-
 /// <summary>
 /// Represents the results of a GetUserPhoto operation.
 /// </summary>

@@ -23,7 +23,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System;
 using System.Runtime.InteropServices;
 
 // CLS Compliant

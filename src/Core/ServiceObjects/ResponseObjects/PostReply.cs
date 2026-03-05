@@ -27,7 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,7 +36,7 @@ using System.Threading.Tasks;
 [ServiceObjectDefinition(XmlElementNames.PostReplyItem, ReturnedByServer = false)]
 public sealed class PostReply : ServiceObject
 {
-    private Item referenceItem;
+    private readonly Item referenceItem;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PostReply"/> class.

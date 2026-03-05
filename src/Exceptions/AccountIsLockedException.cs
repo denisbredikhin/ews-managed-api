@@ -25,8 +25,7 @@
 
  namespace Microsoft.Exchange.WebServices.Data;
 
-	using System;
-	using System.Runtime.Serialization;
+using System;
 
 /// <summary>
 /// Represents an error that occurs when the account that is being accessed is locked and requires user interaction to be unlocked.

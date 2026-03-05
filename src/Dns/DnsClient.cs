@@ -43,7 +43,7 @@ internal class DnsClient
     /// <summary>
     /// Map type of DnsRecord to DnsRecordType.
     /// </summary>
-    private static LazyMember<Dictionary<Type, DnsRecordType>> typeToDnsTypeMap = new LazyMember<Dictionary<Type, DnsRecordType>>(
+    private static readonly LazyMember<Dictionary<Type, DnsRecordType>> typeToDnsTypeMap = new LazyMember<Dictionary<Type, DnsRecordType>>(
         delegate()
         {
             Dictionary<Type, DnsRecordType> result = new Dictionary<Type, DnsRecordType>();

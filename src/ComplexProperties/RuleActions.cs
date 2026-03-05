@@ -40,7 +40,7 @@ public sealed class RuleActions : ComplexProperty
     /// <summary>
     /// The AssignCategories action.
     /// </summary>
-    private StringList assignCategories;
+    private readonly StringList assignCategories;
 
     /// <summary>
     /// The CopyToFolder action.
@@ -55,12 +55,12 @@ public sealed class RuleActions : ComplexProperty
     /// <summary>
     /// The ForwardAsAttachmentToRecipients action.
     /// </summary>
-    private EmailAddressCollection forwardAsAttachmentToRecipients;
+    private readonly EmailAddressCollection forwardAsAttachmentToRecipients;
 
     /// <summary>
     /// The ForwardToRecipients action.
     /// </summary>
-    private EmailAddressCollection forwardToRecipients;
+    private readonly EmailAddressCollection forwardToRecipients;
 
     /// <summary>
     /// The MarkImportance action.
@@ -85,7 +85,7 @@ public sealed class RuleActions : ComplexProperty
     /// <summary>
     /// The RedirectToRecipients action.
     /// </summary>
-    private EmailAddressCollection redirectToRecipients;
+    private readonly EmailAddressCollection redirectToRecipients;
 
     /// <summary>
     /// The SendSMSAlertToRecipients action.

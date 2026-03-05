@@ -26,9 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using Misc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the base class for all time zone transitions.
@@ -38,7 +35,7 @@ internal class TimeZoneTransition : ComplexProperty
     private const string PeriodTarget = "Period";
     private const string GroupTarget = "Group";
 
-    private TimeZoneDefinition timeZoneDefinition;
+    private readonly TimeZoneDefinition timeZoneDefinition;
     private TimeZonePeriod targetPeriod;
     private TimeZoneTransitionGroup targetGroup;
 

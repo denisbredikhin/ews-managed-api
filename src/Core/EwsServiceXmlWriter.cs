@@ -45,11 +45,11 @@ internal class EwsServiceXmlWriter : IDisposable
     /// <summary>
     /// UTF-8 encoding that does not create leading Byte order marks
     /// </summary>
-    private static Encoding utf8Encoding = new UTF8Encoding(false);
+    private static readonly Encoding utf8Encoding = new UTF8Encoding(false);
 
     private bool isDisposed;
-    private ExchangeServiceBase service;
-    private XmlWriter xmlWriter;
+    private readonly ExchangeServiceBase service;
+    private readonly XmlWriter xmlWriter;
     private bool isTimeZoneHeaderEmitted;
     private bool requireWSSecurityUtilityNamespace;
 

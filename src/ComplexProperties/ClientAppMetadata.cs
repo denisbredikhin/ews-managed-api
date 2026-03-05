@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.IO;
-using System.Xml;
-
 /// <summary>
 /// Represents a ClientAppMetadata object.
 /// </summary>

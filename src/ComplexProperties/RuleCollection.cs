@@ -28,7 +28,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
 
 /// <summary>
 /// Represents a collection of rules.
@@ -43,7 +42,7 @@ public sealed class RuleCollection : ComplexProperty, IEnumerable<Rule>
     /// <summary>
     /// The rules in the rule collection.
     /// </summary>
-    private List<Rule> rules;
+    private readonly List<Rule> rules;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RuleCollection"/> class.

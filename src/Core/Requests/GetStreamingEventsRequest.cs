@@ -35,8 +35,8 @@ internal class GetStreamingEventsRequest : HangingServiceRequestBase
     internal const int HeartbeatFrequencyDefault = 45000; ////45s in ms
     private static int heartbeatFrequency = HeartbeatFrequencyDefault;
 
-    private IEnumerable<string> subscriptionIds;
-    private int connectionTimeout;
+    private readonly IEnumerable<string> subscriptionIds;
+    private readonly int connectionTimeout;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetStreamingEventsRequest"/> class.

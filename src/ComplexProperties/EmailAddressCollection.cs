@@ -36,7 +36,7 @@ public sealed class EmailAddressCollection : ComplexPropertyCollection<EmailAddr
     /// <summary>
     /// XML element name
     /// </summary>
-    private string collectionItemXmlElementName;
+    private readonly string collectionItemXmlElementName;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmailAddressCollection"/> class.

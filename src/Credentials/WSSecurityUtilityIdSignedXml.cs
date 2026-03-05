@@ -38,10 +38,10 @@ using System.Xml;
 internal class WSSecurityUtilityIdSignedXml : SignedXml
 {
     private static long nextId = 0;
-    private static string commonPrefix = "uuid-" + Guid.NewGuid().ToString() + "-";
+    private static readonly string commonPrefix = "uuid-" + Guid.NewGuid().ToString() + "-";
 
-    private XmlDocument document;
-    private Dictionary<string, XmlElement> ids;
+    private readonly XmlDocument document;
+    private readonly Dictionary<string, XmlElement> ids;
 
     /// <summary>
     /// Initializes a new instance of the WSSecurityUtilityIdSignedXml class from the specified XML document. 

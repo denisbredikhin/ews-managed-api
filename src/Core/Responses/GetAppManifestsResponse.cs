@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Xml;
 
 /// <summary>
@@ -37,12 +36,12 @@ internal sealed class GetAppManifestsResponse : ServiceResponse
     /// <summary>
     /// List of manifests returned in the response.
     /// </summary>
-    private Collection<XmlDocument> manifests = new Collection<XmlDocument>();
+    private readonly Collection<XmlDocument> manifests = new Collection<XmlDocument>();
 
     /// <summary>
     /// List of extensions returned in the response.
     /// </summary>
-    private Collection<ClientApp> apps = new Collection<ClientApp>();
+    private readonly Collection<ClientApp> apps = new Collection<ClientApp>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetAppManifestsResponse"/> class.

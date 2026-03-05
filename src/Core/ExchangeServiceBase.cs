@@ -30,7 +30,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 #if NETSTANDARD2_0
 using System.Runtime.InteropServices;
@@ -64,7 +63,7 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// Default UserAgent
     /// </summary>
-    private static string defaultUserAgent = "ExchangeServicesClient/" + EwsUtilities.BuildVersion;
+    private static readonly string defaultUserAgent = "ExchangeServicesClient/" + EwsUtilities.BuildVersion;
 
     #endregion
 
@@ -90,12 +89,12 @@ public abstract class ExchangeServiceBase
     private string clientRequestId;
     private bool returnClientRequestId;
     private CookieContainer cookieContainer = new CookieContainer();
-    private TimeZoneInfo timeZone;
+    private readonly TimeZoneInfo timeZone;
     private TimeZoneDefinition timeZoneDefinition;
     private ExchangeServerInfo serverInfo;
     private IWebProxy webProxy;
-    private IDictionary<string, string> httpHeaders = new Dictionary<string, string>();
-    private IDictionary<string, string> httpResponseHeaders = new Dictionary<string, string>();
+    private readonly IDictionary<string, string> httpHeaders = new Dictionary<string, string>();
+    private readonly IDictionary<string, string> httpResponseHeaders = new Dictionary<string, string>();
     private IEwsHttpWebRequestFactory ewsHttpWebRequestFactory = new EwsHttpWebRequestFactory();  
     #endregion
 

@@ -38,7 +38,7 @@ internal class SafeXmlFactory
     /// <summary>
     /// Safe xml reader settings.
     /// </summary>
-    private static XmlReaderSettings defaultSettings = new XmlReaderSettings()
+    private static readonly XmlReaderSettings defaultSettings = new XmlReaderSettings()
     {
         Async = true,
         DtdProcessing = DtdProcessing.Prohibit,

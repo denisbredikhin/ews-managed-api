@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 /// <summary>
 /// Represents the base response class for synchronuization operations.
@@ -40,8 +37,8 @@ public abstract class SyncResponse<TServiceObject, TChange> : ServiceResponse
     where TServiceObject : ServiceObject
     where TChange : Change
 {
-    private ChangeCollection<TChange> changes = new ChangeCollection<TChange>();
-    private PropertySet propertySet;
+    private readonly ChangeCollection<TChange> changes = new ChangeCollection<TChange>();
+    private readonly PropertySet propertySet;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SyncResponse&lt;TServiceObject, TChange&gt;"/> class.

@@ -36,9 +36,9 @@ using System.Threading.Tasks;
 /// </summary>
 public abstract class ServiceObject
 {
-    private object lockObject = new object();
+    private readonly object lockObject = new object();
     private ExchangeService service;
-    private PropertyBag propertyBag;
+    private readonly PropertyBag propertyBag;
     private string xmlElementName;
 
     /// <summary>

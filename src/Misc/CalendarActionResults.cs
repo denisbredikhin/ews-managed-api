@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the results of an action performed on a calendar item or meeting message,
@@ -35,10 +33,10 @@ using System.Text;
 /// </summary>
 public sealed class CalendarActionResults
 {
-    private Appointment appointment;
-    private MeetingRequest meetingRequest;
-    private MeetingResponse meetingResponse;
-    private MeetingCancellation meetingCancellation;
+    private readonly Appointment appointment;
+    private readonly MeetingRequest meetingRequest;
+    private readonly MeetingResponse meetingResponse;
+    private readonly MeetingCancellation meetingCancellation;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CalendarActionResults"/> class.

@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.IO;
 
 /// <summary>
 /// Represents an MeetingSuggestion object.

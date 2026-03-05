@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to a subscription event retrieval operation.
 /// </summary>
 internal sealed class GetEventsResponse : ServiceResponse
 {
-    private GetEventsResults results = new GetEventsResults();
+    private readonly GetEventsResults results = new GetEventsResults();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetEventsResponse"/> class.

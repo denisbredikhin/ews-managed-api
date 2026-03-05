@@ -24,10 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System.Collections.Generic;
-using System.Xml;
-
 /// <summary>
 /// Represents the MeetingInsightValue.
 /// </summary>

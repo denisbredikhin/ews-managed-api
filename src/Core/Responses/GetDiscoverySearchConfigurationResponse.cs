@@ -25,16 +25,14 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents the GetDiscoverySearchConfiguration response.
 /// </summary>
 public sealed class GetDiscoverySearchConfigurationResponse : ServiceResponse
 {
-    List<DiscoverySearchConfiguration> configurations = new List<DiscoverySearchConfiguration>();
+    readonly List<DiscoverySearchConfiguration> configurations = new List<DiscoverySearchConfiguration>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDiscoverySearchConfigurationResponse"/> class.

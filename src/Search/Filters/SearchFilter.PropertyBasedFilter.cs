@@ -25,10 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 /// <content>
 /// Contains nested type SearchFilter.PropertyBasedFilter.

@@ -28,7 +28,6 @@ namespace Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Xml;
 
 /// <summary>
@@ -39,7 +38,7 @@ using System.Xml;
 public sealed class ItemCollection<TItem> : ComplexProperty, IEnumerable<TItem>
     where TItem : Item
 {
-    private List<TItem> items = new List<TItem>();
+    private readonly List<TItem> items = new List<TItem>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ItemCollection&lt;TItem&gt;"/> class.

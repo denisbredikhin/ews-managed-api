@@ -33,7 +33,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal class GetServerTimeZonesResponse : ServiceResponse
 {
-    private Collection<TimeZoneInfo> timeZones = new Collection<TimeZoneInfo>();
+    private readonly Collection<TimeZoneInfo> timeZones = new Collection<TimeZoneInfo>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetServerTimeZonesResponse"/> class.

@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Text;
-using System.Xml;
 
 /// <summary>
 /// Represents retention policy tag object.

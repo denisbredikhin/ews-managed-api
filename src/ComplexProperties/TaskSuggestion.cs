@@ -24,10 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.IO;
-
 /// <summary>
 /// Represents an TaskSuggestion object.
 /// </summary>

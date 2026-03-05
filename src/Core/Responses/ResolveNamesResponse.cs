@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents the response to a name resolution operation.
 /// </summary>
 internal sealed class ResolveNamesResponse : ServiceResponse
 {
-    private NameResolutionCollection resolutions;
+    private readonly NameResolutionCollection resolutions;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ResolveNamesResponse"/> class.

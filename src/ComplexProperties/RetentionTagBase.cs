@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Text;
 
 /// <summary>
 /// Represents the retention tag of an item.

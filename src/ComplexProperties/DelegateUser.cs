@@ -24,18 +24,13 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a delegate user.
 /// </summary>
 public sealed class DelegateUser : ComplexProperty
 {
     private UserId userId = new UserId();
-    private DelegatePermissions permissions = new DelegatePermissions();
+    private readonly DelegatePermissions permissions = new DelegatePermissions();
     private bool receiveCopiesOfMeetingMessages;
     private bool viewPrivateItems;
 

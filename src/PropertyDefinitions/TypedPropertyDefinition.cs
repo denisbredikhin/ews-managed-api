@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal abstract class TypedPropertyDefinition : PropertyDefinition
 {
-    private bool isNullable;
+    private readonly bool isNullable;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TypedPropertyDefinition"/> class.

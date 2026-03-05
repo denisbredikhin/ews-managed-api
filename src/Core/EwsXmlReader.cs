@@ -26,10 +26,8 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Xml;
 
@@ -43,7 +41,7 @@ internal class EwsXmlReader
     #region Private members
 
     private XmlNodeType prevNodeType = XmlNodeType.None;
-    private XmlReader xmlReader;
+    private readonly XmlReader xmlReader;
 
     #endregion
 

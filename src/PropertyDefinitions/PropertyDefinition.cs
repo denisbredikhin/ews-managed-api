@@ -32,10 +32,10 @@ using System.Collections.Generic;
 /// </summary>
 public abstract class PropertyDefinition : ServiceObjectPropertyDefinition
 {
-    private string xmlElementName;
-    private PropertyDefinitionFlags flags;
+    private readonly string xmlElementName;
+    private readonly PropertyDefinitionFlags flags;
     private string name;
-    private ExchangeVersion version;
+    private readonly ExchangeVersion version;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PropertyDefinition"/> class.

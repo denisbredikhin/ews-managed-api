@@ -35,7 +35,7 @@ public sealed class IndexedPropertyDefinition : ServiceObjectPropertyDefinition
     /// <summary>
     /// Index attribute of IndexedFieldURI element.
     /// </summary>
-    private string index;
+    private readonly string index;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="IndexedPropertyDefinition"/> class.

@@ -38,7 +38,7 @@ internal sealed class EwsEnumAttribute : Attribute
     /// <summary>
     /// The name for the enum value used in the server protocol
     /// </summary>
-    private string schemaName;
+    private readonly string schemaName;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EwsEnumAttribute"/> class.

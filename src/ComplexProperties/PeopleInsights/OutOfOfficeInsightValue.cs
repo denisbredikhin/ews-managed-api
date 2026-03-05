@@ -26,9 +26,7 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Xml;
 
 /// <summary>
 /// Represents the OutOfOfficeInsightValue.

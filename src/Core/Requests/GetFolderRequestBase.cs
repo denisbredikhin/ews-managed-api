@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents an abstract GetFolder request.
 /// </summary>
@@ -36,7 +31,7 @@ using System.Text;
 internal abstract class GetFolderRequestBase<TResponse> : GetRequest<Folder, TResponse>
     where TResponse : ServiceResponse
 {
-    private FolderIdWrapperList folderIds = new FolderIdWrapperList();
+    private readonly FolderIdWrapperList folderIds = new FolderIdWrapperList();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetFolderRequestBase&lt;TResponse&gt;"/> class.

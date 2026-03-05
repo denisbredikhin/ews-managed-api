@@ -41,7 +41,7 @@ internal delegate TComplexProperty CreateComplexPropertyDelegate<TComplexPropert
 internal class ComplexPropertyDefinition<TComplexProperty> : ComplexPropertyDefinitionBase
     where TComplexProperty : ComplexProperty
 {
-    private CreateComplexPropertyDelegate<TComplexProperty> propertyCreationDelegate;
+    private readonly CreateComplexPropertyDelegate<TComplexProperty> propertyCreationDelegate;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ComplexPropertyDefinition&lt;TComplexProperty&gt;"/> class.

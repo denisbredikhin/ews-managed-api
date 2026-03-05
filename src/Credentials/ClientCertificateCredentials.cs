@@ -25,7 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System.Net;
 using System.Security.Cryptography.X509Certificates;
 
 /// <summary>
@@ -36,7 +35,7 @@ public sealed class ClientCertificateCredentials : ExchangeCredentials
     /// <summary>
     /// Collection of client certificates.
     /// </summary>
-    private X509CertificateCollection clientCertificates;
+    private readonly X509CertificateCollection clientCertificates;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientCertificateCredentials"/> class.

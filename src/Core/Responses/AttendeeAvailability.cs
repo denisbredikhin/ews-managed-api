@@ -26,17 +26,15 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 /// <summary>
 /// Represents the availability of an individual attendee.
 /// </summary>
 public sealed class AttendeeAvailability : ServiceResponse
 {
-    private Collection<CalendarEvent> calendarEvents = new Collection<CalendarEvent>();
-    private Collection<LegacyFreeBusyStatus> mergedFreeBusyStatus = new Collection<LegacyFreeBusyStatus>();
+    private readonly Collection<CalendarEvent> calendarEvents = new Collection<CalendarEvent>();
+    private readonly Collection<LegacyFreeBusyStatus> mergedFreeBusyStatus = new Collection<LegacyFreeBusyStatus>();
     private FreeBusyViewType viewType;
     private WorkingHours workingHours;
 

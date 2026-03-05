@@ -28,11 +28,8 @@ namespace Microsoft.Exchange.WebServices.Autodiscover;
 using Microsoft.Exchange.WebServices.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.Versioning;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 
 /// <summary>
 /// Represents a GetDomainSettings request.

@@ -25,11 +25,8 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Net;
 using System.Net.Http.Headers;
 
 /// <summary>
@@ -40,8 +37,8 @@ public class ServiceResponse
     private ServiceResult result;
     private ServiceError errorCode;
     private string errorMessage;
-    private Dictionary<string, string> errorDetails = new Dictionary<string, string>();
-    private Collection<PropertyDefinitionBase> errorProperties = new Collection<PropertyDefinitionBase>();
+    private readonly Dictionary<string, string> errorDetails = new Dictionary<string, string>();
+    private readonly Collection<PropertyDefinitionBase> errorProperties = new Collection<PropertyDefinitionBase>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ServiceResponse"/> class.

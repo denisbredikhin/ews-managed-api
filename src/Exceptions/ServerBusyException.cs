@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-	using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents a server busy exception found in a service response.

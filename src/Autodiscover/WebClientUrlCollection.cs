@@ -34,7 +34,7 @@ using Microsoft.Exchange.WebServices.Data;
 /// </summary>
 public sealed class WebClientUrlCollection
 {
-    private List<WebClientUrl> urls;
+    private readonly List<WebClientUrl> urls;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebClientUrlCollection"/> class.

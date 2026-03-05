@@ -23,9 +23,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace Microsoft.Exchange.WebServices.Data;
 
 /// <summary>

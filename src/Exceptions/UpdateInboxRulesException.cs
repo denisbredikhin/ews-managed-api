@@ -25,9 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data;
 
-using System;
 using System.Collections.Generic;
-	using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents an exception thrown when an error occurs as a result of calling 

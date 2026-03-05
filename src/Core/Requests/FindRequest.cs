@@ -26,8 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 /// <summary>
 /// Represents an abstract Find request.
@@ -36,7 +34,7 @@ using System.Text;
 internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TResponse>
     where TResponse : ServiceResponse
 {
-    private FolderIdWrapperList parentFolderIds = new FolderIdWrapperList();
+    private readonly FolderIdWrapperList parentFolderIds = new FolderIdWrapperList();
     private SearchFilter searchFilter;
     private string queryString;
     private bool returnHighlightTerms;

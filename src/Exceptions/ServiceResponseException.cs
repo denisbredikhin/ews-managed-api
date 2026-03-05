@@ -24,10 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-	using System.Runtime.Serialization;
-
 /// <summary>
 /// Represents a remote service exception that has a single response.
 /// </summary>

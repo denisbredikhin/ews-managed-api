@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a property definition for a service object.
 /// </summary>
 public abstract class ServiceObjectPropertyDefinition : PropertyDefinitionBase
 {
-    private string uri;
+    private readonly string uri;
 
     /// <summary>
     /// Gets the name of the XML element.

@@ -24,11 +24,6 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents a ArchiveItem request.
 /// </summary>
@@ -42,7 +37,7 @@ internal class ArchiveItemRequest : MultiResponseServiceRequest<ArchiveItemRespo
     /// <summary>
     /// Items
     /// </summary>
-    private ItemIdWrapperList ids = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList ids = new ItemIdWrapperList();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ArchiveItemRequest"/> class.

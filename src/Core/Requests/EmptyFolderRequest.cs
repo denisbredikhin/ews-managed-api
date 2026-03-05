@@ -24,17 +24,12 @@
  */
 
 namespace Microsoft.Exchange.WebServices.Data;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 /// <summary>
 /// Represents an EmptyFolder request.
 /// </summary>
 internal sealed class EmptyFolderRequest : DeleteRequest<ServiceResponse>
 {
-    private FolderIdWrapperList folderIds = new FolderIdWrapperList();
+    private readonly FolderIdWrapperList folderIds = new FolderIdWrapperList();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmptyFolderRequest"/> class.

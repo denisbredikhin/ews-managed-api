@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 public sealed class DelegateUserResponse : ServiceResponse
 {
-    private bool readDelegateUser;
+    private readonly bool readDelegateUser;
     private DelegateUser delegateUser;
 
     /// <summary>
