@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents an error that occurs when a date and time cannot be converted from one time zone
@@ -59,15 +58,5 @@ public class TimeZoneConversionException : ServiceLocalException
     public TimeZoneConversionException(string message, Exception innerException)
         : base(message, innerException)
     {
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.TimeZoneConversionException"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		protected TimeZoneConversionException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-	    {
-		}
-	}
+    }
+}

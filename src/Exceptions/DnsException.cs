@@ -42,13 +42,4 @@ internal class DnsException : Win32Exception
     {
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.DnsException"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		protected DnsException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
 	}

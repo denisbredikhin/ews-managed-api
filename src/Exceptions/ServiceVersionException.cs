@@ -26,7 +26,6 @@
 namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
-using System.Runtime.Serialization;
 
 /// <summary>
 /// Represents an error that occurs when a request cannot be handled due to a service version mismatch.
@@ -58,15 +57,5 @@ public sealed class ServiceVersionException : ServiceLocalException
     public ServiceVersionException(string message, Exception innerException)
         : base(message, innerException)
     {
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.ServiceVersionException"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		private ServiceVersionException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-	    {
-		}
-	}
+    }
+}
