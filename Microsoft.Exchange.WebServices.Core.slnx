@@ -10,4 +10,5 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="src\Microsoft.Exchange.WebServices.Core.csproj" />
+  <Project Path="tests\Microsoft.Exchange.WebServices.Core.UnitTests\Microsoft.Exchange.WebServices.Core.UnitTests.csproj" />
 </Solution>
