@@ -23,45 +23,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// Definition for MarkAsJunkResponse
+/// </summary>
+public class MarkAsJunkResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetItemResponse"/> class.
+    /// </summary>
+    internal MarkAsJunkResponse() : base()
+    {
+    }
 
     /// <summary>
-    /// Definition for MarkAsJunkResponse
+    /// Reads response elements from XML.
     /// </summary>
-    public class MarkAsJunkResponse : ServiceResponse
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetItemResponse"/> class.
-        /// </summary>
-        internal MarkAsJunkResponse() : base()
+        base.ReadElementsFromXml(reader);
+
+        reader.Read();
+
+        if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.MovedItemId))
         {
+            this.MovedItemId = new ItemId();
+            this.MovedItemId.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.MovedItemId);
+
+            reader.ReadEndElementIfNecessary(XmlNamespace.Messages, XmlElementNames.MovedItemId);
         }
-
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
-
-            reader.Read();
-
-            if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.MovedItemId))
-            {
-                this.MovedItemId = new ItemId();
-                this.MovedItemId.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.MovedItemId);
-
-                reader.ReadEndElementIfNecessary(XmlNamespace.Messages, XmlElementNames.MovedItemId);
-            }
-        }
-
-        /// <summary>
-        /// Gets the moved item id.
-        /// </summary>
-        public ItemId MovedItemId { get; private set; }
     }
+
+    /// <summary>
+    /// Gets the moved item id.
+    /// </summary>
+    public ItemId MovedItemId { get; private set; }
 }

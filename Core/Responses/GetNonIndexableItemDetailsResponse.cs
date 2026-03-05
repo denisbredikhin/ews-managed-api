@@ -23,43 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the GetNonIndexableItemDetails response.
+/// </summary>
+public sealed class GetNonIndexableItemDetailsResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetNonIndexableItemDetailsResponse"/> class.
+    /// </summary>
+    internal GetNonIndexableItemDetailsResponse()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents the GetNonIndexableItemDetails response.
+    /// Reads response elements from XML.
     /// </summary>
-    public sealed class GetNonIndexableItemDetailsResponse : ServiceResponse
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetNonIndexableItemDetailsResponse"/> class.
-        /// </summary>
-        internal GetNonIndexableItemDetailsResponse()
-            : base()
-        {
-        }
+        base.ReadElementsFromXml(reader);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
+        this.NonIndexableItemsResult = NonIndexableItemDetailsResult.LoadFromXml(reader);
+    }
 
-            this.NonIndexableItemsResult = NonIndexableItemDetailsResult.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Non indexable item result
-        /// </summary>
-        public NonIndexableItemDetailsResult NonIndexableItemsResult
-        {
-            get;
-            internal set;
-        }
+    /// <summary>
+    /// Non indexable item result
+    /// </summary>
+    public NonIndexableItemDetailsResult NonIndexableItemsResult
+    {
+        get;
+        internal set;
     }
 }

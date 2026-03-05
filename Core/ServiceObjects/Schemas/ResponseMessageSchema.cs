@@ -23,39 +23,38 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents ResponseMessage schema definition.
+/// </summary>
+internal class ResponseMessageSchema : ServiceObjectSchema
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    // This must be declared after the property definitions
+    internal static readonly ResponseMessageSchema Instance = new ResponseMessageSchema();
 
     /// <summary>
-    /// Represents ResponseMessage schema definition.
+    /// Registers properties.
     /// </summary>
-    internal class ResponseMessageSchema : ServiceObjectSchema
+    /// <remarks>
+    /// IMPORTANT NOTE: PROPERTIES MUST BE REGISTERED IN SCHEMA ORDER (i.e. the same order as they are defined in types.xsd)
+    /// </remarks>
+    internal override void RegisterProperties()
     {
-        // This must be declared after the property definitions
-        internal static readonly ResponseMessageSchema Instance = new ResponseMessageSchema();
+        base.RegisterProperties();
 
-        /// <summary>
-        /// Registers properties.
-        /// </summary>
-        /// <remarks>
-        /// IMPORTANT NOTE: PROPERTIES MUST BE REGISTERED IN SCHEMA ORDER (i.e. the same order as they are defined in types.xsd)
-        /// </remarks>
-        internal override void RegisterProperties()
-        {
-            base.RegisterProperties();
-
-            this.RegisterProperty(ItemSchema.Subject);
-            this.RegisterProperty(ItemSchema.Body);
-            this.RegisterProperty(EmailMessageSchema.ToRecipients);
-            this.RegisterProperty(EmailMessageSchema.CcRecipients);
-            this.RegisterProperty(EmailMessageSchema.BccRecipients);
-            this.RegisterProperty(EmailMessageSchema.IsReadReceiptRequested);
-            this.RegisterProperty(EmailMessageSchema.IsDeliveryReceiptRequested);
-            this.RegisterProperty(ResponseObjectSchema.ReferenceItemId);
-            this.RegisterProperty(ResponseObjectSchema.BodyPrefix);
-        }
+        this.RegisterProperty(ItemSchema.Subject);
+        this.RegisterProperty(ItemSchema.Body);
+        this.RegisterProperty(EmailMessageSchema.ToRecipients);
+        this.RegisterProperty(EmailMessageSchema.CcRecipients);
+        this.RegisterProperty(EmailMessageSchema.BccRecipients);
+        this.RegisterProperty(EmailMessageSchema.IsReadReceiptRequested);
+        this.RegisterProperty(EmailMessageSchema.IsDeliveryReceiptRequested);
+        this.RegisterProperty(ResponseObjectSchema.ReferenceItemId);
+        this.RegisterProperty(ResponseObjectSchema.BodyPrefix);
     }
 }

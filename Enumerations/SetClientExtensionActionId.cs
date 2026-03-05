@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the type of SetClientExtensionActionId.
+/// </summary>
+public enum SetClientExtensionActionId
 {
     /// <summary>
-    /// Defines the type of SetClientExtensionActionId.
+    /// Install
     /// </summary>
-    public enum SetClientExtensionActionId
-    {
-        /// <summary>
-        /// Install
-        /// </summary>
-        Install,
+    Install,
 
-        /// <summary>
-        /// Uninstall
-        /// </summary>
-        Uninstall,
-            
-        /// <summary>
-        /// Configure
-        /// </summary>
-        Configure,
-    }
+    /// <summary>
+    /// Uninstall
+    /// </summary>
+    Uninstall,
+        
+    /// <summary>
+    /// Configure
+    /// </summary>
+    Configure,
 }

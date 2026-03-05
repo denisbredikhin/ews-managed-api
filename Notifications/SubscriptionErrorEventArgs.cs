@@ -23,45 +23,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// 
+/// Provides data to a StreamingSubscriptionConnection's OnSubscriptionError and OnDisconnect events.
+/// </summary>
+public class SubscriptionErrorEventArgs : EventArgs
 {
-    using System;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SubscriptionErrorEventArgs"/> class.
+    /// </summary>
+    /// <param name="subscription">The subscription for which an error occurred. If subscription is null, the error applies to the entire connection.</param>
+    /// <param name="exception">The exception representing the error. If exception is null, the connection was cleanly closed by the server.</param>
+    internal SubscriptionErrorEventArgs(
+        StreamingSubscription subscription,
+        Exception exception)
+    {
+        this.Subscription = subscription;
+        this.Exception = exception;
+    }
 
     /// <summary>
-    /// 
-    /// Provides data to a StreamingSubscriptionConnection's OnSubscriptionError and OnDisconnect events.
+    /// Gets the subscription for which an error occurred. If Subscription is null, the error applies to the entire connection.
     /// </summary>
-    public class SubscriptionErrorEventArgs : EventArgs
+    public StreamingSubscription Subscription
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SubscriptionErrorEventArgs"/> class.
-        /// </summary>
-        /// <param name="subscription">The subscription for which an error occurred. If subscription is null, the error applies to the entire connection.</param>
-        /// <param name="exception">The exception representing the error. If exception is null, the connection was cleanly closed by the server.</param>
-        internal SubscriptionErrorEventArgs(
-            StreamingSubscription subscription,
-            Exception exception)
-        {
-            this.Subscription = subscription;
-            this.Exception = exception;
-        }
+        get;
+        internal set;
+    }
 
-        /// <summary>
-        /// Gets the subscription for which an error occurred. If Subscription is null, the error applies to the entire connection.
-        /// </summary>
-        public StreamingSubscription Subscription
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the exception representing the error. If Exception is null, the connection was cleanly closed by the server.
-        /// </summary>
-        public Exception Exception
-        {
-            get;
-            internal set;
-        }
+    /// <summary>
+    /// Gets the exception representing the error. If Exception is null, the connection was cleanly closed by the server.
+    /// </summary>
+    public Exception Exception
+    {
+        get;
+        internal set;
     }
 }

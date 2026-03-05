@@ -23,58 +23,57 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a pull subscription.
+/// </summary>
+public sealed class PullSubscription : SubscriptionBase
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private bool? moreEventsAvailable;
 
     /// <summary>
-    /// Represents a pull subscription.
+    /// Initializes a new instance of the <see cref="PullSubscription"/> class.
     /// </summary>
-    public sealed class PullSubscription : SubscriptionBase
+    /// <param name="service">The service.</param>
+    internal PullSubscription(ExchangeService service)
+        : base(service)
     {
-        private bool? moreEventsAvailable;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PullSubscription"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal PullSubscription(ExchangeService service)
-            : base(service)
-        {
-        }
+    /// <summary>
+    /// Obtains a collection of events that occurred on the subscribed folders since the point
+    /// in time defined by the Watermark property. When GetEvents succeeds, Watermark is updated.
+    /// </summary>
+    /// <returns>Returns a collection of events that occurred since the last watermark.</returns>
+    public async Task<GetEventsResults> GetEvents(CancellationToken token = default(CancellationToken))
+    {
+        GetEventsResults results = await this.Service.GetEvents(this.Id, this.Watermark, token);
 
-        /// <summary>
-        /// Obtains a collection of events that occurred on the subscribed folders since the point
-        /// in time defined by the Watermark property. When GetEvents succeeds, Watermark is updated.
-        /// </summary>
-        /// <returns>Returns a collection of events that occurred since the last watermark.</returns>
-        public async Task<GetEventsResults> GetEvents(CancellationToken token = default(CancellationToken))
-        {
-            GetEventsResults results = await this.Service.GetEvents(this.Id, this.Watermark, token);
+        this.Watermark = results.NewWatermark;
+        this.moreEventsAvailable = results.MoreEventsAvailable;
 
-            this.Watermark = results.NewWatermark;
-            this.moreEventsAvailable = results.MoreEventsAvailable;
+        return results;
+    }
 
-            return results;
-        }
+    /// <summary>
+    /// Unsubscribes from the pull subscription.
+    /// </summary>
+    public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default(CancellationToken))
+    {
+        return this.Service.Unsubscribe(this.Id, token);
+    }
 
-        /// <summary>
-        /// Unsubscribes from the pull subscription.
-        /// </summary>
-        public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default(CancellationToken))
-        {
-            return this.Service.Unsubscribe(this.Id, token);
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether more events are available on the server.
-        /// MoreEventsAvailable is undefined (null) until GetEvents is called.
-        /// </summary>
-        public bool? MoreEventsAvailable
-        {
-            get { return this.moreEventsAvailable; }
-        }
+    /// <summary>
+    /// Gets a value indicating whether more events are available on the server.
+    /// MoreEventsAvailable is undefined (null) until GetEvents is called.
+    /// </summary>
+    public bool? MoreEventsAvailable
+    {
+        get { return this.moreEventsAvailable; }
     }
 }

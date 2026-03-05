@@ -23,63 +23,62 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the response to a name resolution operation.
+/// </summary>
+internal sealed class ResolveNamesResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private NameResolutionCollection resolutions;
 
     /// <summary>
-    /// Represents the response to a name resolution operation.
+    /// Initializes a new instance of the <see cref="ResolveNamesResponse"/> class.
     /// </summary>
-    internal sealed class ResolveNamesResponse : ServiceResponse
+    /// <param name="service">The service.</param>
+    internal ResolveNamesResponse(ExchangeService service)
+        : base()
     {
-        private NameResolutionCollection resolutions;
+        EwsUtilities.Assert(
+            service != null,
+            "ResolveNamesResponse.ctor",
+            "service is null");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResolveNamesResponse"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal ResolveNamesResponse(ExchangeService service)
-            : base()
+        this.resolutions = new NameResolutionCollection(service);
+    }
+
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
+
+        this.Resolutions.LoadFromXml(reader);
+    }
+
+    /// <summary>
+    /// Override base implementation so that API does not throw when name resolution fails to find a match.
+    /// EWS returns an error in this case but the API will just return an empty NameResolutionCollection. 
+    /// </summary>
+    internal override void InternalThrowIfNecessary()
+    {
+        if (this.ErrorCode != ServiceError.ErrorNameResolutionNoResults)
         {
-            EwsUtilities.Assert(
-                service != null,
-                "ResolveNamesResponse.ctor",
-                "service is null");
-
-            this.resolutions = new NameResolutionCollection(service);
+            base.InternalThrowIfNecessary();
         }
+    }
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
-
-            this.Resolutions.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Override base implementation so that API does not throw when name resolution fails to find a match.
-        /// EWS returns an error in this case but the API will just return an empty NameResolutionCollection. 
-        /// </summary>
-        internal override void InternalThrowIfNecessary()
-        {
-            if (this.ErrorCode != ServiceError.ErrorNameResolutionNoResults)
-            {
-                base.InternalThrowIfNecessary();
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of name resolution suggestions.
-        /// </summary>
-        public NameResolutionCollection Resolutions
-        {
-            get { return this.resolutions; }
-        }
+    /// <summary>
+    /// Gets a list of name resolution suggestions.
+    /// </summary>
+    public NameResolutionCollection Resolutions
+    {
+        get { return this.resolutions; }
     }
 }

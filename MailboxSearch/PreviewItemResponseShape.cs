@@ -23,43 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents preview item response shape
+/// </summary>
+public sealed class PreviewItemResponseShape
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public PreviewItemResponseShape()
+    {
+    }
 
     /// <summary>
-    /// Represents preview item response shape
+    /// Constructor
     /// </summary>
-    public sealed class PreviewItemResponseShape
+    /// <param name="baseShape">Preview item base shape</param>
+    /// <param name="additionalProperties">Additional properties (must be in form of extended properties)</param>
+    public PreviewItemResponseShape(PreviewItemBaseShape baseShape, ExtendedPropertyDefinition[] additionalProperties)
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public PreviewItemResponseShape()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="baseShape">Preview item base shape</param>
-        /// <param name="additionalProperties">Additional properties (must be in form of extended properties)</param>
-        public PreviewItemResponseShape(PreviewItemBaseShape baseShape, ExtendedPropertyDefinition[] additionalProperties)
-        {
-            this.BaseShape = baseShape;
-            this.AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary>
-        /// Mailbox identifier
-        /// </summary>
-        public PreviewItemBaseShape BaseShape { get; set; }
-
-        /// <summary>
-        /// Additional properties (must be in form of extended properties)
-        /// </summary>
-        public ExtendedPropertyDefinition[] AdditionalProperties { get; set; }
+        this.BaseShape = baseShape;
+        this.AdditionalProperties = additionalProperties;
     }
+
+    /// <summary>
+    /// Mailbox identifier
+    /// </summary>
+    public PreviewItemBaseShape BaseShape { get; set; }
+
+    /// <summary>
+    /// Additional properties (must be in form of extended properties)
+    /// </summary>
+    public ExtendedPropertyDefinition[] AdditionalProperties { get; set; }
 }

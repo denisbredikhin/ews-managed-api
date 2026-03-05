@@ -23,20 +23,19 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+namespace Microsoft.Exchange.WebServices.Data;
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a class that can self-validate.
+/// </summary>
+internal interface ISelfValidate
+{
     /// <summary>
-    /// Represents a class that can self-validate.
+    /// Validates this instance.
     /// </summary>
-    internal interface ISelfValidate
-    {
-        /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        void Validate();
-    }
+    void Validate();
 }

@@ -23,43 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the GetNonIndexableItemStatistics response.
+/// </summary>
+public sealed class GetNonIndexableItemStatisticsResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetNonIndexableItemStatisticsResponse"/> class.
+    /// </summary>
+    internal GetNonIndexableItemStatisticsResponse()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents the GetNonIndexableItemStatistics response.
+    /// Reads response elements from XML.
     /// </summary>
-    public sealed class GetNonIndexableItemStatisticsResponse : ServiceResponse
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetNonIndexableItemStatisticsResponse"/> class.
-        /// </summary>
-        internal GetNonIndexableItemStatisticsResponse()
-            : base()
-        {
-        }
+        base.ReadElementsFromXml(reader);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
+        this.NonIndexableStatistics = NonIndexableItemStatistic.LoadFromXml(reader);
+    }
 
-            this.NonIndexableStatistics = NonIndexableItemStatistic.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// List of non indexable statistic
-        /// </summary>
-        public List<NonIndexableItemStatistic> NonIndexableStatistics
-        {
-            get;
-            internal set;
-        }
+    /// <summary>
+    /// List of non indexable statistic
+    /// </summary>
+    public List<NonIndexableItemStatistic> NonIndexableStatistics
+    {
+        get;
+        internal set;
     }
 }

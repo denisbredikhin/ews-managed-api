@@ -23,65 +23,64 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
+
+/// <summary>
+/// Represents an entry of a PhoneNumberDictionary.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public sealed class PhoneNumberEntry : DictionaryEntryProperty<PhoneNumberKey>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Text;
+    private string phoneNumber;
 
     /// <summary>
-    /// Represents an entry of a PhoneNumberDictionary.
+    /// Initializes a new instance of the <see cref="PhoneNumberEntry"/> class.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class PhoneNumberEntry : DictionaryEntryProperty<PhoneNumberKey>
+    internal PhoneNumberEntry()
+        : base()
     {
-        private string phoneNumber;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberEntry"/> class.
-        /// </summary>
-        internal PhoneNumberEntry()
-            : base()
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PhoneNumberEntry"/> class.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <param name="phoneNumber">The phone number.</param>
+    internal PhoneNumberEntry(PhoneNumberKey key, string phoneNumber)
+        : base(key)
+    {
+        this.phoneNumber = phoneNumber;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneNumberEntry"/> class.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="phoneNumber">The phone number.</param>
-        internal PhoneNumberEntry(PhoneNumberKey key, string phoneNumber)
-            : base(key)
-        {
-            this.phoneNumber = phoneNumber;
-        }
+    /// <summary>
+    /// Reads the text value from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadTextValueFromXml(EwsServiceXmlReader reader)
+    {
+        this.phoneNumber = reader.ReadValue();
+    }
 
-        /// <summary>
-        /// Reads the text value from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadTextValueFromXml(EwsServiceXmlReader reader)
-        {
-            this.phoneNumber = reader.ReadValue();
-        }
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteValue(this.PhoneNumber, XmlElementNames.PhoneNumber);
+    }
 
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteValue(this.PhoneNumber, XmlElementNames.PhoneNumber);
-        }
-
-        /// <summary>
-        /// Gets or sets the phone number of the entry.
-        /// </summary>
-        public string PhoneNumber
-        {
-            get { return this.phoneNumber; }
-            set { this.SetFieldValue<string>(ref this.phoneNumber, value); }
-        }
+    /// <summary>
+    /// Gets or sets the phone number of the entry.
+    /// </summary>
+    public string PhoneNumber
+    {
+        get { return this.phoneNumber; }
+        set { this.SetFieldValue<string>(ref this.phoneNumber, value); }
     }
 }

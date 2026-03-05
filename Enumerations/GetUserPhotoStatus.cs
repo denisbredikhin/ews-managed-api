@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the response types from a GetUserPhoto request
+/// </summary>
+public enum GetUserPhotoStatus
 {
     /// <summary>
-    /// Defines the response types from a GetUserPhoto request
+    /// The photo was successfully returned
     /// </summary>
-    public enum GetUserPhotoStatus
-    {
-        /// <summary>
-        /// The photo was successfully returned
-        /// </summary>
-        PhotoReturned,
+    PhotoReturned,
 
-        /// <summary>
-        /// The photo has not changed since it was last obtained
-        /// </summary>
-        PhotoUnchanged,
+    /// <summary>
+    /// The photo has not changed since it was last obtained
+    /// </summary>
+    PhotoUnchanged,
 
-        /// <summary>
-        /// The photo or user was not found on the server
-        /// </summary>
-        PhotoOrUserNotFound,
-    }
+    /// <summary>
+    /// The photo or user was not found on the server
+    /// </summary>
+    PhotoOrUserNotFound,
 }

@@ -23,148 +23,147 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a list a abstracted folder Ids.
+/// </summary>
+internal class FolderIdWrapperList : IEnumerable<AbstractFolderIdWrapper>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// List of <see cref="Microsoft.Exchange.WebServices.Data.AbstractFolderIdWrapper"/>.
+    /// </summary>
+    private List<AbstractFolderIdWrapper> ids = new List<AbstractFolderIdWrapper>();
 
     /// <summary>
-    /// Represents a list a abstracted folder Ids.
+    /// Adds the specified folder.
     /// </summary>
-    internal class FolderIdWrapperList : IEnumerable<AbstractFolderIdWrapper>
+    /// <param name="folder">The folder.</param>
+    internal void Add(Folder folder)
     {
-        /// <summary>
-        /// List of <see cref="Microsoft.Exchange.WebServices.Data.AbstractFolderIdWrapper"/>.
-        /// </summary>
-        private List<AbstractFolderIdWrapper> ids = new List<AbstractFolderIdWrapper>();
+        this.ids.Add(new FolderWrapper(folder));
+    }
 
-        /// <summary>
-        /// Adds the specified folder.
-        /// </summary>
-        /// <param name="folder">The folder.</param>
-        internal void Add(Folder folder)
+    /// <summary>
+    /// Adds the range.
+    /// </summary>
+    /// <param name="folders">The folders.</param>
+    internal void AddRange(IEnumerable<Folder> folders)
+    {
+        if (folders != null)
         {
-            this.ids.Add(new FolderWrapper(folder));
-        }
-
-        /// <summary>
-        /// Adds the range.
-        /// </summary>
-        /// <param name="folders">The folders.</param>
-        internal void AddRange(IEnumerable<Folder> folders)
-        {
-            if (folders != null)
+            foreach (Folder folder in folders)
             {
-                foreach (Folder folder in folders)
-                {
-                    this.Add(folder);
-                }
+                this.Add(folder);
             }
         }
+    }
 
-        /// <summary>
-        /// Adds the specified folder id.
-        /// </summary>
-        /// <param name="folderId">The folder id.</param>
-        internal void Add(FolderId folderId)
-        {
-            this.ids.Add(new FolderIdWrapper(folderId));
-        }
+    /// <summary>
+    /// Adds the specified folder id.
+    /// </summary>
+    /// <param name="folderId">The folder id.</param>
+    internal void Add(FolderId folderId)
+    {
+        this.ids.Add(new FolderIdWrapper(folderId));
+    }
 
-        /// <summary>
-        /// Adds the range of folder ids.
-        /// </summary>
-        /// <param name="folderIds">The folder ids.</param>
-        internal void AddRange(IEnumerable<FolderId> folderIds)
+    /// <summary>
+    /// Adds the range of folder ids.
+    /// </summary>
+    /// <param name="folderIds">The folder ids.</param>
+    internal void AddRange(IEnumerable<FolderId> folderIds)
+    {
+        if (folderIds != null)
         {
-            if (folderIds != null)
+            foreach (FolderId folderId in folderIds)
             {
-                foreach (FolderId folderId in folderIds)
-                {
-                    this.Add(folderId);
-                }
+                this.Add(folderId);
             }
         }
+    }
 
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="ewsNamesapce">The ews namesapce.</param>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        internal void WriteToXml(
-            EwsServiceXmlWriter writer,
-            XmlNamespace ewsNamesapce,
-            string xmlElementName)
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="ewsNamesapce">The ews namesapce.</param>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    internal void WriteToXml(
+        EwsServiceXmlWriter writer,
+        XmlNamespace ewsNamesapce,
+        string xmlElementName)
+    {
+        if (this.Count > 0)
         {
-            if (this.Count > 0)
-            {
-                writer.WriteStartElement(ewsNamesapce, xmlElementName);
+            writer.WriteStartElement(ewsNamesapce, xmlElementName);
 
-                foreach (AbstractFolderIdWrapper folderIdWrapper in this.ids)
-                {
-                    folderIdWrapper.WriteToXml(writer);
-                }
-
-                writer.WriteEndElement();
-            }
-        }
-
-        /// <summary>
-        /// Gets the id count.
-        /// </summary>
-        /// <value>The count.</value>
-        internal int Count
-        {
-            get { return this.ids.Count; }
-        }
-
-        /// <summary>
-        /// Gets the <see cref="Microsoft.Exchange.WebServices.Data.AbstractFolderIdWrapper"/> at the specified index.
-        /// </summary>
-        /// <param name="index">the index</param>
-        internal AbstractFolderIdWrapper this[int index]
-        {
-            get { return this.ids[index]; }
-        }
-
-        /// <summary>
-        /// Validates list of folderIds against a specified request version.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        internal void Validate(ExchangeVersion version)
-        {
             foreach (AbstractFolderIdWrapper folderIdWrapper in this.ids)
             {
-                folderIdWrapper.Validate(version);
+                folderIdWrapper.WriteToXml(writer);
             }
+
+            writer.WriteEndElement();
         }
-
-        #region IEnumerable<AbstractFolderIdWrapper> Members
-
-        /// <summary>
-        /// Gets an enumerator that iterates through the elements of the collection.
-        /// </summary>
-        /// <returns>An IEnumerator for the collection.</returns>
-        public IEnumerator<AbstractFolderIdWrapper> GetEnumerator()
-        {
-            return this.ids.GetEnumerator();
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        /// <summary>
-        /// Gets an enumerator that iterates through the elements of the collection.
-        /// </summary>
-        /// <returns>An IEnumerator for the collection.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.ids.GetEnumerator();
-        }
-
-        #endregion
     }
+
+    /// <summary>
+    /// Gets the id count.
+    /// </summary>
+    /// <value>The count.</value>
+    internal int Count
+    {
+        get { return this.ids.Count; }
+    }
+
+    /// <summary>
+    /// Gets the <see cref="Microsoft.Exchange.WebServices.Data.AbstractFolderIdWrapper"/> at the specified index.
+    /// </summary>
+    /// <param name="index">the index</param>
+    internal AbstractFolderIdWrapper this[int index]
+    {
+        get { return this.ids[index]; }
+    }
+
+    /// <summary>
+    /// Validates list of folderIds against a specified request version.
+    /// </summary>
+    /// <param name="version">The version.</param>
+    internal void Validate(ExchangeVersion version)
+    {
+        foreach (AbstractFolderIdWrapper folderIdWrapper in this.ids)
+        {
+            folderIdWrapper.Validate(version);
+        }
+    }
+
+    #region IEnumerable<AbstractFolderIdWrapper> Members
+
+    /// <summary>
+    /// Gets an enumerator that iterates through the elements of the collection.
+    /// </summary>
+    /// <returns>An IEnumerator for the collection.</returns>
+    public IEnumerator<AbstractFolderIdWrapper> GetEnumerator()
+    {
+        return this.ids.GetEnumerator();
+    }
+
+    #endregion
+
+    #region IEnumerable Members
+
+    /// <summary>
+    /// Gets an enumerator that iterates through the elements of the collection.
+    /// </summary>
+    /// <returns>An IEnumerator for the collection.</returns>
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+        return this.ids.GetEnumerator();
+    }
+
+    #endregion
 }

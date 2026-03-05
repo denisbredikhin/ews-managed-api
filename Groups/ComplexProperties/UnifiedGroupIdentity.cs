@@ -23,50 +23,49 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data.Groups
+namespace Microsoft.Exchange.WebServices.Data.Groups;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+/// <summary>
+/// Defines the UnifiedGroupIdentity class.
+/// </summary>
+internal sealed class UnifiedGroupIdentity : ComplexProperty, ISelfValidate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UnifiedGroupIdentity"/>  class
+    /// </summary>
+    /// <param name="identityType">The identity type</param>
+    /// <param name="value">The value assocaited with the identity type</param>
+    public UnifiedGroupIdentity(UnifiedGroupIdentityType identityType, string value)
+    {
+        this.IdentityType = identityType;
+        this.Value = value;
+    }
 
     /// <summary>
-    /// Defines the UnifiedGroupIdentity class.
+    /// Gets or sets the IdentityType of the UnifiedGroup
     /// </summary>
-    internal sealed class UnifiedGroupIdentity : ComplexProperty, ISelfValidate
+    public UnifiedGroupIdentityType IdentityType { get; set; }
+
+    /// <summary>
+    /// Gets or sets the value associated with the IdentityType for the UnifiedGroup
+    /// </summary>
+    public string Value { get; set; }
+
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    internal override void WriteToXml(EwsServiceXmlWriter writer, string xmlElementName)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnifiedGroupIdentity"/>  class
-        /// </summary>
-        /// <param name="identityType">The identity type</param>
-        /// <param name="value">The value assocaited with the identity type</param>
-        public UnifiedGroupIdentity(UnifiedGroupIdentityType identityType, string value)
-        {
-            this.IdentityType = identityType;
-            this.Value = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the IdentityType of the UnifiedGroup
-        /// </summary>
-        public UnifiedGroupIdentityType IdentityType { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value associated with the IdentityType for the UnifiedGroup
-        /// </summary>
-        public string Value { get; set; }
-
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        internal override void WriteToXml(EwsServiceXmlWriter writer, string xmlElementName)
-        {
-            writer.WriteStartElement(XmlNamespace.Types, xmlElementName);
-            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.GroupIdentityType, this.IdentityType.ToString());
-            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.GroupIdentityValue, this.Value);
-            writer.WriteEndElement();
-        }
+        writer.WriteStartElement(XmlNamespace.Types, xmlElementName);
+        writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.GroupIdentityType, this.IdentityType.ToString());
+        writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.GroupIdentityValue, this.Value);
+        writer.WriteEndElement();
     }
 }

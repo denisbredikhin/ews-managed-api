@@ -23,54 +23,53 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+using System.Xml;
+
+/// <summary>
+/// Represents the collection of InsightValue.
+/// </summary>
+public class InsightValueCollection : ComplexPropertyCollection<InsightValue>
 {
-    using System.Collections.Generic;
-    using System.Xml;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InsightValueCollection"/> class.
+    /// </summary>
+    internal InsightValueCollection()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents the collection of InsightValue.
+    /// Initializes a new instance of the <see cref="InsightValueCollection"/> class.
     /// </summary>
-    public class InsightValueCollection : ComplexPropertyCollection<InsightValue>
+    /// <param name="collection">The collection of objects to include.</param>
+    internal InsightValueCollection(IEnumerable<InsightValue> collection)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InsightValueCollection"/> class.
-        /// </summary>
-        internal InsightValueCollection()
-            : base()
+        if (collection != null)
         {
+            collection.ForEach(this.InternalAdd);
         }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InsightValueCollection"/> class.
-        /// </summary>
-        /// <param name="collection">The collection of objects to include.</param>
-        internal InsightValueCollection(IEnumerable<InsightValue> collection)
-        {
-            if (collection != null)
-            {
-                collection.ForEach(this.InternalAdd);
-            }
-        }
+    /// <summary>
+    /// Creates the complex property.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <returns>InsightValue.</returns>
+    internal override InsightValue CreateComplexProperty(string xmlElementName)
+    {
+        return new InsightValue();
+    }
 
-        /// <summary>
-        /// Creates the complex property.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <returns>InsightValue.</returns>
-        internal override InsightValue CreateComplexProperty(string xmlElementName)
-        {
-            return new InsightValue();
-        }
-
-        /// <summary>
-        /// Gets the name of the collection item XML element.
-        /// </summary>
-        /// <param name="complexProperty">The complex property.</param>
-        /// <returns>XML element name.</returns>
-        internal override string GetCollectionItemXmlElementName(InsightValue complexProperty)
-        {
-            return XmlElementNames.Item;
-        }
+    /// <summary>
+    /// Gets the name of the collection item XML element.
+    /// </summary>
+    /// <param name="complexProperty">The complex property.</param>
+    /// <returns>XML element name.</returns>
+    internal override string GetCollectionItemXmlElementName(InsightValue complexProperty)
+    {
+        return XmlElementNames.Item;
     }
 }

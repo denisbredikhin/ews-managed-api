@@ -23,128 +23,127 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents grouping options in item search operations.
+/// </summary>
+public sealed class Grouping : ISelfValidate
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private SortDirection sortDirection = SortDirection.Ascending;
+    private PropertyDefinitionBase groupOn;
+    private PropertyDefinitionBase aggregateOn;
+    private AggregateType aggregateType;
 
     /// <summary>
-    /// Represents grouping options in item search operations.
+    /// Validates this grouping.
     /// </summary>
-    public sealed class Grouping : ISelfValidate
+    private void InternalValidate()
     {
-        private SortDirection sortDirection = SortDirection.Ascending;
-        private PropertyDefinitionBase groupOn;
-        private PropertyDefinitionBase aggregateOn;
-        private AggregateType aggregateType;
-
-        /// <summary>
-        /// Validates this grouping.
-        /// </summary>
-        private void InternalValidate()
-        {
-            EwsUtilities.ValidateParam(this.GroupOn, "GroupOn");
-            EwsUtilities.ValidateParam(this.AggregateOn, "AggregateOn");
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Grouping"/> class.
-        /// </summary>
-        public Grouping()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Grouping"/> class.
-        /// </summary>
-        /// <param name="groupOn">The property to group on.</param>
-        /// <param name="sortDirection">The sort direction.</param>
-        /// <param name="aggregateOn">The property to aggregate on.</param>
-        /// <param name="aggregateType">The type of aggregate to calculate.</param>
-        public Grouping(
-            PropertyDefinitionBase groupOn,
-            SortDirection sortDirection,
-            PropertyDefinitionBase aggregateOn,
-            AggregateType aggregateType)
-            : this()
-        {
-            EwsUtilities.ValidateParam(groupOn, "groupOn");
-            EwsUtilities.ValidateParam(aggregateOn, "aggregateOn");
-
-            this.groupOn = groupOn;
-            this.sortDirection = sortDirection;
-            this.aggregateOn = aggregateOn;
-            this.aggregateType = aggregateType;
-        }
-
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal void WriteToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.GroupBy);
-            writer.WriteAttributeValue(XmlAttributeNames.Order, this.SortDirection);
-
-            this.GroupOn.WriteToXml(writer);
-
-            writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.AggregateOn);
-            writer.WriteAttributeValue(XmlAttributeNames.Aggregate, this.AggregateType);
-
-            this.AggregateOn.WriteToXml(writer);
-
-            writer.WriteEndElement(); // AggregateOn
-
-            writer.WriteEndElement(); // GroupBy
-        }
-
-        /// <summary>
-        /// Gets or sets the sort direction.
-        /// </summary>
-        public SortDirection SortDirection
-        {
-            get { return this.sortDirection; }
-            set { this.sortDirection = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the property to group on.
-        /// </summary>
-        public PropertyDefinitionBase GroupOn
-        {
-            get { return this.groupOn; }
-            set { this.groupOn = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the property to aggregate on.
-        /// </summary>
-        public PropertyDefinitionBase AggregateOn
-        {
-            get { return this.aggregateOn; }
-            set { this.aggregateOn = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the types of aggregate to calculate.
-        /// </summary>
-        public AggregateType AggregateType
-        {
-            get { return this.aggregateType; }
-            set { this.aggregateType = value; }
-        }
-
-        #region ISelfValidate Members
-
-        /// <summary>
-        /// Implements ISelfValidate.Validate. Validates this grouping.
-        /// </summary>
-        void ISelfValidate.Validate()
-        {
-            this.InternalValidate();
-        }
-
-        #endregion
+        EwsUtilities.ValidateParam(this.GroupOn, "GroupOn");
+        EwsUtilities.ValidateParam(this.AggregateOn, "AggregateOn");
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Grouping"/> class.
+    /// </summary>
+    public Grouping()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Grouping"/> class.
+    /// </summary>
+    /// <param name="groupOn">The property to group on.</param>
+    /// <param name="sortDirection">The sort direction.</param>
+    /// <param name="aggregateOn">The property to aggregate on.</param>
+    /// <param name="aggregateType">The type of aggregate to calculate.</param>
+    public Grouping(
+        PropertyDefinitionBase groupOn,
+        SortDirection sortDirection,
+        PropertyDefinitionBase aggregateOn,
+        AggregateType aggregateType)
+        : this()
+    {
+        EwsUtilities.ValidateParam(groupOn, "groupOn");
+        EwsUtilities.ValidateParam(aggregateOn, "aggregateOn");
+
+        this.groupOn = groupOn;
+        this.sortDirection = sortDirection;
+        this.aggregateOn = aggregateOn;
+        this.aggregateType = aggregateType;
+    }
+
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal void WriteToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.GroupBy);
+        writer.WriteAttributeValue(XmlAttributeNames.Order, this.SortDirection);
+
+        this.GroupOn.WriteToXml(writer);
+
+        writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.AggregateOn);
+        writer.WriteAttributeValue(XmlAttributeNames.Aggregate, this.AggregateType);
+
+        this.AggregateOn.WriteToXml(writer);
+
+        writer.WriteEndElement(); // AggregateOn
+
+        writer.WriteEndElement(); // GroupBy
+    }
+
+    /// <summary>
+    /// Gets or sets the sort direction.
+    /// </summary>
+    public SortDirection SortDirection
+    {
+        get { return this.sortDirection; }
+        set { this.sortDirection = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the property to group on.
+    /// </summary>
+    public PropertyDefinitionBase GroupOn
+    {
+        get { return this.groupOn; }
+        set { this.groupOn = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the property to aggregate on.
+    /// </summary>
+    public PropertyDefinitionBase AggregateOn
+    {
+        get { return this.aggregateOn; }
+        set { this.aggregateOn = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the types of aggregate to calculate.
+    /// </summary>
+    public AggregateType AggregateType
+    {
+        get { return this.aggregateType; }
+        set { this.aggregateType = value; }
+    }
+
+    #region ISelfValidate Members
+
+    /// <summary>
+    /// Implements ISelfValidate.Validate. Validates this grouping.
+    /// </summary>
+    void ISelfValidate.Validate()
+    {
+        this.InternalValidate();
+    }
+
+    #endregion
 }

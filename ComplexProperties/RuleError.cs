@@ -23,109 +23,108 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents an error that occurred as a result of executing a rule operation. 
+/// </summary>
+public sealed class RuleError : ComplexProperty
 {
     /// <summary>
-    /// Represents an error that occurred as a result of executing a rule operation. 
+    /// Rule property.
     /// </summary>
-    public sealed class RuleError : ComplexProperty
+    private RuleProperty ruleProperty;
+
+    /// <summary>
+    /// Rule validation error code.
+    /// </summary>
+    private RuleErrorCode errorCode;
+
+    /// <summary>
+    /// Error message.
+    /// </summary>
+    private string errorMessage;
+
+    /// <summary>
+    /// Field value.
+    /// </summary>
+    private string value;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RuleError"/> class.
+    /// </summary>
+    internal RuleError()
+        : base()
     {
-        /// <summary>
-        /// Rule property.
-        /// </summary>
-        private RuleProperty ruleProperty;
+    }
 
-        /// <summary>
-        /// Rule validation error code.
-        /// </summary>
-        private RuleErrorCode errorCode;
-
-        /// <summary>
-        /// Error message.
-        /// </summary>
-        private string errorMessage;
-
-        /// <summary>
-        /// Field value.
-        /// </summary>
-        private string value;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RuleError"/> class.
-        /// </summary>
-        internal RuleError()
-            : base()
+    /// <summary>
+    /// Gets the property which failed validation.
+    /// </summary>
+    public RuleProperty RuleProperty
+    {
+        get
         {
+            return this.ruleProperty;
         }
+    }
 
-        /// <summary>
-        /// Gets the property which failed validation.
-        /// </summary>
-        public RuleProperty RuleProperty
+    /// <summary>
+    /// Gets the validation error code.
+    /// </summary>
+    public RuleErrorCode ErrorCode
+    {
+        get
         {
-            get
-            {
-                return this.ruleProperty;
-            }
+            return this.errorCode;
         }
+    }
 
-        /// <summary>
-        /// Gets the validation error code.
-        /// </summary>
-        public RuleErrorCode ErrorCode
+    /// <summary>
+    /// Gets the error message.
+    /// </summary>
+    public string ErrorMessage
+    {
+        get
         {
-            get
-            {
-                return this.errorCode;
-            }
+            return this.errorMessage;
         }
+    }
 
-        /// <summary>
-        /// Gets the error message.
-        /// </summary>
-        public string ErrorMessage
+    /// <summary>
+    /// Gets the value that failed validation.
+    /// </summary>
+    public string Value
+    {
+        get
         {
-            get
-            {
-                return this.errorMessage;
-            }
+            return this.value;
         }
+    }
 
-        /// <summary>
-        /// Gets the value that failed validation.
-        /// </summary>
-        public string Value
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
-            get
-            {
-                return this.value;
-            }
-        }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.FieldURI:
-                    this.ruleProperty = reader.ReadElementValue<RuleProperty>();
-                    return true;
-                case XmlElementNames.ErrorCode:
-                    this.errorCode = reader.ReadElementValue<RuleErrorCode>();
-                    return true;
-                case XmlElementNames.ErrorMessage:
-                    this.errorMessage = reader.ReadElementValue();
-                    return true;
-                case XmlElementNames.FieldValue:
-                    this.value = reader.ReadElementValue();
-                    return true;
-                default:
-                    return false;
-            }
+            case XmlElementNames.FieldURI:
+                this.ruleProperty = reader.ReadElementValue<RuleProperty>();
+                return true;
+            case XmlElementNames.ErrorCode:
+                this.errorCode = reader.ReadElementValue<RuleErrorCode>();
+                return true;
+            case XmlElementNames.ErrorMessage:
+                this.errorMessage = reader.ReadElementValue();
+                return true;
+            case XmlElementNames.FieldValue:
+                this.value = reader.ReadElementValue();
+                return true;
+            default:
+                return false;
         }
     }
 }

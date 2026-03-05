@@ -23,25 +23,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines base property sets that are used as the base for custom property sets.
+/// </summary>
+public enum BasePropertySet
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Only includes the Id of items and folders.
+    /// </summary>
+    IdOnly,
 
     /// <summary>
-    /// Defines base property sets that are used as the base for custom property sets.
+    /// Includes all the first class properties of items and folders.
     /// </summary>
-    public enum BasePropertySet
-    {
-        /// <summary>
-        /// Only includes the Id of items and folders.
-        /// </summary>
-        IdOnly,
-
-        /// <summary>
-        /// Includes all the first class properties of items and folders.
-        /// </summary>
-        FirstClassProperties
-    }
+    FirstClassProperties
 }

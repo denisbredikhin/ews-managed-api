@@ -23,85 +23,84 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a GetRoomList request.
+/// </summary>
+internal sealed class GetRoomListsRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetRoomListsRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    internal GetRoomListsRequest(ExchangeService service)
+        : base(service)
+    {
+    }
 
     /// <summary>
-    /// Represents a GetRoomList request.
+    /// Gets the name of the XML element.
     /// </summary>
-    internal sealed class GetRoomListsRequest : SimpleServiceRequestBase
+    /// <returns>XML element name,</returns>
+    internal override string GetXmlElementName()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetRoomListsRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal GetRoomListsRequest(ExchangeService service)
-            : base(service)
-        {
-        }
+        return XmlElementNames.GetRoomListsRequest;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.GetRoomListsRequest;
-        }
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        // Don't have parameter in request
+    }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            // Don't have parameter in request
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.GetRoomListsResponse;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.GetRoomListsResponse;
-        }
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        GetRoomListsResponse response = new GetRoomListsResponse();
+        response.LoadFromXml(reader, XmlElementNames.GetRoomListsResponse);
+        return response;
+    }
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            GetRoomListsResponse response = new GetRoomListsResponse();
-            response.LoadFromXml(reader, XmlElementNames.GetRoomListsResponse);
-            return response;
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2010;
+    }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2010;
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<GetRoomListsResponse> Execute(CancellationToken token)
-        {
-            GetRoomListsResponse serviceResponse = (GetRoomListsResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-            serviceResponse.ThrowIfNecessary();
-            return serviceResponse;
-        }
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<GetRoomListsResponse> Execute(CancellationToken token)
+    {
+        GetRoomListsResponse serviceResponse = (GetRoomListsResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
+        serviceResponse.ThrowIfNecessary();
+        return serviceResponse;
     }
 }

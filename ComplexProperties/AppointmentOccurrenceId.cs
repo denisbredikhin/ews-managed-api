@@ -23,70 +23,69 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents the Id of an occurrence of a recurring appointment.
+/// </summary>
+public sealed class AppointmentOccurrenceId : ItemId
 {
-    using System;
+    /// <summary>
+    /// Index of the occurrence.
+    /// </summary>
+    private int occurrenceIndex;
 
     /// <summary>
-    /// Represents the Id of an occurrence of a recurring appointment.
+    /// Initializes a new instance of the <see cref="AppointmentOccurrenceId"/> class.
     /// </summary>
-    public sealed class AppointmentOccurrenceId : ItemId
+    /// <param name="recurringMasterUniqueId">The Id of the recurring master the Id represents an occurrence of.</param>
+    /// <param name="occurrenceIndex">The index of the occurrence.</param>
+    public AppointmentOccurrenceId(string recurringMasterUniqueId, int occurrenceIndex)
+        : base(recurringMasterUniqueId)
     {
-        /// <summary>
-        /// Index of the occurrence.
-        /// </summary>
-        private int occurrenceIndex;
+        this.OccurrenceIndex = occurrenceIndex;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppointmentOccurrenceId"/> class.
-        /// </summary>
-        /// <param name="recurringMasterUniqueId">The Id of the recurring master the Id represents an occurrence of.</param>
-        /// <param name="occurrenceIndex">The index of the occurrence.</param>
-        public AppointmentOccurrenceId(string recurringMasterUniqueId, int occurrenceIndex)
-            : base(recurringMasterUniqueId)
-        {
-            this.OccurrenceIndex = occurrenceIndex;
+    /// <summary>
+    /// Gets or sets the index of the occurrence. Note that the occurrence index starts at one not zero.
+    /// </summary>
+    public int OccurrenceIndex
+    {
+        get
+        { 
+            return this.occurrenceIndex;
         }
 
-        /// <summary>
-        /// Gets or sets the index of the occurrence. Note that the occurrence index starts at one not zero.
-        /// </summary>
-        public int OccurrenceIndex
+        set
         {
-            get
-            { 
-                return this.occurrenceIndex;
-            }
-
-            set
+            // The occurrence index has to be positive integer.
+            if (value < 1)
             {
-                // The occurrence index has to be positive integer.
-                if (value < 1)
-                {
-                    throw new ArgumentException(Strings.OccurrenceIndexMustBeGreaterThanZero);
-                }
-
-                this.occurrenceIndex = value;
+                throw new ArgumentException(Strings.OccurrenceIndexMustBeGreaterThanZero);
             }
-        }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.OccurrenceItemId;
+            this.occurrenceIndex = value;
         }
+    }
 
-        /// <summary>
-        /// Writes attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteAttributeValue(XmlAttributeNames.RecurringMasterId, this.UniqueId);
-            writer.WriteAttributeValue(XmlAttributeNames.InstanceIndex, this.OccurrenceIndex);
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.OccurrenceItemId;
+    }
+
+    /// <summary>
+    /// Writes attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteAttributeValue(XmlAttributeNames.RecurringMasterId, this.UniqueId);
+        writer.WriteAttributeValue(XmlAttributeNames.InstanceIndex, this.OccurrenceIndex);
     }
 }

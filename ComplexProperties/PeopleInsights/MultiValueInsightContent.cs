@@ -23,107 +23,106 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+using System.Xml;
+
+/// <summary>
+/// Represents the MultiValueInsightContent.
+/// </summary>
+public sealed class MultiValueInsightContent : ComplexProperty
 {
-    using System.Collections.Generic;
-    using System.Xml;
+    /// <summary>
+    /// Gets the ItemList
+    /// </summary>
+    public InsightValueCollection ItemList { get; internal set; }
 
     /// <summary>
-    /// Represents the MultiValueInsightContent.
+    /// Initializes a new instance of the <see cref="MultiValueInsightContent"/> class.
     /// </summary>
-    public sealed class MultiValueInsightContent : ComplexProperty
+    public MultiValueInsightContent()
+        : base()
     {
-        /// <summary>
-        /// Gets the ItemList
-        /// </summary>
-        public InsightValueCollection ItemList { get; internal set; }
+        this.ItemList = new InsightValueCollection();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MultiValueInsightContent"/> class.
-        /// </summary>
-        public MultiValueInsightContent()
-            : base()
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        do
         {
-            this.ItemList = new InsightValueCollection();
-        }
+            reader.Read();
+            InsightValue item = null;
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            do
+            if (reader.NodeType == XmlNodeType.Element && reader.LocalName == XmlElementNames.Item)
             {
-                reader.Read();
-                InsightValue item = null;
-
-                if (reader.NodeType == XmlNodeType.Element && reader.LocalName == XmlElementNames.Item)
+                switch (reader.ReadAttributeValue("xsi:type"))
                 {
-                    switch (reader.ReadAttributeValue("xsi:type"))
-                    {
-                        case XmlElementNames.StringInsightValue:
-                            item = new StringInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.ProfileInsightValue:
-                            item = new ProfileInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.JobInsightValue:
-                            item = new JobInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.UserProfilePicture:
-                            item = new UserProfilePicture();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.EducationInsightValue:
-                            item = new EducationInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.SkillInsightValue:
-                            item = new SkillInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.ComputedInsightValue:
-                            item = new ComputedInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.MeetingInsightValue:
-                            item = new MeetingInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.EmailInsightValue:
-                            item = new EmailInsightValue();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        case XmlElementNames.DelveDocument:
-                            item = new DelveDocument();
-                            item.LoadFromXml(reader, reader.LocalName);
-                            this.ItemList.InternalAdd(item);
-                            break;
-                        default:
-                            return false;
-                    }
+                    case XmlElementNames.StringInsightValue:
+                        item = new StringInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.ProfileInsightValue:
+                        item = new ProfileInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.JobInsightValue:
+                        item = new JobInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.UserProfilePicture:
+                        item = new UserProfilePicture();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.EducationInsightValue:
+                        item = new EducationInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.SkillInsightValue:
+                        item = new SkillInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.ComputedInsightValue:
+                        item = new ComputedInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.MeetingInsightValue:
+                        item = new MeetingInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.EmailInsightValue:
+                        item = new EmailInsightValue();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    case XmlElementNames.DelveDocument:
+                        item = new DelveDocument();
+                        item.LoadFromXml(reader, reader.LocalName);
+                        this.ItemList.InternalAdd(item);
+                        break;
+                    default:
+                        return false;
                 }
-                else
-                {
-                    return false;
-                }
-            } while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.ItemList));
+            }
+            else
+            {
+                return false;
+            }
+        } while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.ItemList));
 
-            return true;
-        }
+        return true;
     }
 }

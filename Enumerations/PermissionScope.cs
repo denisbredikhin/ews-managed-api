@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the scope of a user's permission on a folders.
+/// </summary>
+public enum PermissionScope
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The user does not have the associated permission.
+    /// </summary>
+    None,
 
     /// <summary>
-    /// Defines the scope of a user's permission on a folders.
+    /// The user has the associated permission on items that it owns.
     /// </summary>
-    public enum PermissionScope
-    {
-        /// <summary>
-        /// The user does not have the associated permission.
-        /// </summary>
-        None,
+    Owned,
 
-        /// <summary>
-        /// The user has the associated permission on items that it owns.
-        /// </summary>
-        Owned,
-
-        /// <summary>
-        /// The user has the associated permission on all items.
-        /// </summary>
-        All
-    }
+    /// <summary>
+    /// The user has the associated permission on all items.
+    /// </summary>
+    All
 }

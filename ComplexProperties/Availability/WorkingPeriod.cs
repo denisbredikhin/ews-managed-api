@@ -23,78 +23,77 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text;
+
+/// <summary>
+/// Represents a working period.
+/// </summary>
+internal sealed class WorkingPeriod : ComplexProperty
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Text;
+    private Collection<DayOfTheWeek> daysOfWeek = new Collection<DayOfTheWeek>();
+    private TimeSpan startTime;
+    private TimeSpan endTime;
 
     /// <summary>
-    /// Represents a working period.
+    /// Initializes a new instance of the <see cref="WorkingPeriod"/> class.
     /// </summary>
-    internal sealed class WorkingPeriod : ComplexProperty
+    internal WorkingPeriod()
+        : base()
     {
-        private Collection<DayOfTheWeek> daysOfWeek = new Collection<DayOfTheWeek>();
-        private TimeSpan startTime;
-        private TimeSpan endTime;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WorkingPeriod"/> class.
-        /// </summary>
-        internal WorkingPeriod()
-            : base()
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if appropriate element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
+            case XmlElementNames.DayOfWeek:
+                EwsUtilities.ParseEnumValueList<DayOfTheWeek>(
+                    this.daysOfWeek,
+                    reader.ReadElementValue(),
+                    ' ');
+                return true;
+            case XmlElementNames.StartTimeInMinutes:
+                this.startTime = TimeSpan.FromMinutes(reader.ReadElementValue<int>());
+                return true;
+            case XmlElementNames.EndTimeInMinutes:
+                this.endTime = TimeSpan.FromMinutes(reader.ReadElementValue<int>());
+                return true;
+            default:
+                return false;
         }
+    }
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if appropriate element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.DayOfWeek:
-                    EwsUtilities.ParseEnumValueList<DayOfTheWeek>(
-                        this.daysOfWeek,
-                        reader.ReadElementValue(),
-                        ' ');
-                    return true;
-                case XmlElementNames.StartTimeInMinutes:
-                    this.startTime = TimeSpan.FromMinutes(reader.ReadElementValue<int>());
-                    return true;
-                case XmlElementNames.EndTimeInMinutes:
-                    this.endTime = TimeSpan.FromMinutes(reader.ReadElementValue<int>());
-                    return true;
-                default:
-                    return false;
-            }
-        }
+    /// <summary>
+    /// Gets a collection of work days.
+    /// </summary>
+    internal Collection<DayOfTheWeek> DaysOfWeek
+    {
+        get { return this.daysOfWeek; }
+    }
 
-        /// <summary>
-        /// Gets a collection of work days.
-        /// </summary>
-        internal Collection<DayOfTheWeek> DaysOfWeek
-        {
-            get { return this.daysOfWeek; }
-        }
+    /// <summary>
+    /// Gets the start time of the period.
+    /// </summary>
+    internal TimeSpan StartTime
+    {
+        get { return this.startTime; }
+    }
 
-        /// <summary>
-        /// Gets the start time of the period.
-        /// </summary>
-        internal TimeSpan StartTime
-        {
-            get { return this.startTime; }
-        }
-
-        /// <summary>
-        /// Gets the end time of the period.
-        /// </summary>
-        internal TimeSpan EndTime
-        {
-            get { return this.endTime; }
-        }
+    /// <summary>
+    /// Gets the end time of the period.
+    /// </summary>
+    internal TimeSpan EndTime
+    {
+        get { return this.endTime; }
     }
 }

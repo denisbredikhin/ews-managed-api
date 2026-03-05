@@ -25,31 +25,30 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Interface defined for properties that produce their own update serialization.
+/// </summary>
+internal interface ICustomUpdateSerializer
 {
     /// <summary>
-    /// Interface defined for properties that produce their own update serialization.
+    /// Writes the update to XML.
     /// </summary>
-    internal interface ICustomUpdateSerializer
-    {
-        /// <summary>
-        /// Writes the update to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="propertyDefinition">Property definition.</param>
-        /// <returns>True if property generated serialization.</returns>
-        bool WriteSetUpdateToXml(
-            EwsServiceXmlWriter writer,
-            ServiceObject ewsObject,
-            PropertyDefinition propertyDefinition);
+    /// <param name="writer">The writer.</param>
+    /// <param name="ewsObject">The ews object.</param>
+    /// <param name="propertyDefinition">Property definition.</param>
+    /// <returns>True if property generated serialization.</returns>
+    bool WriteSetUpdateToXml(
+        EwsServiceXmlWriter writer,
+        ServiceObject ewsObject,
+        PropertyDefinition propertyDefinition);
 
-        /// <summary>
-        /// Writes the deletion update to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <returns>True if property generated serialization.</returns>
-        bool WriteDeleteUpdateToXml(EwsServiceXmlWriter writer, ServiceObject ewsObject);
-    }
+    /// <summary>
+    /// Writes the deletion update to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="ewsObject">The ews object.</param>
+    /// <returns>True if property generated serialization.</returns>
+    bool WriteDeleteUpdateToXml(EwsServiceXmlWriter writer, ServiceObject ewsObject);
 }

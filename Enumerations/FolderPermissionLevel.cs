@@ -23,77 +23,76 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+namespace Microsoft.Exchange.WebServices.Data;
 
-    // TODO : Do we want to include more information about what those levels actually allow users to do?
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+// TODO : Do we want to include more information about what those levels actually allow users to do?
+
+/// <summary>
+/// Defines permission levels for calendar folders.
+/// </summary>
+public enum FolderPermissionLevel
+{
+    /// <summary>
+    /// No permission is granted.
+    /// </summary>
+    None,
 
     /// <summary>
-    /// Defines permission levels for calendar folders.
+    /// The Owner level.
     /// </summary>
-    public enum FolderPermissionLevel
-    {
-        /// <summary>
-        /// No permission is granted.
-        /// </summary>
-        None,
+    Owner,
 
-        /// <summary>
-        /// The Owner level.
-        /// </summary>
-        Owner,
+    /// <summary>
+    /// The Publishing Editor level.
+    /// </summary>
+    PublishingEditor,
 
-        /// <summary>
-        /// The Publishing Editor level.
-        /// </summary>
-        PublishingEditor,
+    /// <summary>
+    /// The Editor level.
+    /// </summary>
+    Editor,
 
-        /// <summary>
-        /// The Editor level.
-        /// </summary>
-        Editor,
+    /// <summary>
+    /// The Pusnlishing Author level.
+    /// </summary>
+    PublishingAuthor,
 
-        /// <summary>
-        /// The Pusnlishing Author level.
-        /// </summary>
-        PublishingAuthor,
+    /// <summary>
+    /// The Author level.
+    /// </summary>
+    Author,
 
-        /// <summary>
-        /// The Author level.
-        /// </summary>
-        Author,
+    /// <summary>
+    /// The Non-editing Author level.
+    /// </summary>
+    NoneditingAuthor,
 
-        /// <summary>
-        /// The Non-editing Author level.
-        /// </summary>
-        NoneditingAuthor,
+    /// <summary>
+    /// The Reviewer level.
+    /// </summary>
+    Reviewer,
 
-        /// <summary>
-        /// The Reviewer level.
-        /// </summary>
-        Reviewer,
+    /// <summary>
+    /// The Contributor level.
+    /// </summary>
+    Contributor,
 
-        /// <summary>
-        /// The Contributor level.
-        /// </summary>
-        Contributor,
+    /// <summary>
+    /// The Free/busy Time Only level. (Can only be applied to Calendar folders).
+    /// </summary>
+    FreeBusyTimeOnly,
 
-        /// <summary>
-        /// The Free/busy Time Only level. (Can only be applied to Calendar folders).
-        /// </summary>
-        FreeBusyTimeOnly,
+    /// <summary>
+    /// The Free/busy Time, Subject and Location level. (Can only be applied to Calendar folders).
+    /// </summary>
+    FreeBusyTimeAndSubjectAndLocation,
 
-        /// <summary>
-        /// The Free/busy Time, Subject and Location level. (Can only be applied to Calendar folders).
-        /// </summary>
-        FreeBusyTimeAndSubjectAndLocation,
-
-        /// <summary>
-        /// The Custom level.
-        /// </summary>
-        Custom
-    }
+    /// <summary>
+    /// The Custom level.
+    /// </summary>
+    Custom
 }

@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the external audience of an Out of Office notification.
+/// </summary>
+public enum OofExternalAudience
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// No external recipients should receive Out of Office notifications.
+    /// </summary>
+    None,
 
     /// <summary>
-    /// Defines the external audience of an Out of Office notification.
+    /// Only recipients that are in the user's Contacts frolder should receive Out of Office notifications.
     /// </summary>
-    public enum OofExternalAudience
-    {
-        /// <summary>
-        /// No external recipients should receive Out of Office notifications.
-        /// </summary>
-        None,
+    Known,
 
-        /// <summary>
-        /// Only recipients that are in the user's Contacts frolder should receive Out of Office notifications.
-        /// </summary>
-        Known,
-
-        /// <summary>
-        /// All recipients should receive Out of Office notifications.
-        /// </summary>
-        All
-    }
+    /// <summary>
+    /// All recipients should receive Out of Office notifications.
+    /// </summary>
+    All
 }

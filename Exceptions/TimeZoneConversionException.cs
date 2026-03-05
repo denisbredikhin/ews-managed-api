@@ -23,42 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Runtime.Serialization;
+
+/// <summary>
+/// Represents an error that occurs when a date and time cannot be converted from one time zone
+/// to another.
+/// </summary>
+public class TimeZoneConversionException : ServiceLocalException
 {
-    using System;
-    using System.Runtime.Serialization;
+    /// <summary>
+    /// ServiceLocalException Constructor.
+    /// </summary>
+    public TimeZoneConversionException()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents an error that occurs when a date and time cannot be converted from one time zone
-    /// to another.
+    /// ServiceLocalException Constructor.
     /// </summary>
-    public class TimeZoneConversionException : ServiceLocalException
+    /// <param name="message">Error message text.</param>
+    public TimeZoneConversionException(string message)
+        : base(message)
     {
-        /// <summary>
-        /// ServiceLocalException Constructor.
-        /// </summary>
-        public TimeZoneConversionException()
-            : base()
-        {
-        }
+    }
 
-        /// <summary>
-        /// ServiceLocalException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        public TimeZoneConversionException(string message)
-            : base(message)
-        {
-        }
-
-        /// <summary>
-        /// ServiceLocalException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public TimeZoneConversionException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+    /// <summary>
+    /// ServiceLocalException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    /// <param name="innerException">Inner exception.</param>
+    public TimeZoneConversionException(string message, Exception innerException)
+        : base(message, innerException)
+    {
 		}
 
 		/// <summary>
@@ -71,4 +71,3 @@ namespace Microsoft.Exchange.WebServices.Data
 	    {
 		}
 	}
-}

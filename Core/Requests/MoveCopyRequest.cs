@@ -23,69 +23,68 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents an abstract Move/Copy request.
+/// </summary>
+/// <typeparam name="TServiceObject">The type of the service object.</typeparam>
+/// <typeparam name="TResponse">The type of the response.</typeparam>
+internal abstract class MoveCopyRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>
+    where TServiceObject : ServiceObject
+    where TResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private FolderId destinationFolderId;
 
     /// <summary>
-    /// Represents an abstract Move/Copy request.
+    /// Validates request.
     /// </summary>
-    /// <typeparam name="TServiceObject">The type of the service object.</typeparam>
-    /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class MoveCopyRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>
-        where TServiceObject : ServiceObject
-        where TResponse : ServiceResponse
+    internal override void Validate()
     {
-        private FolderId destinationFolderId;
+        EwsUtilities.ValidateParam(this.DestinationFolderId, "DestinationFolderId");
+        this.DestinationFolderId.Validate(this.Service.RequestedServerVersion);
+    }
 
-        /// <summary>
-        /// Validates request.
-        /// </summary>
-        internal override void Validate()
-        {
-            EwsUtilities.ValidateParam(this.DestinationFolderId, "DestinationFolderId");
-            this.DestinationFolderId.Validate(this.Service.RequestedServerVersion);
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MoveCopyRequest&lt;TServiceObject, TResponse&gt;"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal MoveCopyRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MoveCopyRequest&lt;TServiceObject, TResponse&gt;"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal MoveCopyRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
-        {
-        }
+    /// <summary>
+    /// Writes the ids as XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal abstract void WriteIdsToXml(EwsServiceXmlWriter writer);
 
-        /// <summary>
-        /// Writes the ids as XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal abstract void WriteIdsToXml(EwsServiceXmlWriter writer);
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ToFolderId);
+        this.DestinationFolderId.WriteToXml(writer);
+        writer.WriteEndElement();
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ToFolderId);
-            this.DestinationFolderId.WriteToXml(writer);
-            writer.WriteEndElement();
+        this.WriteIdsToXml(writer);
+    }
 
-            this.WriteIdsToXml(writer);
-        }
-
-        /// <summary>
-        /// Gets or sets the destination folder id.
-        /// </summary>
-        /// <value>The destination folder id.</value>
-        public FolderId DestinationFolderId
-        {
-            get { return this.destinationFolderId; }
-            set { this.destinationFolderId = value; }
-        }
+    /// <summary>
+    /// Gets or sets the destination folder id.
+    /// </summary>
+    /// <value>The destination folder id.</value>
+    public FolderId DestinationFolderId
+    {
+        get { return this.destinationFolderId; }
+        set { this.destinationFolderId = value; }
     }
 }

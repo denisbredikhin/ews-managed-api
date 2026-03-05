@@ -23,24 +23,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Dns
-{
-    using System;
-    using System.ComponentModel;
+namespace Microsoft.Exchange.WebServices.Dns;
+
+using System;
+using System.ComponentModel;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents an error that occurs when performing a DNS operation.
+/// </summary>
+internal class DnsException : Win32Exception
+{
     /// <summary>
-    /// Represents an error that occurs when performing a DNS operation.
+    /// Initializes a new instance of the <see cref="DnsException"/> class.
     /// </summary>
-    internal class DnsException : Win32Exception
+    /// <param name="errorCode">The error code.</param>
+    internal DnsException(int errorCode)
+        : base(errorCode)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DnsException"/> class.
-        /// </summary>
-        /// <param name="errorCode">The error code.</param>
-        internal DnsException(int errorCode)
-            : base(errorCode)
-        {
 		}
 
 		/// <summary>
@@ -53,4 +53,3 @@ namespace Microsoft.Exchange.WebServices.Dns
 		{
 		}
 	}
-}

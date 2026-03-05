@@ -23,65 +23,64 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Identifies the user configuration dictionary key and value types.
+/// </summary>
+public enum UserConfigurationDictionaryObjectType
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// DateTime type.
+    /// </summary>
+    DateTime,
 
     /// <summary>
-    /// Identifies the user configuration dictionary key and value types.
+    /// Boolean type.
     /// </summary>
-    public enum UserConfigurationDictionaryObjectType
-    {
-        /// <summary>
-        /// DateTime type.
-        /// </summary>
-        DateTime,
+    Boolean,
 
-        /// <summary>
-        /// Boolean type.
-        /// </summary>
-        Boolean,
+    /// <summary>
+    /// Byte type.
+    /// </summary>
+    Byte,
 
-        /// <summary>
-        /// Byte type.
-        /// </summary>
-        Byte,
+    /// <summary>
+    /// String type.
+    /// </summary>
+    String,
 
-        /// <summary>
-        /// String type.
-        /// </summary>
-        String,
+    /// <summary>
+    /// 32-bit integer type.
+    /// </summary>
+    Integer32,
 
-        /// <summary>
-        /// 32-bit integer type.
-        /// </summary>
-        Integer32,
+    /// <summary>
+    /// 32-bit unsigned integer type.
+    /// </summary>
+    UnsignedInteger32,
 
-        /// <summary>
-        /// 32-bit unsigned integer type.
-        /// </summary>
-        UnsignedInteger32,
+    /// <summary>
+    /// 64-bit integer type.
+    /// </summary>
+    Integer64,
 
-        /// <summary>
-        /// 64-bit integer type.
-        /// </summary>
-        Integer64,
+    /// <summary>
+    /// 64-bit unsigned integer type.
+    /// </summary>
+    UnsignedInteger64,
 
-        /// <summary>
-        /// 64-bit unsigned integer type.
-        /// </summary>
-        UnsignedInteger64,
+    /// <summary>
+    /// String array type.
+    /// </summary>
+    StringArray,
 
-        /// <summary>
-        /// String array type.
-        /// </summary>
-        StringArray,
-
-        /// <summary>
-        /// Byte array type
-        /// </summary>
-        ByteArray,
-    }
+    /// <summary>
+    /// Byte array type
+    /// </summary>
+    ByteArray,
 }

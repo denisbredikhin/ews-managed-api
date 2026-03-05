@@ -23,45 +23,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Net;
+using System.Net.Http;
+
+/// <summary>
+/// Represents an implementation of IEwsHttpWebRequestFactory using EwsHttpWebRequest.
+/// </summary>
+internal class EwsHttpWebRequestFactory : IEwsHttpWebRequestFactory
 {
-    using System;
-    using System.Net;
-    using System.Net.Http;
+    #region IEwsHttpWebRequestFactory Members
 
     /// <summary>
-    /// Represents an implementation of IEwsHttpWebRequestFactory using EwsHttpWebRequest.
+    /// Create a new instance of <see cref="EwsHttpWebRequest"/>.
     /// </summary>
-    internal class EwsHttpWebRequestFactory : IEwsHttpWebRequestFactory
+    /// <param name="uri">The service URI.</param>
+    /// <returns>An instance of <see cref="IEwsHttpWebRequest"/>./// </returns>
+    IEwsHttpWebRequest IEwsHttpWebRequestFactory.CreateRequest(Uri uri)
     {
-        #region IEwsHttpWebRequestFactory Members
-
-        /// <summary>
-        /// Create a new instance of <see cref="EwsHttpWebRequest"/>.
-        /// </summary>
-        /// <param name="uri">The service URI.</param>
-        /// <returns>An instance of <see cref="IEwsHttpWebRequest"/>./// </returns>
-        IEwsHttpWebRequest IEwsHttpWebRequestFactory.CreateRequest(Uri uri)
-        {
-            return new EwsHttpWebRequest(uri);
-        }
-
-        /// <summary>
-        /// Creates response from a EwsHttpClientException.
-        /// </summary>
-        /// <param name="exception">The exception.</param>
-        /// <returns>Instance of IEwsHttpWebResponse.</returns>
-        IEwsHttpWebResponse IEwsHttpWebRequestFactory.CreateExceptionResponse(EwsHttpClientException exception)
-        {
-            EwsUtilities.ValidateParam(exception, "exception");
-
-            if (exception.Response == null)
-            {
-                throw new InvalidOperationException("The exception does not contain response.");
-            }
-
-            return new EwsHttpWebResponse(exception.Response);
-        }
-        #endregion
+        return new EwsHttpWebRequest(uri);
     }
+
+    /// <summary>
+    /// Creates response from a EwsHttpClientException.
+    /// </summary>
+    /// <param name="exception">The exception.</param>
+    /// <returns>Instance of IEwsHttpWebResponse.</returns>
+    IEwsHttpWebResponse IEwsHttpWebRequestFactory.CreateExceptionResponse(EwsHttpClientException exception)
+    {
+        EwsUtilities.ValidateParam(exception, "exception");
+
+        if (exception.Response == null)
+        {
+            throw new InvalidOperationException("The exception does not contain response.");
+        }
+
+        return new EwsHttpWebResponse(exception.Response);
+    }
+    #endregion
 }

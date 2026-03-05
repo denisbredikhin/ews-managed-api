@@ -23,25 +23,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Determines items to be included in a SyncFolderItems response.
+/// </summary>
+public enum SyncFolderItemsScope
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Include only normal items in the response.
+    /// </summary>
+    NormalItems,
 
     /// <summary>
-    /// Determines items to be included in a SyncFolderItems response.
+    /// Include normal and associated items in the response.
     /// </summary>
-    public enum SyncFolderItemsScope
-    {
-        /// <summary>
-        /// Include only normal items in the response.
-        /// </summary>
-        NormalItems,
-
-        /// <summary>
-        /// Include normal and associated items in the response.
-        /// </summary>
-        NormalAndAssociatedItems
-    }
+    NormalAndAssociatedItems
 }

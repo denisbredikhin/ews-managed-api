@@ -23,93 +23,92 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents the base class for Id expressed in a specific format.
+/// </summary>
+public abstract class AlternateIdBase : ISelfValidate
 {
     /// <summary>
-    /// Represents the base class for Id expressed in a specific format.
+    /// Initializes a new instance of the <see cref="AlternateIdBase"/> class.
     /// </summary>
-    public abstract class AlternateIdBase : ISelfValidate
+    internal AlternateIdBase()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AlternateIdBase"/> class.
-        /// </summary>
-        internal AlternateIdBase()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AlternateIdBase"/> class.
-        /// </summary>
-        /// <param name="format">The format.</param>
-        internal AlternateIdBase(IdFormat format)
-            : this()
-        {
-            this.Format = format;
-        }
-
-        /// <summary>
-        /// Gets or sets the format in which the Id in expressed.
-        /// </summary>
-        public IdFormat Format
-        {
-            get; set;
-        }
-
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal abstract string GetXmlElementName();
-
-        /// <summary>
-        /// Writes the attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal virtual void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteAttributeValue(XmlAttributeNames.Format, this.Format);
-        }
-
-        /// <summary>
-        /// Loads the attributes from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal virtual void LoadAttributesFromXml(EwsServiceXmlReader reader)
-        {
-            this.Format = reader.ReadAttributeValue<IdFormat>(XmlAttributeNames.Format);
-        }
-
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal void WriteToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteStartElement(XmlNamespace.Types, this.GetXmlElementName());
-
-            this.WriteAttributesToXml(writer);
-
-            writer.WriteEndElement(); // this.GetXmlElementName()
-        }
-
-        /// <summary>
-        /// Validate this instance.
-        /// </summary>
-        internal virtual void InternalValidate()
-        {
-            // nothing to do.
-        }
-
-        #region ISelfValidate Members
-
-        /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        void ISelfValidate.Validate()
-        {
-            this.InternalValidate();
-        }
-
-        #endregion
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AlternateIdBase"/> class.
+    /// </summary>
+    /// <param name="format">The format.</param>
+    internal AlternateIdBase(IdFormat format)
+        : this()
+    {
+        this.Format = format;
+    }
+
+    /// <summary>
+    /// Gets or sets the format in which the Id in expressed.
+    /// </summary>
+    public IdFormat Format
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal abstract string GetXmlElementName();
+
+    /// <summary>
+    /// Writes the attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal virtual void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteAttributeValue(XmlAttributeNames.Format, this.Format);
+    }
+
+    /// <summary>
+    /// Loads the attributes from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal virtual void LoadAttributesFromXml(EwsServiceXmlReader reader)
+    {
+        this.Format = reader.ReadAttributeValue<IdFormat>(XmlAttributeNames.Format);
+    }
+
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal void WriteToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Types, this.GetXmlElementName());
+
+        this.WriteAttributesToXml(writer);
+
+        writer.WriteEndElement(); // this.GetXmlElementName()
+    }
+
+    /// <summary>
+    /// Validate this instance.
+    /// </summary>
+    internal virtual void InternalValidate()
+    {
+        // nothing to do.
+    }
+
+    #region ISelfValidate Members
+
+    /// <summary>
+    /// Validates this instance.
+    /// </summary>
+    void ISelfValidate.Validate()
+    {
+        this.InternalValidate();
+    }
+
+    #endregion
 }

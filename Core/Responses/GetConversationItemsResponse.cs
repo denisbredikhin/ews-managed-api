@@ -23,43 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.ObjectModel;
+
+/// <summary>
+/// Represents the response to a GetConversationItems operation.
+/// </summary>
+public sealed class GetConversationItemsResponse : ServiceResponse
 {
-    using System.Collections.ObjectModel;
+    private PropertySet propertySet;
 
     /// <summary>
-    /// Represents the response to a GetConversationItems operation.
+    /// Initializes a new instance of the <see cref="GetConversationItemsResponse"/> class.
     /// </summary>
-    public sealed class GetConversationItemsResponse : ServiceResponse
+    /// <param name="propertySet">The property set.</param>
+    internal GetConversationItemsResponse(PropertySet propertySet)
+        : base()
     {
-        private PropertySet propertySet;
+        this.propertySet = propertySet;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetConversationItemsResponse"/> class.
-        /// </summary>
-        /// <param name="propertySet">The property set.</param>
-        internal GetConversationItemsResponse(PropertySet propertySet)
-            : base()
-        {
-            this.propertySet = propertySet;
-        }
+    /// <summary>
+    /// Gets or sets the conversation.
+    /// </summary>
+    /// <value>The conversation.</value>
+    public ConversationResponse Conversation { get; set; }
 
-        /// <summary>
-        /// Gets or sets the conversation.
-        /// </summary>
-        /// <value>The conversation.</value>
-        public ConversationResponse Conversation { get; set; }
+    /// <summary>
+    /// Read Conversations from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        this.Conversation = new ConversationResponse(this.propertySet);
 
-        /// <summary>
-        /// Read Conversations from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            this.Conversation = new ConversationResponse(this.propertySet);
-
-            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.Conversation);
-            this.Conversation.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.Conversation);
-        }
+        reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.Conversation);
+        this.Conversation.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.Conversation);
     }
 }

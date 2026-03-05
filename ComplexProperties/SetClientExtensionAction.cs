@@ -23,61 +23,60 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents the SetClientExtension method action.
+/// </summary>
+public sealed class SetClientExtensionAction : ComplexProperty
 {
-    using System;
+    private readonly SetClientExtensionActionId setClientExtensionActionId;
+    private readonly string extensionId;
+    private readonly ClientExtension clientExtension;
 
     /// <summary>
-    /// Represents the SetClientExtension method action.
+    /// Initializes a new instance of the <see cref="SetClientExtensionAction"/> class.
     /// </summary>
-    public sealed class SetClientExtensionAction : ComplexProperty
+    /// <param name="setClientExtensionActionId">Set action such as install, uninstall and configure</param>
+    /// <param name="extensionId">ExtensionId, required by configure and uninstall actions</param>
+    /// <param name="clientExtension">Extension data object, e.g. required by configure action</param>
+    public SetClientExtensionAction(
+        SetClientExtensionActionId setClientExtensionActionId,
+        string extensionId,
+        ClientExtension clientExtension)
+            : base()
     {
-        private readonly SetClientExtensionActionId setClientExtensionActionId;
-        private readonly string extensionId;
-        private readonly ClientExtension clientExtension;
+        this.Namespace = XmlNamespace.Types;
+        this.setClientExtensionActionId = setClientExtensionActionId;
+        this.extensionId = extensionId;
+        this.clientExtension = clientExtension;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetClientExtensionAction"/> class.
-        /// </summary>
-        /// <param name="setClientExtensionActionId">Set action such as install, uninstall and configure</param>
-        /// <param name="extensionId">ExtensionId, required by configure and uninstall actions</param>
-        /// <param name="clientExtension">Extension data object, e.g. required by configure action</param>
-        public SetClientExtensionAction(
-            SetClientExtensionActionId setClientExtensionActionId,
-            string extensionId,
-            ClientExtension clientExtension)
-                : base()
+    /// <summary>
+    /// Writes attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteAttributeValue(XmlAttributeNames.SetClientExtensionActionId, this.setClientExtensionActionId);
+
+        if (!string.IsNullOrEmpty(this.extensionId))
         {
-            this.Namespace = XmlNamespace.Types;
-            this.setClientExtensionActionId = setClientExtensionActionId;
-            this.extensionId = extensionId;
-            this.clientExtension = clientExtension;
+            writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionId, this.extensionId);
         }
+    }
 
-        /// <summary>
-        /// Writes attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        if (null != this.clientExtension)
         {
-            writer.WriteAttributeValue(XmlAttributeNames.SetClientExtensionActionId, this.setClientExtensionActionId);
-
-            if (!string.IsNullOrEmpty(this.extensionId))
-            {
-                writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionId, this.extensionId);
-            }
-        }
-
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            if (null != this.clientExtension)
-            {
-                this.clientExtension.WriteToXml(writer, XmlNamespace.Types, XmlElementNames.ClientExtension);
-            }
+            this.clientExtension.WriteToXml(writer, XmlNamespace.Types, XmlElementNames.ClientExtension);
         }
     }
 }

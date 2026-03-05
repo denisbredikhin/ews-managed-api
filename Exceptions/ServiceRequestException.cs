@@ -23,41 +23,41 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Runtime.Serialization;
+
+/// <summary>
+/// Represents an error that occurs when a service operation request fails (e.g. connection error).
+/// </summary>
+public class ServiceRequestException : ServiceRemoteException
 {
-    using System;
-    using System.Runtime.Serialization;
+    /// <summary>
+    /// ServiceRequestException Constructor.
+    /// </summary>
+    public ServiceRequestException()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents an error that occurs when a service operation request fails (e.g. connection error).
+    /// ServiceRequestException Constructor.
     /// </summary>
-    public class ServiceRequestException : ServiceRemoteException
+    /// <param name="message">Error message text.</param>
+    public ServiceRequestException(string message)
+        : base(message)
     {
-        /// <summary>
-        /// ServiceRequestException Constructor.
-        /// </summary>
-        public ServiceRequestException()
-            : base()
-        {
-        }
+    }
 
-        /// <summary>
-        /// ServiceRequestException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        public ServiceRequestException(string message)
-            : base(message)
-        {
-        }
-
-        /// <summary>
-        /// ServiceRequestException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public ServiceRequestException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+    /// <summary>
+    /// ServiceRequestException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    /// <param name="innerException">Inner exception.</param>
+    public ServiceRequestException(string message, Exception innerException)
+        : base(message, innerException)
+    {
 		}
 
 		/// <summary>
@@ -70,4 +70,3 @@ namespace Microsoft.Exchange.WebServices.Data
 	    {
 		}
 	}
-}

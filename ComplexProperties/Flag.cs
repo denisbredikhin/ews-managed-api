@@ -23,142 +23,141 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Encapsulates information on the occurrence of a recurring appointment.
+/// </summary>
+public sealed class Flag : ComplexProperty
 {
-    using System;
+    private ItemFlagStatus flagStatus;
+    private DateTime startDate;
+    private DateTime dueDate;
+    private DateTime completeDate;
 
     /// <summary>
-    /// Encapsulates information on the occurrence of a recurring appointment.
+    /// Initializes a new instance of the <see cref="Flag"/> class.
     /// </summary>
-    public sealed class Flag : ComplexProperty
+    public Flag()
     {
-        private ItemFlagStatus flagStatus;
-        private DateTime startDate;
-        private DateTime dueDate;
-        private DateTime completeDate;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Flag"/> class.
-        /// </summary>
-        public Flag()
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
+            case XmlElementNames.FlagStatus:
+                this.flagStatus = reader.ReadElementValue<ItemFlagStatus>();
+                return true;
+            case XmlElementNames.StartDate:
+                this.startDate = reader.ReadElementValueAsDateTime().Value;
+                return true;
+            case XmlElementNames.DueDate:
+                this.dueDate = reader.ReadElementValueAsDateTime().Value;
+                return true;
+            case XmlElementNames.CompleteDate:
+                this.completeDate = reader.ReadElementValueAsDateTime().Value;
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.FlagStatus, this.FlagStatus);
+
+        if (this.FlagStatus == ItemFlagStatus.Flagged)
+        {
+            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.StartDate, this.StartDate);
+            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.DueDate, this.DueDate);
+        }
+        else if (this.FlagStatus == ItemFlagStatus.Complete)
+        {
+            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.CompleteDate, this.CompleteDate);
+        }
+    }
+
+    /// <summary>
+    /// Validates this instance.
+    /// </summary>
+    internal void Validate()
+    {
+        EwsUtilities.ValidateParam(this.flagStatus, "FlagStatus");
+    }
+
+    /// <summary>
+    /// Gets or sets the flag status.
+    /// </summary>
+    public ItemFlagStatus FlagStatus
+    {
+        get
+        {
+            return this.flagStatus;
         }
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+        set
         {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.FlagStatus:
-                    this.flagStatus = reader.ReadElementValue<ItemFlagStatus>();
-                    return true;
-                case XmlElementNames.StartDate:
-                    this.startDate = reader.ReadElementValueAsDateTime().Value;
-                    return true;
-                case XmlElementNames.DueDate:
-                    this.dueDate = reader.ReadElementValueAsDateTime().Value;
-                    return true;
-                case XmlElementNames.CompleteDate:
-                    this.completeDate = reader.ReadElementValueAsDateTime().Value;
-                    return true;
-                default:
-                    return false;
-            }
+            this.SetFieldValue<ItemFlagStatus>(ref this.flagStatus, value);
+        }
+    }
+
+    /// <summary>
+    /// Gets the start date.
+    /// </summary>
+    public DateTime StartDate
+    {
+        get 
+        { 
+            return this.startDate; 
         }
 
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        set
         {
-            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.FlagStatus, this.FlagStatus);
+            this.SetFieldValue<DateTime>(ref this.startDate, value);
+        }
+    }
 
-            if (this.FlagStatus == ItemFlagStatus.Flagged)
-            {
-                writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.StartDate, this.StartDate);
-                writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.DueDate, this.DueDate);
-            }
-            else if (this.FlagStatus == ItemFlagStatus.Complete)
-            {
-                writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.CompleteDate, this.CompleteDate);
-            }
+    /// <summary>
+    /// Gets the due date.
+    /// </summary>
+    public DateTime DueDate
+    {
+        get 
+        { 
+            return this.dueDate; 
         }
 
-        /// <summary>
-        /// Validates this instance.
-        /// </summary>
-        internal void Validate()
+        set
         {
-            EwsUtilities.ValidateParam(this.flagStatus, "FlagStatus");
+            this.SetFieldValue<DateTime>(ref this.dueDate, value);
+        }
+    }
+
+    /// <summary>
+    /// Gets the complete date.
+    /// </summary>
+    public DateTime CompleteDate
+    {
+        get 
+        { 
+            return this.completeDate; 
         }
 
-        /// <summary>
-        /// Gets or sets the flag status.
-        /// </summary>
-        public ItemFlagStatus FlagStatus
+        set
         {
-            get
-            {
-                return this.flagStatus;
-            }
-
-            set
-            {
-                this.SetFieldValue<ItemFlagStatus>(ref this.flagStatus, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets the start date.
-        /// </summary>
-        public DateTime StartDate
-        {
-            get 
-            { 
-                return this.startDate; 
-            }
-
-            set
-            {
-                this.SetFieldValue<DateTime>(ref this.startDate, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets the due date.
-        /// </summary>
-        public DateTime DueDate
-        {
-            get 
-            { 
-                return this.dueDate; 
-            }
-
-            set
-            {
-                this.SetFieldValue<DateTime>(ref this.dueDate, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets the complete date.
-        /// </summary>
-        public DateTime CompleteDate
-        {
-            get 
-            { 
-                return this.completeDate; 
-            }
-
-            set
-            {
-                this.SetFieldValue<DateTime>(ref this.completeDate, value);
-            }
+            this.SetFieldValue<DateTime>(ref this.completeDate, value);
         }
     }
 }

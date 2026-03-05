@@ -23,23 +23,23 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
+namespace Microsoft.Exchange.WebServices.Data;
+
 	using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents an error that occurs when a service operation fails remotely.
+/// </summary>
+public class ServiceRemoteException : Exception
+{
     /// <summary>
-    /// Represents an error that occurs when a service operation fails remotely.
+    /// ServiceRemoteException Constructor.
     /// </summary>
-    public class ServiceRemoteException : Exception
+    public ServiceRemoteException()
+        : base()
     {
-        /// <summary>
-        /// ServiceRemoteException Constructor.
-        /// </summary>
-        public ServiceRemoteException()
-            : base()
-        {
-        }
+    }
 
 		/// <summary>
 		/// ServiceRemoteException Constructor.
@@ -70,4 +70,3 @@ namespace Microsoft.Exchange.WebServices.Data
 	    {
 		}
 	}
-}

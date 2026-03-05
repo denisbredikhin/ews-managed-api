@@ -7,68 +7,67 @@
 //-----------------------------------------------------------------------
 // <summary>Implements the class for computed insight value property.</summary>
 //-----------------------------------------------------------------------
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents a computed insight value.
+/// </summary>
+public sealed class ComputedInsightValueProperty : ComplexProperty
 {
+    private string key;
+    private string value;
+    
     /// <summary>
-    /// Represents a computed insight value.
+    /// Gets or sets the Key
     /// </summary>
-    public sealed class ComputedInsightValueProperty : ComplexProperty
+    public string Key
     {
-        private string key;
-        private string value;
-        
-        /// <summary>
-        /// Gets or sets the Key
-        /// </summary>
-        public string Key
+        get
         {
-            get
-            {
-                return this.key;
-            }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.key, value);
-            }
+            return this.key;
         }
 
-        /// <summary>
-        /// Gets or sets the Value
-        /// </summary>
-        public string Value
+        set
         {
-            get
-            {
-                return this.value;
-            }
+            this.SetFieldValue<string>(ref this.key, value);
+        }
+    }
 
-            set
-            {
-                this.SetFieldValue<string>(ref this.value, value);
-            }
+    /// <summary>
+    /// Gets or sets the Value
+    /// </summary>
+    public string Value
+    {
+        get
+        {
+            return this.value;
         }
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">XML reader</param>
-        /// <returns>Whether the element was read</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+        set
         {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.Key:
-                    this.Key = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.Value:
-                    this.Value = reader.ReadElementValue();
-                    break;
-                default:
-                    return false;
-            }
-
-            return true;
+            this.SetFieldValue<string>(ref this.value, value);
         }
+    }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">XML reader</param>
+    /// <returns>Whether the element was read</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
+        {
+            case XmlElementNames.Key:
+                this.Key = reader.ReadElementValue();
+                break;
+            case XmlElementNames.Value:
+                this.Value = reader.ReadElementValue();
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 }

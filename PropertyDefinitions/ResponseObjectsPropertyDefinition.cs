@@ -23,136 +23,135 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+/// <summary>
+/// Represents response object property defintion.
+/// </summary>
+internal sealed class ResponseObjectsPropertyDefinition : PropertyDefinition
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ResponseObjectsPropertyDefinition"/> class.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="version">The version.</param>
+    internal ResponseObjectsPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        ExchangeVersion version)
+        : base(
+            xmlElementName,
+            uri,
+            version)
+    {
+    }
 
     /// <summary>
-    /// Represents response object property defintion.
+    /// Loads from XML.
     /// </summary>
-    internal sealed class ResponseObjectsPropertyDefinition : PropertyDefinition
+    /// <param name="reader">The reader.</param>
+    /// <param name="propertyBag">The property bag.</param>
+    internal override sealed void LoadPropertyValueFromXml(EwsServiceXmlReader reader, PropertyBag propertyBag)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResponseObjectsPropertyDefinition"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="version">The version.</param>
-        internal ResponseObjectsPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            ExchangeVersion version)
-            : base(
-                xmlElementName,
-                uri,
-                version)
+        ResponseActions value = ResponseActions.None;
+
+        reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, this.XmlElementName);
+
+        if (!reader.IsEmptyElement)
         {
-        }
-
-        /// <summary>
-        /// Loads from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        internal override sealed void LoadPropertyValueFromXml(EwsServiceXmlReader reader, PropertyBag propertyBag)
-        {
-            ResponseActions value = ResponseActions.None;
-
-            reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, this.XmlElementName);
-
-            if (!reader.IsEmptyElement)
+            do
             {
-                do
+                reader.Read();
+
+                if (reader.IsStartElement())
                 {
-                    reader.Read();
-
-                    if (reader.IsStartElement())
-                    {
-                        value |= GetResponseAction(reader.LocalName);
-                    }
+                    value |= GetResponseAction(reader.LocalName);
                 }
-                while (!reader.IsEndElement(XmlNamespace.Types, this.XmlElementName));
             }
-
-            propertyBag[this] = value;
+            while (!reader.IsEndElement(XmlNamespace.Types, this.XmlElementName));
         }
 
-        /// <summary>
-        /// Gets the response action.
-        /// </summary>
-        /// <param name="responseActionString">The response action string.</param>
-        /// <returns></returns>
-        private static ResponseActions GetResponseAction(string responseActionString)
+        propertyBag[this] = value;
+    }
+
+    /// <summary>
+    /// Gets the response action.
+    /// </summary>
+    /// <param name="responseActionString">The response action string.</param>
+    /// <returns></returns>
+    private static ResponseActions GetResponseAction(string responseActionString)
+    {
+        ResponseActions value = ResponseActions.None;
+
+        switch (responseActionString)
         {
-            ResponseActions value = ResponseActions.None;
-
-            switch (responseActionString)
-            {
-                case XmlElementNames.AcceptItem:
-                    value = ResponseActions.Accept;
-                    break;
-                case XmlElementNames.TentativelyAcceptItem:
-                    value = ResponseActions.TentativelyAccept;
-                    break;
-                case XmlElementNames.DeclineItem:
-                    value = ResponseActions.Decline;
-                    break;
-                case XmlElementNames.ReplyToItem:
-                    value = ResponseActions.Reply;
-                    break;
-                case XmlElementNames.ForwardItem:
-                    value = ResponseActions.Forward;
-                    break;
-                case XmlElementNames.ReplyAllToItem:
-                    value = ResponseActions.ReplyAll;
-                    break;
-                case XmlElementNames.CancelCalendarItem:
-                    value = ResponseActions.Cancel;
-                    break;
-                case XmlElementNames.RemoveItem:
-                    value = ResponseActions.RemoveFromCalendar;
-                    break;
-                case XmlElementNames.SuppressReadReceipt:
-                    value = ResponseActions.SuppressReadReceipt;
-                    break;
-                case XmlElementNames.PostReplyItem:
-                    value = ResponseActions.PostReply;
-                    break;
-            }
-            return value;
+            case XmlElementNames.AcceptItem:
+                value = ResponseActions.Accept;
+                break;
+            case XmlElementNames.TentativelyAcceptItem:
+                value = ResponseActions.TentativelyAccept;
+                break;
+            case XmlElementNames.DeclineItem:
+                value = ResponseActions.Decline;
+                break;
+            case XmlElementNames.ReplyToItem:
+                value = ResponseActions.Reply;
+                break;
+            case XmlElementNames.ForwardItem:
+                value = ResponseActions.Forward;
+                break;
+            case XmlElementNames.ReplyAllToItem:
+                value = ResponseActions.ReplyAll;
+                break;
+            case XmlElementNames.CancelCalendarItem:
+                value = ResponseActions.Cancel;
+                break;
+            case XmlElementNames.RemoveItem:
+                value = ResponseActions.RemoveFromCalendar;
+                break;
+            case XmlElementNames.SuppressReadReceipt:
+                value = ResponseActions.SuppressReadReceipt;
+                break;
+            case XmlElementNames.PostReplyItem:
+                value = ResponseActions.PostReply;
+                break;
         }
+        return value;
+    }
 
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <param name="isUpdateOperation">Indicates whether the context is an update operation.</param>
-        internal override void WritePropertyValueToXml(
-            EwsServiceXmlWriter writer,
-            PropertyBag propertyBag,
-            bool isUpdateOperation)
-        {
-            // ResponseObjects is a read-only property, no need to implement this.
-        }
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="propertyBag">The property bag.</param>
+    /// <param name="isUpdateOperation">Indicates whether the context is an update operation.</param>
+    internal override void WritePropertyValueToXml(
+        EwsServiceXmlWriter writer,
+        PropertyBag propertyBag,
+        bool isUpdateOperation)
+    {
+        // ResponseObjects is a read-only property, no need to implement this.
+    }
 
-        /// <summary>
-        /// Gets a value indicating whether this property definition is for a nullable type (ref, int?, bool?...).
-        /// </summary>
-        internal override bool IsNullable
-        {
-            get { return false; }
-        }
+    /// <summary>
+    /// Gets a value indicating whether this property definition is for a nullable type (ref, int?, bool?...).
+    /// </summary>
+    internal override bool IsNullable
+    {
+        get { return false; }
+    }
 
-        /// <summary>
-        /// Gets the property type.
-        /// </summary>
-        public override Type Type
-        {
-            get { return typeof(ResponseActions); }
-        }
+    /// <summary>
+    /// Gets the property type.
+    /// </summary>
+    public override Type Type
+    {
+        get { return typeof(ResponseActions); }
     }
 }

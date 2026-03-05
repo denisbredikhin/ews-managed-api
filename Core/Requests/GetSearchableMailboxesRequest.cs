@@ -23,95 +23,94 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a GetSearchableMailboxesRequest request.
+/// </summary>
+internal sealed class GetSearchableMailboxesRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetSearchableMailboxesRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    internal GetSearchableMailboxesRequest(ExchangeService service)
+        : base(service)
+    {
+    }
 
     /// <summary>
-    /// Represents a GetSearchableMailboxesRequest request.
+    /// Gets the name of the response XML element.
     /// </summary>
-    internal sealed class GetSearchableMailboxesRequest : SimpleServiceRequestBase
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetSearchableMailboxesRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal GetSearchableMailboxesRequest(ExchangeService service)
-            : base(service)
-        {
-        }
-
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.GetSearchableMailboxesResponse;
-        }
-
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.GetSearchableMailboxes;
-        }
-
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            GetSearchableMailboxesResponse response = new GetSearchableMailboxesResponse();
-            response.LoadFromXml(reader, this.GetResponseXmlElementName());
-            return response;
-        }
-
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.SearchFilter, this.SearchFilter ?? string.Empty);
-            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.ExpandGroupMembership, this.ExpandGroupMembership.ToString().ToLower());
-        }
-
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2013;
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<GetSearchableMailboxesResponse> Execute(CancellationToken token)
-        {
-            GetSearchableMailboxesResponse serviceResponse = (GetSearchableMailboxesResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-            return serviceResponse;
-        }
-
-        /// <summary>
-        /// Search filter
-        /// </summary>
-        public string SearchFilter { get; set; }
-
-        /// <summary>
-        /// Expand group membership
-        /// </summary>
-        public bool ExpandGroupMembership { get; set; }
+        return XmlElementNames.GetSearchableMailboxesResponse;
     }
+
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.GetSearchableMailboxes;
+    }
+
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        GetSearchableMailboxesResponse response = new GetSearchableMailboxesResponse();
+        response.LoadFromXml(reader, this.GetResponseXmlElementName());
+        return response;
+    }
+
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.SearchFilter, this.SearchFilter ?? string.Empty);
+        writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.ExpandGroupMembership, this.ExpandGroupMembership.ToString().ToLower());
+    }
+
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2013;
+    }
+
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<GetSearchableMailboxesResponse> Execute(CancellationToken token)
+    {
+        GetSearchableMailboxesResponse serviceResponse = (GetSearchableMailboxesResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
+        return serviceResponse;
+    }
+
+    /// <summary>
+    /// Search filter
+    /// </summary>
+    public string SearchFilter { get; set; }
+
+    /// <summary>
+    /// Expand group membership
+    /// </summary>
+    public bool ExpandGroupMembership { get; set; }
 }

@@ -23,106 +23,105 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a folder containing task items.
+/// </summary>
+[ServiceObjectDefinition(XmlElementNames.TasksFolder)]
+public class TasksFolder : Folder
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    /// <summary>
+    /// Initializes an unsaved local instance of <see cref="TasksFolder"/>. To bind to an existing tasks folder, use TasksFolder.Bind() instead.
+    /// </summary>
+    /// <param name="service">The ExchangeService object to which the tasks folder will be bound.</param>
+    public TasksFolder(ExchangeService service)
+        : base(service)
+    {
+    }
 
     /// <summary>
-    /// Represents a folder containing task items.
+    /// Binds to an existing tasks folder and loads the specified set of properties.
+    /// Calling this method results in a call to EWS.
     /// </summary>
-    [ServiceObjectDefinition(XmlElementNames.TasksFolder)]
-    public class TasksFolder : Folder
+    /// <param name="service">The service to use to bind to the tasks folder.</param>
+    /// <param name="id">The Id of the tasks folder to bind to.</param>
+    /// <param name="propertySet">The set of properties to load.</param>
+    /// <returns>A TasksFolder instance representing the task folder corresponding to the specified Id.</returns>
+    public static new Task<TasksFolder> Bind(
+        ExchangeService service,
+        FolderId id,
+        PropertySet propertySet,
+        CancellationToken token = default(CancellationToken))
     {
-        /// <summary>
-        /// Initializes an unsaved local instance of <see cref="TasksFolder"/>. To bind to an existing tasks folder, use TasksFolder.Bind() instead.
-        /// </summary>
-        /// <param name="service">The ExchangeService object to which the tasks folder will be bound.</param>
-        public TasksFolder(ExchangeService service)
-            : base(service)
-        {
-        }
+        return service.BindToFolder<TasksFolder>(id, propertySet, token);
+    }
 
-        /// <summary>
-        /// Binds to an existing tasks folder and loads the specified set of properties.
-        /// Calling this method results in a call to EWS.
-        /// </summary>
-        /// <param name="service">The service to use to bind to the tasks folder.</param>
-        /// <param name="id">The Id of the tasks folder to bind to.</param>
-        /// <param name="propertySet">The set of properties to load.</param>
-        /// <returns>A TasksFolder instance representing the task folder corresponding to the specified Id.</returns>
-        public static new Task<TasksFolder> Bind(
-            ExchangeService service,
-            FolderId id,
-            PropertySet propertySet,
-            CancellationToken token = default(CancellationToken))
-        {
-            return service.BindToFolder<TasksFolder>(id, propertySet, token);
-        }
+    /// <summary>
+    /// Binds to an existing tasks folder and loads its first class properties.
+    /// Calling this method results in a call to EWS.
+    /// </summary>
+    /// <param name="service">The service to use to bind to the tasks folder.</param>
+    /// <param name="id">The Id of the tasks folder to bind to.</param>
+    /// <returns>A TasksFolder instance representing the task folder corresponding to the specified Id.</returns>
+    public static new Task<TasksFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default(CancellationToken))
+    {
+        return TasksFolder.Bind(
+            service,
+            id,
+            PropertySet.FirstClassProperties,
+            token);
+    }
 
-        /// <summary>
-        /// Binds to an existing tasks folder and loads its first class properties.
-        /// Calling this method results in a call to EWS.
-        /// </summary>
-        /// <param name="service">The service to use to bind to the tasks folder.</param>
-        /// <param name="id">The Id of the tasks folder to bind to.</param>
-        /// <returns>A TasksFolder instance representing the task folder corresponding to the specified Id.</returns>
-        public static new Task<TasksFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default(CancellationToken))
-        {
-            return TasksFolder.Bind(
-                service,
-                id,
-                PropertySet.FirstClassProperties,
-                token);
-        }
+    /// <summary>
+    /// Binds to an existing tasks folder and loads the specified set of properties.
+    /// Calling this method results in a call to EWS.
+    /// </summary>
+    /// <param name="service">The service to use to bind to the tasks folder.</param>
+    /// <param name="name">The name of the tasks folder to bind to.</param>
+    /// <param name="propertySet">The set of properties to load.</param>
+    /// <returns>A TasksFolder instance representing the tasks folder with the specified name.</returns>
+    public static new Task<TasksFolder> Bind(
+        ExchangeService service,
+        WellKnownFolderName name,
+        PropertySet propertySet,
+        CancellationToken token = default(CancellationToken))
+    {
+        return TasksFolder.Bind(
+            service,
+            new FolderId(name),
+            propertySet,
+            token);
+    }
 
-        /// <summary>
-        /// Binds to an existing tasks folder and loads the specified set of properties.
-        /// Calling this method results in a call to EWS.
-        /// </summary>
-        /// <param name="service">The service to use to bind to the tasks folder.</param>
-        /// <param name="name">The name of the tasks folder to bind to.</param>
-        /// <param name="propertySet">The set of properties to load.</param>
-        /// <returns>A TasksFolder instance representing the tasks folder with the specified name.</returns>
-        public static new Task<TasksFolder> Bind(
-            ExchangeService service,
-            WellKnownFolderName name,
-            PropertySet propertySet,
-            CancellationToken token = default(CancellationToken))
-        {
-            return TasksFolder.Bind(
-                service,
-                new FolderId(name),
-                propertySet,
-                token);
-        }
+    /// <summary>
+    /// Binds to an existing tasks folder and loads its first class properties.
+    /// Calling this method results in a call to EWS.
+    /// </summary>
+    /// <param name="service">The service to use to bind to the tasks folder.</param>
+    /// <param name="name">The name of the tasks folder to bind to.</param>
+    /// <returns>A TasksFolder instance representing the tasks folder with the specified name.</returns>
+    public static new Task<TasksFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default(CancellationToken))
+    {
+        return TasksFolder.Bind(
+            service,
+            new FolderId(name),
+            PropertySet.FirstClassProperties,
+            token);
+    }
 
-        /// <summary>
-        /// Binds to an existing tasks folder and loads its first class properties.
-        /// Calling this method results in a call to EWS.
-        /// </summary>
-        /// <param name="service">The service to use to bind to the tasks folder.</param>
-        /// <param name="name">The name of the tasks folder to bind to.</param>
-        /// <returns>A TasksFolder instance representing the tasks folder with the specified name.</returns>
-        public static new Task<TasksFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default(CancellationToken))
-        {
-            return TasksFolder.Bind(
-                service,
-                new FolderId(name),
-                PropertySet.FirstClassProperties,
-                token);
-        }
-
-        /// <summary>
-        /// Gets the minimum required server version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this service object type is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2007_SP1;
-        }
+    /// <summary>
+    /// Gets the minimum required server version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this service object type is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2007_SP1;
     }
 }

@@ -23,47 +23,46 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.ComponentModel;
+
+/// <summary>
+/// Represents a collection of conversation items.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public sealed class ConversationNodeCollection : ComplexPropertyCollection<ConversationNode>
 {
-    using System;
-    using System.ComponentModel;
+    private PropertySet propertySet;
 
     /// <summary>
-    /// Represents a collection of conversation items.
+    /// Initializes a new instance of the <see cref="ConversationNodeCollection"/> class.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class ConversationNodeCollection : ComplexPropertyCollection<ConversationNode>
+    /// <param name="propertySet">The property set.</param>
+    internal ConversationNodeCollection(PropertySet propertySet)
+        : base()
     {
-        private PropertySet propertySet;
+        this.propertySet = propertySet;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationNodeCollection"/> class.
-        /// </summary>
-        /// <param name="propertySet">The property set.</param>
-        internal ConversationNodeCollection(PropertySet propertySet)
-            : base()
-        {
-            this.propertySet = propertySet;
-        }
+    /// <summary>
+    /// Creates the complex property.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <returns>ConversationItem.</returns>
+    internal override ConversationNode CreateComplexProperty(string xmlElementName)
+    {
+        return new ConversationNode(this.propertySet);
+    }
 
-        /// <summary>
-        /// Creates the complex property.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <returns>ConversationItem.</returns>
-        internal override ConversationNode CreateComplexProperty(string xmlElementName)
-        {
-            return new ConversationNode(this.propertySet);
-        }
-
-        /// <summary>
-        /// Gets the name of the collection item XML element.
-        /// </summary>
-        /// <param name="complexProperty">The complex property.</param>
-        /// <returns>XML element name.</returns>
-        internal override string GetCollectionItemXmlElementName(ConversationNode complexProperty)
-        {
-            return complexProperty.GetXmlElementName();
-        }
+    /// <summary>
+    /// Gets the name of the collection item XML element.
+    /// </summary>
+    /// <param name="complexProperty">The complex property.</param>
+    /// <returns>XML element name.</returns>
+    internal override string GetCollectionItemXmlElementName(ConversationNode complexProperty)
+    {
+        return complexProperty.GetXmlElementName();
     }
 }

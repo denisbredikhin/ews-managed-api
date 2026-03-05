@@ -23,73 +23,72 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// Represents the collection of profile insight values. 
+/// </summary>
+public sealed class ProfileInsightValueCollection : ComplexPropertyCollection<ProfileInsightValue>
 {
-    using System;
-    using System.Collections.Generic;
+    /// <summary>
+    /// XML element name
+    /// </summary>
+    private readonly string collectionItemXmlElementName;
 
     /// <summary>
-    /// Represents the collection of profile insight values. 
+    /// Creates a new instance of the <see cref="ProfileInsightValueCollection"/> class.
     /// </summary>
-    public sealed class ProfileInsightValueCollection : ComplexPropertyCollection<ProfileInsightValue>
+    internal ProfileInsightValueCollection()
+        : this(XmlElementNames.ProfileInsightValue)
     {
-        /// <summary>
-        /// XML element name
-        /// </summary>
-        private readonly string collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="ProfileInsightValueCollection"/> class.
-        /// </summary>
-        internal ProfileInsightValueCollection()
-            : this(XmlElementNames.ProfileInsightValue)
-        {
-        }
+    /// <summary>
+    /// Creates a new instance of the <see cref="ProfileInsightValueCollection"/> class.
+    /// </summary>
+    /// <param name="collectionItemXmlElementName">Name of the collection item XML element.</param>
+    internal ProfileInsightValueCollection(string collectionItemXmlElementName)
+        : base()
+    {
+        this.collectionItemXmlElementName = collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="ProfileInsightValueCollection"/> class.
-        /// </summary>
-        /// <param name="collectionItemXmlElementName">Name of the collection item XML element.</param>
-        internal ProfileInsightValueCollection(string collectionItemXmlElementName)
-            : base()
+    /// <summary>
+    /// Creates a ProfileInsightValue object from an XML element name.
+    /// </summary>
+    /// <param name="xmlElementName">The XML element name from which to create the ProfileInsightValue.</param>
+    /// <returns>A ProfileInsightValue object.</returns>
+    internal override ProfileInsightValue CreateComplexProperty(string xmlElementName)
+    {
+        if (xmlElementName == this.collectionItemXmlElementName)
         {
-            this.collectionItemXmlElementName = collectionItemXmlElementName;
+            return new ProfileInsightValue();
         }
+        else
+        {
+            return null;
+        }
+    }
 
-        /// <summary>
-        /// Creates a ProfileInsightValue object from an XML element name.
-        /// </summary>
-        /// <param name="xmlElementName">The XML element name from which to create the ProfileInsightValue.</param>
-        /// <returns>A ProfileInsightValue object.</returns>
-        internal override ProfileInsightValue CreateComplexProperty(string xmlElementName)
-        {
-            if (xmlElementName == this.collectionItemXmlElementName)
-            {
-                return new ProfileInsightValue();
-            }
-            else
-            {
-                return null;
-            }
-        }
+    /// <summary>
+    /// Retrieves the XML element name corresponding to the provided PersonInsight object.
+    /// </summary>
+    /// <param name="insight">The ProfileInsightValue object from which to determine the XML element name.</param>
+    /// <returns>The XML element name corresponding to the provided ProfileInsightValue object.</returns>
+    internal override string GetCollectionItemXmlElementName(ProfileInsightValue insight)
+    {
+        return this.collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Retrieves the XML element name corresponding to the provided PersonInsight object.
-        /// </summary>
-        /// <param name="insight">The ProfileInsightValue object from which to determine the XML element name.</param>
-        /// <returns>The XML element name corresponding to the provided ProfileInsightValue object.</returns>
-        internal override string GetCollectionItemXmlElementName(ProfileInsightValue insight)
-        {
-            return this.collectionItemXmlElementName;
-        }
-
-        /// <summary>
-        /// Determine whether we should write collection to XML or not.
-        /// </summary>
-        /// <returns>Always true, even if the collection is empty.</returns>
-        internal override bool ShouldWriteToRequest()
-        {
-            return true;
-        }
+    /// <summary>
+    /// Determine whether we should write collection to XML or not.
+    /// </summary>
+    /// <returns>Always true, even if the collection is empty.</returns>
+    internal override bool ShouldWriteToRequest()
+    {
+        return true;
     }
 }

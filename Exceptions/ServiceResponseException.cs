@@ -23,35 +23,35 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents a remote service exception that has a single response.
+/// </summary>
+public class ServiceResponseException : ServiceRemoteException
+{
     /// <summary>
-    /// Represents a remote service exception that has a single response.
+    /// Error details Value keys
     /// </summary>
-    public class ServiceResponseException : ServiceRemoteException
+    private const string ExceptionClassKey = "ExceptionClass";
+    private const string ExceptionMessageKey = "ExceptionMessage";
+    private const string StackTraceKey = "StackTrace";
+
+    /// <summary>
+    /// ServiceResponse when service operation failed remotely.
+    /// </summary>
+    private readonly ServiceResponse response;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ServiceResponseException"/> class.
+    /// </summary>
+    /// <param name="response">The ServiceResponse when service operation failed remotely.</param>
+    internal ServiceResponseException(ServiceResponse response)
     {
-        /// <summary>
-        /// Error details Value keys
-        /// </summary>
-        private const string ExceptionClassKey = "ExceptionClass";
-        private const string ExceptionMessageKey = "ExceptionMessage";
-        private const string StackTraceKey = "StackTrace";
-
-        /// <summary>
-        /// ServiceResponse when service operation failed remotely.
-        /// </summary>
-        private readonly ServiceResponse response;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceResponseException"/> class.
-        /// </summary>
-        /// <param name="response">The ServiceResponse when service operation failed remotely.</param>
-        internal ServiceResponseException(ServiceResponse response)
-        {
-            this.response = response;
+        this.response = response;
 		}
 
 
@@ -59,49 +59,48 @@ namespace Microsoft.Exchange.WebServices.Data
 		/// Gets the ServiceResponse for the exception.
 		/// </summary>
 		public ServiceResponse Response
-        {
-            get { return this.response; }
-        }
+    {
+        get { return this.response; }
+    }
 
-        /// <summary>
-        /// Gets the service error code.
-        /// </summary>
-        public ServiceError ErrorCode
-        {
-            get { return this.response.ErrorCode; }
-        }
+    /// <summary>
+    /// Gets the service error code.
+    /// </summary>
+    public ServiceError ErrorCode
+    {
+        get { return this.response.ErrorCode; }
+    }
 
-        /// <summary>
-        /// Gets a message that describes the current exception.
-        /// </summary>
-        /// <returns>The error message that explains the reason for the exception.</returns>
-        public override string Message
+    /// <summary>
+    /// Gets a message that describes the current exception.
+    /// </summary>
+    /// <returns>The error message that explains the reason for the exception.</returns>
+    public override string Message
+    {
+        get
         {
-            get
+            // Special case for Internal Server Error. If the server returned
+            // stack trace information, include it in the exception message.
+            if (this.Response.ErrorCode == ServiceError.ErrorInternalServerError)
             {
-                // Special case for Internal Server Error. If the server returned
-                // stack trace information, include it in the exception message.
-                if (this.Response.ErrorCode == ServiceError.ErrorInternalServerError)
+                string exceptionClass;
+                string exceptionMessage;
+                string stackTrace;
+
+                if (this.Response.ErrorDetails.TryGetValue(ExceptionClassKey, out exceptionClass) &&
+                    this.Response.ErrorDetails.TryGetValue(ExceptionMessageKey, out exceptionMessage) &&
+                    this.Response.ErrorDetails.TryGetValue(StackTraceKey, out stackTrace))
                 {
-                    string exceptionClass;
-                    string exceptionMessage;
-                    string stackTrace;
-
-                    if (this.Response.ErrorDetails.TryGetValue(ExceptionClassKey, out exceptionClass) &&
-                        this.Response.ErrorDetails.TryGetValue(ExceptionMessageKey, out exceptionMessage) &&
-                        this.Response.ErrorDetails.TryGetValue(StackTraceKey, out stackTrace))
-                    {
-                        return string.Format(
-                            Strings.ServerErrorAndStackTraceDetails,
-                            this.Response.ErrorMessage,
-                            exceptionClass,
-                            exceptionMessage,
-                            stackTrace);
-                    }
+                    return string.Format(
+                        Strings.ServerErrorAndStackTraceDetails,
+                        this.Response.ErrorMessage,
+                        exceptionClass,
+                        exceptionMessage,
+                        stackTrace);
                 }
-
-                return this.Response.ErrorMessage;
             }
+
+            return this.Response.ErrorMessage;
         }
     }
 }

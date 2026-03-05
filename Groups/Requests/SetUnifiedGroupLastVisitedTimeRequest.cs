@@ -23,112 +23,111 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data.Groups
+namespace Microsoft.Exchange.WebServices.Data.Groups;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a request to the SetUnifiedGroupLastVisitedTimeRequest operation.
+/// </summary>
+internal sealed class SetUnifiedGroupLastVisitedTimeRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    /// <summary>
+    /// The last visited time utc for the group
+    /// </summary>
+    private readonly DateTime lastVisitedTimeUtc;
 
     /// <summary>
-    /// Represents a request to the SetUnifiedGroupLastVisitedTimeRequest operation.
+    /// The identify type associated with the group
     /// </summary>
-    internal sealed class SetUnifiedGroupLastVisitedTimeRequest : SimpleServiceRequestBase
+    private readonly UnifiedGroupIdentityType identityType;
+
+    /// <summary>
+    /// The value of identity associated with the group
+    /// </summary>
+    private readonly string identityValue;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SetUnifiedGroupLastVisitedTimeRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="lastVisitedTimeUtc">The last visited time utc for the group</param>
+    /// <param name="identityType">The identity type for the group</param>
+    /// <param name="value">The value associated with the identify type for the group</param>
+    internal SetUnifiedGroupLastVisitedTimeRequest(
+        ExchangeService service,
+        DateTime lastVisitedTimeUtc,
+        UnifiedGroupIdentityType identityType,
+        string value) : base(service)
     {
-        /// <summary>
-        /// The last visited time utc for the group
-        /// </summary>
-        private readonly DateTime lastVisitedTimeUtc;
+        this.lastVisitedTimeUtc = lastVisitedTimeUtc;
+        this.identityType = identityType;
+        this.identityValue = value;
+    }
 
-        /// <summary>
-        /// The identify type associated with the group
-        /// </summary>
-        private readonly UnifiedGroupIdentityType identityType;
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.SetUnifiedGroupLastVisitedTimeResponseMessage;
+    }
 
-        /// <summary>
-        /// The value of identity associated with the group
-        /// </summary>
-        private readonly string identityValue;
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>    
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.SetUnifiedGroupLastVisitedTime;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetUnifiedGroupLastVisitedTimeRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="lastVisitedTimeUtc">The last visited time utc for the group</param>
-        /// <param name="identityType">The identity type for the group</param>
-        /// <param name="value">The value associated with the identify type for the group</param>
-        internal SetUnifiedGroupLastVisitedTimeRequest(
-            ExchangeService service,
-            DateTime lastVisitedTimeUtc,
-            UnifiedGroupIdentityType identityType,
-            string value) : base(service)
-        {
-            this.lastVisitedTimeUtc = lastVisitedTimeUtc;
-            this.identityType = identityType;
-            this.identityValue = value;
-        }
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        ServiceResponse response = new ServiceResponse();
+        response.LoadFromXml(reader, GetResponseXmlElementName());
+        return response;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.SetUnifiedGroupLastVisitedTimeResponseMessage;
-        }
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        UnifiedGroupIdentity groupIdentity = new UnifiedGroupIdentity(this.identityType, this.identityValue);
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>    
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.SetUnifiedGroupLastVisitedTime;
-        }
+        groupIdentity.WriteToXml(writer, XmlElementNames.GroupIdentity);
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            ServiceResponse response = new ServiceResponse();
-            response.LoadFromXml(reader, GetResponseXmlElementName());
-            return response;
-        }
+        writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.LastVisitedTimeUtc, this.lastVisitedTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ"));
+    }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            UnifiedGroupIdentity groupIdentity = new UnifiedGroupIdentity(this.identityType, this.identityValue);
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2015;
+    }
 
-            groupIdentity.WriteToXml(writer, XmlElementNames.GroupIdentity);
-
-            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.LastVisitedTimeUtc, this.lastVisitedTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ"));
-        }
-
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2015;
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<ServiceResponse> Execute(CancellationToken token)
-        {
-            return (ServiceResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-        }
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<ServiceResponse> Execute(CancellationToken token)
+    {
+        return (ServiceResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
     }
 }

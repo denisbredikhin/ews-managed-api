@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// The values indicate the types of item icons to display.
+/// </summary>
+public enum SendPrompt
 {
     /// <summary>
-    /// The values indicate the types of item icons to display.
+    /// None
     /// </summary>
-    public enum SendPrompt
-    {
-        /// <summary>
-        /// None
-        /// </summary>
-        None,
+    None,
 
-        /// <summary>
-        /// Send
-        /// </summary>
-        Send,
+    /// <summary>
+    /// Send
+    /// </summary>
+    Send,
 
-        /// <summary>
-        /// VotingOption
-        /// </summary>
-        VotingOption,
-    }
+    /// <summary>
+    /// VotingOption
+    /// </summary>
+    VotingOption,
 }

@@ -23,62 +23,61 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Xml;
+
+/// <summary>
+/// Represents the response to a UpdateInboxRulesResponse operation.
+/// </summary>
+internal sealed class UpdateInboxRulesResponse : ServiceResponse
 {
-    using System.Xml;
+    /// <summary>
+    /// Rule operation error collection.
+    /// </summary>
+    private RuleOperationErrorCollection errors;
 
     /// <summary>
-    /// Represents the response to a UpdateInboxRulesResponse operation.
+    /// Initializes a new instance of the <see cref="UpdateInboxRulesResponse"/> class.
     /// </summary>
-    internal sealed class UpdateInboxRulesResponse : ServiceResponse
+    internal UpdateInboxRulesResponse()
+        : base()
     {
-        /// <summary>
-        /// Rule operation error collection.
-        /// </summary>
-        private RuleOperationErrorCollection errors;
+        this.errors = new RuleOperationErrorCollection();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateInboxRulesResponse"/> class.
-        /// </summary>
-        internal UpdateInboxRulesResponse()
-            : base()
+    /// <summary>
+    /// Loads extra error details from XML
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <param name="xmlElementName">The current element name of the extra error details.</param>
+    /// <returns>True if the expected extra details is loaded; 
+    /// False if the element name does not match the expected element. </returns>
+    internal override bool LoadExtraErrorDetailsFromXml(EwsServiceXmlReader reader, string xmlElementName)
+    {
+        if (xmlElementName.Equals(XmlElementNames.MessageXml))
         {
-            this.errors = new RuleOperationErrorCollection();
+            return base.LoadExtraErrorDetailsFromXml(reader, xmlElementName);
         }
-
-        /// <summary>
-        /// Loads extra error details from XML
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <param name="xmlElementName">The current element name of the extra error details.</param>
-        /// <returns>True if the expected extra details is loaded; 
-        /// False if the element name does not match the expected element. </returns>
-        internal override bool LoadExtraErrorDetailsFromXml(EwsServiceXmlReader reader, string xmlElementName)
+        else if (xmlElementName.Equals(XmlElementNames.RuleOperationErrors))
         {
-            if (xmlElementName.Equals(XmlElementNames.MessageXml))
-            {
-                return base.LoadExtraErrorDetailsFromXml(reader, xmlElementName);
-            }
-            else if (xmlElementName.Equals(XmlElementNames.RuleOperationErrors))
-            {
-                this.errors.LoadFromXml(reader, XmlNamespace.Messages, xmlElementName);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            this.errors.LoadFromXml(reader, XmlNamespace.Messages, xmlElementName);
+            return true;
         }
-
-        /// <summary>
-        /// Gets the rule operation errors in the response.
-        /// </summary>
-        internal RuleOperationErrorCollection Errors
+        else
         {
-            get
-            {
-                return this.errors;
-            }
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Gets the rule operation errors in the response.
+    /// </summary>
+    internal RuleOperationErrorCollection Errors
+    {
+        get
+        {
+            return this.errors;
         }
     }
 }

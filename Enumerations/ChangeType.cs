@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the type of change of a synchronization event.
+/// </summary>
+public enum ChangeType
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// An item or folder was created.
+    /// </summary>
+    Create,
 
     /// <summary>
-    /// Defines the type of change of a synchronization event.
+    /// An item or folder was modified.
     /// </summary>
-    public enum ChangeType
-    {
-        /// <summary>
-        /// An item or folder was created.
-        /// </summary>
-        Create,
+    Update,
 
-        /// <summary>
-        /// An item or folder was modified.
-        /// </summary>
-        Update,
+    /// <summary>
+    /// An item or folder was deleted.
+    /// </summary>
+    Delete,
 
-        /// <summary>
-        /// An item or folder was deleted.
-        /// </summary>
-        Delete,
-
-        /// <summary>
-        /// An item's IsRead flag was changed.
-        /// </summary>
-        ReadFlagChange,
-    }
+    /// <summary>
+    /// An item's IsRead flag was changed.
+    /// </summary>
+    ReadFlagChange,
 }

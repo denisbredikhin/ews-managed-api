@@ -23,126 +23,125 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+using System.ComponentModel;
+
+/// <summary>
+/// Represents the base view class for search operations.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public abstract class ViewBase
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
+    private PropertySet propertySet;
 
     /// <summary>
-    /// Represents the base view class for search operations.
+    /// Initializes a new instance of the <see cref="ViewBase"/> class.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public abstract class ViewBase
+    internal ViewBase()
     {
-        private PropertySet propertySet;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ViewBase"/> class.
-        /// </summary>
-        internal ViewBase()
+    /// <summary>
+    /// Validates this view.
+    /// </summary>
+    /// <param name="request">The request using this view.</param>
+    internal virtual void InternalValidate(ServiceRequestBase request)
+    {
+        if (this.PropertySet != null)
         {
+            this.PropertySet.InternalValidate();
+            this.PropertySet.ValidateForRequest(request, true /*summaryPropertiesOnly*/);
         }
+    }
 
-        /// <summary>
-        /// Validates this view.
-        /// </summary>
-        /// <param name="request">The request using this view.</param>
-        internal virtual void InternalValidate(ServiceRequestBase request)
+    /// <summary>
+    /// Writes this view to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal virtual void InternalWriteViewToXml(EwsServiceXmlWriter writer)
+    {
+        int? maxEntriesReturned = this.GetMaxEntriesReturned();
+
+        if (maxEntriesReturned.HasValue)
         {
-            if (this.PropertySet != null)
-            {
-                this.PropertySet.InternalValidate();
-                this.PropertySet.ValidateForRequest(request, true /*summaryPropertiesOnly*/);
-            }
+            writer.WriteAttributeValue(XmlAttributeNames.MaxEntriesReturned, maxEntriesReturned.Value);
         }
+    }
 
-        /// <summary>
-        /// Writes this view to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal virtual void InternalWriteViewToXml(EwsServiceXmlWriter writer)
-        {
-            int? maxEntriesReturned = this.GetMaxEntriesReturned();
+    /// <summary>
+    /// Writes the search settings to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="groupBy">The group by clause.</param>
+    internal abstract void InternalWriteSearchSettingsToXml(EwsServiceXmlWriter writer, Grouping groupBy);
 
-            if (maxEntriesReturned.HasValue)
-            {
-                writer.WriteAttributeValue(XmlAttributeNames.MaxEntriesReturned, maxEntriesReturned.Value);
-            }
-        }
+    /// <summary>
+    /// Writes OrderBy property to XML.
+    /// </summary>
+    /// <param name="writer">The writer</param>
+    internal abstract void WriteOrderByToXml(EwsServiceXmlWriter writer);
 
-        /// <summary>
-        /// Writes the search settings to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="groupBy">The group by clause.</param>
-        internal abstract void InternalWriteSearchSettingsToXml(EwsServiceXmlWriter writer, Grouping groupBy);
+    /// <summary>
+    /// Gets the name of the view XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal abstract string GetViewXmlElementName();
 
-        /// <summary>
-        /// Writes OrderBy property to XML.
-        /// </summary>
-        /// <param name="writer">The writer</param>
-        internal abstract void WriteOrderByToXml(EwsServiceXmlWriter writer);
+    /// <summary>
+    /// Gets the maximum number of items or folders the search operation should return.
+    /// </summary>
+    /// <returns>The maximum number of items or folders that should be returned by the search operation.</returns>
+    internal abstract int? GetMaxEntriesReturned();
 
-        /// <summary>
-        /// Gets the name of the view XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal abstract string GetViewXmlElementName();
+    /// <summary>
+    /// Gets the type of service object this view applies to.
+    /// </summary>
+    /// <returns>A ServiceObjectType value.</returns>
+    internal abstract ServiceObjectType GetServiceObjectType();
 
-        /// <summary>
-        /// Gets the maximum number of items or folders the search operation should return.
-        /// </summary>
-        /// <returns>The maximum number of items or folders that should be returned by the search operation.</returns>
-        internal abstract int? GetMaxEntriesReturned();
+    /// <summary>
+    /// Writes the attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal abstract void WriteAttributesToXml(EwsServiceXmlWriter writer);
 
-        /// <summary>
-        /// Gets the type of service object this view applies to.
-        /// </summary>
-        /// <returns>A ServiceObjectType value.</returns>
-        internal abstract ServiceObjectType GetServiceObjectType();
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="groupBy">The group by clause.</param>
+    internal virtual void WriteToXml(EwsServiceXmlWriter writer, Grouping groupBy)
+    {
+        this.GetPropertySetOrDefault().WriteToXml(writer, this.GetServiceObjectType());
 
-        /// <summary>
-        /// Writes the attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal abstract void WriteAttributesToXml(EwsServiceXmlWriter writer);
+        writer.WriteStartElement(XmlNamespace.Messages, this.GetViewXmlElementName());
 
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="groupBy">The group by clause.</param>
-        internal virtual void WriteToXml(EwsServiceXmlWriter writer, Grouping groupBy)
-        {
-            this.GetPropertySetOrDefault().WriteToXml(writer, this.GetServiceObjectType());
+        this.InternalWriteViewToXml(writer);
 
-            writer.WriteStartElement(XmlNamespace.Messages, this.GetViewXmlElementName());
+        writer.WriteEndElement(); // this.GetViewXmlElementName()
 
-            this.InternalWriteViewToXml(writer);
+        this.InternalWriteSearchSettingsToXml(writer, groupBy);
+    }
 
-            writer.WriteEndElement(); // this.GetViewXmlElementName()
+    /// <summary>
+    /// Gets the property set or the default.
+    /// </summary>
+    /// <returns>PropertySet</returns>
+    internal PropertySet GetPropertySetOrDefault()
+    {
+        // If property set is null, default is FirstClassProperties
+        return this.PropertySet ?? PropertySet.FirstClassProperties;
+    }
 
-            this.InternalWriteSearchSettingsToXml(writer, groupBy);
-        }
-
-        /// <summary>
-        /// Gets the property set or the default.
-        /// </summary>
-        /// <returns>PropertySet</returns>
-        internal PropertySet GetPropertySetOrDefault()
-        {
-            // If property set is null, default is FirstClassProperties
-            return this.PropertySet ?? PropertySet.FirstClassProperties;
-        }
-
-        /// <summary>
-        /// Gets or sets the property set. PropertySet determines which properties will be loaded on found items. If PropertySet is null,
-        /// all first class properties are loaded on found items.
-        /// </summary>
-        public PropertySet PropertySet
-        {
-            get { return this.propertySet; }
-            set { this.propertySet = value; }
-        }
+    /// <summary>
+    /// Gets or sets the property set. PropertySet determines which properties will be loaded on found items. If PropertySet is null,
+    /// all first class properties are loaded on found items.
+    /// </summary>
+    public PropertySet PropertySet
+    {
+        get { return this.propertySet; }
+        set { this.propertySet = value; }
     }
 }

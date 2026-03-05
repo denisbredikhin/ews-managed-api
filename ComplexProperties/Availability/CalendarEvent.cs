@@ -23,88 +23,87 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents an event in a calendar.
+/// </summary>
+public sealed class CalendarEvent : ComplexProperty
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private DateTime startTime;
+    private DateTime endTime;
+    private LegacyFreeBusyStatus freeBusyStatus;
+    private CalendarEventDetails details;
 
     /// <summary>
-    /// Represents an event in a calendar.
+    /// Initializes a new instance of the <see cref="CalendarEvent"/> class.
     /// </summary>
-    public sealed class CalendarEvent : ComplexProperty
+    internal CalendarEvent()
+        : base()
     {
-        private DateTime startTime;
-        private DateTime endTime;
-        private LegacyFreeBusyStatus freeBusyStatus;
-        private CalendarEventDetails details;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarEvent"/> class.
-        /// </summary>
-        internal CalendarEvent()
-            : base()
-        {
-        }
+    /// <summary>
+    /// Gets the start date and time of the event.
+    /// </summary>
+    public DateTime StartTime
+    {
+        get { return this.startTime; }
+    }
 
-        /// <summary>
-        /// Gets the start date and time of the event.
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this.startTime; }
-        }
+    /// <summary>
+    /// Gets the end date and time of the event.
+    /// </summary>
+    public DateTime EndTime
+    {
+        get { return this.endTime; }
+    }
 
-        /// <summary>
-        /// Gets the end date and time of the event.
-        /// </summary>
-        public DateTime EndTime
-        {
-            get { return this.endTime; }
-        }
+    /// <summary>
+    /// Gets the free/busy status associated with the event.
+    /// </summary>
+    public LegacyFreeBusyStatus FreeBusyStatus
+    {
+        get { return this.freeBusyStatus; }
+    }
 
-        /// <summary>
-        /// Gets the free/busy status associated with the event.
-        /// </summary>
-        public LegacyFreeBusyStatus FreeBusyStatus
-        {
-            get { return this.freeBusyStatus; }
-        }
+    /// <summary>
+    /// Gets the details of the calendar event. Details is null if the user
+    /// requsting them does no have the appropriate rights.
+    /// </summary>
+    public CalendarEventDetails Details
+    {
+        get { return this.details; }
+    }
 
-        /// <summary>
-        /// Gets the details of the calendar event. Details is null if the user
-        /// requsting them does no have the appropriate rights.
-        /// </summary>
-        public CalendarEventDetails Details
+    /// <summary>
+    /// Attempts to read the element at the reader's current position.
+    /// </summary>
+    /// <param name="reader">The reader used to read the element.</param>
+    /// <returns>True if the element was read, false otherwise.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
-            get { return this.details; }
-        }
-
-        /// <summary>
-        /// Attempts to read the element at the reader's current position.
-        /// </summary>
-        /// <param name="reader">The reader used to read the element.</param>
-        /// <returns>True if the element was read, false otherwise.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.StartTime:
-                    this.startTime = reader.ReadElementValueAsUnbiasedDateTimeScopedToServiceTimeZone();
-                    return true;
-                case XmlElementNames.EndTime:
-                    this.endTime = reader.ReadElementValueAsUnbiasedDateTimeScopedToServiceTimeZone();
-                    return true;
-                case XmlElementNames.BusyType:
-                    this.freeBusyStatus = reader.ReadElementValue<LegacyFreeBusyStatus>();
-                    return true;
-                case XmlElementNames.CalendarEventDetails:
-                    this.details = new CalendarEventDetails();
-                    this.details.LoadFromXml(reader, reader.LocalName);
-                    return true;
-                default:
-                    return false;
-            }
+            case XmlElementNames.StartTime:
+                this.startTime = reader.ReadElementValueAsUnbiasedDateTimeScopedToServiceTimeZone();
+                return true;
+            case XmlElementNames.EndTime:
+                this.endTime = reader.ReadElementValueAsUnbiasedDateTimeScopedToServiceTimeZone();
+                return true;
+            case XmlElementNames.BusyType:
+                this.freeBusyStatus = reader.ReadElementValue<LegacyFreeBusyStatus>();
+                return true;
+            case XmlElementNames.CalendarEventDetails:
+                this.details = new CalendarEventDetails();
+                this.details.LoadFromXml(reader, reader.LocalName);
+                return true;
+            default:
+                return false;
         }
     }
 }

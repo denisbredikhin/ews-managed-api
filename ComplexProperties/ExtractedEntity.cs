@@ -23,51 +23,50 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.IO;
+
+/// <summary>
+/// Represents an ExtractedEntity object.
+/// </summary>
+public abstract class ExtractedEntity : ComplexProperty
 {
-    using System;
-    using System.IO;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ExtractedEntity"/> class.
+    /// </summary>
+    internal ExtractedEntity()
+        : base()
+    {
+        this.Namespace = XmlNamespace.Types;
+    }
 
     /// <summary>
-    /// Represents an ExtractedEntity object.
+    /// Gets the Position.
     /// </summary>
-    public abstract class ExtractedEntity : ComplexProperty
+    public EmailPosition Position { get; internal set; }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExtractedEntity"/> class.
-        /// </summary>
-        internal ExtractedEntity()
-            : base()
+        switch (reader.LocalName)
         {
-            this.Namespace = XmlNamespace.Types;
-        }
+            case XmlElementNames.NlgEmailPosition:
+                string positionAsString = reader.ReadElementValue();
 
-        /// <summary>
-        /// Gets the Position.
-        /// </summary>
-        public EmailPosition Position { get; internal set; }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.NlgEmailPosition:
-                    string positionAsString = reader.ReadElementValue();
-
-                    if (!string.IsNullOrEmpty(positionAsString))
-                    {
-                        this.Position = EwsUtilities.Parse<EmailPosition>(positionAsString);
-                    }
-                    return true;
-                
-                default:
-                    return base.TryReadElementFromXml(reader);
-            }
+                if (!string.IsNullOrEmpty(positionAsString))
+                {
+                    this.Position = EwsUtilities.Parse<EmailPosition>(positionAsString);
+                }
+                return true;
+            
+            default:
+                return base.TryReadElementFromXml(reader);
         }
     }
 }

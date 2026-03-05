@@ -23,41 +23,41 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Runtime.Serialization;
+
+/// <summary>
+/// Represents an error that occurs when a request cannot be handled due to a service version mismatch.
+/// </summary>
+public sealed class ServiceVersionException : ServiceLocalException
 {
-    using System;
-    using System.Runtime.Serialization;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ServiceVersionException"/> class.
+    /// </summary>
+    public ServiceVersionException()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents an error that occurs when a request cannot be handled due to a service version mismatch.
+    /// Initializes a new instance of the <see cref="ServiceVersionException"/> class.
     /// </summary>
-    public sealed class ServiceVersionException : ServiceLocalException
+    /// <param name="message">The error message.</param>
+    public ServiceVersionException(string message)
+        : base(message)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceVersionException"/> class.
-        /// </summary>
-        public ServiceVersionException()
-            : base()
-        {
-        }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceVersionException"/> class.
-        /// </summary>
-        /// <param name="message">The error message.</param>
-        public ServiceVersionException(string message)
-            : base(message)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceVersionException"/> class.
-        /// </summary>
-        /// <param name="message">The error message.</param>
-        /// <param name="innerException">The inner exception.</param>
-        public ServiceVersionException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ServiceVersionException"/> class.
+    /// </summary>
+    /// <param name="message">The error message.</param>
+    /// <param name="innerException">The inner exception.</param>
+    public ServiceVersionException(string message, Exception innerException)
+        : base(message, innerException)
+    {
 		}
 
 		/// <summary>
@@ -70,4 +70,3 @@ namespace Microsoft.Exchange.WebServices.Data
 	    {
 		}
 	}
-}

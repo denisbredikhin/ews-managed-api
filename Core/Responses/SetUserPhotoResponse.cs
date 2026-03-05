@@ -23,49 +23,48 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Xml;
+
+/// <summary>
+/// Represents the response to GetUserPhoto operation.
+/// </summary>
+internal sealed class SetUserPhotoResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Net;
-    using System.Net.Http.Headers;
-    using System.Xml;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetUserPhotoResponse"/> class.
+    /// </summary>
+    internal SetUserPhotoResponse()
+    {
+        this.Results = new SetUserPhotoResults();
+    }
 
     /// <summary>
-    /// Represents the response to GetUserPhoto operation.
+    /// Gets GetUserPhoto results.
     /// </summary>
-    internal sealed class SetUserPhotoResponse : ServiceResponse
+    /// <returns>GetUserPhoto results.</returns>
+    internal SetUserPhotoResults Results { get; private set; }
+
+    /// <summary>
+    /// Read Photo results from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserPhotoResponse"/> class.
-        /// </summary>
-        internal SetUserPhotoResponse()
-        {
-            this.Results = new SetUserPhotoResults();
-        }
+    }
 
-        /// <summary>
-        /// Gets GetUserPhoto results.
-        /// </summary>
-        /// <returns>GetUserPhoto results.</returns>
-        internal SetUserPhotoResults Results { get; private set; }
-
-        /// <summary>
-        /// Read Photo results from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-        }
-
-        /// <summary>
-        /// Read Photo response headers
-        /// </summary>
-        /// <param name="responseHeaders">The response header.</param>
-        internal override void ReadHeader(HttpResponseHeaders responseHeaders)
-        {
-        }
+    /// <summary>
+    /// Read Photo response headers
+    /// </summary>
+    /// <param name="responseHeaders">The response header.</param>
+    internal override void ReadHeader(HttpResponseHeaders responseHeaders)
+    {
     }
 }

@@ -23,124 +23,123 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
+
+/// <summary>
+/// Represents a collection of attendees.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public sealed class AttendeeCollection : ComplexPropertyCollection<Attendee>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AttendeeCollection"/> class.
+    /// </summary>
+    internal AttendeeCollection()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents a collection of attendees.
+    /// Adds an attendee to the collection.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class AttendeeCollection : ComplexPropertyCollection<Attendee>
+    /// <param name="attendee">The attendee to add.</param>
+    public void Add(Attendee attendee)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttendeeCollection"/> class.
-        /// </summary>
-        internal AttendeeCollection()
-            : base()
+        this.InternalAdd(attendee);
+    }
+
+    /// <summary>
+    /// Adds a attendee to the collection.
+    /// </summary>
+    /// <param name="smtpAddress">The SMTP address of the attendee.</param>
+    /// <returns>An Attendee instance initialized with the provided SMTP address.</returns>
+    public Attendee Add(string smtpAddress)
+    {
+        Attendee result = new Attendee(smtpAddress);
+
+        this.InternalAdd(result);
+
+        return result;
+    }
+
+    /// <summary>
+    /// Adds a attendee to the collection.
+    /// </summary>
+    /// <param name="name">The name of the attendee.</param>
+    /// <param name="smtpAddress">The SMTP address of the attendee.</param>
+    /// <returns>An Attendee instance initialized with the provided name and SMTP address.</returns>
+    public Attendee Add(string name, string smtpAddress)
+    {
+        Attendee result = new Attendee(name, smtpAddress);
+
+        this.InternalAdd(result);
+
+        return result;
+    }
+
+    /// <summary>
+    /// Clears the collection.
+    /// </summary>
+    public void Clear()
+    {
+        this.InternalClear();
+    }
+
+    /// <summary>
+    /// Removes an attendee from the collection.
+    /// </summary>
+    /// <param name="index">The index of the attendee to remove.</param>
+    public void RemoveAt(int index)
+    {
+        if (index < 0 || index >= this.Count)
         {
+            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
         }
 
-        /// <summary>
-        /// Adds an attendee to the collection.
-        /// </summary>
-        /// <param name="attendee">The attendee to add.</param>
-        public void Add(Attendee attendee)
+        this.InternalRemoveAt(index);
+    }
+
+    /// <summary>
+    /// Removes an attendee from the collection.
+    /// </summary>
+    /// <param name="attendee">The attendee to remove.</param>
+    /// <returns>True if the attendee was successfully removed from the collection, false otherwise.</returns>
+    public bool Remove(Attendee attendee)
+    {
+        EwsUtilities.ValidateParam(attendee, "attendee");
+
+        return this.InternalRemove(attendee);
+    }
+
+    /// <summary>
+    /// Creates an Attendee object from an XML element name.
+    /// </summary>
+    /// <param name="xmlElementName">The XML element name from which to create the attendee.</param>
+    /// <returns>An Attendee object.</returns>
+    internal override Attendee CreateComplexProperty(string xmlElementName)
+    {
+        if (xmlElementName == XmlElementNames.Attendee)
         {
-            this.InternalAdd(attendee);
+            return new Attendee();
         }
-
-        /// <summary>
-        /// Adds a attendee to the collection.
-        /// </summary>
-        /// <param name="smtpAddress">The SMTP address of the attendee.</param>
-        /// <returns>An Attendee instance initialized with the provided SMTP address.</returns>
-        public Attendee Add(string smtpAddress)
+        else
         {
-            Attendee result = new Attendee(smtpAddress);
-
-            this.InternalAdd(result);
-
-            return result;
+            return null;
         }
+    }
 
-        /// <summary>
-        /// Adds a attendee to the collection.
-        /// </summary>
-        /// <param name="name">The name of the attendee.</param>
-        /// <param name="smtpAddress">The SMTP address of the attendee.</param>
-        /// <returns>An Attendee instance initialized with the provided name and SMTP address.</returns>
-        public Attendee Add(string name, string smtpAddress)
-        {
-            Attendee result = new Attendee(name, smtpAddress);
-
-            this.InternalAdd(result);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Clears the collection.
-        /// </summary>
-        public void Clear()
-        {
-            this.InternalClear();
-        }
-
-        /// <summary>
-        /// Removes an attendee from the collection.
-        /// </summary>
-        /// <param name="index">The index of the attendee to remove.</param>
-        public void RemoveAt(int index)
-        {
-            if (index < 0 || index >= this.Count)
-            {
-                throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
-            }
-
-            this.InternalRemoveAt(index);
-        }
-
-        /// <summary>
-        /// Removes an attendee from the collection.
-        /// </summary>
-        /// <param name="attendee">The attendee to remove.</param>
-        /// <returns>True if the attendee was successfully removed from the collection, false otherwise.</returns>
-        public bool Remove(Attendee attendee)
-        {
-            EwsUtilities.ValidateParam(attendee, "attendee");
-
-            return this.InternalRemove(attendee);
-        }
-
-        /// <summary>
-        /// Creates an Attendee object from an XML element name.
-        /// </summary>
-        /// <param name="xmlElementName">The XML element name from which to create the attendee.</param>
-        /// <returns>An Attendee object.</returns>
-        internal override Attendee CreateComplexProperty(string xmlElementName)
-        {
-            if (xmlElementName == XmlElementNames.Attendee)
-            {
-                return new Attendee();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the XML element name corresponding to the provided Attendee object.
-        /// </summary>
-        /// <param name="attendee">The Attendee object from which to determine the XML element name.</param>
-        /// <returns>The XML element name corresponding to the provided Attendee object.</returns>
-        internal override string GetCollectionItemXmlElementName(Attendee attendee)
-        {
-            return XmlElementNames.Attendee;
-        }
+    /// <summary>
+    /// Retrieves the XML element name corresponding to the provided Attendee object.
+    /// </summary>
+    /// <param name="attendee">The Attendee object from which to determine the XML element name.</param>
+    /// <returns>The XML element name corresponding to the provided Attendee object.</returns>
+    internal override string GetCollectionItemXmlElementName(Attendee attendee)
+    {
+        return XmlElementNames.Attendee;
     }
 }

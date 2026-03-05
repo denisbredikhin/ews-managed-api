@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents response to GetUserOofSettings request.
+/// </summary>
+internal sealed class GetUserOofSettingsResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private OofSettings oofSettings;
 
     /// <summary>
-    /// Represents response to GetUserOofSettings request.
+    /// Initializes a new instance of the <see cref="GetUserOofSettingsResponse"/> class.
     /// </summary>
-    internal sealed class GetUserOofSettingsResponse : ServiceResponse
+    internal GetUserOofSettingsResponse()
+        : base()
     {
-        private OofSettings oofSettings;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserOofSettingsResponse"/> class.
-        /// </summary>
-        internal GetUserOofSettingsResponse()
-            : base()
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets the OOF settings.
-        /// </summary>
-        /// <value>The oof settings.</value>
-        public OofSettings OofSettings
-        {
-            get { return this.oofSettings; }
-            internal set { this.oofSettings = value; }
-        }
+    /// <summary>
+    /// Gets or sets the OOF settings.
+    /// </summary>
+    /// <value>The oof settings.</value>
+    public OofSettings OofSettings
+    {
+        get { return this.oofSettings; }
+        internal set { this.oofSettings = value; }
     }
 }

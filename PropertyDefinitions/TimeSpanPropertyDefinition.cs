@@ -23,53 +23,52 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents TimeSpan property definition.
+/// </summary>
+internal class TimeSpanPropertyDefinition : GenericPropertyDefinition<TimeSpan>
 {
-    using System;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TimeSpanPropertyDefinition"/> class.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="flags">The flags.</param>
+    /// <param name="version">The version.</param>
+    internal TimeSpanPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        PropertyDefinitionFlags flags,
+        ExchangeVersion version)
+        : base(
+            xmlElementName,
+            uri,
+            flags,
+            version)
+    {
+    }
 
     /// <summary>
-    /// Represents TimeSpan property definition.
+    /// Parses the specified value.
     /// </summary>
-    internal class TimeSpanPropertyDefinition : GenericPropertyDefinition<TimeSpan>
+    /// <param name="value">The value.</param>
+    /// <returns>TimeSpan value.</returns>
+    internal override object Parse(string value)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TimeSpanPropertyDefinition"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="flags">The flags.</param>
-        /// <param name="version">The version.</param>
-        internal TimeSpanPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            PropertyDefinitionFlags flags,
-            ExchangeVersion version)
-            : base(
-                xmlElementName,
-                uri,
-                flags,
-                version)
-        {
-        }
+        return EwsUtilities.XSDurationToTimeSpan(value);
+    }
 
-        /// <summary>
-        /// Parses the specified value.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>TimeSpan value.</returns>
-        internal override object Parse(string value)
-        {
-            return EwsUtilities.XSDurationToTimeSpan(value);
-        }
-
-        /// <summary>
-        /// Converts instance to a string.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>TimeSpan value.</returns>
-        internal override string ToString(object value)
-        {
-            return EwsUtilities.TimeSpanToXSDuration((TimeSpan)value);
-        }
+    /// <summary>
+    /// Converts instance to a string.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>TimeSpan value.</returns>
+    internal override string ToString(object value)
+    {
+        return EwsUtilities.TimeSpanToXSDuration((TimeSpan)value);
     }
 }

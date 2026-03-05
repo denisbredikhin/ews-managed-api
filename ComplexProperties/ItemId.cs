@@ -23,51 +23,50 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the Id of an Exchange item.
+/// </summary>
+public class ItemId : ServiceId
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ItemId"/> class.
+    /// </summary>
+    internal ItemId()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents the Id of an Exchange item.
+    /// Defines an implicit conversion between string and ItemId.
     /// </summary>
-    public class ItemId : ServiceId
+    /// <param name="uniqueId">The unique Id to convert to ItemId.</param>
+    /// <returns>An ItemId initialized with the specified unique Id.</returns>
+    public static implicit operator ItemId(string uniqueId)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ItemId"/> class.
-        /// </summary>
-        internal ItemId()
-            : base()
-        {
-        }
+        return new ItemId(uniqueId);
+    }
 
-        /// <summary>
-        /// Defines an implicit conversion between string and ItemId.
-        /// </summary>
-        /// <param name="uniqueId">The unique Id to convert to ItemId.</param>
-        /// <returns>An ItemId initialized with the specified unique Id.</returns>
-        public static implicit operator ItemId(string uniqueId)
-        {
-            return new ItemId(uniqueId);
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.ItemId;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.ItemId;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of ItemId.
-        /// </summary>
-        /// <param name="uniqueId">The unique Id used to initialize the ItemId.</param>
-        public ItemId(string uniqueId)
-            : base(uniqueId)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of ItemId.
+    /// </summary>
+    /// <param name="uniqueId">The unique Id used to initialize the ItemId.</param>
+    public ItemId(string uniqueId)
+        : base(uniqueId)
+    {
     }
 }

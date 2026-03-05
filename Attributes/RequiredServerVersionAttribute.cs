@@ -23,42 +23,41 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// RequiredServerVersionAttribute decorates classes, methods, properties, enum values with the first Exchange version 
+/// in which they appeared.
+/// </summary>
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+internal sealed class RequiredServerVersionAttribute : Attribute
 {
-    using System;
+    /// <summary>
+    /// Exchange version.
+    /// </summary>
+    private ExchangeVersion version;
 
     /// <summary>
-    /// RequiredServerVersionAttribute decorates classes, methods, properties, enum values with the first Exchange version 
-    /// in which they appeared.
+    /// Initializes a new instance of the <see cref="RequiredServerVersionAttribute"/> class.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    internal sealed class RequiredServerVersionAttribute : Attribute
+    /// <param name="version">The Exchange version.</param>
+    internal RequiredServerVersionAttribute(ExchangeVersion version)
+        : base()
     {
-        /// <summary>
-        /// Exchange version.
-        /// </summary>
-        private ExchangeVersion version;
+        this.version = version;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredServerVersionAttribute"/> class.
-        /// </summary>
-        /// <param name="version">The Exchange version.</param>
-        internal RequiredServerVersionAttribute(ExchangeVersion version)
-            : base()
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <value>The name of the XML element.</value>
+    internal ExchangeVersion Version
+    {
+        get
         {
-            this.version = version;
-        }
-
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <value>The name of the XML element.</value>
-        internal ExchangeVersion Version
-        {
-            get
-            {
-                return this.version;
-            }
+            return this.version;
         }
     }
 }

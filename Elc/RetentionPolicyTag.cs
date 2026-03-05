@@ -23,128 +23,127 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Text;
+using System.Xml;
+
+/// <summary>
+/// Represents retention policy tag object.
+/// </summary>
+public sealed class RetentionPolicyTag
 {
-    using System;
-    using System.Text;
-    using System.Xml;
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public RetentionPolicyTag()
+    {
+    }
 
     /// <summary>
-    /// Represents retention policy tag object.
+    /// Constructor for retention policy tag.
     /// </summary>
-    public sealed class RetentionPolicyTag
+    /// <param name="displayName">Display name.</param>
+    /// <param name="retentionId">Retention id.</param>
+    /// <param name="retentionPeriod">Retention period.</param>
+    /// <param name="type">Retention folder type.</param>
+    /// <param name="retentionAction">Retention action.</param>
+    /// <param name="isVisible">Is visible.</param>
+    /// <param name="optedInto">Opted into.</param>
+    /// <param name="isArchive">Is archive tag.</param>
+    internal RetentionPolicyTag(
+        string displayName,
+        Guid retentionId,
+        int retentionPeriod,
+        ElcFolderType type,
+        RetentionActionType retentionAction,
+        bool isVisible,
+        bool optedInto,
+        bool isArchive)
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RetentionPolicyTag()
-        {
-        }
-
-        /// <summary>
-        /// Constructor for retention policy tag.
-        /// </summary>
-        /// <param name="displayName">Display name.</param>
-        /// <param name="retentionId">Retention id.</param>
-        /// <param name="retentionPeriod">Retention period.</param>
-        /// <param name="type">Retention folder type.</param>
-        /// <param name="retentionAction">Retention action.</param>
-        /// <param name="isVisible">Is visible.</param>
-        /// <param name="optedInto">Opted into.</param>
-        /// <param name="isArchive">Is archive tag.</param>
-        internal RetentionPolicyTag(
-            string displayName,
-            Guid retentionId,
-            int retentionPeriod,
-            ElcFolderType type,
-            RetentionActionType retentionAction,
-            bool isVisible,
-            bool optedInto,
-            bool isArchive)
-        {
-            DisplayName = displayName;
-            RetentionId = retentionId;
-            RetentionPeriod = retentionPeriod;
-            Type = type;
-            RetentionAction = retentionAction;
-            IsVisible = isVisible;
-            OptedInto = optedInto;
-            IsArchive = isArchive;
-        }
-
-        /// <summary>
-        /// Load from xml.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Retention policy tag object.</returns>
-        internal static RetentionPolicyTag LoadFromXml(EwsServiceXmlReader reader)
-        {
-            reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.RetentionPolicyTag);
-
-            RetentionPolicyTag retentionPolicyTag = new RetentionPolicyTag();
-            retentionPolicyTag.DisplayName = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.DisplayName);
-            retentionPolicyTag.RetentionId = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.RetentionId));
-            retentionPolicyTag.RetentionPeriod = reader.ReadElementValue<int>(XmlNamespace.Types, XmlElementNames.RetentionPeriod);
-            retentionPolicyTag.Type = reader.ReadElementValue<ElcFolderType>(XmlNamespace.Types, XmlElementNames.Type);
-            retentionPolicyTag.RetentionAction = reader.ReadElementValue<RetentionActionType>(XmlNamespace.Types, XmlElementNames.RetentionAction);
-
-            // Description is not a required property.
-            reader.Read();
-            if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Description))
-            {
-                retentionPolicyTag.Description = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Description);
-            }
-
-            retentionPolicyTag.IsVisible = reader.ReadElementValue<bool>(XmlNamespace.Types, XmlElementNames.IsVisible);
-            retentionPolicyTag.OptedInto = reader.ReadElementValue<bool>(XmlNamespace.Types, XmlElementNames.OptedInto);
-            retentionPolicyTag.IsArchive = reader.ReadElementValue<bool>(XmlNamespace.Types, XmlElementNames.IsArchive);
-
-            return retentionPolicyTag;
-        }
-
-        /// <summary>
-        /// Retention policy tag display name.
-        /// </summary>
-        public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Retention Id.
-        /// </summary>
-        public Guid RetentionId { get; set; }
-
-        /// <summary>
-        /// Retention period in time span.
-        /// </summary>
-        public int RetentionPeriod { get; set; }
-
-        /// <summary>
-        /// Retention type.
-        /// </summary>
-        public ElcFolderType Type { get; set; }
-
-        /// <summary>
-        /// Retention action.
-        /// </summary>
-        public RetentionActionType RetentionAction { get; set; }
-
-        /// <summary>
-        /// Retention policy tag description.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Is this a visible tag?
-        /// </summary>
-        public bool IsVisible { get; set; }
-
-        /// <summary>
-        /// Is this a opted into tag?
-        /// </summary>
-        public bool OptedInto { get; set; }
-
-        /// <summary>
-        /// Is this an archive tag?
-        /// </summary>
-        public bool IsArchive { get; set; }
+        DisplayName = displayName;
+        RetentionId = retentionId;
+        RetentionPeriod = retentionPeriod;
+        Type = type;
+        RetentionAction = retentionAction;
+        IsVisible = isVisible;
+        OptedInto = optedInto;
+        IsArchive = isArchive;
     }
+
+    /// <summary>
+    /// Load from xml.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Retention policy tag object.</returns>
+    internal static RetentionPolicyTag LoadFromXml(EwsServiceXmlReader reader)
+    {
+        reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.RetentionPolicyTag);
+
+        RetentionPolicyTag retentionPolicyTag = new RetentionPolicyTag();
+        retentionPolicyTag.DisplayName = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.DisplayName);
+        retentionPolicyTag.RetentionId = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.RetentionId));
+        retentionPolicyTag.RetentionPeriod = reader.ReadElementValue<int>(XmlNamespace.Types, XmlElementNames.RetentionPeriod);
+        retentionPolicyTag.Type = reader.ReadElementValue<ElcFolderType>(XmlNamespace.Types, XmlElementNames.Type);
+        retentionPolicyTag.RetentionAction = reader.ReadElementValue<RetentionActionType>(XmlNamespace.Types, XmlElementNames.RetentionAction);
+
+        // Description is not a required property.
+        reader.Read();
+        if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Description))
+        {
+            retentionPolicyTag.Description = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Description);
+        }
+
+        retentionPolicyTag.IsVisible = reader.ReadElementValue<bool>(XmlNamespace.Types, XmlElementNames.IsVisible);
+        retentionPolicyTag.OptedInto = reader.ReadElementValue<bool>(XmlNamespace.Types, XmlElementNames.OptedInto);
+        retentionPolicyTag.IsArchive = reader.ReadElementValue<bool>(XmlNamespace.Types, XmlElementNames.IsArchive);
+
+        return retentionPolicyTag;
+    }
+
+    /// <summary>
+    /// Retention policy tag display name.
+    /// </summary>
+    public string DisplayName { get; set; }
+
+    /// <summary>
+    /// Retention Id.
+    /// </summary>
+    public Guid RetentionId { get; set; }
+
+    /// <summary>
+    /// Retention period in time span.
+    /// </summary>
+    public int RetentionPeriod { get; set; }
+
+    /// <summary>
+    /// Retention type.
+    /// </summary>
+    public ElcFolderType Type { get; set; }
+
+    /// <summary>
+    /// Retention action.
+    /// </summary>
+    public RetentionActionType RetentionAction { get; set; }
+
+    /// <summary>
+    /// Retention policy tag description.
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
+    /// Is this a visible tag?
+    /// </summary>
+    public bool IsVisible { get; set; }
+
+    /// <summary>
+    /// Is this a opted into tag?
+    /// </summary>
+    public bool OptedInto { get; set; }
+
+    /// <summary>
+    /// Is this an archive tag?
+    /// </summary>
+    public bool IsArchive { get; set; }
 }

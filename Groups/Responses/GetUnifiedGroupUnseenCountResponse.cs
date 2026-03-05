@@ -23,39 +23,38 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data.Groups
+namespace Microsoft.Exchange.WebServices.Data.Groups;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+/// <summary>
+/// Represents a response to the GetUnifiedGroupUnseenCount operation
+/// </summary>
+internal sealed class GetUnifiedGroupUnseenCountResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetUnifiedGroupUnseenCountResponse"/> class.
+    /// </summary>
+    internal GetUnifiedGroupUnseenCountResponse() :
+         base()
+    {
+    }
 
     /// <summary>
-    /// Represents a response to the GetUnifiedGroupUnseenCount operation
+    /// Gets or sets the unseen count
     /// </summary>
-    internal sealed class GetUnifiedGroupUnseenCountResponse : ServiceResponse
+    public int UnseenCount { get; set; }
+
+    /// <summary>
+    /// Read response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetUnifiedGroupUnseenCountResponse"/> class.
-        /// </summary>
-        internal GetUnifiedGroupUnseenCountResponse() :
-             base()
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets the unseen count
-        /// </summary>
-        public int UnseenCount { get; set; }
-
-        /// <summary>
-        /// Read response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
-            this.UnseenCount = reader.ReadElementValue<int>(XmlNamespace.NotSpecified, XmlElementNames.UnseenCount);
-        }
+        base.ReadElementsFromXml(reader);
+        this.UnseenCount = reader.ReadElementValue<int>(XmlNamespace.NotSpecified, XmlElementNames.UnseenCount);
     }
 }

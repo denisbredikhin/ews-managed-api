@@ -23,125 +23,124 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+
+/// <summary>
+/// Represents an AddDelegate request.
+/// </summary>
+internal class AddDelegateRequest : DelegateManagementRequestBase<DelegateManagementResponse>
 {
-    using System.Collections.Generic;
+    private List<DelegateUser> delegateUsers = new List<DelegateUser>();
+    private MeetingRequestsDeliveryScope? meetingRequestsDeliveryScope;
 
     /// <summary>
-    /// Represents an AddDelegate request.
+    /// Initializes a new instance of the <see cref="AddDelegateRequest"/> class.
     /// </summary>
-    internal class AddDelegateRequest : DelegateManagementRequestBase<DelegateManagementResponse>
+    /// <param name="service">The service.</param>
+    internal AddDelegateRequest(ExchangeService service)
+        : base(service)
     {
-        private List<DelegateUser> delegateUsers = new List<DelegateUser>();
-        private MeetingRequestsDeliveryScope? meetingRequestsDeliveryScope;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AddDelegateRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal AddDelegateRequest(ExchangeService service)
-            : base(service)
+    /// <summary>
+    /// Validate request.
+    /// </summary>
+    internal override void Validate()
+    {
+        base.Validate();
+        EwsUtilities.ValidateParamCollection(this.DelegateUsers, "DelegateUsers");
+
+        foreach (DelegateUser delegateUser in this.DelegateUsers)
         {
+            delegateUser.ValidateUpdateDelegate();
         }
 
-        /// <summary>
-        /// Validate request.
-        /// </summary>
-        internal override void Validate()
+        if (this.MeetingRequestsDeliveryScope.HasValue)
         {
-            base.Validate();
-            EwsUtilities.ValidateParamCollection(this.DelegateUsers, "DelegateUsers");
+            EwsUtilities.ValidateEnumVersionValue(this.MeetingRequestsDeliveryScope.Value, this.Service.RequestedServerVersion);
+        }
+    }
 
-            foreach (DelegateUser delegateUser in this.DelegateUsers)
-            {
-                delegateUser.ValidateUpdateDelegate();
-            }
+    /// <summary>
+    /// Writes the elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteElementsToXml(writer);
 
-            if (this.MeetingRequestsDeliveryScope.HasValue)
-            {
-                EwsUtilities.ValidateEnumVersionValue(this.MeetingRequestsDeliveryScope.Value, this.Service.RequestedServerVersion);
-            }
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.DelegateUsers);
+
+        foreach (DelegateUser delegateUser in this.DelegateUsers)
+        {
+            delegateUser.WriteToXml(writer, XmlElementNames.DelegateUser);
         }
 
-        /// <summary>
-        /// Writes the elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        writer.WriteEndElement(); // DelegateUsers
+
+        if (this.MeetingRequestsDeliveryScope.HasValue)
         {
-            base.WriteElementsToXml(writer);
-
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.DelegateUsers);
-
-            foreach (DelegateUser delegateUser in this.DelegateUsers)
-            {
-                delegateUser.WriteToXml(writer, XmlElementNames.DelegateUser);
-            }
-
-            writer.WriteEndElement(); // DelegateUsers
-
-            if (this.MeetingRequestsDeliveryScope.HasValue)
-            {
-                writer.WriteElementValue(
-                XmlNamespace.Messages,
-                XmlElementNames.DeliverMeetingRequests,
-                this.MeetingRequestsDeliveryScope.Value);
-            }
+            writer.WriteElementValue(
+            XmlNamespace.Messages,
+            XmlElementNames.DeliverMeetingRequests,
+            this.MeetingRequestsDeliveryScope.Value);
         }
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.AddDelegate;
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.AddDelegate;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.AddDelegateResponse;
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.AddDelegateResponse;
+    }
 
-        /// <summary>
-        /// Creates the response.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal override DelegateManagementResponse CreateResponse()
-        {
-            return new DelegateManagementResponse(true, this.delegateUsers);
-        }
+    /// <summary>
+    /// Creates the response.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal override DelegateManagementResponse CreateResponse()
+    {
+        return new DelegateManagementResponse(true, this.delegateUsers);
+    }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2007_SP1;
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2007_SP1;
+    }
 
-        /// <summary>
-        /// Gets or sets the meeting requests delivery scope.
-        /// </summary>
-        /// <value>The meeting requests delivery scope.</value>
-        public MeetingRequestsDeliveryScope? MeetingRequestsDeliveryScope
-        {
-            get { return this.meetingRequestsDeliveryScope; }
-            set { this.meetingRequestsDeliveryScope = value; }
-        }
+    /// <summary>
+    /// Gets or sets the meeting requests delivery scope.
+    /// </summary>
+    /// <value>The meeting requests delivery scope.</value>
+    public MeetingRequestsDeliveryScope? MeetingRequestsDeliveryScope
+    {
+        get { return this.meetingRequestsDeliveryScope; }
+        set { this.meetingRequestsDeliveryScope = value; }
+    }
 
-        /// <summary>
-        /// Gets the delegate users.
-        /// </summary>
-        /// <value>The delegate users.</value>
-        public List<DelegateUser> DelegateUsers
-        {
-            get { return this.delegateUsers; }
-        }
+    /// <summary>
+    /// Gets the delegate users.
+    /// </summary>
+    /// <value>The delegate users.</value>
+    public List<DelegateUser> DelegateUsers
+    {
+        get { return this.delegateUsers; }
     }
 }

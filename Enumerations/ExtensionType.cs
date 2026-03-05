@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the type of ExtensionType.
+/// </summary>
+public enum ExtensionType
 {
     /// <summary>
-    /// Defines the type of ExtensionType.
+    /// Default
     /// </summary>
-    public enum ExtensionType
-    {
-        /// <summary>
-        /// Default
-        /// </summary>
-        Default = 0,
+    Default = 0,
 
-        /// <summary>
-        /// Private
-        /// </summary>
-        Private = 1,
+    /// <summary>
+    /// Private
+    /// </summary>
+    Private = 1,
 
-        /// <summary>
-        /// MarketPlace
-        /// </summary>
-        MarketPlace = 2,
-    }
+    /// <summary>
+    /// MarketPlace
+    /// </summary>
+    MarketPlace = 2,
 }

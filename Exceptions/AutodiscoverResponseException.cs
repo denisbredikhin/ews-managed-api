@@ -23,31 +23,31 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
-{
-    using System;
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System;
 	using System.Runtime.Serialization;
-    using Microsoft.Exchange.WebServices.Data;
+using Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents an exception from an autodiscover error response.
+/// </summary>
+public class AutodiscoverResponseException : ServiceRemoteException
+{
+    /// <summary>
+    /// Error code when Autodiscover service operation failed remotely.
+    /// </summary>
+    private readonly AutodiscoverErrorCode errorCode;
 
     /// <summary>
-    /// Represents an exception from an autodiscover error response.
+    /// Initializes a new instance of the <see cref="AutodiscoverResponseException"/> class.
     /// </summary>
-    public class AutodiscoverResponseException : ServiceRemoteException
+    /// <param name="errorCode">The error code.</param>
+    /// <param name="message">The message.</param>
+    internal AutodiscoverResponseException(AutodiscoverErrorCode errorCode, string message)
+        : base(message)
     {
-        /// <summary>
-        /// Error code when Autodiscover service operation failed remotely.
-        /// </summary>
-        private readonly AutodiscoverErrorCode errorCode;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutodiscoverResponseException"/> class.
-        /// </summary>
-        /// <param name="errorCode">The error code.</param>
-        /// <param name="message">The message.</param>
-        internal AutodiscoverResponseException(AutodiscoverErrorCode errorCode, string message)
-            : base(message)
-        {
-            this.errorCode = errorCode;
+        this.errorCode = errorCode;
 		}
 
 
@@ -55,8 +55,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
 		/// Gets the ErrorCode for the exception.
 		/// </summary>
 		public AutodiscoverErrorCode ErrorCode
-        {
-            get { return this.errorCode; }
-        }
+    {
+        get { return this.errorCode; }
     }
 }

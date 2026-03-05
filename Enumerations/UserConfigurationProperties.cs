@@ -23,44 +23,43 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Identifies the user configuration properties to retrieve.
+/// </summary>
+[Flags]
+public enum UserConfigurationProperties
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Retrieve the Id property.
+    /// </summary>
+    Id = 1,
 
     /// <summary>
-    /// Identifies the user configuration properties to retrieve.
+    /// Retrieve the Dictionary property.
     /// </summary>
-    [Flags]
-    public enum UserConfigurationProperties
-    {
-        /// <summary>
-        /// Retrieve the Id property.
-        /// </summary>
-        Id = 1,
+    Dictionary = 2,
 
-        /// <summary>
-        /// Retrieve the Dictionary property.
-        /// </summary>
-        Dictionary = 2,
+    /// <summary>
+    /// Retrieve the XmlData property.
+    /// </summary>
+    XmlData = 4,
 
-        /// <summary>
-        /// Retrieve the XmlData property.
-        /// </summary>
-        XmlData = 4,
+    /// <summary>
+    /// Retrieve the BinaryData property.
+    /// </summary>
+    BinaryData = 8,
 
-        /// <summary>
-        /// Retrieve the BinaryData property.
-        /// </summary>
-        BinaryData = 8,
-
-        /// <summary>
-        /// Retrieve all properties.
-        /// </summary>
-        All = UserConfigurationProperties.Id | 
-            UserConfigurationProperties.Dictionary | 
-            UserConfigurationProperties.XmlData | 
-            UserConfigurationProperties.BinaryData
-    }
+    /// <summary>
+    /// Retrieve all properties.
+    /// </summary>
+    All = UserConfigurationProperties.Id | 
+        UserConfigurationProperties.Dictionary | 
+        UserConfigurationProperties.XmlData | 
+        UserConfigurationProperties.BinaryData
 }

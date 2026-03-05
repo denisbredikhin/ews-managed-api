@@ -23,74 +23,73 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents the Unified Messaging functionalities.
+/// </summary>
+public sealed class UnifiedMessaging
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private ExchangeService service;
 
     /// <summary>
-    /// Represents the Unified Messaging functionalities.
+    /// Constructor
     /// </summary>
-    public sealed class UnifiedMessaging
+    /// <param name="service">EWS service to which this object belongs.</param>
+    internal UnifiedMessaging(ExchangeService service)
     {
-        private ExchangeService service;
+        this.service = service;
+    }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="service">EWS service to which this object belongs.</param>
-        internal UnifiedMessaging(ExchangeService service)
-        {
-            this.service = service;
-        }
+    /// <summary>
+    /// Calls a phone and reads a message to the person who picks up.
+    /// </summary>
+    /// <param name="itemId">The Id of the message to read.</param>
+    /// <param name="dialString">The full dial string used to call the phone.</param>
+    /// <returns>An object providing status for the phone call.</returns>
+    public async Task<PhoneCall> PlayOnPhone(ItemId itemId, string dialString, CancellationToken token = default(CancellationToken))
+    {
+        EwsUtilities.ValidateParam(itemId, "itemId");
+        EwsUtilities.ValidateParam(dialString, "dialString");
 
-        /// <summary>
-        /// Calls a phone and reads a message to the person who picks up.
-        /// </summary>
-        /// <param name="itemId">The Id of the message to read.</param>
-        /// <param name="dialString">The full dial string used to call the phone.</param>
-        /// <returns>An object providing status for the phone call.</returns>
-        public async Task<PhoneCall> PlayOnPhone(ItemId itemId, string dialString, CancellationToken token = default(CancellationToken))
-        {
-            EwsUtilities.ValidateParam(itemId, "itemId");
-            EwsUtilities.ValidateParam(dialString, "dialString");
+        PlayOnPhoneRequest request = new PlayOnPhoneRequest(service);
+        request.DialString = dialString;
+        request.ItemId = itemId;
+        PlayOnPhoneResponse serviceResponse = await request.Execute(token).ConfigureAwait(false);
 
-            PlayOnPhoneRequest request = new PlayOnPhoneRequest(service);
-            request.DialString = dialString;
-            request.ItemId = itemId;
-            PlayOnPhoneResponse serviceResponse = await request.Execute(token).ConfigureAwait(false);
+        PhoneCall callInformation = new PhoneCall(service, serviceResponse.PhoneCallId);
 
-            PhoneCall callInformation = new PhoneCall(service, serviceResponse.PhoneCallId);
+        return callInformation;
+    }
 
-            return callInformation;
-        }
+    /// <summary>
+    /// Retrieves information about a current phone call.
+    /// </summary>
+    /// <param name="id">The Id of the phone call.</param>
+    /// <returns>An object providing status for the phone call.</returns>
+    internal async Task<PhoneCall> GetPhoneCallInformation(PhoneCallId id, CancellationToken token)
+    {
+        GetPhoneCallRequest request = new GetPhoneCallRequest(service);
+        request.Id = id;
+        GetPhoneCallResponse response = await request.Execute(token).ConfigureAwait(false);
 
-        /// <summary>
-        /// Retrieves information about a current phone call.
-        /// </summary>
-        /// <param name="id">The Id of the phone call.</param>
-        /// <returns>An object providing status for the phone call.</returns>
-        internal async Task<PhoneCall> GetPhoneCallInformation(PhoneCallId id, CancellationToken token)
-        {
-            GetPhoneCallRequest request = new GetPhoneCallRequest(service);
-            request.Id = id;
-            GetPhoneCallResponse response = await request.Execute(token).ConfigureAwait(false);
+        return response.PhoneCall;
+    }
 
-            return response.PhoneCall;
-        }
-
-        /// <summary>
-        /// Disconnects a phone call.
-        /// </summary>
-        /// <param name="id">The Id of the phone call.</param>
-        internal System.Threading.Tasks.Task DisconnectPhoneCall(PhoneCallId id, CancellationToken token)
-        {
-            DisconnectPhoneCallRequest request = new DisconnectPhoneCallRequest(service);
-            request.Id = id;
-            return request.Execute(token);
-        }
+    /// <summary>
+    /// Disconnects a phone call.
+    /// </summary>
+    /// <param name="id">The Id of the phone call.</param>
+    internal System.Threading.Tasks.Task DisconnectPhoneCall(PhoneCallId id, CancellationToken token)
+    {
+        DisconnectPhoneCallRequest request = new DisconnectPhoneCallRequest(service);
+        request.Id = id;
+        return request.Execute(token);
     }
 }

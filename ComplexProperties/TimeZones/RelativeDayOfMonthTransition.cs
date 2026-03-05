@@ -23,137 +23,136 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using Misc;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a time zone period transition that occurs on a relative day of a specific month.
+/// </summary>
+internal class RelativeDayOfMonthTransition : AbsoluteMonthTransition
 {
-    using Misc;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private DayOfTheWeek dayOfTheWeek;
+    private int weekIndex;
 
     /// <summary>
-    /// Represents a time zone period transition that occurs on a relative day of a specific month.
+    /// Gets the XML element name associated with the transition.
     /// </summary>
-    internal class RelativeDayOfMonthTransition : AbsoluteMonthTransition
+    /// <returns>The XML element name associated with the transition.</returns>
+    internal override string GetXmlElementName()
     {
-        private DayOfTheWeek dayOfTheWeek;
-        private int weekIndex;
+        return XmlElementNames.RecurringDayTransition;
+    }
 
-        /// <summary>
-        /// Gets the XML element name associated with the transition.
-        /// </summary>
-        /// <returns>The XML element name associated with the transition.</returns>
-        internal override string GetXmlElementName()
+    /// <summary>
+    /// Creates a timw zone transition time.
+    /// </summary>
+    /// <returns>A TimeZoneInfo.TransitionTime.</returns>
+    internal override TransitionTime CreateTransitionTime()
+    {
+        return TransitionTime.CreateFloatingDateRule(
+            new DateTime(this.TimeOffset.Ticks),
+            this.Month,
+            this.WeekIndex == -1 ? 5 : this.WeekIndex,
+            EwsUtilities.EwsToSystemDayOfWeek(this.DayOfTheWeek));
+    }
+
+    /// <summary>
+    /// Initializes this transition based on the specified transition time.
+    /// </summary>
+    /// <param name="transitionTime">The transition time to initialize from.</param>
+    internal override void InitializeFromTransitionTime(TransitionTime transitionTime)
+    {
+        base.InitializeFromTransitionTime(transitionTime);
+
+        this.dayOfTheWeek = EwsUtilities.SystemToEwsDayOfTheWeek(transitionTime.DayOfWeek);
+
+        // TimeZoneInfo uses week indices from 1 to 5, 5 being the last week of the month.
+        // EWS uses -1 to denote the last week of the month.
+        this.weekIndex = transitionTime.Week == 5 ? -1 : transitionTime.Week;
+    }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        if (base.TryReadElementFromXml(reader))
         {
-            return XmlElementNames.RecurringDayTransition;
+            return true;
         }
-
-        /// <summary>
-        /// Creates a timw zone transition time.
-        /// </summary>
-        /// <returns>A TimeZoneInfo.TransitionTime.</returns>
-        internal override TransitionTime CreateTransitionTime()
+        else
         {
-            return TransitionTime.CreateFloatingDateRule(
-                new DateTime(this.TimeOffset.Ticks),
-                this.Month,
-                this.WeekIndex == -1 ? 5 : this.WeekIndex,
-                EwsUtilities.EwsToSystemDayOfWeek(this.DayOfTheWeek));
-        }
-
-        /// <summary>
-        /// Initializes this transition based on the specified transition time.
-        /// </summary>
-        /// <param name="transitionTime">The transition time to initialize from.</param>
-        internal override void InitializeFromTransitionTime(TransitionTime transitionTime)
-        {
-            base.InitializeFromTransitionTime(transitionTime);
-
-            this.dayOfTheWeek = EwsUtilities.SystemToEwsDayOfTheWeek(transitionTime.DayOfWeek);
-
-            // TimeZoneInfo uses week indices from 1 to 5, 5 being the last week of the month.
-            // EWS uses -1 to denote the last week of the month.
-            this.weekIndex = transitionTime.Week == 5 ? -1 : transitionTime.Week;
-        }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            if (base.TryReadElementFromXml(reader))
+            switch (reader.LocalName)
             {
-                return true;
-            }
-            else
-            {
-                switch (reader.LocalName)
-                {
-                    case XmlElementNames.DayOfWeek:
-                        this.dayOfTheWeek = reader.ReadElementValue<DayOfTheWeek>();
-                        return true;
-                    case XmlElementNames.Occurrence:
-                        this.weekIndex = reader.ReadElementValue<int>();
-                        return true;
-                    default:
-                        return false;
-                }
+                case XmlElementNames.DayOfWeek:
+                    this.dayOfTheWeek = reader.ReadElementValue<DayOfTheWeek>();
+                    return true;
+                case XmlElementNames.Occurrence:
+                    this.weekIndex = reader.ReadElementValue<int>();
+                    return true;
+                default:
+                    return false;
             }
         }
+    }
 
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            base.WriteElementsToXml(writer);
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteElementsToXml(writer);
 
-            writer.WriteElementValue(
-                XmlNamespace.Types,
-                XmlElementNames.DayOfWeek,
-                this.dayOfTheWeek);
+        writer.WriteElementValue(
+            XmlNamespace.Types,
+            XmlElementNames.DayOfWeek,
+            this.dayOfTheWeek);
 
-            writer.WriteElementValue(
-                XmlNamespace.Types,
-                XmlElementNames.Occurrence,
-                this.weekIndex);
-        }
+        writer.WriteElementValue(
+            XmlNamespace.Types,
+            XmlElementNames.Occurrence,
+            this.weekIndex);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RelativeDayOfMonthTransition"/> class.
-        /// </summary>
-        /// <param name="timeZoneDefinition">The time zone definition this transition belongs to.</param>
-        internal RelativeDayOfMonthTransition(TimeZoneDefinition timeZoneDefinition)
-            : base(timeZoneDefinition)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RelativeDayOfMonthTransition"/> class.
+    /// </summary>
+    /// <param name="timeZoneDefinition">The time zone definition this transition belongs to.</param>
+    internal RelativeDayOfMonthTransition(TimeZoneDefinition timeZoneDefinition)
+        : base(timeZoneDefinition)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RelativeDayOfMonthTransition"/> class.
-        /// </summary>
-        /// <param name="timeZoneDefinition">The time zone definition this transition belongs to.</param>
-        /// <param name="targetPeriod">The period the transition will target.</param>
-        internal RelativeDayOfMonthTransition(TimeZoneDefinition timeZoneDefinition, TimeZonePeriod targetPeriod)
-            : base(timeZoneDefinition, targetPeriod)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="RelativeDayOfMonthTransition"/> class.
+    /// </summary>
+    /// <param name="timeZoneDefinition">The time zone definition this transition belongs to.</param>
+    /// <param name="targetPeriod">The period the transition will target.</param>
+    internal RelativeDayOfMonthTransition(TimeZoneDefinition timeZoneDefinition, TimeZonePeriod targetPeriod)
+        : base(timeZoneDefinition, targetPeriod)
+    {
+    }
 
-        /// <summary>
-        /// Gets the day of the week when the transition occurs.
-        /// </summary>
-        internal DayOfTheWeek DayOfTheWeek
-        {
-            get { return this.dayOfTheWeek; }
-        }
+    /// <summary>
+    /// Gets the day of the week when the transition occurs.
+    /// </summary>
+    internal DayOfTheWeek DayOfTheWeek
+    {
+        get { return this.dayOfTheWeek; }
+    }
 
-        /// <summary>
-        /// Gets the index of the week in the month when the transition occurs.
-        /// </summary>
-        internal int WeekIndex
-        {
-            get { return this.weekIndex; }
-        }
+    /// <summary>
+    /// Gets the index of the week in the month when the transition occurs.
+    /// </summary>
+    internal int WeekIndex
+    {
+        get { return this.weekIndex; }
     }
 }

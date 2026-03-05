@@ -23,59 +23,58 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents String property definition.
+/// </summary>
+internal class StringPropertyDefinition : TypedPropertyDefinition
 {
-    using System;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StringPropertyDefinition"/> class.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="flags">The flags.</param>
+    /// <param name="version">The version.</param>
+    internal StringPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        PropertyDefinitionFlags flags,
+        ExchangeVersion version)
+        : base(
+            xmlElementName,
+            uri,
+            flags,
+            version)
+    {
+    }
 
     /// <summary>
-    /// Represents String property definition.
+    /// Parses the specified value.
     /// </summary>
-    internal class StringPropertyDefinition : TypedPropertyDefinition
+    /// <param name="value">The value.</param>
+    /// <returns>String value.</returns>
+    internal override object Parse(string value)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StringPropertyDefinition"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="flags">The flags.</param>
-        /// <param name="version">The version.</param>
-        internal StringPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            PropertyDefinitionFlags flags,
-            ExchangeVersion version)
-            : base(
-                xmlElementName,
-                uri,
-                flags,
-                version)
-        {
-        }
+        return value;
+    }
 
-        /// <summary>
-        /// Parses the specified value.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>String value.</returns>
-        internal override object Parse(string value)
-        {
-            return value;
-        }
+    /// <summary>
+    /// Gets a value indicating whether this property definition is for a nullable type (ref, int?, bool?...).
+    /// </summary>
+    internal override bool IsNullable
+    {
+        get { return true; }
+    }
 
-        /// <summary>
-        /// Gets a value indicating whether this property definition is for a nullable type (ref, int?, bool?...).
-        /// </summary>
-        internal override bool IsNullable
-        {
-            get { return true; }
-        }
-
-        /// <summary>
-        /// Gets the property type.
-        /// </summary>
-        public override Type Type
-        {
-            get { return typeof(string); }
-        }
+    /// <summary>
+    /// Gets the property type.
+    /// </summary>
+    public override Type Type
+    {
+        get { return typeof(string); }
     }
 }

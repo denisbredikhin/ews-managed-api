@@ -23,40 +23,39 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// The ConnectionFailureCause enumeration
+/// </summary>
+public enum ConnectionFailureCause
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// None
+    /// </summary>
+    None,
 
     /// <summary>
-    /// The ConnectionFailureCause enumeration
+    /// UserBusy
     /// </summary>
-    public enum ConnectionFailureCause
-    {
-        /// <summary>
-        /// None
-        /// </summary>
-        None,
+    UserBusy,
 
-        /// <summary>
-        /// UserBusy
-        /// </summary>
-        UserBusy,
+    /// <summary>
+    /// NoAnswer
+    /// </summary>
+    NoAnswer,
 
-        /// <summary>
-        /// NoAnswer
-        /// </summary>
-        NoAnswer,
+    /// <summary>
+    /// Unavailable
+    /// </summary>
+    Unavailable,
 
-        /// <summary>
-        /// Unavailable
-        /// </summary>
-        Unavailable,
-
-        /// <summary>
-        /// Other
-        /// </summary>
-        Other
-    }
+    /// <summary>
+    /// Other
+    /// </summary>
+    Other
 }

@@ -23,92 +23,91 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents generic property definition.
+/// </summary>
+/// <typeparam name="TPropertyValue">Property value type. Constrained to be a value type.</typeparam>
+internal class GenericPropertyDefinition<TPropertyValue> : TypedPropertyDefinition where TPropertyValue : struct
 {
-    using System;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GenericPropertyDefinition&lt;T&gt;"/> class.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="version">The version.</param>
+    internal GenericPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        ExchangeVersion version)
+        : base(
+            xmlElementName,
+            uri,
+            version)
+    {
+    }
 
     /// <summary>
-    /// Represents generic property definition.
+    /// Initializes a new instance of the <see cref="GenericPropertyDefinition&lt;T&gt;"/> class.
     /// </summary>
-    /// <typeparam name="TPropertyValue">Property value type. Constrained to be a value type.</typeparam>
-    internal class GenericPropertyDefinition<TPropertyValue> : TypedPropertyDefinition where TPropertyValue : struct
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="flags">The flags.</param>
+    /// <param name="version">The version.</param>
+    internal GenericPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        PropertyDefinitionFlags flags,
+        ExchangeVersion version)
+        : base(
+            xmlElementName,
+            uri,
+            flags,
+            version)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericPropertyDefinition&lt;T&gt;"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="version">The version.</param>
-        internal GenericPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            ExchangeVersion version)
-            : base(
-                xmlElementName,
-                uri,
-                version)
-        {
-        }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericPropertyDefinition&lt;T&gt;"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="flags">The flags.</param>
-        /// <param name="version">The version.</param>
-        internal GenericPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            PropertyDefinitionFlags flags,
-            ExchangeVersion version)
-            : base(
-                xmlElementName,
-                uri,
-                flags,
-                version)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GenericPropertyDefinition&lt;T&gt;"/> class.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="flags">The flags.</param>
+    /// <param name="version">The version.</param>
+    /// <param name="isNullable">if set to true, property value is nullable.</param>
+    internal GenericPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        PropertyDefinitionFlags flags,
+        ExchangeVersion version,
+        bool isNullable)
+        : base(
+            xmlElementName,
+            uri,
+            flags,
+            version,
+            isNullable)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericPropertyDefinition&lt;T&gt;"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="flags">The flags.</param>
-        /// <param name="version">The version.</param>
-        /// <param name="isNullable">if set to true, property value is nullable.</param>
-        internal GenericPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            PropertyDefinitionFlags flags,
-            ExchangeVersion version,
-            bool isNullable)
-            : base(
-                xmlElementName,
-                uri,
-                flags,
-                version,
-                isNullable)
-        {
-        }
+    /// <summary>
+    /// Parses the specified value.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>Value of string.</returns>
+    internal override object Parse(string value)
+    {
+        return EwsUtilities.Parse<TPropertyValue>(value);
+    }
 
-        /// <summary>
-        /// Parses the specified value.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>Value of string.</returns>
-        internal override object Parse(string value)
-        {
-            return EwsUtilities.Parse<TPropertyValue>(value);
-        }
-
-        /// <summary>
-        /// Gets the property type.
-        /// </summary>
-        public override Type Type
-        {
-            get { return this.IsNullable ? typeof(Nullable<TPropertyValue>) : typeof(TPropertyValue); }
-        }
+    /// <summary>
+    /// Gets the property type.
+    /// </summary>
+    public override Type Type
+    {
+        get { return this.IsNullable ? typeof(Nullable<TPropertyValue>) : typeof(TPropertyValue); }
     }
 }

@@ -23,57 +23,56 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines actions applicable to Conversation.
+/// </summary>
+internal enum ConversationActionType
 {
     /// <summary>
-    /// Defines actions applicable to Conversation.
+    /// Categorizes every current and future message in the conversation
     /// </summary>
-    internal enum ConversationActionType
-    {
-        /// <summary>
-        /// Categorizes every current and future message in the conversation
-        /// </summary>
-        AlwaysCategorize,
+    AlwaysCategorize,
 
-        /// <summary>
-        /// Deletes every current and future message in the conversation
-        /// </summary>
-        AlwaysDelete,
+    /// <summary>
+    /// Deletes every current and future message in the conversation
+    /// </summary>
+    AlwaysDelete,
 
-        /// <summary>
-        /// Moves every current and future message in the conversation
-        /// </summary>
-        AlwaysMove,
+    /// <summary>
+    /// Moves every current and future message in the conversation
+    /// </summary>
+    AlwaysMove,
 
-        /// <summary>
-        /// Deletes current item in context folder in the conversation
-        /// </summary>
-        Delete,
+    /// <summary>
+    /// Deletes current item in context folder in the conversation
+    /// </summary>
+    Delete,
 
-        /// <summary>
-        /// Moves current item in context folder in the conversation
-        /// </summary>
-        Move,
+    /// <summary>
+    /// Moves current item in context folder in the conversation
+    /// </summary>
+    Move,
 
-        /// <summary>
-        /// Copies current item in context folder in the conversation
-        /// </summary>
-        Copy,
+    /// <summary>
+    /// Copies current item in context folder in the conversation
+    /// </summary>
+    Copy,
 
-        /// <summary>
-        /// Marks current item in context folder in the conversation with
-        /// provided read state
-        /// </summary>
-        SetReadState,
+    /// <summary>
+    /// Marks current item in context folder in the conversation with
+    /// provided read state
+    /// </summary>
+    SetReadState,
 
-        /// <summary>
-        /// Set retention policy.
-        /// </summary>
-        SetRetentionPolicy,
+    /// <summary>
+    /// Set retention policy.
+    /// </summary>
+    SetRetentionPolicy,
 
-        /// <summary>
-        /// Flag current items in context folder in the conversation with provided flag state.
-        /// </summary>
-        Flag,
-    }
+    /// <summary>
+    /// Flag current items in context folder in the conversation with provided flag state.
+    /// </summary>
+    Flag,
 }

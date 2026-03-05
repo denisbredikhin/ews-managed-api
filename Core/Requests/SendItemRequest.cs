@@ -23,154 +23,153 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a SendItem request.
+/// </summary>
+internal sealed class SendItemRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private IEnumerable<Item> items;
+    private FolderId savedCopyDestinationFolderId;
 
     /// <summary>
-    /// Represents a SendItem request.
+    /// Asserts the valid.
     /// </summary>
-    internal sealed class SendItemRequest : MultiResponseServiceRequest<ServiceResponse>
+    internal override void Validate()
     {
-        private IEnumerable<Item> items;
-        private FolderId savedCopyDestinationFolderId;
+        base.Validate();
+        EwsUtilities.ValidateParam(this.Items, "Items");
 
-        /// <summary>
-        /// Asserts the valid.
-        /// </summary>
-        internal override void Validate()
+        if (this.SavedCopyDestinationFolderId != null)
         {
-            base.Validate();
-            EwsUtilities.ValidateParam(this.Items, "Items");
+            this.SavedCopyDestinationFolderId.Validate(this.Service.RequestedServerVersion);
+        }
+    }
 
-            if (this.SavedCopyDestinationFolderId != null)
-            {
-                this.SavedCopyDestinationFolderId.Validate(this.Service.RequestedServerVersion);
-            }
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Service response.</returns>
+    internal override ServiceResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+    {
+        return new ServiceResponse();
+    }
+
+    /// <summary>
+    /// Gets the expected response message count.
+    /// </summary>
+    /// <returns>Number of expected response messages.</returns>
+    internal override int GetExpectedResponseMessageCount()
+    {
+        return EwsUtilities.GetEnumeratedObjectCount(this.Items);
+    }
+
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.SendItem;
+    }
+
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.SendItemResponse;
+    }
+
+    /// <summary>
+    /// Gets the name of the response message XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseMessageXmlElementName()
+    {
+        return XmlElementNames.SendItemResponseMessage;
+    }
+
+    /// <summary>
+    /// Writes the attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteAttributesToXml(writer);
+
+        writer.WriteAttributeValue(
+            XmlAttributeNames.SaveItemToFolder,
+            this.SavedCopyDestinationFolderId != null);
+    }
+
+    /// <summary>
+    /// Writes the elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ItemIds);
+
+        foreach (Item item in this.Items)
+        {
+            item.Id.WriteToXml(writer, XmlElementNames.ItemId);
         }
 
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Service response.</returns>
-        internal override ServiceResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+        writer.WriteEndElement(); // ItemIds
+
+        if (this.SavedCopyDestinationFolderId != null)
         {
-            return new ServiceResponse();
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SavedItemFolderId);
+            this.SavedCopyDestinationFolderId.WriteToXml(writer);
+            writer.WriteEndElement();
         }
+    }
 
-        /// <summary>
-        /// Gets the expected response message count.
-        /// </summary>
-        /// <returns>Number of expected response messages.</returns>
-        internal override int GetExpectedResponseMessageCount()
-        {
-            return EwsUtilities.GetEnumeratedObjectCount(this.Items);
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2007_SP1;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.SendItem;
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SendItemRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal SendItemRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
+    {
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.SendItemResponse;
-        }
+    /// <summary>
+    /// Gets or sets the items.
+    /// </summary>
+    /// <value>The items.</value>
+    public IEnumerable<Item> Items
+    {
+        get { return this.items; }
+        set { this.items = value; }
+    }
 
-        /// <summary>
-        /// Gets the name of the response message XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseMessageXmlElementName()
-        {
-            return XmlElementNames.SendItemResponseMessage;
-        }
-
-        /// <summary>
-        /// Writes the attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            base.WriteAttributesToXml(writer);
-
-            writer.WriteAttributeValue(
-                XmlAttributeNames.SaveItemToFolder,
-                this.SavedCopyDestinationFolderId != null);
-        }
-
-        /// <summary>
-        /// Writes the elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ItemIds);
-
-            foreach (Item item in this.Items)
-            {
-                item.Id.WriteToXml(writer, XmlElementNames.ItemId);
-            }
-
-            writer.WriteEndElement(); // ItemIds
-
-            if (this.SavedCopyDestinationFolderId != null)
-            {
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SavedItemFolderId);
-                this.SavedCopyDestinationFolderId.WriteToXml(writer);
-                writer.WriteEndElement();
-            }
-        }
-
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2007_SP1;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SendItemRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal SendItemRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets the items.
-        /// </summary>
-        /// <value>The items.</value>
-        public IEnumerable<Item> Items
-        {
-            get { return this.items; }
-            set { this.items = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the saved copy destination folder id.
-        /// </summary>
-        /// <value>The saved copy destination folder id.</value>
-        public FolderId SavedCopyDestinationFolderId
-        {
-            get { return this.savedCopyDestinationFolderId; }
-            set { this.savedCopyDestinationFolderId = value; }
-        }
+    /// <summary>
+    /// Gets or sets the saved copy destination folder id.
+    /// </summary>
+    /// <value>The saved copy destination folder id.</value>
+    public FolderId SavedCopyDestinationFolderId
+    {
+        get { return this.savedCopyDestinationFolderId; }
+        set { this.savedCopyDestinationFolderId = value; }
     }
 }

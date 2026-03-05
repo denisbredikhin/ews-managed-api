@@ -23,121 +23,120 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a PlayOnPhone request.
+/// </summary>
+internal sealed class PlayOnPhoneRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private ItemId itemId;
+    private string dialString;
 
     /// <summary>
-    /// Represents a PlayOnPhone request.
+    /// Initializes a new instance of the <see cref="PlayOnPhoneRequest"/> class.
     /// </summary>
-    internal sealed class PlayOnPhoneRequest : SimpleServiceRequestBase
+    /// <param name="service">The service.</param>
+    internal PlayOnPhoneRequest(ExchangeService service)
+        : base(service)
     {
-        private ItemId itemId;
-        private string dialString;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayOnPhoneRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal PlayOnPhoneRequest(ExchangeService service)
-            : base(service)
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.PlayOnPhone;
+    }
+
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        this.itemId.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.ItemId);
+        writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.DialString, dialString);
+    }
+
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.PlayOnPhoneResponse;
+    }
+
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        PlayOnPhoneResponse serviceResponse = new PlayOnPhoneResponse(this.Service);
+        serviceResponse.LoadFromXml(reader, XmlElementNames.PlayOnPhoneResponse);
+        return serviceResponse;
+    }
+
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2010;
+    }
+
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<PlayOnPhoneResponse> Execute(CancellationToken token)
+    {
+        PlayOnPhoneResponse serviceResponse = (PlayOnPhoneResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
+        serviceResponse.ThrowIfNecessary();
+        return serviceResponse;
+    }
+
+    /// <summary>
+    /// Gets or sets the item id of the message to play.
+    /// </summary>
+    internal ItemId ItemId
+    {
+        get
         {
+            return this.itemId;
         }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetXmlElementName()
+        set
         {
-            return XmlElementNames.PlayOnPhone;
+            this.itemId = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the dial string.
+    /// </summary>
+    internal string DialString
+    {
+        get
+        {
+            return this.dialString;
         }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        set
         {
-            this.itemId.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.ItemId);
-            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.DialString, dialString);
-        }
-
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.PlayOnPhoneResponse;
-        }
-
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            PlayOnPhoneResponse serviceResponse = new PlayOnPhoneResponse(this.Service);
-            serviceResponse.LoadFromXml(reader, XmlElementNames.PlayOnPhoneResponse);
-            return serviceResponse;
-        }
-
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2010;
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<PlayOnPhoneResponse> Execute(CancellationToken token)
-        {
-            PlayOnPhoneResponse serviceResponse = (PlayOnPhoneResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-            serviceResponse.ThrowIfNecessary();
-            return serviceResponse;
-        }
-
-        /// <summary>
-        /// Gets or sets the item id of the message to play.
-        /// </summary>
-        internal ItemId ItemId
-        {
-            get
-            {
-                return this.itemId;
-            }
-
-            set
-            {
-                this.itemId = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the dial string.
-        /// </summary>
-        internal string DialString
-        {
-            get
-            {
-                return this.dialString;
-            }
-
-            set
-            {
-                this.dialString = value;
-            }
+            this.dialString = value;
         }
     }
 }

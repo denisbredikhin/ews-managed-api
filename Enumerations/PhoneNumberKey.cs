@@ -23,126 +23,125 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines phone number entries for a contact.
+/// </summary>
+public enum PhoneNumberKey
 {
     /// <summary>
-    /// Defines phone number entries for a contact.
+    /// The assistant's phone number.
     /// </summary>
-    public enum PhoneNumberKey
-    {
-        /// <summary>
-        /// The assistant's phone number.
-        /// </summary>
-        AssistantPhone,
+    AssistantPhone,
 
-        /// <summary>
-        /// The business fax number.
-        /// </summary>
-        BusinessFax,
+    /// <summary>
+    /// The business fax number.
+    /// </summary>
+    BusinessFax,
 
-        /// <summary>
-        /// The business phone number.
-        /// </summary>
-        BusinessPhone,
+    /// <summary>
+    /// The business phone number.
+    /// </summary>
+    BusinessPhone,
 
-        /// <summary>
-        /// The second business phone number.
-        /// </summary>
-        BusinessPhone2,
+    /// <summary>
+    /// The second business phone number.
+    /// </summary>
+    BusinessPhone2,
 
-        /// <summary>
-        /// The callback number.
-        /// </summary>
-        Callback,
+    /// <summary>
+    /// The callback number.
+    /// </summary>
+    Callback,
 
-        /// <summary>
-        /// The car phone number.
-        /// </summary>
-        CarPhone,
+    /// <summary>
+    /// The car phone number.
+    /// </summary>
+    CarPhone,
 
-        /// <summary>
-        /// The company's main phone number.
-        /// </summary>
-        CompanyMainPhone,
+    /// <summary>
+    /// The company's main phone number.
+    /// </summary>
+    CompanyMainPhone,
 
-        /// <summary>
-        /// The home fax number.
-        /// </summary>
-        HomeFax,
+    /// <summary>
+    /// The home fax number.
+    /// </summary>
+    HomeFax,
 
-        /// <summary>
-        /// The home phone number.
-        /// </summary>
-        HomePhone,
+    /// <summary>
+    /// The home phone number.
+    /// </summary>
+    HomePhone,
 
-        /// <summary>
-        /// The second home phone number.
-        /// </summary>
-        HomePhone2,
+    /// <summary>
+    /// The second home phone number.
+    /// </summary>
+    HomePhone2,
 
-        /// <summary>
-        /// The ISDN number.
-        /// </summary>
-        Isdn,
+    /// <summary>
+    /// The ISDN number.
+    /// </summary>
+    Isdn,
 
-        /// <summary>
-        /// The mobile phone number.
-        /// </summary>
-        MobilePhone,
+    /// <summary>
+    /// The mobile phone number.
+    /// </summary>
+    MobilePhone,
 
-        /// <summary>
-        /// An alternate fax number.
-        /// </summary>
-        OtherFax,
+    /// <summary>
+    /// An alternate fax number.
+    /// </summary>
+    OtherFax,
 
-        /// <summary>
-        /// An alternate phone number.
-        /// </summary>
-        OtherTelephone,
+    /// <summary>
+    /// An alternate phone number.
+    /// </summary>
+    OtherTelephone,
 
-        /// <summary>
-        /// The pager number.
-        /// </summary>
-        Pager,
+    /// <summary>
+    /// The pager number.
+    /// </summary>
+    Pager,
 
-        /// <summary>
-        /// The primary phone number.
-        /// </summary>
-        PrimaryPhone,
+    /// <summary>
+    /// The primary phone number.
+    /// </summary>
+    PrimaryPhone,
 
-        /// <summary>
-        /// The radio phone number.
-        /// </summary>
-        RadioPhone,
+    /// <summary>
+    /// The radio phone number.
+    /// </summary>
+    RadioPhone,
 
-        /// <summary>
-        /// The Telex number.
-        /// </summary>
-        Telex,
+    /// <summary>
+    /// The Telex number.
+    /// </summary>
+    Telex,
 
-        /// <summary>
-        /// The TTY/TTD phone number.
-        /// </summary>
-        TtyTddPhone,
+    /// <summary>
+    /// The TTY/TTD phone number.
+    /// </summary>
+    TtyTddPhone,
 
-        /// <summary>
-        /// Business mobile number.
-        /// </summary>
-        BusinessMobile,
+    /// <summary>
+    /// Business mobile number.
+    /// </summary>
+    BusinessMobile,
 
-        /// <summary>
-        /// IP Phone number.
-        /// </summary>
-        IPPhone,
+    /// <summary>
+    /// IP Phone number.
+    /// </summary>
+    IPPhone,
 
-        /// <summary>
-        /// Mms number.
-        /// </summary>
-        Mms,
+    /// <summary>
+    /// Mms number.
+    /// </summary>
+    Mms,
 
-        /// <summary>
-        /// Msn number.
-        /// </summary>
-        Msn
-    }
+    /// <summary>
+    /// Msn number.
+    /// </summary>
+    Msn
 }

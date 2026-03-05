@@ -23,116 +23,115 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a time zone period as defined in the EWS schema.
+/// </summary>
+internal class TimeZonePeriod : ComplexProperty
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    internal const string StandardPeriodId = "Std";
+    internal const string StandardPeriodName = "Standard";
+    internal const string DaylightPeriodId = "Dlt";
+    internal const string DaylightPeriodName = "Daylight";
+
+    private TimeSpan bias;
+    private string name;
+    private string id;
 
     /// <summary>
-    /// Represents a time zone period as defined in the EWS schema.
+    /// Reads the attributes from XML.
     /// </summary>
-    internal class TimeZonePeriod : ComplexProperty
+    /// <param name="reader">The reader.</param>
+    internal override void ReadAttributesFromXml(EwsServiceXmlReader reader)
     {
-        internal const string StandardPeriodId = "Std";
-        internal const string StandardPeriodName = "Standard";
-        internal const string DaylightPeriodId = "Dlt";
-        internal const string DaylightPeriodName = "Daylight";
+        this.id = reader.ReadAttributeValue(XmlAttributeNames.Id);
+        this.name = reader.ReadAttributeValue(XmlAttributeNames.Name);
+        this.bias = EwsUtilities.XSDurationToTimeSpan(reader.ReadAttributeValue(XmlAttributeNames.Bias));
+    }
 
-        private TimeSpan bias;
-        private string name;
-        private string id;
+    /// <summary>
+    /// Writes the attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteAttributeValue(XmlAttributeNames.Bias, EwsUtilities.TimeSpanToXSDuration(this.bias));
+        writer.WriteAttributeValue(XmlAttributeNames.Name, this.name);
+        writer.WriteAttributeValue(XmlAttributeNames.Id, this.id);
+    }
 
-        /// <summary>
-        /// Reads the attributes from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadAttributesFromXml(EwsServiceXmlReader reader)
+    /// <summary>
+    /// Loads from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal void LoadFromXml(EwsServiceXmlReader reader)
+    {
+        this.LoadFromXml(reader, XmlElementNames.Period);
+    }
+
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal void WriteToXml(EwsServiceXmlWriter writer)
+    {
+        this.WriteToXml(writer, XmlElementNames.Period);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TimeZonePeriod"/> class.
+    /// </summary>
+    internal TimeZonePeriod()
+        : base()
+    {
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether this period represents the Standard period.
+    /// </summary>
+    /// <value>
+    ///     <c>true</c> if this instance is standard period; otherwise, <c>false</c>.
+    /// </value>
+    internal bool IsStandardPeriod
+    {
+        get
         {
-            this.id = reader.ReadAttributeValue(XmlAttributeNames.Id);
-            this.name = reader.ReadAttributeValue(XmlAttributeNames.Name);
-            this.bias = EwsUtilities.XSDurationToTimeSpan(reader.ReadAttributeValue(XmlAttributeNames.Bias));
+            return string.Compare(
+                this.name,
+                TimeZonePeriod.StandardPeriodName,
+                StringComparison.OrdinalIgnoreCase) == 0;
         }
+    }
 
-        /// <summary>
-        /// Writes the attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteAttributeValue(XmlAttributeNames.Bias, EwsUtilities.TimeSpanToXSDuration(this.bias));
-            writer.WriteAttributeValue(XmlAttributeNames.Name, this.name);
-            writer.WriteAttributeValue(XmlAttributeNames.Id, this.id);
-        }
+    /// <summary>
+    /// Gets or sets the bias to UTC associated with this period.
+    /// </summary>
+    internal TimeSpan Bias
+    {
+        get { return this.bias; }
+        set { this.bias = value; }
+    }
 
-        /// <summary>
-        /// Loads from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal void LoadFromXml(EwsServiceXmlReader reader)
-        {
-            this.LoadFromXml(reader, XmlElementNames.Period);
-        }
+    /// <summary>
+    /// Gets or sets the name of this period.
+    /// </summary>
+    internal string Name
+    {
+        get { return this.name; }
+        set { this.name = value; }
+    }
 
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal void WriteToXml(EwsServiceXmlWriter writer)
-        {
-            this.WriteToXml(writer, XmlElementNames.Period);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TimeZonePeriod"/> class.
-        /// </summary>
-        internal TimeZonePeriod()
-            : base()
-        {
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this period represents the Standard period.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if this instance is standard period; otherwise, <c>false</c>.
-        /// </value>
-        internal bool IsStandardPeriod
-        {
-            get
-            {
-                return string.Compare(
-                    this.name,
-                    TimeZonePeriod.StandardPeriodName,
-                    StringComparison.OrdinalIgnoreCase) == 0;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the bias to UTC associated with this period.
-        /// </summary>
-        internal TimeSpan Bias
-        {
-            get { return this.bias; }
-            set { this.bias = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the name of this period.
-        /// </summary>
-        internal string Name
-        {
-            get { return this.name; }
-            set { this.name = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the id of this period.
-        /// </summary>
-        internal string Id
-        {
-            get { return this.id; }
-            set { this.id = value; }
-        }
+    /// <summary>
+    /// Gets or sets the id of this period.
+    /// </summary>
+    internal string Id
+    {
+        get { return this.id; }
+        set { this.id = value; }
     }
 }

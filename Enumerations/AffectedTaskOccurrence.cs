@@ -23,25 +23,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Indicates which occurrence of a recurring task should be deleted.
+/// </summary>
+public enum AffectedTaskOccurrence
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// All occurrences of the recurring task will be deleted.
+    /// </summary>
+    AllOccurrences,
 
     /// <summary>
-    /// Indicates which occurrence of a recurring task should be deleted.
+    /// Only the current occurrence of the recurring task will be deleted.
     /// </summary>
-    public enum AffectedTaskOccurrence
-    {
-        /// <summary>
-        /// All occurrences of the recurring task will be deleted.
-        /// </summary>
-        AllOccurrences,
-
-        /// <summary>
-        /// Only the current occurrence of the recurring task will be deleted.
-        /// </summary>
-        SpecifiedOccurrenceOnly
-    }
+    SpecifiedOccurrenceOnly
 }

@@ -23,45 +23,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines supported Id formats in ConvertId operations.
+/// </summary>
+public enum IdFormat
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The EWS Id format used in Exchange 2007 RTM.
+    /// </summary>
+    EwsLegacyId,
 
     /// <summary>
-    /// Defines supported Id formats in ConvertId operations.
+    /// The EWS Id format used in Exchange 2007 SP1 and above.
     /// </summary>
-    public enum IdFormat
-    {
-        /// <summary>
-        /// The EWS Id format used in Exchange 2007 RTM.
-        /// </summary>
-        EwsLegacyId,
+    EwsId,
 
-        /// <summary>
-        /// The EWS Id format used in Exchange 2007 SP1 and above.
-        /// </summary>
-        EwsId,
+    /// <summary>
+    /// The base64-encoded PR_ENTRYID property.
+    /// </summary>
+    EntryId,
 
-        /// <summary>
-        /// The base64-encoded PR_ENTRYID property.
-        /// </summary>
-        EntryId,
+    /// <summary>
+    /// The hexadecimal representation  of the PR_ENTRYID property.
+    /// </summary>
+    HexEntryId,
 
-        /// <summary>
-        /// The hexadecimal representation  of the PR_ENTRYID property.
-        /// </summary>
-        HexEntryId,
+    /// <summary>
+    /// The Store Id format.
+    /// </summary>
+    StoreId,
 
-        /// <summary>
-        /// The Store Id format.
-        /// </summary>
-        StoreId,
-
-        /// <summary>
-        /// The Outlook Web Access Id format.
-        /// </summary>
-        OwaId
-    }
+    /// <summary>
+    /// The Outlook Web Access Id format.
+    /// </summary>
+    OwaId
 }

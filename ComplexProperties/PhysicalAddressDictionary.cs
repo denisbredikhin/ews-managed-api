@@ -23,65 +23,64 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.ComponentModel;
+
+/// <summary>
+/// Represents a dictionary of physical addresses.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public sealed class PhysicalAddressDictionary : DictionaryProperty<PhysicalAddressKey, PhysicalAddressEntry>
 {
-    using System.ComponentModel;
+    /// <summary>
+    /// Creates instance of dictionary entry.
+    /// </summary>
+    /// <returns>New instance.</returns>
+    internal override PhysicalAddressEntry CreateEntryInstance()
+    {
+        return new PhysicalAddressEntry();
+    }
 
     /// <summary>
-    /// Represents a dictionary of physical addresses.
+    /// Gets or sets the physical address at the specified key.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class PhysicalAddressDictionary : DictionaryProperty<PhysicalAddressKey, PhysicalAddressEntry>
+    /// <param name="key">The key of the physical address to get or set.</param>
+    /// <returns>The physical address at the specified key.</returns>
+    public PhysicalAddressEntry this[PhysicalAddressKey key]
     {
-        /// <summary>
-        /// Creates instance of dictionary entry.
-        /// </summary>
-        /// <returns>New instance.</returns>
-        internal override PhysicalAddressEntry CreateEntryInstance()
+        get
         {
-            return new PhysicalAddressEntry();
+            return this.Entries[key];
         }
 
-        /// <summary>
-        /// Gets or sets the physical address at the specified key.
-        /// </summary>
-        /// <param name="key">The key of the physical address to get or set.</param>
-        /// <returns>The physical address at the specified key.</returns>
-        public PhysicalAddressEntry this[PhysicalAddressKey key]
+        set
         {
-            get
+            if (value == null)
             {
-                return this.Entries[key];
+                this.InternalRemove(key);
             }
-
-            set
+            else
             {
-                if (value == null)
-                {
-                    this.InternalRemove(key);
-                }
-                else
-                {
-                    value.Key = key;
-                    this.InternalAddOrReplace(value);
-                }
+                value.Key = key;
+                this.InternalAddOrReplace(value);
             }
         }
+    }
 
-        /// <summary>
-        /// Tries to get the physical address associated with the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <param name="physicalAddress">
-        /// When this method returns, contains the physical address associated with the specified key,
-        /// if the key is found; otherwise, null. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>
-        /// true if the Dictionary contains a physical address associated with the specified key; otherwise, false.
-        /// </returns>
-        public bool TryGetValue(PhysicalAddressKey key, out PhysicalAddressEntry physicalAddress)
-        {
-            return this.Entries.TryGetValue(key, out physicalAddress);
-        }
+    /// <summary>
+    /// Tries to get the physical address associated with the specified key.
+    /// </summary>
+    /// <param name="key">The key.</param>
+    /// <param name="physicalAddress">
+    /// When this method returns, contains the physical address associated with the specified key,
+    /// if the key is found; otherwise, null. This parameter is passed uninitialized.
+    /// </param>
+    /// <returns>
+    /// true if the Dictionary contains a physical address associated with the specified key; otherwise, false.
+    /// </returns>
+    public bool TryGetValue(PhysicalAddressKey key, out PhysicalAddressEntry physicalAddress)
+    {
+        return this.Entries.TryGetValue(key, out physicalAddress);
     }
 }

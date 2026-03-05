@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the hold action.
+/// </summary>
+public enum HoldAction
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Create new hold
+    /// </summary>
+    Create,
 
     /// <summary>
-    /// Defines the hold action.
+    /// Update query associated with a hold
     /// </summary>
-    public enum HoldAction
-    {
-        /// <summary>
-        /// Create new hold
-        /// </summary>
-        Create,
+    Update,
 
-        /// <summary>
-        /// Update query associated with a hold
-        /// </summary>
-        Update,
-
-        /// <summary>
-        /// Release the hold
-        /// </summary>
-        Remove,
-    }
+    /// <summary>
+    /// Release the hold
+    /// </summary>
+    Remove,
 }

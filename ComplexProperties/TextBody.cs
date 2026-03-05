@@ -23,37 +23,36 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents the body of a message.
+/// </summary>
+public sealed class TextBody : MessageBody
 {
     /// <summary>
-    /// Represents the body of a message.
+    /// Initializes a new instance of the <see cref="TextBody"/> class.
     /// </summary>
-    public sealed class TextBody : MessageBody
+    public TextBody()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TextBody"/> class.
-        /// </summary>
-        public TextBody()
-        {
-        }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TextBody"/> class.
-        /// </summary>
-        /// <param name="text">The text of the message body.</param>
-        public TextBody(string text)
-            : base(BodyType.Text, text)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TextBody"/> class.
+    /// </summary>
+    /// <param name="text">The text of the message body.</param>
+    public TextBody(string text)
+        : base(BodyType.Text, text)
+    {
+    }
 
-        /// <summary>
-        /// Defines an implicit conversation between a string and TextBody.
-        /// </summary>
-        /// <param name="textBody">The string to convert to TextBody, assumed to be HTML.</param>
-        /// <returns>A TextBody initialized with the specified string.</returns>
-        public static implicit operator TextBody(string textBody)
-        {
-            return new TextBody(textBody);
-        }
+    /// <summary>
+    /// Defines an implicit conversation between a string and TextBody.
+    /// </summary>
+    /// <param name="textBody">The string to convert to TextBody, assumed to be HTML.</param>
+    /// <returns>A TextBody initialized with the specified string.</returns>
+    public static implicit operator TextBody(string textBody)
+    {
+        return new TextBody(textBody);
     }
 }

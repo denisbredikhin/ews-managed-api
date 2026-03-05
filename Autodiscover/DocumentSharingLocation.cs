@@ -23,281 +23,280 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System.Collections.Generic;
+using System.Xml;
+using Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents a sharing location.
+/// </summary>
+public sealed class DocumentSharingLocation
 {
-    using System.Collections.Generic;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
+    /// <summary>
+    /// The URL of the web service to use to manipulate documents at the 
+    /// sharing location.
+    /// </summary>
+    private string serviceUrl;
 
     /// <summary>
-    /// Represents a sharing location.
+    /// The URL of the sharing location (for viewing the contents in a web 
+    /// browser).
     /// </summary>
-    public sealed class DocumentSharingLocation
+    private string locationUrl;
+
+    /// <summary>
+    /// The display name of the location.
+    /// </summary>
+    private string displayName;
+
+    /// <summary>
+    /// The set of file extensions that are allowed at the location.
+    /// </summary>
+    private IEnumerable<string> supportedFileExtensions;
+
+    /// <summary>
+    /// Indicates whether external users (outside the enterprise/tenant) 
+    /// can view documents at the location.
+    /// </summary>
+    private bool externalAccessAllowed;
+
+    /// <summary>
+    /// Indicates whether anonymous users can view documents at the location.
+    /// </summary>
+    private bool anonymousAccessAllowed;
+
+    /// <summary>
+    /// Indicates whether the user can modify permissions for documents at
+    /// the location.
+    /// </summary>
+    private bool canModifyPermissions;
+
+    /// <summary>
+    /// Indicates whether this location is the user's default location.  
+    /// This will generally be their My Site.
+    /// </summary>
+    private bool isDefault;
+
+    /// <summary>
+    /// Gets the URL of the web service to use to manipulate 
+    /// documents at the sharing location.
+    /// </summary>
+    public string ServiceUrl
     {
-        /// <summary>
-        /// The URL of the web service to use to manipulate documents at the 
-        /// sharing location.
-        /// </summary>
-        private string serviceUrl;
-
-        /// <summary>
-        /// The URL of the sharing location (for viewing the contents in a web 
-        /// browser).
-        /// </summary>
-        private string locationUrl;
-
-        /// <summary>
-        /// The display name of the location.
-        /// </summary>
-        private string displayName;
-
-        /// <summary>
-        /// The set of file extensions that are allowed at the location.
-        /// </summary>
-        private IEnumerable<string> supportedFileExtensions;
-
-        /// <summary>
-        /// Indicates whether external users (outside the enterprise/tenant) 
-        /// can view documents at the location.
-        /// </summary>
-        private bool externalAccessAllowed;
-
-        /// <summary>
-        /// Indicates whether anonymous users can view documents at the location.
-        /// </summary>
-        private bool anonymousAccessAllowed;
-
-        /// <summary>
-        /// Indicates whether the user can modify permissions for documents at
-        /// the location.
-        /// </summary>
-        private bool canModifyPermissions;
-
-        /// <summary>
-        /// Indicates whether this location is the user's default location.  
-        /// This will generally be their My Site.
-        /// </summary>
-        private bool isDefault;
-
-        /// <summary>
-        /// Gets the URL of the web service to use to manipulate 
-        /// documents at the sharing location.
-        /// </summary>
-        public string ServiceUrl
+        get
         {
-            get
-            {
-                return this.serviceUrl;
-            }
-
-            private set
-            {
-                this.serviceUrl = value;
-            }
+            return this.serviceUrl;
         }
 
-        /// <summary>
-        /// Gets the URL of the sharing location (for viewing the 
-        /// contents in a web browser).
-        /// </summary>
-        public string LocationUrl
+        private set
         {
-            get
-            {
-                return this.locationUrl;
-            }
+            this.serviceUrl = value;
+        }
+    }
 
-            private set
-            {
-                this.locationUrl = value;
-            }
+    /// <summary>
+    /// Gets the URL of the sharing location (for viewing the 
+    /// contents in a web browser).
+    /// </summary>
+    public string LocationUrl
+    {
+        get
+        {
+            return this.locationUrl;
         }
 
-        /// <summary>
-        /// Gets the display name of the location.
-        /// </summary>
-        public string DisplayName
+        private set
         {
-            get
-            {
-                return this.displayName;
-            }
+            this.locationUrl = value;
+        }
+    }
 
-            private set
-            {
-                this.displayName = value;
-            }
+    /// <summary>
+    /// Gets the display name of the location.
+    /// </summary>
+    public string DisplayName
+    {
+        get
+        {
+            return this.displayName;
         }
 
-        /// <summary>
-        /// Gets the space-separated list of file extensions that are 
-        /// allowed at the location.
-        /// </summary>
-        /// <remarks>
-        /// Example:  "docx pptx xlsx"
-        /// </remarks>
-        public IEnumerable<string> SupportedFileExtensions
+        private set
         {
-            get
-            {
-                return this.supportedFileExtensions;
-            }
+            this.displayName = value;
+        }
+    }
 
-            private set
-            {
-                this.supportedFileExtensions = value;
-            }
+    /// <summary>
+    /// Gets the space-separated list of file extensions that are 
+    /// allowed at the location.
+    /// </summary>
+    /// <remarks>
+    /// Example:  "docx pptx xlsx"
+    /// </remarks>
+    public IEnumerable<string> SupportedFileExtensions
+    {
+        get
+        {
+            return this.supportedFileExtensions;
         }
 
-        /// <summary>
-        /// Gets a flag indicating whether external users (outside the 
-        /// enterprise/tenant) can view documents at the location.
-        /// </summary>
-        public bool ExternalAccessAllowed
+        private set
         {
-            get
-            {
-                return this.externalAccessAllowed;
-            }
+            this.supportedFileExtensions = value;
+        }
+    }
 
-            private set
-            {
-                this.externalAccessAllowed = value;
-            }
+    /// <summary>
+    /// Gets a flag indicating whether external users (outside the 
+    /// enterprise/tenant) can view documents at the location.
+    /// </summary>
+    public bool ExternalAccessAllowed
+    {
+        get
+        {
+            return this.externalAccessAllowed;
         }
 
-        /// <summary>
-        /// Gets a flag indicating whether anonymous users can view
-        /// documents at the location.
-        /// </summary>
-        public bool AnonymousAccessAllowed
+        private set
         {
-            get
-            {
-                return this.anonymousAccessAllowed;
-            }
+            this.externalAccessAllowed = value;
+        }
+    }
 
-            private set
-            {
-                this.anonymousAccessAllowed = value;
-            }
+    /// <summary>
+    /// Gets a flag indicating whether anonymous users can view
+    /// documents at the location.
+    /// </summary>
+    public bool AnonymousAccessAllowed
+    {
+        get
+        {
+            return this.anonymousAccessAllowed;
         }
 
-        /// <summary>
-        /// Gets a flag indicating whether the user can modify 
-        /// permissions for documents at the location.
-        /// </summary>
-        /// <remarks>
-        /// This will be true for the user's "My Site," for example. However,
-        /// documents at team and project sites will typically be ACLed by the
-        /// site owner, so the user will not be able to modify permissions. 
-        /// This will most likely by false even if the caller is the owner,
-        /// to avoid surprises.  They should go to SharePoint to modify
-        /// permissions for team and project sites.
-        /// </remarks>
-        public bool CanModifyPermissions
+        private set
         {
-            get
-            {
-                return this.canModifyPermissions;
-            }
+            this.anonymousAccessAllowed = value;
+        }
+    }
 
-            private set
-            {
-                this.canModifyPermissions = value;
-            }
+    /// <summary>
+    /// Gets a flag indicating whether the user can modify 
+    /// permissions for documents at the location.
+    /// </summary>
+    /// <remarks>
+    /// This will be true for the user's "My Site," for example. However,
+    /// documents at team and project sites will typically be ACLed by the
+    /// site owner, so the user will not be able to modify permissions. 
+    /// This will most likely by false even if the caller is the owner,
+    /// to avoid surprises.  They should go to SharePoint to modify
+    /// permissions for team and project sites.
+    /// </remarks>
+    public bool CanModifyPermissions
+    {
+        get
+        {
+            return this.canModifyPermissions;
         }
 
-        /// <summary>
-        /// Gets a flag indicating whether this location is the user's
-        /// default location.  This will generally be their My Site.
-        /// </summary>
-        public bool IsDefault
+        private set
         {
-            get
-            {
-                return this.isDefault;
-            }
+            this.canModifyPermissions = value;
+        }
+    }
 
-            private set
-            {
-                this.isDefault = value;
-            }
+    /// <summary>
+    /// Gets a flag indicating whether this location is the user's
+    /// default location.  This will generally be their My Site.
+    /// </summary>
+    public bool IsDefault
+    {
+        get
+        {
+            return this.isDefault;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DocumentSharingLocation"/> class.
-        /// </summary>
-        private DocumentSharingLocation()
+        private set
         {
+            this.isDefault = value;
         }
+    }
 
-        /// <summary>
-        /// Loads DocumentSharingLocation instance from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>DocumentSharingLocation.</returns>
-        internal static DocumentSharingLocation LoadFromXml(EwsXmlReader reader)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DocumentSharingLocation"/> class.
+    /// </summary>
+    private DocumentSharingLocation()
+    {
+    }
+
+    /// <summary>
+    /// Loads DocumentSharingLocation instance from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>DocumentSharingLocation.</returns>
+    internal static DocumentSharingLocation LoadFromXml(EwsXmlReader reader)
+    {
+        DocumentSharingLocation location = new DocumentSharingLocation();
+
+        do
         {
-            DocumentSharingLocation location = new DocumentSharingLocation();
+            reader.Read();
 
-            do
+            if (reader.NodeType == XmlNodeType.Element)
             {
-                reader.Read();
-
-                if (reader.NodeType == XmlNodeType.Element)
+                switch (reader.LocalName)
                 {
-                    switch (reader.LocalName)
-                    {
-                        case XmlElementNames.ServiceUrl:
-                            location.ServiceUrl = reader.ReadElementValue<string>();
-                            break;
+                    case XmlElementNames.ServiceUrl:
+                        location.ServiceUrl = reader.ReadElementValue<string>();
+                        break;
 
-                        case XmlElementNames.LocationUrl:
-                            location.LocationUrl = reader.ReadElementValue<string>();
-                            break;
+                    case XmlElementNames.LocationUrl:
+                        location.LocationUrl = reader.ReadElementValue<string>();
+                        break;
 
-                        case XmlElementNames.DisplayName:
-                            location.DisplayName = reader.ReadElementValue<string>();
-                            break;
+                    case XmlElementNames.DisplayName:
+                        location.DisplayName = reader.ReadElementValue<string>();
+                        break;
 
-                        case XmlElementNames.SupportedFileExtensions:
-                            List<string> fileExtensions = new List<string>();
+                    case XmlElementNames.SupportedFileExtensions:
+                        List<string> fileExtensions = new List<string>();
+                        reader.Read();
+                        while (reader.IsStartElement(XmlNamespace.Autodiscover, XmlElementNames.FileExtension))
+                        {                                
+                            string extension = reader.ReadElementValue<string>();
+                            fileExtensions.Add(extension);
                             reader.Read();
-                            while (reader.IsStartElement(XmlNamespace.Autodiscover, XmlElementNames.FileExtension))
-                            {                                
-                                string extension = reader.ReadElementValue<string>();
-                                fileExtensions.Add(extension);
-                                reader.Read();
-                            }
-                            
-                            location.SupportedFileExtensions = fileExtensions;
-                            break;
+                        }
+                        
+                        location.SupportedFileExtensions = fileExtensions;
+                        break;
 
-                        case XmlElementNames.ExternalAccessAllowed:
-                            location.ExternalAccessAllowed = reader.ReadElementValue<bool>();
-                            break;
+                    case XmlElementNames.ExternalAccessAllowed:
+                        location.ExternalAccessAllowed = reader.ReadElementValue<bool>();
+                        break;
 
-                        case XmlElementNames.AnonymousAccessAllowed:
-                            location.AnonymousAccessAllowed = reader.ReadElementValue<bool>();
-                            break;
+                    case XmlElementNames.AnonymousAccessAllowed:
+                        location.AnonymousAccessAllowed = reader.ReadElementValue<bool>();
+                        break;
 
-                        case XmlElementNames.CanModifyPermissions:
-                            location.CanModifyPermissions = reader.ReadElementValue<bool>();
-                            break;
+                    case XmlElementNames.CanModifyPermissions:
+                        location.CanModifyPermissions = reader.ReadElementValue<bool>();
+                        break;
 
-                        case XmlElementNames.IsDefault:
-                            location.IsDefault = reader.ReadElementValue<bool>();
-                            break;
+                    case XmlElementNames.IsDefault:
+                        location.IsDefault = reader.ReadElementValue<bool>();
+                        break;
 
-                        default:
-                            break;
-                    }
+                    default:
+                        break;
                 }
             }
-            while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.DocumentSharingLocation));
-
-            return location;
         }
+        while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.DocumentSharingLocation));
+
+        return location;
     }
 }

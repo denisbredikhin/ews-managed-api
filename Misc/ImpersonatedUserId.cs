@@ -23,82 +23,81 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents an impersonated user Id.
+/// </summary>
+public sealed class ImpersonatedUserId
 {
-    using System;
+    private ConnectingIdType idType;
+    private string id;
 
     /// <summary>
-    /// Represents an impersonated user Id.
+    /// Initializes a new instance of the <see cref="ImpersonatedUserId"/> class.
     /// </summary>
-    public sealed class ImpersonatedUserId
+    public ImpersonatedUserId()
     {
-        private ConnectingIdType idType;
-        private string id;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImpersonatedUserId"/> class.
-        /// </summary>
-        public ImpersonatedUserId()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ImpersonatedUserId"/> class.
+    /// </summary>
+    /// <param name="idType">The type of this Id.</param>
+    /// <param name="id">The user Id.</param>
+    public ImpersonatedUserId(ConnectingIdType idType, string id)
+        : this()
+    {
+        this.idType = idType;
+        this.id = id;
+    }
+
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal void WriteToXml(EwsServiceXmlWriter writer)
+    {
+        if (string.IsNullOrEmpty(this.id))
         {
+            throw new ArgumentException(Strings.IdPropertyMustBeSet);
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImpersonatedUserId"/> class.
-        /// </summary>
-        /// <param name="idType">The type of this Id.</param>
-        /// <param name="id">The user Id.</param>
-        public ImpersonatedUserId(ConnectingIdType idType, string id)
-            : this()
-        {
-            this.idType = idType;
-            this.id = id;
-        }
+        writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.ExchangeImpersonation);
+        writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.ConnectingSID);
 
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal void WriteToXml(EwsServiceXmlWriter writer)
-        {
-            if (string.IsNullOrEmpty(this.id))
-            {
-                throw new ArgumentException(Strings.IdPropertyMustBeSet);
-            }
+        // For 2007 SP1, use PrimarySmtpAddress for type SmtpAddress
+        string connectingIdTypeLocalName =
+            (this.idType == ConnectingIdType.SmtpAddress) && (writer.Service.RequestedServerVersion == ExchangeVersion.Exchange2007_SP1) 
+                ? XmlElementNames.PrimarySmtpAddress 
+                : this.IdType.ToString();
 
-            writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.ExchangeImpersonation);
-            writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.ConnectingSID);
+        writer.WriteElementValue(
+            XmlNamespace.Types,
+            connectingIdTypeLocalName,
+            this.id);
 
-            // For 2007 SP1, use PrimarySmtpAddress for type SmtpAddress
-            string connectingIdTypeLocalName =
-                (this.idType == ConnectingIdType.SmtpAddress) && (writer.Service.RequestedServerVersion == ExchangeVersion.Exchange2007_SP1) 
-                    ? XmlElementNames.PrimarySmtpAddress 
-                    : this.IdType.ToString();
+        writer.WriteEndElement(); // ConnectingSID
+        writer.WriteEndElement(); // ExchangeImpersonation
+    }
 
-            writer.WriteElementValue(
-                XmlNamespace.Types,
-                connectingIdTypeLocalName,
-                this.id);
+    /// <summary>
+    /// Gets or sets the type of the Id.
+    /// </summary>
+    public ConnectingIdType IdType
+    {
+        get { return this.idType; }
+        set { this.idType = value; }
+    }
 
-            writer.WriteEndElement(); // ConnectingSID
-            writer.WriteEndElement(); // ExchangeImpersonation
-        }
-
-        /// <summary>
-        /// Gets or sets the type of the Id.
-        /// </summary>
-        public ConnectingIdType IdType
-        {
-            get { return this.idType; }
-            set { this.idType = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the user Id.
-        /// </summary>
-        public string Id
-        {
-            get { return this.id; }
-            set { this.id = value; }
-        }
+    /// <summary>
+    /// Gets or sets the user Id.
+    /// </summary>
+    public string Id
+    {
+        get { return this.id; }
+        set { this.id = value; }
     }
 }

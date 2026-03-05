@@ -23,32 +23,31 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents a GetItem request.
+/// </summary>
+internal sealed class GetItemRequest : GetItemRequestBase<GetItemResponse>
 {
     /// <summary>
-    /// Represents a GetItem request.
+    /// Initializes a new instance of the <see cref="GetItemRequest"/> class.
     /// </summary>
-    internal sealed class GetItemRequest : GetItemRequestBase<GetItemResponse>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal GetItemRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetItemRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal GetItemRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
-        {
-        }
+    }
 
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Service response.</returns>
-        internal override GetItemResponse CreateServiceResponse(ExchangeService service, int responseIndex)
-        {
-            return new GetItemResponse(this.ItemIds[responseIndex], this.PropertySet);
-        }
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Service response.</returns>
+    internal override GetItemResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+    {
+        return new GetItemResponse(this.ItemIds[responseIndex], this.PropertySet);
     }
 }

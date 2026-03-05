@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the type of data that can be requested via GetUserAvailability.
+/// </summary>
+public enum AvailabilityData
 {
     /// <summary>
-    /// Defines the type of data that can be requested via GetUserAvailability.
+    /// Only return free/busy data.
     /// </summary>
-    public enum AvailabilityData
-    {
-        /// <summary>
-        /// Only return free/busy data.
-        /// </summary>
-        FreeBusy,
+    FreeBusy,
 
-        /// <summary>
-        /// Only return suggestions.
-        /// </summary>
-        Suggestions,
+    /// <summary>
+    /// Only return suggestions.
+    /// </summary>
+    Suggestions,
 
-        /// <summary>
-        /// Return both free/busy data and suggestions.
-        /// </summary>
-        FreeBusyAndSuggestions
-    }
+    /// <summary>
+    /// Return both free/busy data and suggestions.
+    /// </summary>
+    FreeBusyAndSuggestions
 }

@@ -23,135 +23,134 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a service request that can have multiple responses.
+/// </summary>
+/// <typeparam name="TResponse">The type of the response.</typeparam>
+internal abstract class MultiResponseServiceRequest<TResponse> : SimpleServiceRequestBase
+    where TResponse : ServiceResponse
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private ServiceErrorHandling errorHandlingMode;
 
     /// <summary>
-    /// Represents a service request that can have multiple responses.
+    /// Parses the response.
     /// </summary>
-    /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class MultiResponseServiceRequest<TResponse> : SimpleServiceRequestBase
-        where TResponse : ServiceResponse
+    /// <param name="reader">The reader.</param>
+    /// <returns>Service response collection.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        private ServiceErrorHandling errorHandlingMode;
+        ServiceResponseCollection<TResponse> serviceResponses = new ServiceResponseCollection<TResponse>();
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Service response collection.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
+        reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
+
+        for (int i = 0; i < this.GetExpectedResponseMessageCount(); i++)
         {
-            ServiceResponseCollection<TResponse> serviceResponses = new ServiceResponseCollection<TResponse>();
-
-            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
-
-            for (int i = 0; i < this.GetExpectedResponseMessageCount(); i++)
+            // Read ahead to see if we've reached the end of the response messages early.
+            reader.Read();
+            if (reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages))
             {
-                // Read ahead to see if we've reached the end of the response messages early.
-                reader.Read();
-                if (reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages))
-                {
-                    break;
-                }
-
-                TResponse response = this.CreateServiceResponse(reader.Service, i);
-
-                response.LoadFromXml(reader, this.GetResponseMessageXmlElementName());
-
-                // Add the response to the list after it has been deserialized because the response
-                // list updates an overall result as individual responses are added to it.
-                serviceResponses.Add(response);
+                break;
             }
 
-            // If there's a general error in batch processing,
-            // the server will return a single response message containing the error
-            // (for example, if the SavedItemFolderId is bogus in a batch CreateItem
-            // call). In this case, throw a ServiceResponseException. Otherwise this 
-            // is an unexpected server error.
-            if (serviceResponses.Count < this.GetExpectedResponseMessageCount())
+            TResponse response = this.CreateServiceResponse(reader.Service, i);
+
+            response.LoadFromXml(reader, this.GetResponseMessageXmlElementName());
+
+            // Add the response to the list after it has been deserialized because the response
+            // list updates an overall result as individual responses are added to it.
+            serviceResponses.Add(response);
+        }
+
+        // If there's a general error in batch processing,
+        // the server will return a single response message containing the error
+        // (for example, if the SavedItemFolderId is bogus in a batch CreateItem
+        // call). In this case, throw a ServiceResponseException. Otherwise this 
+        // is an unexpected server error.
+        if (serviceResponses.Count < this.GetExpectedResponseMessageCount())
+        {
+            if ((serviceResponses.Count == 1) && (serviceResponses[0].Result == ServiceResult.Error))
             {
-                if ((serviceResponses.Count == 1) && (serviceResponses[0].Result == ServiceResult.Error))
-                {
-                    throw new ServiceResponseException(serviceResponses[0]);
-                }
-                else
-                {
-                    throw new ServiceXmlDeserializationException(
-                                string.Format(
-                                    Strings.TooFewServiceReponsesReturned,
-                                    this.GetResponseMessageXmlElementName(),
-                                    this.GetExpectedResponseMessageCount(),
-                                    serviceResponses.Count));
-                }
+                throw new ServiceResponseException(serviceResponses[0]);
             }
-
-            reader.ReadEndElementIfNecessary(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
-
-            return serviceResponses;
-        }
-
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Service response.</returns>
-        internal abstract TResponse CreateServiceResponse(ExchangeService service, int responseIndex);
-        
-        /// <summary>
-        /// Gets the name of the response message XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal abstract string GetResponseMessageXmlElementName();
-
-        /// <summary>
-        /// Gets the expected response message count.
-        /// </summary>
-        /// <returns>Number of expected response messages.</returns>
-        internal abstract int GetExpectedResponseMessageCount();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MultiResponseServiceRequest&lt;TResponse&gt;"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal MultiResponseServiceRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service)
-        {
-            this.errorHandlingMode = errorHandlingMode;
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response collection.</returns>
-        internal async Task<ServiceResponseCollection<TResponse>> ExecuteAsync(CancellationToken token)
-        {
-            ServiceResponseCollection<TResponse> serviceResponses = (ServiceResponseCollection<TResponse>)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-
-            if (this.ErrorHandlingMode == ServiceErrorHandling.ThrowOnError)
+            else
             {
-                EwsUtilities.Assert(
-                    serviceResponses.Count == 1,
-                    "MultiResponseServiceRequest.Execute",
-                    "ServiceErrorHandling.ThrowOnError error handling is only valid for singleton request");
-
-                serviceResponses[0].ThrowIfNecessary();
+                throw new ServiceXmlDeserializationException(
+                            string.Format(
+                                Strings.TooFewServiceReponsesReturned,
+                                this.GetResponseMessageXmlElementName(),
+                                this.GetExpectedResponseMessageCount(),
+                                serviceResponses.Count));
             }
-
-            return serviceResponses;
         }
 
-        /// <summary>
-        /// Gets a value indicating how errors should be handled.
-        /// </summary>
-        internal ServiceErrorHandling ErrorHandlingMode
+        reader.ReadEndElementIfNecessary(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
+
+        return serviceResponses;
+    }
+
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Service response.</returns>
+    internal abstract TResponse CreateServiceResponse(ExchangeService service, int responseIndex);
+    
+    /// <summary>
+    /// Gets the name of the response message XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal abstract string GetResponseMessageXmlElementName();
+
+    /// <summary>
+    /// Gets the expected response message count.
+    /// </summary>
+    /// <returns>Number of expected response messages.</returns>
+    internal abstract int GetExpectedResponseMessageCount();
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MultiResponseServiceRequest&lt;TResponse&gt;"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal MultiResponseServiceRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service)
+    {
+        this.errorHandlingMode = errorHandlingMode;
+    }
+
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response collection.</returns>
+    internal async Task<ServiceResponseCollection<TResponse>> ExecuteAsync(CancellationToken token)
+    {
+        ServiceResponseCollection<TResponse> serviceResponses = (ServiceResponseCollection<TResponse>)await this.InternalExecuteAsync(token).ConfigureAwait(false);
+
+        if (this.ErrorHandlingMode == ServiceErrorHandling.ThrowOnError)
         {
-            get { return this.errorHandlingMode; }
+            EwsUtilities.Assert(
+                serviceResponses.Count == 1,
+                "MultiResponseServiceRequest.Execute",
+                "ServiceErrorHandling.ThrowOnError error handling is only valid for singleton request");
+
+            serviceResponses[0].ThrowIfNecessary();
         }
+
+        return serviceResponses;
+    }
+
+    /// <summary>
+    /// Gets a value indicating how errors should be handled.
+    /// </summary>
+    internal ServiceErrorHandling ErrorHandlingMode
+    {
+        get { return this.errorHandlingMode; }
     }
 }

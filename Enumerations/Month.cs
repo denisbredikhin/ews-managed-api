@@ -23,75 +23,74 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines months of the year.
+/// </summary>
+public enum Month
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// January.
+    /// </summary>
+    January = 1,
 
     /// <summary>
-    /// Defines months of the year.
+    /// February.
     /// </summary>
-    public enum Month
-    {
-        /// <summary>
-        /// January.
-        /// </summary>
-        January = 1,
+    February = 2,
 
-        /// <summary>
-        /// February.
-        /// </summary>
-        February = 2,
+    /// <summary>
+    /// March.
+    /// </summary>
+    March = 3,
 
-        /// <summary>
-        /// March.
-        /// </summary>
-        March = 3,
+    /// <summary>
+    /// April.
+    /// </summary>
+    April = 4,
 
-        /// <summary>
-        /// April.
-        /// </summary>
-        April = 4,
+    /// <summary>
+    /// May.
+    /// </summary>
+    May = 5,
 
-        /// <summary>
-        /// May.
-        /// </summary>
-        May = 5,
+    /// <summary>
+    /// June.
+    /// </summary>
+    June = 6,
 
-        /// <summary>
-        /// June.
-        /// </summary>
-        June = 6,
+    /// <summary>
+    /// July.
+    /// </summary>
+    July = 7,
 
-        /// <summary>
-        /// July.
-        /// </summary>
-        July = 7,
+    /// <summary>
+    /// August.
+    /// </summary>
+    August = 8,
 
-        /// <summary>
-        /// August.
-        /// </summary>
-        August = 8,
+    /// <summary>
+    /// September.
+    /// </summary>
+    September = 9,
 
-        /// <summary>
-        /// September.
-        /// </summary>
-        September = 9,
+    /// <summary>
+    /// October.
+    /// </summary>
+    October = 10,
 
-        /// <summary>
-        /// October.
-        /// </summary>
-        October = 10,
+    /// <summary>
+    /// November.
+    /// </summary>
+    November = 11,
 
-        /// <summary>
-        /// November.
-        /// </summary>
-        November = 11,
-
-        /// <summary>
-        /// December.
-        /// </summary>
-        December = 12
-    }
+    /// <summary>
+    /// December.
+    /// </summary>
+    December = 12
 }

@@ -23,43 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents set hold on mailboxes parameters.
+/// </summary>
+public sealed class SetHoldOnMailboxesParameters
 {
-    using System;
+    /// <summary>
+    /// Action type
+    /// </summary>
+    public HoldAction ActionType { get; set; }
 
     /// <summary>
-    /// Represents set hold on mailboxes parameters.
+    /// Hold id
     /// </summary>
-    public sealed class SetHoldOnMailboxesParameters
-    {
-        /// <summary>
-        /// Action type
-        /// </summary>
-        public HoldAction ActionType { get; set; }
+    public string HoldId { get; set; }
 
-        /// <summary>
-        /// Hold id
-        /// </summary>
-        public string HoldId { get; set; }
+    /// <summary>
+    /// Query
+    /// </summary>
+    public string Query { get; set; }
 
-        /// <summary>
-        /// Query
-        /// </summary>
-        public string Query { get; set; }
+    /// <summary>
+    /// Collection of mailboxes
+    /// </summary>
+    public string[] Mailboxes { get; set; }
 
-        /// <summary>
-        /// Collection of mailboxes
-        /// </summary>
-        public string[] Mailboxes { get; set; }
+    /// <summary>
+    /// Query language
+    /// </summary>
+    public string Language { get; set; }
 
-        /// <summary>
-        /// Query language
-        /// </summary>
-        public string Language { get; set; }
-
-        /// <summary>
-        /// In-place hold identity
-        /// </summary>
-        public string InPlaceHoldIdentity { get; set; }
-    }
+    /// <summary>
+    /// In-place hold identity
+    /// </summary>
+    public string InPlaceHoldIdentity { get; set; }
 }

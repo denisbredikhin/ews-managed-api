@@ -23,73 +23,72 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// Represents the collection of person insights. 
+/// </summary>
+public sealed class SkillInsightValueCollection : ComplexPropertyCollection<SkillInsightValue>
 {
-    using System;
-    using System.Collections.Generic;
+    /// <summary>
+    /// XML element name
+    /// </summary>
+    private readonly string collectionItemXmlElementName;
 
     /// <summary>
-    /// Represents the collection of person insights. 
+    /// Creates a new instance of the <see cref="SkillInsightValueCollection"/> class.
     /// </summary>
-    public sealed class SkillInsightValueCollection : ComplexPropertyCollection<SkillInsightValue>
+    internal SkillInsightValueCollection()
+        : this(XmlElementNames.SkillInsightValue)
     {
-        /// <summary>
-        /// XML element name
-        /// </summary>
-        private readonly string collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="SkillInsightValueCollection"/> class.
-        /// </summary>
-        internal SkillInsightValueCollection()
-            : this(XmlElementNames.SkillInsightValue)
-        {
-        }
+    /// <summary>
+    /// Creates a new instance of the <see cref="SkillInsightValueCollection"/> class.
+    /// </summary>
+    /// <param name="collectionItemXmlElementName">Name of the collection item XML element.</param>
+    internal SkillInsightValueCollection(string collectionItemXmlElementName)
+        : base()
+    {
+        this.collectionItemXmlElementName = collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="SkillInsightValueCollection"/> class.
-        /// </summary>
-        /// <param name="collectionItemXmlElementName">Name of the collection item XML element.</param>
-        internal SkillInsightValueCollection(string collectionItemXmlElementName)
-            : base()
+    /// <summary>
+    /// Creates a SkillInsightValue object from an XML element name.
+    /// </summary>
+    /// <param name="xmlElementName">The XML element name from which to create the SkillInsightValue.</param>
+    /// <returns>A SkillInsightValue object.</returns>
+    internal override SkillInsightValue CreateComplexProperty(string xmlElementName)
+    {
+        if (xmlElementName == this.collectionItemXmlElementName)
         {
-            this.collectionItemXmlElementName = collectionItemXmlElementName;
+            return new SkillInsightValue();
         }
+        else
+        {
+            return null;
+        }
+    }
 
-        /// <summary>
-        /// Creates a SkillInsightValue object from an XML element name.
-        /// </summary>
-        /// <param name="xmlElementName">The XML element name from which to create the SkillInsightValue.</param>
-        /// <returns>A SkillInsightValue object.</returns>
-        internal override SkillInsightValue CreateComplexProperty(string xmlElementName)
-        {
-            if (xmlElementName == this.collectionItemXmlElementName)
-            {
-                return new SkillInsightValue();
-            }
-            else
-            {
-                return null;
-            }
-        }
+    /// <summary>
+    /// Retrieves the XML element name corresponding to the provided PersonInsight object.
+    /// </summary>
+    /// <param name="insight">The SkillInsightValue object from which to determine the XML element name.</param>
+    /// <returns>The XML element name corresponding to the provided SkillInsightValue object.</returns>
+    internal override string GetCollectionItemXmlElementName(SkillInsightValue insight)
+    {
+        return this.collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Retrieves the XML element name corresponding to the provided PersonInsight object.
-        /// </summary>
-        /// <param name="insight">The SkillInsightValue object from which to determine the XML element name.</param>
-        /// <returns>The XML element name corresponding to the provided SkillInsightValue object.</returns>
-        internal override string GetCollectionItemXmlElementName(SkillInsightValue insight)
-        {
-            return this.collectionItemXmlElementName;
-        }
-
-        /// <summary>
-        /// Determine whether we should write collection to XML or not.
-        /// </summary>
-        /// <returns>Always true, even if the collection is empty.</returns>
-        internal override bool ShouldWriteToRequest()
-        {
-            return true;
-        }
+    /// <summary>
+    /// Determine whether we should write collection to XML or not.
+    /// </summary>
+    /// <returns>Always true, even if the collection is empty.</returns>
+    internal override bool ShouldWriteToRequest()
+    {
+        return true;
     }
 }

@@ -23,104 +23,103 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Text;
+
+/// <summary>
+/// Represents a suggestion for a specific date.
+/// </summary>
+public sealed class Suggestion : ComplexProperty
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Globalization;
-    using System.Text;
+    private DateTime date;
+    private SuggestionQuality quality;
+    private Collection<TimeSuggestion> timeSuggestions = new Collection<TimeSuggestion>();
 
     /// <summary>
-    /// Represents a suggestion for a specific date.
+    /// Initializes a new instance of the <see cref="Suggestion"/> class.
     /// </summary>
-    public sealed class Suggestion : ComplexProperty
+    internal Suggestion()
+        : base()
     {
-        private DateTime date;
-        private SuggestionQuality quality;
-        private Collection<TimeSuggestion> timeSuggestions = new Collection<TimeSuggestion>();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Suggestion"/> class.
-        /// </summary>
-        internal Suggestion()
-            : base()
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if appropriate element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
-        }
+            case XmlElementNames.Date:
+                // The date that is returned by Availability is unscoped. 
+                DateTime tempDate = DateTime.Parse(reader.ReadElementValue(), CultureInfo.InvariantCulture);
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if appropriate element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.Date:
-                    // The date that is returned by Availability is unscoped. 
-                    DateTime tempDate = DateTime.Parse(reader.ReadElementValue(), CultureInfo.InvariantCulture);
+                if (tempDate.Kind != DateTimeKind.Unspecified)
+                {
+                    this.date = new DateTime(tempDate.Ticks, DateTimeKind.Unspecified);
+                }
+                else
+                {
+                    this.date = tempDate;
+                }
 
-                    if (tempDate.Kind != DateTimeKind.Unspecified)
+                return true;
+            case XmlElementNames.DayQuality:
+                this.quality = reader.ReadElementValue<SuggestionQuality>();
+                return true;
+            case XmlElementNames.SuggestionArray:
+                if (!reader.IsEmptyElement)
+                {
+                    do
                     {
-                        this.date = new DateTime(tempDate.Ticks, DateTimeKind.Unspecified);
-                    }
-                    else
-                    {
-                        this.date = tempDate;
-                    }
+                        reader.Read();
 
-                    return true;
-                case XmlElementNames.DayQuality:
-                    this.quality = reader.ReadElementValue<SuggestionQuality>();
-                    return true;
-                case XmlElementNames.SuggestionArray:
-                    if (!reader.IsEmptyElement)
-                    {
-                        do
+                        if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Suggestion))
                         {
-                            reader.Read();
+                            TimeSuggestion timeSuggestion = new TimeSuggestion();
 
-                            if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Suggestion))
-                            {
-                                TimeSuggestion timeSuggestion = new TimeSuggestion();
+                            timeSuggestion.LoadFromXml(reader, reader.LocalName);
 
-                                timeSuggestion.LoadFromXml(reader, reader.LocalName);
-
-                                this.timeSuggestions.Add(timeSuggestion);
-                            }
+                            this.timeSuggestions.Add(timeSuggestion);
                         }
-                        while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.SuggestionArray));
                     }
+                    while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.SuggestionArray));
+                }
 
-                    return true;
-                default:
-                    return false;
-            }
+                return true;
+            default:
+                return false;
         }
+    }
 
-        /// <summary>
-        /// Gets the date and time of the suggestion.
-        /// </summary>
-        public DateTime Date
-        {
-            get { return this.date; }
-        }
+    /// <summary>
+    /// Gets the date and time of the suggestion.
+    /// </summary>
+    public DateTime Date
+    {
+        get { return this.date; }
+    }
 
-        /// <summary>
-        /// Gets the quality of the suggestion.
-        /// </summary>
-        public SuggestionQuality Quality
-        {
-            get { return this.quality; }
-        }
+    /// <summary>
+    /// Gets the quality of the suggestion.
+    /// </summary>
+    public SuggestionQuality Quality
+    {
+        get { return this.quality; }
+    }
 
-        /// <summary>
-        /// Gets a collection of suggested times within the suggested day.
-        /// </summary>
-        public Collection<TimeSuggestion> TimeSuggestions
-        {
-            get { return this.timeSuggestions; }
-        }
+    /// <summary>
+    /// Gets a collection of suggested times within the suggested day.
+    /// </summary>
+    public Collection<TimeSuggestion> TimeSuggestions
+    {
+        get { return this.timeSuggestions; }
     }
 }

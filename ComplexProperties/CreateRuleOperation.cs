@@ -23,78 +23,77 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents an operation to create a new rule.
+/// </summary>
+public sealed class CreateRuleOperation : RuleOperation
 {
     /// <summary>
-    /// Represents an operation to create a new rule.
+    /// Inbox rule to be created.
     /// </summary>
-    public sealed class CreateRuleOperation : RuleOperation
+    private Rule rule;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateRuleOperation"/> class.
+    /// </summary>
+    public CreateRuleOperation()
+        : base()
     {
-        /// <summary>
-        /// Inbox rule to be created.
-        /// </summary>
-        private Rule rule;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateRuleOperation"/> class.
-        /// </summary>
-        public CreateRuleOperation()
-            : base()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateRuleOperation"/> class.
+    /// </summary>
+    /// <param name="rule">The inbox rule to create.</param>
+    public CreateRuleOperation(Rule rule)
+        : base()
+    {
+        this.rule = rule;
+    }
+
+    /// <summary>
+    /// Gets or sets the rule to be created.
+    /// </summary>
+    public Rule Rule
+    {
+        get
         {
+            return this.rule;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateRuleOperation"/> class.
-        /// </summary>
-        /// <param name="rule">The inbox rule to create.</param>
-        public CreateRuleOperation(Rule rule)
-            : base()
+        set
         {
-            this.rule = rule;
+            this.SetFieldValue<Rule>(ref this.rule, value);
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the rule to be created.
-        /// </summary>
-        public Rule Rule
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        this.Rule.WriteToXml(writer, XmlElementNames.Rule);
+    }
+
+    /// <summary>
+    ///  Validates this instance.
+    /// </summary>
+    internal override void InternalValidate()
+    {
+        EwsUtilities.ValidateParam(this.rule, "Rule");
+    }
+
+    /// <summary>
+    /// Gets the Xml element name of the CreateRuleOperation object.
+    /// </summary>
+    internal override string XmlElementName
+    {
+        get
         {
-            get
-            {
-                return this.rule;
-            }
-
-            set
-            {
-                this.SetFieldValue<Rule>(ref this.rule, value);
-            }
-        }
-
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            this.Rule.WriteToXml(writer, XmlElementNames.Rule);
-        }
-
-        /// <summary>
-        ///  Validates this instance.
-        /// </summary>
-        internal override void InternalValidate()
-        {
-            EwsUtilities.ValidateParam(this.rule, "Rule");
-        }
-
-        /// <summary>
-        /// Gets the Xml element name of the CreateRuleOperation object.
-        /// </summary>
-        internal override string XmlElementName
-        {
-            get
-            {
-                return XmlElementNames.CreateRuleOperation;
-            }
+            return XmlElementNames.CreateRuleOperation;
         }
     }
 }

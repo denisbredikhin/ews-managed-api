@@ -23,111 +23,110 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a UpdateUserConfiguration request.
+/// </summary>
+internal class UpdateUserConfigurationRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    protected UserConfiguration userConfiguration;
 
     /// <summary>
-    /// Represents a UpdateUserConfiguration request.
+    /// Validate request.
     /// </summary>
-    internal class UpdateUserConfigurationRequest : MultiResponseServiceRequest<ServiceResponse>
+    internal override void Validate()
     {
-        protected UserConfiguration userConfiguration;
+        base.Validate();
+        EwsUtilities.ValidateParam(this.userConfiguration, "userConfiguration");
+    }
 
-        /// <summary>
-        /// Validate request.
-        /// </summary>
-        internal override void Validate()
-        {
-            base.Validate();
-            EwsUtilities.ValidateParam(this.userConfiguration, "userConfiguration");
-        }
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Service response.</returns>
+    internal override ServiceResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+    {
+        return new ServiceResponse();
+    }
 
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Service response.</returns>
-        internal override ServiceResponse CreateServiceResponse(ExchangeService service, int responseIndex)
-        {
-            return new ServiceResponse();
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2010;
+    }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2010;
-        }
+    /// <summary>
+    /// Gets the expected response message count.
+    /// </summary>
+    /// <returns>Number of expected response messages.</returns>
+    internal override int GetExpectedResponseMessageCount()
+    {
+        return 1;
+    }
 
-        /// <summary>
-        /// Gets the expected response message count.
-        /// </summary>
-        /// <returns>Number of expected response messages.</returns>
-        internal override int GetExpectedResponseMessageCount()
-        {
-            return 1;
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.UpdateUserConfiguration;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.UpdateUserConfiguration;
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.UpdateUserConfigurationResponse;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.UpdateUserConfigurationResponse;
-        }
+    /// <summary>
+    /// Gets the name of the response message XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseMessageXmlElementName()
+    {
+        return XmlElementNames.UpdateUserConfigurationResponseMessage;
+    }
 
-        /// <summary>
-        /// Gets the name of the response message XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseMessageXmlElementName()
-        {
-            return XmlElementNames.UpdateUserConfigurationResponseMessage;
-        }
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        // Write UserConfiguration element
+        this.userConfiguration.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.UserConfiguration);
+    }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            // Write UserConfiguration element
-            this.userConfiguration.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.UserConfiguration);
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateUserConfigurationRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    internal UpdateUserConfigurationRequest(ExchangeService service)
+        : base(service, ServiceErrorHandling.ThrowOnError)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateUserConfigurationRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal UpdateUserConfigurationRequest(ExchangeService service)
-            : base(service, ServiceErrorHandling.ThrowOnError)
-        {
-        }
-
-        /// <summary>
-        /// Gets or sets the user configuration.
-        /// </summary>
-        /// <value>The user configuration.</value>
-        public UserConfiguration UserConfiguration
-        {
-            get { return this.userConfiguration; }
-            set { this.userConfiguration = value; }
-        }
+    /// <summary>
+    /// Gets or sets the user configuration.
+    /// </summary>
+    /// <value>The user configuration.</value>
+    public UserConfiguration UserConfiguration
+    {
+        get { return this.userConfiguration; }
+        set { this.userConfiguration = value; }
     }
 }

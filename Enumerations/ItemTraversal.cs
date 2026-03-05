@@ -23,31 +23,30 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the scope of FindItems operations.
+/// </summary>
+public enum ItemTraversal
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// All non deleted items in the specified folder are retrieved.
+    /// </summary>
+    Shallow,
 
     /// <summary>
-    /// Defines the scope of FindItems operations.
+    /// Only soft-deleted items are retrieved.
     /// </summary>
-    public enum ItemTraversal
-    {
-        /// <summary>
-        /// All non deleted items in the specified folder are retrieved.
-        /// </summary>
-        Shallow,
+    SoftDeleted,
 
-        /// <summary>
-        /// Only soft-deleted items are retrieved.
-        /// </summary>
-        SoftDeleted,
-
-        /// <summary>
-        /// Only associated items are retrieved (Exchange 2010 or later).
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2010)]
-        Associated
-    }
+    /// <summary>
+    /// Only associated items are retrieved (Exchange 2010 or later).
+    /// </summary>
+    [RequiredServerVersion(ExchangeVersion.Exchange2010)]
+    Associated
 }

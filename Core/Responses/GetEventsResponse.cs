@@ -23,44 +23,43 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the response to a subscription event retrieval operation.
+/// </summary>
+internal sealed class GetEventsResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private GetEventsResults results = new GetEventsResults();
 
     /// <summary>
-    /// Represents the response to a subscription event retrieval operation.
+    /// Initializes a new instance of the <see cref="GetEventsResponse"/> class.
     /// </summary>
-    internal sealed class GetEventsResponse : ServiceResponse
+    internal GetEventsResponse()
+        : base()
     {
-        private GetEventsResults results = new GetEventsResults();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetEventsResponse"/> class.
-        /// </summary>
-        internal GetEventsResponse()
-            : base()
-        {
-        }
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
+        this.results.LoadFromXml(reader);
+    }
 
-            this.results.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Gets event results from subscription.
-        /// </summary>
-        internal GetEventsResults Results
-        {
-            get { return this.results; }
-        }
+    /// <summary>
+    /// Gets event results from subscription.
+    /// </summary>
+    internal GetEventsResults Results
+    {
+        get { return this.results; }
     }
 }

@@ -23,95 +23,94 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a UnpinTeamMailbox request.
+/// </summary>
+internal sealed class UnpinTeamMailboxRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
+    /// <summary>
+    /// TeamMailbox email address
+    /// </summary>
+    private readonly EmailAddress emailAddress;
 
     /// <summary>
-    /// Represents a UnpinTeamMailbox request.
+    /// Initializes a new instance of the <see cref="UnpinTeamMailboxRequest"/> class.
     /// </summary>
-    internal sealed class UnpinTeamMailboxRequest : SimpleServiceRequestBase
+    /// <param name="service">The service</param>
+    /// <param name="emailAddress">TeamMailbox email address</param>
+    public UnpinTeamMailboxRequest(ExchangeService service, EmailAddress emailAddress)
+        : base(service)
     {
-        /// <summary>
-        /// TeamMailbox email address
-        /// </summary>
-        private readonly EmailAddress emailAddress;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnpinTeamMailboxRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service</param>
-        /// <param name="emailAddress">TeamMailbox email address</param>
-        public UnpinTeamMailboxRequest(ExchangeService service, EmailAddress emailAddress)
-            : base(service)
+        if (emailAddress == null)
         {
-            if (emailAddress == null)
-            {
-                throw new ArgumentNullException("emailAddress");
-            }
-
-            this.emailAddress = emailAddress;
+            throw new ArgumentNullException("emailAddress");
         }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.UnpinTeamMailbox;
-        }
+        this.emailAddress = emailAddress;
+    }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            this.emailAddress.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.EmailAddress);
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.UnpinTeamMailbox;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.UnpinTeamMailboxResponse;
-        }
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        this.emailAddress.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.EmailAddress);
+    }
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            ServiceResponse response = new ServiceResponse();
-            response.LoadFromXml(reader, GetResponseXmlElementName());
-            return response;
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.UnpinTeamMailboxResponse;
+    }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2013;
-        }
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        ServiceResponse response = new ServiceResponse();
+        response.LoadFromXml(reader, GetResponseXmlElementName());
+        return response;
+    }
 
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<ServiceResponse> Execute(CancellationToken token)
-        {
-            ServiceResponse serviceResponse = (ServiceResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-            serviceResponse.ThrowIfNecessary();
-            return serviceResponse;
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2013;
+    }
+
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<ServiceResponse> Execute(CancellationToken token)
+    {
+        ServiceResponse serviceResponse = (ServiceResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
+        serviceResponse.ThrowIfNecessary();
+        return serviceResponse;
     }
 }

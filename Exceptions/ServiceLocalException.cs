@@ -23,42 +23,42 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents an error that occurs when a service operation fails locally (e.g. validation error).
+/// </summary>
+public class ServiceLocalException : Exception
+{
     /// <summary>
-    /// Represents an error that occurs when a service operation fails locally (e.g. validation error).
+    /// ServiceLocalException Constructor.
     /// </summary>
-    public class ServiceLocalException : Exception
+    public ServiceLocalException()
+        : base()
     {
-        /// <summary>
-        /// ServiceLocalException Constructor.
-        /// </summary>
-        public ServiceLocalException()
-            : base()
-        {
-        }
+    }
 
-        /// <summary>
-        /// ServiceLocalException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        public ServiceLocalException(string message)
-            : base(message)
-        {
-        }
+    /// <summary>
+    /// ServiceLocalException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    public ServiceLocalException(string message)
+        : base(message)
+    {
+    }
 
-        /// <summary>
-        /// ServiceLocalException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public ServiceLocalException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+    /// <summary>
+    /// ServiceLocalException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    /// <param name="innerException">Inner exception.</param>
+    public ServiceLocalException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.ServiceLocalException"/> class with serialized data.
@@ -69,4 +69,3 @@ namespace Microsoft.Exchange.WebServices.Data
 	    {
 		}
 	}
-}

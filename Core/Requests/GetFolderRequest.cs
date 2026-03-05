@@ -23,36 +23,35 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a GetFolder request.
+/// </summary>
+internal sealed class GetFolderRequest : GetFolderRequestBase<GetFolderResponse>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetFolderRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal GetFolderRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
+    {
+    }
 
     /// <summary>
-    /// Represents a GetFolder request.
+    /// Creates the service response.
     /// </summary>
-    internal sealed class GetFolderRequest : GetFolderRequestBase<GetFolderResponse>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Service response.</returns>
+    internal override GetFolderResponse CreateServiceResponse(ExchangeService service, int responseIndex)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetFolderRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal GetFolderRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
-        {
-        }
-
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Service response.</returns>
-        internal override GetFolderResponse CreateServiceResponse(ExchangeService service, int responseIndex)
-        {
-            return new GetFolderResponse(this.FolderIds[responseIndex].GetFolder(), this.PropertySet);
-        }
+        return new GetFolderResponse(this.FolderIds[responseIndex].GetFolder(), this.PropertySet);
     }
 }

@@ -23,101 +23,100 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml;
+
+/// <summary>
+/// Represents the response to a folder search operation.
+/// </summary>
+public sealed class FindFolderResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Xml;
+    private FindFoldersResults results = new FindFoldersResults();
+    private PropertySet propertySet;
 
     /// <summary>
-    /// Represents the response to a folder search operation.
+    /// Reads response elements from XML.
     /// </summary>
-    public sealed class FindFolderResponse : ServiceResponse
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        private FindFoldersResults results = new FindFoldersResults();
-        private PropertySet propertySet;
+        reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.RootFolder);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+        this.results.TotalCount = reader.ReadAttributeValue<int>(XmlAttributeNames.TotalItemsInView);
+        this.results.MoreAvailable = !reader.ReadAttributeValue<bool>(XmlAttributeNames.IncludesLastItemInRange);
+
+        // Ignore IndexedPagingOffset attribute if MoreAvailable is false.
+        this.results.NextPageOffset = results.MoreAvailable ? reader.ReadNullableAttributeValue<int>(XmlAttributeNames.IndexedPagingOffset) : null;
+
+        reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.Folders);
+        if (!reader.IsEmptyElement)
         {
-            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.RootFolder);
-
-            this.results.TotalCount = reader.ReadAttributeValue<int>(XmlAttributeNames.TotalItemsInView);
-            this.results.MoreAvailable = !reader.ReadAttributeValue<bool>(XmlAttributeNames.IncludesLastItemInRange);
-
-            // Ignore IndexedPagingOffset attribute if MoreAvailable is false.
-            this.results.NextPageOffset = results.MoreAvailable ? reader.ReadNullableAttributeValue<int>(XmlAttributeNames.IndexedPagingOffset) : null;
-
-            reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.Folders);
-            if (!reader.IsEmptyElement)
+            do
             {
-                do
+                reader.Read();
+
+                if (reader.NodeType == XmlNodeType.Element)
                 {
-                    reader.Read();
+                    Folder folder = EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(reader.Service, reader.LocalName);
 
-                    if (reader.NodeType == XmlNodeType.Element)
+                    if (folder == null)
                     {
-                        Folder folder = EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(reader.Service, reader.LocalName);
+                        reader.SkipCurrentElement();
+                    }
+                    else
+                    {
+                        folder.LoadFromXml(
+                                    reader,
+                                    true, /* clearPropertyBag */
+                                    this.propertySet,
+                                    true  /* summaryPropertiesOnly */);
 
-                        if (folder == null)
-                        {
-                            reader.SkipCurrentElement();
-                        }
-                        else
-                        {
-                            folder.LoadFromXml(
-                                        reader,
-                                        true, /* clearPropertyBag */
-                                        this.propertySet,
-                                        true  /* summaryPropertiesOnly */);
-
-                            this.results.Folders.Add(folder);
-                        }
+                        this.results.Folders.Add(folder);
                     }
                 }
-                while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Folders));
             }
-
-            reader.ReadEndElement(XmlNamespace.Messages, XmlElementNames.RootFolder);
+            while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Folders));
         }
 
-        /// <summary>
-        /// Creates a folder instance.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <returns>Folder</returns>
-        private Folder CreateFolderInstance(ExchangeService service, string xmlElementName)
-        {
-            return EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(service, xmlElementName);
-        }
+        reader.ReadEndElement(XmlNamespace.Messages, XmlElementNames.RootFolder);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FindFolderResponse"/> class.
-        /// </summary>
-        /// <param name="propertySet">The property set from, the request.</param>
-        internal FindFolderResponse(PropertySet propertySet)
-            : base()
-        {
-            this.propertySet = propertySet;
+    /// <summary>
+    /// Creates a folder instance.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <returns>Folder</returns>
+    private Folder CreateFolderInstance(ExchangeService service, string xmlElementName)
+    {
+        return EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(service, xmlElementName);
+    }
 
-            EwsUtilities.Assert(
-                this.propertySet != null,
-                "FindFolderResponse.ctor",
-                "PropertySet should not be null");
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FindFolderResponse"/> class.
+    /// </summary>
+    /// <param name="propertySet">The property set from, the request.</param>
+    internal FindFolderResponse(PropertySet propertySet)
+        : base()
+    {
+        this.propertySet = propertySet;
 
-        /// <summary>
-        /// Gets the results of the search operation.
-        /// </summary>
-        public FindFoldersResults Results
-        {
-            get { return this.results; }
-        }
+        EwsUtilities.Assert(
+            this.propertySet != null,
+            "FindFolderResponse.ctor",
+            "PropertySet should not be null");
+    }
+
+    /// <summary>
+    /// Gets the results of the search operation.
+    /// </summary>
+    public FindFoldersResults Results
+    {
+        get { return this.results; }
     }
 }

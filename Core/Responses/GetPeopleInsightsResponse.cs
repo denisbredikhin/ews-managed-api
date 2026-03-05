@@ -23,58 +23,57 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Xml;
+
+/// <summary>
+/// Represents the response to a GetPeopleInsights operation.
+/// </summary>
+internal sealed class GetPeopleInsightsResponse : ServiceResponse
 {
-    using System.Collections.ObjectModel;
-    using System.IO;
-    using System.Xml;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetPeopleInsightsResponse"/> class.
+    /// </summary>
+    public GetPeopleInsightsResponse()
+        : base()
+    {
+        this.People = new Collection<Person>();
+    }
 
     /// <summary>
-    /// Represents the response to a GetPeopleInsights operation.
+    /// Gets the People
     /// </summary>
-    internal sealed class GetPeopleInsightsResponse : ServiceResponse
+    internal Collection<Person> People { get; private set; }
+
+    /// <summary>
+    /// Read Person from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetPeopleInsightsResponse"/> class.
-        /// </summary>
-        public GetPeopleInsightsResponse()
-            : base()
+        EwsUtilities.Assert(
+               this.People != null,
+               "GetPeopleInsightsResponse.ReadElementsFromXml",
+               "People is null.");
+        
+        reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.People);
+        if (!reader.IsEmptyElement)
         {
-            this.People = new Collection<Person>();
-        }
-
-        /// <summary>
-        /// Gets the People
-        /// </summary>
-        internal Collection<Person> People { get; private set; }
-
-        /// <summary>
-        /// Read Person from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            EwsUtilities.Assert(
-                   this.People != null,
-                   "GetPeopleInsightsResponse.ReadElementsFromXml",
-                   "People is null.");
-            
-            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.People);
-            if (!reader.IsEmptyElement)
+            do
             {
-                do
-                {
-                    reader.Read();
+                reader.Read();
 
-                    if (reader.NodeType == XmlNodeType.Element)
-                    {
-                        Person item = new Person();
-                        item.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.Person);
-                        this.People.Add(item);
-                    }
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    Person item = new Person();
+                    item.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.Person);
+                    this.People.Add(item);
                 }
-                while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.People));
             }
+            while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.People));
         }
     }
 }

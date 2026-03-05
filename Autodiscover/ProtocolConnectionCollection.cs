@@ -23,64 +23,63 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System.Collections.Generic;
+using System.Xml;
+using Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents a user setting that is a collection of protocol connection.
+/// </summary>
+public sealed class ProtocolConnectionCollection
 {
-    using System.Collections.Generic;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
+    private List<ProtocolConnection> connections;
 
     /// <summary>
-    /// Represents a user setting that is a collection of protocol connection.
+    /// Initializes a new instance of the <see cref="ProtocolConnectionCollection"/> class.
     /// </summary>
-    public sealed class ProtocolConnectionCollection
+    internal ProtocolConnectionCollection()
     {
-        private List<ProtocolConnection> connections;
+        this.connections = new List<ProtocolConnection>();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProtocolConnectionCollection"/> class.
-        /// </summary>
-        internal ProtocolConnectionCollection()
+    /// <summary>
+    /// Read user setting with ProtocolConnectionCollection value.
+    /// </summary>
+    /// <param name="reader">EwsServiceXmlReader</param>
+    internal static ProtocolConnectionCollection LoadFromXml(EwsXmlReader reader)
+    {
+        ProtocolConnectionCollection value = new ProtocolConnectionCollection();
+        ProtocolConnection connection = null;
+
+        do
         {
-            this.connections = new List<ProtocolConnection>();
-        }
+            reader.Read();
 
-        /// <summary>
-        /// Read user setting with ProtocolConnectionCollection value.
-        /// </summary>
-        /// <param name="reader">EwsServiceXmlReader</param>
-        internal static ProtocolConnectionCollection LoadFromXml(EwsXmlReader reader)
-        {
-            ProtocolConnectionCollection value = new ProtocolConnectionCollection();
-            ProtocolConnection connection = null;
-
-            do
+            if (reader.NodeType == XmlNodeType.Element)
             {
-                reader.Read();
-
-                if (reader.NodeType == XmlNodeType.Element)
+                if (reader.LocalName == XmlElementNames.ProtocolConnection)
                 {
-                    if (reader.LocalName == XmlElementNames.ProtocolConnection)
+                    connection = ProtocolConnection.LoadFromXml(reader);
+                    if (connection != null)
                     {
-                        connection = ProtocolConnection.LoadFromXml(reader);
-                        if (connection != null)
-                        {
-                            value.Connections.Add(connection);
-                        }
+                        value.Connections.Add(connection);
                     }
                 }
             }
-            while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.ProtocolConnections));
-
-            return value;
         }
+        while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.ProtocolConnections));
 
-        /// <summary>
-        /// Gets the Connections.
-        /// </summary>
-        public List<ProtocolConnection> Connections
-        {
-            get { return this.connections; }
-            internal set { this.connections = value; }
-        }
+        return value;
+    }
+
+    /// <summary>
+    /// Gets the Connections.
+    /// </summary>
+    public List<ProtocolConnection> Connections
+    {
+        get { return this.connections; }
+        internal set { this.connections = value; }
     }
 }

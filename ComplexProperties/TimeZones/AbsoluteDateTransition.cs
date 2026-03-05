@@ -23,101 +23,100 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using Misc;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+/// <summary>
+/// Represents a time zone period transition that occurs on a fixed (absolute) date.
+/// </summary>
+internal class AbsoluteDateTransition : TimeZoneTransition
 {
-    using Misc;
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Text;
+    private DateTime dateTime;
 
     /// <summary>
-    /// Represents a time zone period transition that occurs on a fixed (absolute) date.
+    /// Initializes this transition based on the specified transition time.
     /// </summary>
-    internal class AbsoluteDateTransition : TimeZoneTransition
+    /// <param name="transitionTime">The transition time to initialize from.</param>
+    internal override void InitializeFromTransitionTime(TransitionTime transitionTime)
     {
-        private DateTime dateTime;
+        throw new ServiceLocalException(Strings.UnsupportedTimeZonePeriodTransitionTarget);
+    }
 
-        /// <summary>
-        /// Initializes this transition based on the specified transition time.
-        /// </summary>
-        /// <param name="transitionTime">The transition time to initialize from.</param>
-        internal override void InitializeFromTransitionTime(TransitionTime transitionTime)
+    /// <summary>
+    /// Gets the XML element name associated with the transition.
+    /// </summary>
+    /// <returns>The XML element name associated with the transition.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.AbsoluteDateTransition;
+    }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        bool result = base.TryReadElementFromXml(reader);
+
+        if (!result)
         {
-            throw new ServiceLocalException(Strings.UnsupportedTimeZonePeriodTransitionTarget);
-        }
-
-        /// <summary>
-        /// Gets the XML element name associated with the transition.
-        /// </summary>
-        /// <returns>The XML element name associated with the transition.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.AbsoluteDateTransition;
-        }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            bool result = base.TryReadElementFromXml(reader);
-
-            if (!result)
+            if (reader.LocalName == XmlElementNames.DateTime)
             {
-                if (reader.LocalName == XmlElementNames.DateTime)
-                {
-                    this.dateTime = DateTime.Parse(reader.ReadElementValue(), CultureInfo.InvariantCulture);
+                this.dateTime = DateTime.Parse(reader.ReadElementValue(), CultureInfo.InvariantCulture);
 
-                    result = true;
-                }
+                result = true;
             }
-
-            return result;
         }
 
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            base.WriteElementsToXml(writer);
+        return result;
+    }
 
-            writer.WriteElementValue(
-                XmlNamespace.Types,
-                XmlElementNames.DateTime,
-                this.dateTime);
-        }
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteElementsToXml(writer);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbsoluteDateTransition"/> class.
-        /// </summary>
-        /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
-        internal AbsoluteDateTransition(TimeZoneDefinition timeZoneDefinition)
-            : base(timeZoneDefinition)
-        {
-        }
+        writer.WriteElementValue(
+            XmlNamespace.Types,
+            XmlElementNames.DateTime,
+            this.dateTime);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AbsoluteDateTransition"/> class.
-        /// </summary>
-        /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
-        /// <param name="targetGroup">The transition group the transition will target.</param>
-        internal AbsoluteDateTransition(TimeZoneDefinition timeZoneDefinition, TimeZoneTransitionGroup targetGroup)
-            : base(timeZoneDefinition, targetGroup)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AbsoluteDateTransition"/> class.
+    /// </summary>
+    /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
+    internal AbsoluteDateTransition(TimeZoneDefinition timeZoneDefinition)
+        : base(timeZoneDefinition)
+    {
+    }
 
-        /// <summary>
-        /// Gets or sets the absolute date and time when the transition occurs.
-        /// </summary>
-        internal DateTime DateTime
-        {
-            get { return this.dateTime; }
-            set { this.dateTime = value; }
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AbsoluteDateTransition"/> class.
+    /// </summary>
+    /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
+    /// <param name="targetGroup">The transition group the transition will target.</param>
+    internal AbsoluteDateTransition(TimeZoneDefinition timeZoneDefinition, TimeZoneTransitionGroup targetGroup)
+        : base(timeZoneDefinition, targetGroup)
+    {
+    }
+
+    /// <summary>
+    /// Gets or sets the absolute date and time when the transition occurs.
+    /// </summary>
+    internal DateTime DateTime
+    {
+        get { return this.dateTime; }
+        set { this.dateTime = value; }
     }
 }

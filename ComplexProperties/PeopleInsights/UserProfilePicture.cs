@@ -23,117 +23,116 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+using System.Xml;
+
+/// <summary>
+/// Represents the UserProfilePicture.
+/// </summary>
+public sealed class UserProfilePicture : InsightValue
 {
-    using System.Collections.Generic;
-    using System.Xml;
+    private string blob;
+    private string photoSize;
+    private string url;
+    private string imageType;
 
     /// <summary>
-    /// Represents the UserProfilePicture.
+    /// Gets the Blob
     /// </summary>
-    public sealed class UserProfilePicture : InsightValue
+    public string Blob
     {
-        private string blob;
-        private string photoSize;
-        private string url;
-        private string imageType;
-
-        /// <summary>
-        /// Gets the Blob
-        /// </summary>
-        public string Blob
+        get
         {
-            get
-            {
-                return this.blob;
-            }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.blob, value);
-            }
+            return this.blob;
         }
 
-        /// <summary>
-        /// Gets the PhotoSize
-        /// </summary>
-        public string PhotoSize
+        set
         {
-            get
-            {
-                return this.photoSize;
-            }
+            this.SetFieldValue<string>(ref this.blob, value);
+        }
+    }
 
-            set
-            {
-                this.SetFieldValue<string>(ref this.photoSize, value);
-            }
+    /// <summary>
+    /// Gets the PhotoSize
+    /// </summary>
+    public string PhotoSize
+    {
+        get
+        {
+            return this.photoSize;
         }
 
-        /// <summary>
-        /// Gets the Url
-        /// </summary>
-        public string Url
+        set
         {
-            get
-            {
-                return this.url;
-            }
+            this.SetFieldValue<string>(ref this.photoSize, value);
+        }
+    }
 
-            set
-            {
-                this.SetFieldValue<string>(ref this.url, value);
-            }
+    /// <summary>
+    /// Gets the Url
+    /// </summary>
+    public string Url
+    {
+        get
+        {
+            return this.url;
         }
 
-        /// <summary>
-        /// Gets the ImageType
-        /// </summary>
-        public string ImageType
+        set
         {
-            get
-            {
-                return this.imageType;   
-            }
+            this.SetFieldValue<string>(ref this.url, value);
+        }
+    }
 
-            set
-            {
-                this.SetFieldValue<string>(ref this.imageType, value);
-            }
+    /// <summary>
+    /// Gets the ImageType
+    /// </summary>
+    public string ImageType
+    {
+        get
+        {
+            return this.imageType;   
         }
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">XML reader</param>
-        /// <returns>Whether the element was read</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+        set
         {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.InsightSource:
-                    this.InsightSource = reader.ReadElementValue<string>();
-                    break;
-                case XmlElementNames.UpdatedUtcTicks:
-                    this.UpdatedUtcTicks = reader.ReadElementValue<long>();
-                    break;
-                case XmlElementNames.Blob:
-                    this.Blob = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.PhotoSize:
-                    this.PhotoSize = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.Url:
-                    this.Url = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.ImageType:
-                    this.ImageType = reader.ReadElementValue();
-                    break;
-                default:
-                    return false;
-            }
-
-            return true;
+            this.SetFieldValue<string>(ref this.imageType, value);
         }
+    }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">XML reader</param>
+    /// <returns>Whether the element was read</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
+        {
+            case XmlElementNames.InsightSource:
+                this.InsightSource = reader.ReadElementValue<string>();
+                break;
+            case XmlElementNames.UpdatedUtcTicks:
+                this.UpdatedUtcTicks = reader.ReadElementValue<long>();
+                break;
+            case XmlElementNames.Blob:
+                this.Blob = reader.ReadElementValue();
+                break;
+            case XmlElementNames.PhotoSize:
+                this.PhotoSize = reader.ReadElementValue();
+                break;
+            case XmlElementNames.Url:
+                this.Url = reader.ReadElementValue();
+                break;
+            case XmlElementNames.ImageType:
+                this.ImageType = reader.ReadElementValue();
+                break;
+            default:
+                return false;
+        }
+
+        return true;
     }
 }

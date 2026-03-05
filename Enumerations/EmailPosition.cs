@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the email position of an extracted entity.
+/// </summary>
+public enum EmailPosition
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The position is in the latest reply.
+    /// </summary>
+    LatestReply,
 
     /// <summary>
-    /// Defines the email position of an extracted entity.
+    /// The position is not in the latest reply.
     /// </summary>
-    public enum EmailPosition
-    {
-        /// <summary>
-        /// The position is in the latest reply.
-        /// </summary>
-        LatestReply,
+    Other,
 
-        /// <summary>
-        /// The position is not in the latest reply.
-        /// </summary>
-        Other,
+    /// <summary>
+    /// The position is in the subject.
+    /// </summary>
+    Subject,
 
-        /// <summary>
-        /// The position is in the subject.
-        /// </summary>
-        Subject,
-
-        /// <summary>
-        /// The position is in the signature.
-        /// </summary>
-        Signature,
-    }
+    /// <summary>
+    /// The position is in the signature.
+    /// </summary>
+    Signature,
 }

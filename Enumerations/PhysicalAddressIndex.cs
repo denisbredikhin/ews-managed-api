@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines a physical address index.
+/// </summary>
+public enum PhysicalAddressIndex
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// None.
+    /// </summary>
+    None,
 
     /// <summary>
-    /// Defines a physical address index.
+    /// The business address.
     /// </summary>
-    public enum PhysicalAddressIndex
-    {
-        /// <summary>
-        /// None.
-        /// </summary>
-        None,
+    Business,
 
-        /// <summary>
-        /// The business address.
-        /// </summary>
-        Business,
+    /// <summary>
+    /// The home address.
+    /// </summary>
+    Home,
 
-        /// <summary>
-        /// The home address.
-        /// </summary>
-        Home,
-
-        /// <summary>
-        /// The alternate address.
-        /// </summary>
-        Other
-    }
+    /// <summary>
+    /// The alternate address.
+    /// </summary>
+    Other
 }

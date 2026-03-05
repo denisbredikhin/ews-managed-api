@@ -24,55 +24,55 @@
  */
 
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Runtime.Serialization;
+
+/// <summary>
+/// Represents an error that occurs when an operation on a property fails.
+/// </summary>
+public class PropertyException : ServiceLocalException
 {
-    using System;
-    using System.Runtime.Serialization;
+    /// <summary>
+    /// The name of the property that is at the origin of the exception.
+    /// </summary>
+    private readonly string name;
 
     /// <summary>
-    /// Represents an error that occurs when an operation on a property fails.
+    /// PropertyException constructor.
     /// </summary>
-    public class PropertyException : ServiceLocalException
+    /// <param name="name">The name of the property that is at the origin of the exception.</param>
+    public PropertyException(string name)
+        : base()
     {
-        /// <summary>
-        /// The name of the property that is at the origin of the exception.
-        /// </summary>
-        private readonly string name;
+        this.name = name;
+    }
 
-        /// <summary>
-        /// PropertyException constructor.
-        /// </summary>
-        /// <param name="name">The name of the property that is at the origin of the exception.</param>
-        public PropertyException(string name)
-            : base()
-        {
-            this.name = name;
-        }
+    /// <summary>
+    /// PropertyException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    /// <param name="name">The name of the property that is at the origin of the exception.</param>
+    public PropertyException(string message, string name)
+        : base(message)
+    {
+        this.name = name;
+    }
 
-        /// <summary>
-        /// PropertyException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="name">The name of the property that is at the origin of the exception.</param>
-        public PropertyException(string message, string name)
-            : base(message)
-        {
-            this.name = name;
-        }
-
-        /// <summary>
-        /// PropertyException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="name">The name of the property that is at the origin of the exception.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public PropertyException(
-            string message,
-            string name,
-            Exception innerException)
-            : base(message, innerException)
-        {
-            this.name = name;
+    /// <summary>
+    /// PropertyException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    /// <param name="name">The name of the property that is at the origin of the exception.</param>
+    /// <param name="innerException">Inner exception.</param>
+    public PropertyException(
+        string message,
+        string name,
+        Exception innerException)
+        : base(message, innerException)
+    {
+        this.name = name;
 		}
 
 
@@ -80,8 +80,7 @@ namespace Microsoft.Exchange.WebServices.Data
 		/// Gets the name of the property that caused the exception.
 		/// </summary>
 		public string Name
-        {
-            get { return this.name; }
-        }
+    {
+        get { return this.name; }
     }
 }

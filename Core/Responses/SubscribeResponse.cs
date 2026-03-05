@@ -23,53 +23,52 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the base response class to subscription creation operations.
+/// </summary>
+/// <typeparam name="TSubscription">Subscription type.</typeparam>
+internal sealed class SubscribeResponse<TSubscription> : ServiceResponse
+    where TSubscription : SubscriptionBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private TSubscription subscription;
 
     /// <summary>
-    /// Represents the base response class to subscription creation operations.
+    /// Initializes a new instance of the <see cref="SubscribeResponse&lt;TSubscription&gt;"/> class.
     /// </summary>
-    /// <typeparam name="TSubscription">Subscription type.</typeparam>
-    internal sealed class SubscribeResponse<TSubscription> : ServiceResponse
-        where TSubscription : SubscriptionBase
+    /// <param name="subscription">The subscription.</param>
+    internal SubscribeResponse(TSubscription subscription)
+        : base()
     {
-        private TSubscription subscription;
+        EwsUtilities.Assert(
+            subscription != null,
+            "SubscribeResponse.ctor",
+            "subscription is null");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SubscribeResponse&lt;TSubscription&gt;"/> class.
-        /// </summary>
-        /// <param name="subscription">The subscription.</param>
-        internal SubscribeResponse(TSubscription subscription)
-            : base()
-        {
-            EwsUtilities.Assert(
-                subscription != null,
-                "SubscribeResponse.ctor",
-                "subscription is null");
+        this.subscription = subscription;
+    }
 
-            this.subscription = subscription;
-        }
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
+        this.subscription.LoadFromXml(reader);
+    }
 
-            this.subscription.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Gets the subscription that was created.
-        /// </summary>
-        public TSubscription Subscription
-        {
-            get { return this.subscription; }
-        }
+    /// <summary>
+    /// Gets the subscription that was created.
+    /// </summary>
+    public TSubscription Subscription
+    {
+        get { return this.subscription; }
     }
 }

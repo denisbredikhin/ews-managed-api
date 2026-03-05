@@ -23,76 +23,75 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the Id of a phone call.
+/// </summary>
+internal sealed class PhoneCallId : ComplexProperty
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private string id;
 
     /// <summary>
-    /// Represents the Id of a phone call.
+    /// Initializes a new instance of the <see cref="PhoneCallId"/> class.
     /// </summary>
-    internal sealed class PhoneCallId : ComplexProperty
+    internal PhoneCallId()
     {
-        private string id;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneCallId"/> class.
-        /// </summary>
-        internal PhoneCallId()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PhoneCallId"/> class. 
+    /// </summary>
+    /// <param name="id">The Id of the phone call.</param>
+    internal PhoneCallId(string id)
+    {
+        this.id = id;
+    }
+
+    /// <summary>
+    /// Reads attributes from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadAttributesFromXml(EwsServiceXmlReader reader)
+    {
+        this.id = reader.ReadAttributeValue(XmlAttributeNames.Id);
+    }
+
+    /// <summary>
+    /// Writes attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteAttributeValue(XmlAttributeNames.Id, this.id);
+    }
+
+    /// <summary>
+    /// Writes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal void WriteToXml(EwsServiceXmlWriter writer)
+    {
+        this.WriteToXml(writer, XmlElementNames.PhoneCallId);
+    }
+
+    /// <summary>
+    /// Gets or sets the Id of the phone call.
+    /// </summary>
+    internal string Id
+    {
+        get
         {
+            return this.id;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PhoneCallId"/> class. 
-        /// </summary>
-        /// <param name="id">The Id of the phone call.</param>
-        internal PhoneCallId(string id)
+        set
         {
-            this.id = id;
-        }
-
-        /// <summary>
-        /// Reads attributes from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadAttributesFromXml(EwsServiceXmlReader reader)
-        {
-            this.id = reader.ReadAttributeValue(XmlAttributeNames.Id);
-        }
-
-        /// <summary>
-        /// Writes attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteAttributeValue(XmlAttributeNames.Id, this.id);
-        }
-
-        /// <summary>
-        /// Writes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal void WriteToXml(EwsServiceXmlWriter writer)
-        {
-            this.WriteToXml(writer, XmlElementNames.PhoneCallId);
-        }
-
-        /// <summary>
-        /// Gets or sets the Id of the phone call.
-        /// </summary>
-        internal string Id
-        {
-            get
-            {
-                return this.id;
-            }
-
-            set
-            {
-                this.id = value;
-            }
+            this.id = value;
         }
     }
 }

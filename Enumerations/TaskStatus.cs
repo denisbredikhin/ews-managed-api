@@ -23,40 +23,39 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the execution status of a task.
+/// </summary>
+public enum TaskStatus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The execution of the task is not started.
+    /// </summary>
+    NotStarted,
 
     /// <summary>
-    /// Defines the execution status of a task.
+    /// The execution of the task is in progress.
     /// </summary>
-    public enum TaskStatus
-    {
-        /// <summary>
-        /// The execution of the task is not started.
-        /// </summary>
-        NotStarted,
+    InProgress,
 
-        /// <summary>
-        /// The execution of the task is in progress.
-        /// </summary>
-        InProgress,
+    /// <summary>
+    /// The execution of the task is completed.
+    /// </summary>
+    Completed,
 
-        /// <summary>
-        /// The execution of the task is completed.
-        /// </summary>
-        Completed,
+    /// <summary>
+    /// The execution of the task is waiting on others.
+    /// </summary>
+    WaitingOnOthers,
 
-        /// <summary>
-        /// The execution of the task is waiting on others.
-        /// </summary>
-        WaitingOnOthers,
-
-        /// <summary>
-        /// The execution of the task is deferred.
-        /// </summary>
-        Deferred
-    }
+    /// <summary>
+    /// The execution of the task is deferred.
+    /// </summary>
+    Deferred
 }

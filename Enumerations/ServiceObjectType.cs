@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the type of a service object.
+/// </summary>
+public enum ServiceObjectType
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The object is a folder.
+    /// </summary>
+    Folder,
 
     /// <summary>
-    /// Defines the type of a service object.
+    /// The object is an item.
     /// </summary>
-    public enum ServiceObjectType
-    {
-        /// <summary>
-        /// The object is a folder.
-        /// </summary>
-        Folder,
+    Item,
 
-        /// <summary>
-        /// The object is an item.
-        /// </summary>
-        Item,
+    /// <summary>
+    /// Data represents a conversation
+    /// </summary>
+    Conversation,
 
-        /// <summary>
-        /// Data represents a conversation
-        /// </summary>
-        Conversation,
-
-        /// <summary>
-        /// Data represents a persona
-        /// </summary>
-        Persona
-    }
+    /// <summary>
+    /// Data represents a persona
+    /// </summary>
+    Persona
 }

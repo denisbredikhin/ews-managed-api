@@ -23,53 +23,52 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents the response to a GetInboxRules operation.
+/// </summary>
+internal sealed class GetInboxRulesResponse : ServiceResponse
 {
     /// <summary>
-    /// Represents the response to a GetInboxRules operation.
+    /// Rule collection.
     /// </summary>
-    internal sealed class GetInboxRulesResponse : ServiceResponse
+    private RuleCollection ruleCollection;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetInboxRulesResponse"/> class.
+    /// </summary>
+    internal GetInboxRulesResponse()
+        : base()
     {
-        /// <summary>
-        /// Rule collection.
-        /// </summary>
-        private RuleCollection ruleCollection;
+        this.ruleCollection = new RuleCollection();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetInboxRulesResponse"/> class.
-        /// </summary>
-        internal GetInboxRulesResponse()
-            : base()
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        reader.Read();
+        this.ruleCollection.OutlookRuleBlobExists = reader.ReadElementValue<bool>(
+            XmlNamespace.Messages, 
+            XmlElementNames.OutlookRuleBlobExists);
+        reader.Read();
+        if (reader.IsStartElement(XmlNamespace.NotSpecified, XmlElementNames.InboxRules))
         {
-            this.ruleCollection = new RuleCollection();
+            this.ruleCollection.LoadFromXml(reader, XmlNamespace.NotSpecified, XmlElementNames.InboxRules);
         }
+    }
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    /// <summary>
+    /// Gets the rule collection in the response.
+    /// </summary>
+    internal RuleCollection Rules
+    {
+        get
         {
-            reader.Read();
-            this.ruleCollection.OutlookRuleBlobExists = reader.ReadElementValue<bool>(
-                XmlNamespace.Messages, 
-                XmlElementNames.OutlookRuleBlobExists);
-            reader.Read();
-            if (reader.IsStartElement(XmlNamespace.NotSpecified, XmlElementNames.InboxRules))
-            {
-                this.ruleCollection.LoadFromXml(reader, XmlNamespace.NotSpecified, XmlElementNames.InboxRules);
-            }
-        }
-
-        /// <summary>
-        /// Gets the rule collection in the response.
-        /// </summary>
-        internal RuleCollection Rules
-        {
-            get
-            {
-                return this.ruleCollection;
-            }
+            return this.ruleCollection;
         }
     }
 }

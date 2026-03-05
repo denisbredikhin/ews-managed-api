@@ -23,70 +23,69 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Xml;
+
+/// <summary>
+/// Represents the response to an individual attachment retrieval request.
+/// </summary>
+public sealed class GetAttachmentResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Xml;
+    private Attachment attachment;
 
     /// <summary>
-    /// Represents the response to an individual attachment retrieval request.
+    /// Initializes a new instance of the <see cref="GetAttachmentResponse"/> class.
     /// </summary>
-    public sealed class GetAttachmentResponse : ServiceResponse
+    /// <param name="attachment">The attachment.</param>
+    internal GetAttachmentResponse(Attachment attachment)
+        : base()
     {
-        private Attachment attachment;
+        this.attachment = attachment;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetAttachmentResponse"/> class.
-        /// </summary>
-        /// <param name="attachment">The attachment.</param>
-        internal GetAttachmentResponse(Attachment attachment)
-            : base()
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
+
+        reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.Attachments);
+        if (!reader.IsEmptyElement)
         {
-            this.attachment = attachment;
-        }
+            reader.Read(XmlNodeType.Element);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
-
-            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.Attachments);
-            if (!reader.IsEmptyElement)
+            if (this.attachment == null)
             {
-                reader.Read(XmlNodeType.Element);
-
-                if (this.attachment == null)
+                if (string.Equals(reader.LocalName, XmlElementNames.FileAttachment, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (string.Equals(reader.LocalName, XmlElementNames.FileAttachment, StringComparison.OrdinalIgnoreCase))
-                    {
-                        this.attachment = new FileAttachment(reader.Service);
-                    }
-                    else if (string.Equals(reader.LocalName, XmlElementNames.ItemAttachment, StringComparison.OrdinalIgnoreCase))
-                    {
-                        this.attachment = new ItemAttachment(reader.Service);
-                    }
+                    this.attachment = new FileAttachment(reader.Service);
                 }
-
-                if (this.attachment != null)
+                else if (string.Equals(reader.LocalName, XmlElementNames.ItemAttachment, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.attachment.LoadFromXml(reader, reader.LocalName);
+                    this.attachment = new ItemAttachment(reader.Service);
                 }
-
-                reader.ReadEndElement(XmlNamespace.Messages, XmlElementNames.Attachments);
             }
-        }
 
-        /// <summary>
-        /// Gets the attachment that was retrieved.
-        /// </summary>
-        public Attachment Attachment
-        {
-            get { return this.attachment; }
+            if (this.attachment != null)
+            {
+                this.attachment.LoadFromXml(reader, reader.LocalName);
+            }
+
+            reader.ReadEndElement(XmlNamespace.Messages, XmlElementNames.Attachments);
         }
+    }
+
+    /// <summary>
+    /// Gets the attachment that was retrieved.
+    /// </summary>
+    public Attachment Attachment
+    {
+        get { return this.attachment; }
     }
 }

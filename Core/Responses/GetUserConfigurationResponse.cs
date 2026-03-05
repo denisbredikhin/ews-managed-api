@@ -23,50 +23,49 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Text;
+
+/// <summary>
+/// Represents a response to a GetUserConfiguration request.
+/// </summary>
+internal sealed class GetUserConfigurationResponse : ServiceResponse
 {
-    using System;
-    using System.Text;
+    private UserConfiguration userConfiguration;
 
     /// <summary>
-    /// Represents a response to a GetUserConfiguration request.
+    /// Initializes a new instance of the <see cref="GetUserConfigurationResponse"/> class.
     /// </summary>
-    internal sealed class GetUserConfigurationResponse : ServiceResponse
+    /// <param name="userConfiguration">The userConfiguration.</param>
+    internal GetUserConfigurationResponse(UserConfiguration userConfiguration)
+        : base()
     {
-        private UserConfiguration userConfiguration;
+        EwsUtilities.Assert(
+            userConfiguration != null,
+            "GetUserConfigurationResponse.ctor",
+            "userConfiguration is null");
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserConfigurationResponse"/> class.
-        /// </summary>
-        /// <param name="userConfiguration">The userConfiguration.</param>
-        internal GetUserConfigurationResponse(UserConfiguration userConfiguration)
-            : base()
-        {
-            EwsUtilities.Assert(
-                userConfiguration != null,
-                "GetUserConfigurationResponse.ctor",
-                "userConfiguration is null");
+        this.userConfiguration = userConfiguration;
+    }
 
-            this.userConfiguration = userConfiguration;
-        }
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
+        this.userConfiguration.LoadFromXml(reader);
+    }
 
-            this.userConfiguration.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Gets the user configuration that was created.
-        /// </summary>
-        public UserConfiguration UserConfiguration
-        {
-            get { return this.userConfiguration; }
-        }
+    /// <summary>
+    /// Gets the user configuration that was created.
+    /// </summary>
+    public UserConfiguration UserConfiguration
+    {
+        get { return this.userConfiguration; }
     }
 }

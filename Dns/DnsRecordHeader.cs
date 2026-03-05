@@ -23,46 +23,45 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Dns
+namespace Microsoft.Exchange.WebServices.Dns;
+
+using System;
+using System.Runtime.InteropServices;
+
+/// <summary>
+///  Represents the native format of a DNS record returned by the Win32 DNS API
+/// </summary>
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+internal struct DnsRecordHeader
 {
-    using System;
-    using System.Runtime.InteropServices;
+    /// <summary>
+    /// Pointer to the next DNS dnsRecord.
+    /// </summary>
+    internal IntPtr NextRecord;
 
     /// <summary>
-    ///  Represents the native format of a DNS record returned by the Win32 DNS API
+    /// Domain name of the dnsRecord set to be updated.
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct DnsRecordHeader
-    {
-        /// <summary>
-        /// Pointer to the next DNS dnsRecord.
-        /// </summary>
-        internal IntPtr NextRecord;
+    internal string Name;
 
-        /// <summary>
-        /// Domain name of the dnsRecord set to be updated.
-        /// </summary>
-        internal string Name;
+    /// <summary>The type of the current dnsRecord.</summary>
+    internal DnsRecordType RecordType;
 
-        /// <summary>The type of the current dnsRecord.</summary>
-        internal DnsRecordType RecordType;
+    /// <summary>Length of the data, in bytes. </summary>
+    internal UInt16 DataLength;
 
-        /// <summary>Length of the data, in bytes. </summary>
-        internal UInt16 DataLength;
+    /// <summary>
+    /// Flags used in the structure, in the form of a bit-wise DWORD.
+    /// </summary>
+    internal UInt32 Flags;
 
-        /// <summary>
-        /// Flags used in the structure, in the form of a bit-wise DWORD.
-        /// </summary>
-        internal UInt32 Flags;
+    /// <summary>
+    /// Time to live, in seconds
+    /// </summary>
+    internal UInt32 Ttl;
 
-        /// <summary>
-        /// Time to live, in seconds
-        /// </summary>
-        internal UInt32 Ttl;
-
-        /// <summary>
-        /// Reserved for future use.
-        /// </summary>
-        internal UInt32 Reserved;
-    }
+    /// <summary>
+    /// Reserved for future use.
+    /// </summary>
+    internal UInt32 Reserved;
 }

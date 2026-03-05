@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the order in which conversation nodes should be returned by GetConversationItems.
+/// </summary>
+public enum ConversationSortOrder
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Tree order, ascending
+    /// </summary>
+    TreeOrderAscending,
 
     /// <summary>
-    /// Defines the order in which conversation nodes should be returned by GetConversationItems.
+    /// Tree order, descending.
     /// </summary>
-    public enum ConversationSortOrder
-    {
-        /// <summary>
-        /// Tree order, ascending
-        /// </summary>
-        TreeOrderAscending,
+    TreeOrderDescending,
 
-        /// <summary>
-        /// Tree order, descending.
-        /// </summary>
-        TreeOrderDescending,
+    /// <summary>
+    /// Chronological order, ascending.
+    /// </summary>
+    DateOrderAscending,
 
-        /// <summary>
-        /// Chronological order, ascending.
-        /// </summary>
-        DateOrderAscending,
-
-        /// <summary>
-        /// Chronological order, descending.
-        /// </summary>
-        DateOrderDescending,
-    }
+    /// <summary>
+    /// Chronological order, descending.
+    /// </summary>
+    DateOrderDescending,
 }

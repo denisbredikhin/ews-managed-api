@@ -23,48 +23,47 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.ComponentModel;
+
+/// <summary>
+/// Represents a collection of deleted occurrence objects.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+public sealed class DeletedOccurrenceInfoCollection : ComplexPropertyCollection<DeletedOccurrenceInfo>
 {
-    using System.ComponentModel;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="OccurrenceInfoCollection"/> class.
+    /// </summary>
+    internal DeletedOccurrenceInfoCollection()
+    {
+    }
 
     /// <summary>
-    /// Represents a collection of deleted occurrence objects.
+    /// Creates the complex property.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class DeletedOccurrenceInfoCollection : ComplexPropertyCollection<DeletedOccurrenceInfo>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <returns>OccurenceInfo instance.</returns>
+    internal override DeletedOccurrenceInfo CreateComplexProperty(string xmlElementName)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OccurrenceInfoCollection"/> class.
-        /// </summary>
-        internal DeletedOccurrenceInfoCollection()
+        if (xmlElementName == XmlElementNames.DeletedOccurrence)
         {
+            return new DeletedOccurrenceInfo();
         }
+        else
+        {
+            return null;
+        }
+    }
 
-        /// <summary>
-        /// Creates the complex property.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <returns>OccurenceInfo instance.</returns>
-        internal override DeletedOccurrenceInfo CreateComplexProperty(string xmlElementName)
-        {
-            if (xmlElementName == XmlElementNames.DeletedOccurrence)
-            {
-                return new DeletedOccurrenceInfo();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Gets the name of the collection item XML element.
-        /// </summary>
-        /// <param name="complexProperty">The complex property.</param>
-        /// <returns>XML element name.</returns>
-        internal override string GetCollectionItemXmlElementName(DeletedOccurrenceInfo complexProperty)
-        {
-            return XmlElementNames.Occurrence;
-        }
+    /// <summary>
+    /// Gets the name of the collection item XML element.
+    /// </summary>
+    /// <param name="complexProperty">The complex property.</param>
+    /// <returns>XML element name.</returns>
+    internal override string GetCollectionItemXmlElementName(DeletedOccurrenceInfo complexProperty)
+    {
+        return XmlElementNames.Occurrence;
     }
 }

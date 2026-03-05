@@ -23,45 +23,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.IO;
+
+/// <summary>
+/// Represents an UrlEntity object.
+/// </summary>
+public sealed class UrlEntity : ExtractedEntity
 {
-    using System;
-    using System.IO;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UrlEntity"/> class.
+    /// </summary>
+    internal UrlEntity()
+        : base()
+    {
+    }
 
     /// <summary>
-    /// Represents an UrlEntity object.
+    /// Gets the meeting suggestion Location.
     /// </summary>
-    public sealed class UrlEntity : ExtractedEntity
+    public string Url { get; internal set; }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UrlEntity"/> class.
-        /// </summary>
-        internal UrlEntity()
-            : base()
+        switch (reader.LocalName)
         {
-        }
-
-        /// <summary>
-        /// Gets the meeting suggestion Location.
-        /// </summary>
-        public string Url { get; internal set; }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.NlgUrl:
-                    this.Url = reader.ReadElementValue();
-                    return true;
-                
-                default:
-                    return base.TryReadElementFromXml(reader);
-            }
+            case XmlElementNames.NlgUrl:
+                this.Url = reader.ReadElementValue();
+                return true;
+            
+            default:
+                return base.TryReadElementFromXml(reader);
         }
     }
 }

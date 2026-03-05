@@ -23,39 +23,38 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents the response to a GetAppMarketplaceUrl operation
+/// </summary>
+internal sealed class GetAppMarketplaceUrlResponse : ServiceResponse
 {
+    private string appMarketplaceUrl;
+
     /// <summary>
-    /// Represents the response to a GetAppMarketplaceUrl operation
+    /// Initializes a new instance of the <see cref="GetAppMarketplaceUrlResponse"/> class.
     /// </summary>
-    internal sealed class GetAppMarketplaceUrlResponse : ServiceResponse
+    internal GetAppMarketplaceUrlResponse()
+        : base()
     {
-        private string appMarketplaceUrl;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetAppMarketplaceUrlResponse"/> class.
-        /// </summary>
-        internal GetAppMarketplaceUrlResponse()
-            : base()
-        {
-        }
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
+        this.appMarketplaceUrl = reader.ReadElementValue<string>(XmlNamespace.NotSpecified, XmlElementNames.AppMarketplaceUrl);
+    }
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
-            this.appMarketplaceUrl = reader.ReadElementValue<string>(XmlNamespace.NotSpecified, XmlElementNames.AppMarketplaceUrl);
-        }
-
-        /// <summary>
-        /// App Marketplace Url
-        /// </summary>
-        public string AppMarketplaceUrl
-        {
-            get { return this.appMarketplaceUrl; }
-        }
+    /// <summary>
+    /// App Marketplace Url
+    /// </summary>
+    public string AppMarketplaceUrl
+    {
+        get { return this.appMarketplaceUrl; }
     }
 }

@@ -23,104 +23,103 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents recurrent range with an end date.
+/// </summary>
+internal sealed class EndDateRecurrenceRange : RecurrenceRange
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private DateTime endDate;
 
     /// <summary>
-    /// Represents recurrent range with an end date.
+    /// Initializes a new instance of the <see cref="EndDateRecurrenceRange"/> class.
     /// </summary>
-    internal sealed class EndDateRecurrenceRange : RecurrenceRange
+    public EndDateRecurrenceRange()
+        : base()
     {
-        private DateTime endDate;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EndDateRecurrenceRange"/> class.
-        /// </summary>
-        public EndDateRecurrenceRange()
-            : base()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="EndDateRecurrenceRange"/> class.
+    /// </summary>
+    /// <param name="startDate">The start date.</param>
+    /// <param name="endDate">The end date.</param>
+    public EndDateRecurrenceRange(DateTime startDate, DateTime endDate)
+        : base(startDate)
+    {
+        this.endDate = endDate;
+    }
+
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <value>The name of the XML element.</value>
+    internal override string XmlElementName
+    {
+        get { return XmlElementNames.EndDateRecurrence; }
+    }
+
+    /// <summary>
+    /// Setups the recurrence.
+    /// </summary>
+    /// <param name="recurrence">The recurrence.</param>
+    internal override void SetupRecurrence(Recurrence recurrence)
+    {
+        base.SetupRecurrence(recurrence);
+
+        recurrence.EndDate = this.EndDate;
+    }
+
+    /// <summary>
+    /// Writes the elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteElementsToXml(writer);
+
+        writer.WriteElementValue(
+            XmlNamespace.Types,
+            XmlElementNames.EndDate,
+            EwsUtilities.DateTimeToXSDate(this.EndDate));
+    }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        if (base.TryReadElementFromXml(reader))
         {
+            return true;
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EndDateRecurrenceRange"/> class.
-        /// </summary>
-        /// <param name="startDate">The start date.</param>
-        /// <param name="endDate">The end date.</param>
-        public EndDateRecurrenceRange(DateTime startDate, DateTime endDate)
-            : base(startDate)
+        else
         {
-            this.endDate = endDate;
-        }
-
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <value>The name of the XML element.</value>
-        internal override string XmlElementName
-        {
-            get { return XmlElementNames.EndDateRecurrence; }
-        }
-
-        /// <summary>
-        /// Setups the recurrence.
-        /// </summary>
-        /// <param name="recurrence">The recurrence.</param>
-        internal override void SetupRecurrence(Recurrence recurrence)
-        {
-            base.SetupRecurrence(recurrence);
-
-            recurrence.EndDate = this.EndDate;
-        }
-
-        /// <summary>
-        /// Writes the elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            base.WriteElementsToXml(writer);
-
-            writer.WriteElementValue(
-                XmlNamespace.Types,
-                XmlElementNames.EndDate,
-                EwsUtilities.DateTimeToXSDate(this.EndDate));
-        }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            if (base.TryReadElementFromXml(reader))
+            switch (reader.LocalName)
             {
-                return true;
-            }
-            else
-            {
-                switch (reader.LocalName)
-                {
-                    case XmlElementNames.EndDate:
-                        this.endDate = reader.ReadElementValueAsDateTime().Value;
-                        return true;
-                    default:
-                        return false;
-                }
+                case XmlElementNames.EndDate:
+                    this.endDate = reader.ReadElementValueAsDateTime().Value;
+                    return true;
+                default:
+                    return false;
             }
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the end date.
-        /// </summary>
-        /// <value>The end date.</value>
-        public DateTime EndDate
-        {
-            get { return this.endDate; }
-            set { this.SetFieldValue<DateTime>(ref this.endDate, value); }
-        }
+    /// <summary>
+    /// Gets or sets the end date.
+    /// </summary>
+    /// <value>The end date.</value>
+    public DateTime EndDate
+    {
+        get { return this.endDate; }
+        set { this.SetFieldValue<DateTime>(ref this.endDate, value); }
     }
 }

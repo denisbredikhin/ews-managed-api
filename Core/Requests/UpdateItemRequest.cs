@@ -23,255 +23,254 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents an UpdateItem request.
+/// </summary>
+internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private List<Item> items = new List<Item>();
+    private FolderId savedItemsDestinationFolder;
+    private ConflictResolutionMode conflictResolutionMode;
+    private MessageDisposition? messageDisposition;
+    private SendInvitationsOrCancellationsMode? sendInvitationsOrCancellationsMode;
 
     /// <summary>
-    /// Represents an UpdateItem request.
+    /// Initializes a new instance of the <see cref="UpdateItemRequest"/> class.
     /// </summary>
-    internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal UpdateItemRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
     {
-        private List<Item> items = new List<Item>();
-        private FolderId savedItemsDestinationFolder;
-        private ConflictResolutionMode conflictResolutionMode;
-        private MessageDisposition? messageDisposition;
-        private SendInvitationsOrCancellationsMode? sendInvitationsOrCancellationsMode;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateItemRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal UpdateItemRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
+    /// <summary>
+    /// Gets a value indicating whether the TimeZoneContext SOAP header should be emitted.
+    /// </summary>
+    /// <value>
+    ///     <c>true</c> if the time zone should be emitted; otherwise, <c>false</c>.
+    /// </value>
+    internal override bool EmitTimeZoneHeader
+    {
+        get
         {
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the TimeZoneContext SOAP header should be emitted.
-        /// </summary>
-        /// <value>
-        ///     <c>true</c> if the time zone should be emitted; otherwise, <c>false</c>.
-        /// </value>
-        internal override bool EmitTimeZoneHeader
-        {
-            get
-            {
-                foreach (Item item in this.Items)
-                {
-                    if (item.GetIsTimeZoneHeaderRequired(true /* isUpdateOperation */))
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Validates the request.
-        /// </summary>
-        internal override void Validate()
-        {
-            base.Validate();
-            EwsUtilities.ValidateParamCollection(this.Items, "Items");
-            for (int i = 0; i < this.Items.Count; i++)
-            {
-                if ((this.Items[i] == null) || this.Items[i].IsNew)
-                {
-                    throw new ArgumentException(string.Format(Strings.ItemToUpdateCannotBeNullOrNew, i));
-                }
-            }
-
-            if (this.SavedItemsDestinationFolder != null)
-            {
-                this.SavedItemsDestinationFolder.Validate(this.Service.RequestedServerVersion);
-            }
-
-            // Validate each item.
             foreach (Item item in this.Items)
             {
-                item.Validate();
+                if (item.GetIsTimeZoneHeaderRequired(true /* isUpdateOperation */))
+                {
+                    return true;
+                }
             }
 
-            if (this.SuppressReadReceipts && this.Service.RequestedServerVersion < ExchangeVersion.Exchange2013)
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Validates the request.
+    /// </summary>
+    internal override void Validate()
+    {
+        base.Validate();
+        EwsUtilities.ValidateParamCollection(this.Items, "Items");
+        for (int i = 0; i < this.Items.Count; i++)
+        {
+            if ((this.Items[i] == null) || this.Items[i].IsNew)
             {
-                throw new ServiceVersionException(
-                    string.Format(
-                        Strings.ParameterIncompatibleWithRequestVersion,
-                        "SuppressReadReceipts",
-                        ExchangeVersion.Exchange2013));
+                throw new ArgumentException(string.Format(Strings.ItemToUpdateCannotBeNullOrNew, i));
             }
         }
 
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Response object.</returns>
-        internal override UpdateItemResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+        if (this.SavedItemsDestinationFolder != null)
         {
-            return new UpdateItemResponse(this.Items[responseIndex]);
+            this.SavedItemsDestinationFolder.Validate(this.Service.RequestedServerVersion);
         }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
+        // Validate each item.
+        foreach (Item item in this.Items)
         {
-            return XmlElementNames.UpdateItem;
+            item.Validate();
         }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>Xml element name.</returns>
-        internal override string GetResponseXmlElementName()
+        if (this.SuppressReadReceipts && this.Service.RequestedServerVersion < ExchangeVersion.Exchange2013)
         {
-            return XmlElementNames.UpdateItemResponse;
+            throw new ServiceVersionException(
+                string.Format(
+                    Strings.ParameterIncompatibleWithRequestVersion,
+                    "SuppressReadReceipts",
+                    ExchangeVersion.Exchange2013));
+        }
+    }
+
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Response object.</returns>
+    internal override UpdateItemResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+    {
+        return new UpdateItemResponse(this.Items[responseIndex]);
+    }
+
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.UpdateItem;
+    }
+
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>Xml element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.UpdateItemResponse;
+    }
+
+    /// <summary>
+    /// Gets the name of the response message XML element.
+    /// </summary>
+    /// <returns>Xml element name.</returns>
+    internal override string GetResponseMessageXmlElementName()
+    {
+        return XmlElementNames.UpdateItemResponseMessage;
+    }
+
+    /// <summary>
+    /// Gets the expected response message count.
+    /// </summary>
+    /// <returns>Number of items in response.</returns>
+    internal override int GetExpectedResponseMessageCount()
+    {
+        return this.items.Count;
+    }
+
+    /// <summary>
+    /// Writes XML attributes.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteAttributesToXml(writer);
+
+        if (this.MessageDisposition.HasValue)
+        {
+            writer.WriteAttributeValue(XmlAttributeNames.MessageDisposition, this.MessageDisposition);
         }
 
-        /// <summary>
-        /// Gets the name of the response message XML element.
-        /// </summary>
-        /// <returns>Xml element name.</returns>
-        internal override string GetResponseMessageXmlElementName()
+        if (this.SuppressReadReceipts)
         {
-            return XmlElementNames.UpdateItemResponseMessage;
+            writer.WriteAttributeValue(XmlAttributeNames.SuppressReadReceipts, true);
         }
 
-        /// <summary>
-        /// Gets the expected response message count.
-        /// </summary>
-        /// <returns>Number of items in response.</returns>
-        internal override int GetExpectedResponseMessageCount()
+        writer.WriteAttributeValue(XmlAttributeNames.ConflictResolution, this.ConflictResolutionMode);
+
+        if (this.SendInvitationsOrCancellationsMode.HasValue)
         {
-            return this.items.Count;
+            writer.WriteAttributeValue(
+                XmlAttributeNames.SendMeetingInvitationsOrCancellations,
+                this.SendInvitationsOrCancellationsMode.Value);
         }
+    }
 
-        /// <summary>
-        /// Writes XML attributes.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        if (this.SavedItemsDestinationFolder != null)
         {
-            base.WriteAttributesToXml(writer);
-
-            if (this.MessageDisposition.HasValue)
-            {
-                writer.WriteAttributeValue(XmlAttributeNames.MessageDisposition, this.MessageDisposition);
-            }
-
-            if (this.SuppressReadReceipts)
-            {
-                writer.WriteAttributeValue(XmlAttributeNames.SuppressReadReceipts, true);
-            }
-
-            writer.WriteAttributeValue(XmlAttributeNames.ConflictResolution, this.ConflictResolutionMode);
-
-            if (this.SendInvitationsOrCancellationsMode.HasValue)
-            {
-                writer.WriteAttributeValue(
-                    XmlAttributeNames.SendMeetingInvitationsOrCancellations,
-                    this.SendInvitationsOrCancellationsMode.Value);
-            }
-        }
-
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            if (this.SavedItemsDestinationFolder != null)
-            {
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SavedItemFolderId);
-                this.SavedItemsDestinationFolder.WriteToXml(writer);
-                writer.WriteEndElement();
-            }
-
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ItemChanges);
-
-            foreach (Item item in this.items)
-            {
-                item.WriteToXmlForUpdate(writer);
-            }
-
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SavedItemFolderId);
+            this.SavedItemsDestinationFolder.WriteToXml(writer);
             writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ItemChanges);
+
+        foreach (Item item in this.items)
         {
-            return ExchangeVersion.Exchange2007_SP1;
+            item.WriteToXmlForUpdate(writer);
         }
 
-        /// <summary>
-        /// Gets or sets the message disposition.
-        /// </summary>
-        /// <value>The message disposition.</value>
-        public MessageDisposition? MessageDisposition
-        {
-            get { return this.messageDisposition; }
-            set { this.messageDisposition = value; }
-        }
+        writer.WriteEndElement();
+    }
 
-        /// <summary>
-        /// Gets or sets the conflict resolution mode.
-        /// </summary>
-        /// <value>The conflict resolution mode.</value>
-        public ConflictResolutionMode ConflictResolutionMode
-        {
-            get { return this.conflictResolutionMode; }
-            set { this.conflictResolutionMode = value; }
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2007_SP1;
+    }
 
-        /// <summary>
-        /// Gets or sets the send invitations or cancellations mode.
-        /// </summary>
-        /// <value>The send invitations or cancellations mode.</value>
-        public SendInvitationsOrCancellationsMode? SendInvitationsOrCancellationsMode
-        {
-            get { return this.sendInvitationsOrCancellationsMode; }
-            set { this.sendInvitationsOrCancellationsMode = value; }
-        }
+    /// <summary>
+    /// Gets or sets the message disposition.
+    /// </summary>
+    /// <value>The message disposition.</value>
+    public MessageDisposition? MessageDisposition
+    {
+        get { return this.messageDisposition; }
+        set { this.messageDisposition = value; }
+    }
 
-        /// <summary>
-        /// Gets or sets whether to suppress read receipts
-        /// </summary>
-        /// <value>Whether to suppress read receipts</value>
-        public bool SuppressReadReceipts
-        {
-            get;
-            set;
-        }
+    /// <summary>
+    /// Gets or sets the conflict resolution mode.
+    /// </summary>
+    /// <value>The conflict resolution mode.</value>
+    public ConflictResolutionMode ConflictResolutionMode
+    {
+        get { return this.conflictResolutionMode; }
+        set { this.conflictResolutionMode = value; }
+    }
 
-        /// <summary>
-        /// Gets the items.
-        /// </summary>
-        /// <value>The items.</value>
-        public List<Item> Items
-        {
-            get { return this.items; }
-        }
+    /// <summary>
+    /// Gets or sets the send invitations or cancellations mode.
+    /// </summary>
+    /// <value>The send invitations or cancellations mode.</value>
+    public SendInvitationsOrCancellationsMode? SendInvitationsOrCancellationsMode
+    {
+        get { return this.sendInvitationsOrCancellationsMode; }
+        set { this.sendInvitationsOrCancellationsMode = value; }
+    }
 
-        /// <summary>
-        /// Gets or sets the saved items destination folder.
-        /// </summary>
-        /// <value>The saved items destination folder.</value>
-        public FolderId SavedItemsDestinationFolder
-        {
-            get { return this.savedItemsDestinationFolder; }
-            set { this.savedItemsDestinationFolder = value; }
-        }
+    /// <summary>
+    /// Gets or sets whether to suppress read receipts
+    /// </summary>
+    /// <value>Whether to suppress read receipts</value>
+    public bool SuppressReadReceipts
+    {
+        get;
+        set;
+    }
+
+    /// <summary>
+    /// Gets the items.
+    /// </summary>
+    /// <value>The items.</value>
+    public List<Item> Items
+    {
+        get { return this.items; }
+    }
+
+    /// <summary>
+    /// Gets or sets the saved items destination folder.
+    /// </summary>
+    /// <value>The saved items destination folder.</value>
+    public FolderId SavedItemsDestinationFolder
+    {
+        get { return this.savedItemsDestinationFolder; }
+        set { this.savedItemsDestinationFolder = value; }
     }
 }

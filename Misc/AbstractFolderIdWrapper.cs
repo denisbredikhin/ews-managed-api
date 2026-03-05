@@ -23,45 +23,44 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the abstraction of a folder Id.
+/// </summary>
+internal abstract class AbstractFolderIdWrapper
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Obtains the Folder object associated with the wrapper.
+    /// </summary>
+    /// <returns>The Folder object associated with the wrapper.</returns>
+    public virtual Folder GetFolder()
+    {
+        return null;
+    }
 
     /// <summary>
-    /// Represents the abstraction of a folder Id.
+    /// Initializes a new instance of AbstractFolderIdWrapper.
     /// </summary>
-    internal abstract class AbstractFolderIdWrapper
+    internal AbstractFolderIdWrapper()
     {
-        /// <summary>
-        /// Obtains the Folder object associated with the wrapper.
-        /// </summary>
-        /// <returns>The Folder object associated with the wrapper.</returns>
-        public virtual Folder GetFolder()
-        {
-            return null;
-        }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of AbstractFolderIdWrapper.
-        /// </summary>
-        internal AbstractFolderIdWrapper()
-        {
-        }
+    /// <summary>
+    /// Writes the Id encapsulated in the wrapper to XML.
+    /// </summary>
+    /// <param name="writer">The writer to write the Id to.</param>
+    internal abstract void WriteToXml(EwsServiceXmlWriter writer);
 
-        /// <summary>
-        /// Writes the Id encapsulated in the wrapper to XML.
-        /// </summary>
-        /// <param name="writer">The writer to write the Id to.</param>
-        internal abstract void WriteToXml(EwsServiceXmlWriter writer);
-
-        /// <summary>
-        /// Validates folderId against specified version.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        internal virtual void Validate(ExchangeVersion version)
-        {
-        }
+    /// <summary>
+    /// Validates folderId against specified version.
+    /// </summary>
+    /// <param name="version">The version.</param>
+    internal virtual void Validate(ExchangeVersion version)
+    {
     }
 }

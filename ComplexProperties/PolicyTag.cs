@@ -23,33 +23,32 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents the policy tag of an item or folder.
+/// </summary>
+public sealed class PolicyTag : RetentionTagBase
 {
-    using System;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PolicyTag"/> class.
+    /// </summary>
+    public PolicyTag()
+        : base(XmlElementNames.PolicyTag)
+    {
+    }
 
     /// <summary>
-    /// Represents the policy tag of an item or folder.
+    /// Initializes a new instance of the <see cref="PolicyTag"/> class.
     /// </summary>
-    public sealed class PolicyTag : RetentionTagBase
+    /// <param name="isExplicit">Is explicit.</param>
+    /// <param name="retentionId">Retention id.</param>
+    public PolicyTag(bool isExplicit, Guid retentionId)
+        : this()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PolicyTag"/> class.
-        /// </summary>
-        public PolicyTag()
-            : base(XmlElementNames.PolicyTag)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PolicyTag"/> class.
-        /// </summary>
-        /// <param name="isExplicit">Is explicit.</param>
-        /// <param name="retentionId">Retention id.</param>
-        public PolicyTag(bool isExplicit, Guid retentionId)
-            : this()
-        {
-            this.IsExplicit = isExplicit;
-            this.RetentionId = retentionId;
-        }
+        this.IsExplicit = isExplicit;
+        this.RetentionId = retentionId;
     }
 }

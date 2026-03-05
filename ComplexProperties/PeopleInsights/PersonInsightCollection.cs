@@ -23,131 +23,130 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// Represents the collection of person insights. 
+/// </summary>
+public sealed class PersonInsightCollection : ComplexPropertyCollection<PersonInsight>
 {
-    using System;
-    using System.Collections.Generic;
+    /// <summary>
+    /// XML element name
+    /// </summary>
+    private readonly string collectionItemXmlElementName;
 
     /// <summary>
-    /// Represents the collection of person insights. 
+    /// Creates a new instance of the <see cref="PersonInsightCollection"/> class.
     /// </summary>
-    public sealed class PersonInsightCollection : ComplexPropertyCollection<PersonInsight>
+    internal PersonInsightCollection()
+        : this(XmlElementNames.Insight)
     {
-        /// <summary>
-        /// XML element name
-        /// </summary>
-        private readonly string collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="PersonInsightCollection"/> class.
-        /// </summary>
-        internal PersonInsightCollection()
-            : this(XmlElementNames.Insight)
-        {
-        }
+    /// <summary>
+    /// Creates a new instance of the <see cref="PersonInsightCollection"/> class.
+    /// </summary>
+    /// <param name="collectionItemXmlElementName">Name of the collection item XML element.</param>
+    internal PersonInsightCollection(string collectionItemXmlElementName)
+        : base()
+    {
+        this.collectionItemXmlElementName = collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Creates a new instance of the <see cref="PersonInsightCollection"/> class.
-        /// </summary>
-        /// <param name="collectionItemXmlElementName">Name of the collection item XML element.</param>
-        internal PersonInsightCollection(string collectionItemXmlElementName)
-            : base()
-        {
-            this.collectionItemXmlElementName = collectionItemXmlElementName;
-        }
+    /// <summary>
+    /// Adds an insight to the collection.
+    /// </summary>
+    /// <param name="insight">The insight to add.</param>
+    public void Add(PersonInsight insight)
+    {
+        this.InternalAdd(insight);
+    }
 
-        /// <summary>
-        /// Adds an insight to the collection.
-        /// </summary>
-        /// <param name="insight">The insight to add.</param>
-        public void Add(PersonInsight insight)
+    /// <summary>
+    /// Adds multiple person insights to the collection.
+    /// </summary>
+    /// <param name="insights">The collection of person insights to add.</param>
+    public void AddRange(IEnumerable<PersonInsight> insights)
+    {
+        if (insights != null)
         {
-            this.InternalAdd(insight);
-        }
-
-        /// <summary>
-        /// Adds multiple person insights to the collection.
-        /// </summary>
-        /// <param name="insights">The collection of person insights to add.</param>
-        public void AddRange(IEnumerable<PersonInsight> insights)
-        {
-            if (insights != null)
+            foreach (PersonInsight insight in insights)
             {
-                foreach (PersonInsight insight in insights)
-                {
-                    this.Add(insight);
-                }
+                this.Add(insight);
             }
         }
+    }
 
-        /// <summary>
-        /// Clears the collection.
-        /// </summary>
-        public void Clear()
+    /// <summary>
+    /// Clears the collection.
+    /// </summary>
+    public void Clear()
+    {
+        this.InternalClear();
+    }
+
+    /// <summary>
+    /// Removes a person insight from the collection.
+    /// </summary>
+    /// <param name="index">The index of the person insight to remove.</param>
+    public void RemoveAt(int index)
+    {
+        if (index < 0 || index >= this.Count)
         {
-            this.InternalClear();
+            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
         }
 
-        /// <summary>
-        /// Removes a person insight from the collection.
-        /// </summary>
-        /// <param name="index">The index of the person insight to remove.</param>
-        public void RemoveAt(int index)
+        this.InternalRemoveAt(index);
+    }
+
+    /// <summary>
+    /// Removes a person insight from the collection.
+    /// </summary>
+    /// <param name="insight">The person sight to remove.</param>
+    /// <returns>Whether removed from the collection</returns>
+    public bool Remove(PersonInsight insight)
+    {
+        EwsUtilities.ValidateParam(insight, "insight");
+
+        return this.InternalRemove(insight);
+    }
+
+    /// <summary>
+    /// Creates a PersonInsight object from an XML element name.
+    /// </summary>
+    /// <param name="xmlElementName">The XML element name from which to create the PersonInsight.</param>
+    /// <returns>A PersonInsight object.</returns>
+    internal override PersonInsight CreateComplexProperty(string xmlElementName)
+    {
+        if (xmlElementName == this.collectionItemXmlElementName)
         {
-            if (index < 0 || index >= this.Count)
-            {
-                throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
-            }
-
-            this.InternalRemoveAt(index);
+            return new PersonInsight();
         }
-
-        /// <summary>
-        /// Removes a person insight from the collection.
-        /// </summary>
-        /// <param name="insight">The person sight to remove.</param>
-        /// <returns>Whether removed from the collection</returns>
-        public bool Remove(PersonInsight insight)
+        else
         {
-            EwsUtilities.ValidateParam(insight, "insight");
-
-            return this.InternalRemove(insight);
+            return null;
         }
+    }
 
-        /// <summary>
-        /// Creates a PersonInsight object from an XML element name.
-        /// </summary>
-        /// <param name="xmlElementName">The XML element name from which to create the PersonInsight.</param>
-        /// <returns>A PersonInsight object.</returns>
-        internal override PersonInsight CreateComplexProperty(string xmlElementName)
-        {
-            if (xmlElementName == this.collectionItemXmlElementName)
-            {
-                return new PersonInsight();
-            }
-            else
-            {
-                return null;
-            }
-        }
+    /// <summary>
+    /// Retrieves the XML element name corresponding to the provided PersonInsight object.
+    /// </summary>
+    /// <param name="insight">The PersonInsight object from which to determine the XML element name.</param>
+    /// <returns>The XML element name corresponding to the provided PersonInsight object.</returns>
+    internal override string GetCollectionItemXmlElementName(PersonInsight insight)
+    {
+        return this.collectionItemXmlElementName;
+    }
 
-        /// <summary>
-        /// Retrieves the XML element name corresponding to the provided PersonInsight object.
-        /// </summary>
-        /// <param name="insight">The PersonInsight object from which to determine the XML element name.</param>
-        /// <returns>The XML element name corresponding to the provided PersonInsight object.</returns>
-        internal override string GetCollectionItemXmlElementName(PersonInsight insight)
-        {
-            return this.collectionItemXmlElementName;
-        }
-
-        /// <summary>
-        /// Determine whether we should write collection to XML or not.
-        /// </summary>
-        /// <returns>Always true, even if the collection is empty.</returns>
-        internal override bool ShouldWriteToRequest()
-        {
-            return true;
-        }
+    /// <summary>
+    /// Determine whether we should write collection to XML or not.
+    /// </summary>
+    /// <returns>Always true, even if the collection is empty.</returns>
+    internal override bool ShouldWriteToRequest()
+    {
+        return true;
     }
 }

@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the type of ClientAccessTokenType
+/// </summary>
+public enum ClientAccessTokenType
 {
     /// <summary>
-    /// Defines the type of ClientAccessTokenType
+    /// CallerIdentity
     /// </summary>
-    public enum ClientAccessTokenType
-    {
-        /// <summary>
-        /// CallerIdentity
-        /// </summary>
-        CallerIdentity,
+    CallerIdentity,
 
-        /// <summary>
-        /// ExtensionCallback.
-        /// </summary>
-        ExtensionCallback,
+    /// <summary>
+    /// ExtensionCallback.
+    /// </summary>
+    ExtensionCallback,
 
-        /// <summary>
-        /// ScopedToken.
-        /// </summary>
-        ScopedToken,
-    }
+    /// <summary>
+    /// ScopedToken.
+    /// </summary>
+    ScopedToken,
 }

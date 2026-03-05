@@ -23,24 +23,23 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+namespace Microsoft.Exchange.WebServices.Data;
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// The Attachable attribute decorates item classes that can be attached to other items.
+/// </summary>
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+internal sealed class AttachableAttribute : Attribute
+{
     /// <summary>
-    /// The Attachable attribute decorates item classes that can be attached to other items.
+    /// Initializes a new instance of the <see cref="AttachableAttribute"/> class.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    internal sealed class AttachableAttribute : Attribute
+    internal AttachableAttribute()
+        : base()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AttachableAttribute"/> class.
-        /// </summary>
-        internal AttachableAttribute()
-            : base()
-        {
-        }
     }
 }

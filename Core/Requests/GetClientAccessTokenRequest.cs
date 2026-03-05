@@ -23,126 +23,125 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a GetClientAccessToken request.
+/// </summary>
+internal sealed class GetClientAccessTokenRequest : MultiResponseServiceRequest<GetClientAccessTokenResponse>
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetClientAccessTokenRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal GetClientAccessTokenRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
+    {
+    }
 
     /// <summary>
-    /// Represents a GetClientAccessToken request.
+    /// Creates the service response.
     /// </summary>
-    internal sealed class GetClientAccessTokenRequest : MultiResponseServiceRequest<GetClientAccessTokenResponse>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Response object.</returns>
+    internal override GetClientAccessTokenResponse CreateServiceResponse(ExchangeService service, int responseIndex)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetClientAccessTokenRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal GetClientAccessTokenRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
-        {
-        }
+        return new GetClientAccessTokenResponse(
+            this.TokenRequests[responseIndex].Id,
+            this.TokenRequests[responseIndex].TokenType);
+    }
 
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Response object.</returns>
-        internal override GetClientAccessTokenResponse CreateServiceResponse(ExchangeService service, int responseIndex)
-        {
-            return new GetClientAccessTokenResponse(
-                this.TokenRequests[responseIndex].Id,
-                this.TokenRequests[responseIndex].TokenType);
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.GetClientAccessToken;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.GetClientAccessToken;
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>Xml element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.GetClientAccessTokenResponse;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>Xml element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.GetClientAccessTokenResponse;
-        }
+    /// <summary>
+    /// Gets the name of the response message XML element.
+    /// </summary>
+    /// <returns>Xml element name.</returns>
+    internal override string GetResponseMessageXmlElementName()
+    {
+        return XmlElementNames.GetClientAccessTokenResponseMessage;
+    }
 
-        /// <summary>
-        /// Gets the name of the response message XML element.
-        /// </summary>
-        /// <returns>Xml element name.</returns>
-        internal override string GetResponseMessageXmlElementName()
-        {
-            return XmlElementNames.GetClientAccessTokenResponseMessage;
-        }
+    /// <summary>
+    /// Gets the expected response message count.
+    /// </summary>
+    /// <returns>Number of items in response.</returns>
+    internal override int GetExpectedResponseMessageCount()
+    {
+        return TokenRequests.Length;
+    }
 
-        /// <summary>
-        /// Gets the expected response message count.
-        /// </summary>
-        /// <returns>Number of items in response.</returns>
-        internal override int GetExpectedResponseMessageCount()
-        {
-            return TokenRequests.Length;
-        }
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.TokenRequests);
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        foreach (ClientAccessTokenRequest tokenRequestInfo in this.TokenRequests)
         {
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.TokenRequests);
-
-            foreach (ClientAccessTokenRequest tokenRequestInfo in this.TokenRequests)
+            writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.TokenRequest);
+            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.Id, tokenRequestInfo.Id);
+            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.TokenType, tokenRequestInfo.TokenType);
+            if (!string.IsNullOrEmpty(tokenRequestInfo.Scope))
             {
-                writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.TokenRequest);
-                writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.Id, tokenRequestInfo.Id);
-                writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.TokenType, tokenRequestInfo.TokenType);
-                if (!string.IsNullOrEmpty(tokenRequestInfo.Scope))
-                {
-                    writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.HighlightTermScope, tokenRequestInfo.Scope);
-                }
-
-                writer.WriteEndElement();
+                writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.HighlightTermScope, tokenRequestInfo.Scope);
             }
 
             writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Validate request.
-        /// </summary>
-        internal override void Validate()
-        {
-            base.Validate();
+        writer.WriteEndElement();
+    }
 
-            if (this.TokenRequests == null || this.TokenRequests.Length == 0)
-            {
-                throw new ServiceValidationException(Strings.HoldIdParameterIsNotSpecified);
-            }
-        }
+    /// <summary>
+    /// Validate request.
+    /// </summary>
+    internal override void Validate()
+    {
+        base.Validate();
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
+        if (this.TokenRequests == null || this.TokenRequests.Length == 0)
         {
-            return ExchangeVersion.Exchange2013;
+            throw new ServiceValidationException(Strings.HoldIdParameterIsNotSpecified);
         }
+    }
 
-        internal ClientAccessTokenRequest[] TokenRequests
-        {
-            get;
-            set;
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2013;
+    }
+
+    internal ClientAccessTokenRequest[] TokenRequests
+    {
+        get;
+        set;
     }
 }

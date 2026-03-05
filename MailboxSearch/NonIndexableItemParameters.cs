@@ -23,51 +23,50 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents non indexable item parameters base class
+/// </summary>
+public abstract class NonIndexableItemParameters
 {
-    using System;
+    /// <summary>
+    /// List of mailboxes (in legacy DN format)
+    /// </summary>
+    public string[] Mailboxes { get; set; }
 
     /// <summary>
-    /// Represents non indexable item parameters base class
+    /// Search archive only
     /// </summary>
-    public abstract class NonIndexableItemParameters
-    {
-        /// <summary>
-        /// List of mailboxes (in legacy DN format)
-        /// </summary>
-        public string[] Mailboxes { get; set; }
+    public bool SearchArchiveOnly { get; set; }
+}
 
-        /// <summary>
-        /// Search archive only
-        /// </summary>
-        public bool SearchArchiveOnly { get; set; }
-    }
+/// <summary>
+/// Represents get non indexable item statistics parameters.
+/// </summary>
+public sealed class GetNonIndexableItemStatisticsParameters : NonIndexableItemParameters
+{
+}
+
+/// <summary>
+/// Represents get non indexable item details parameters.
+/// </summary>
+public sealed class GetNonIndexableItemDetailsParameters : NonIndexableItemParameters
+{
+    /// <summary>
+    /// Page size
+    /// </summary>
+    public int? PageSize { get; set; }
 
     /// <summary>
-    /// Represents get non indexable item statistics parameters.
+    /// Page item reference
     /// </summary>
-    public sealed class GetNonIndexableItemStatisticsParameters : NonIndexableItemParameters
-    {
-    }
+    public string PageItemReference { get; set; }
 
     /// <summary>
-    /// Represents get non indexable item details parameters.
+    /// Search page direction
     /// </summary>
-    public sealed class GetNonIndexableItemDetailsParameters : NonIndexableItemParameters
-    {
-        /// <summary>
-        /// Page size
-        /// </summary>
-        public int? PageSize { get; set; }
-
-        /// <summary>
-        /// Page item reference
-        /// </summary>
-        public string PageItemReference { get; set; }
-
-        /// <summary>
-        /// Search page direction
-        /// </summary>
-        public SearchPageDirection? PageDirection { get; set; }
-    }
+    public SearchPageDirection? PageDirection { get; set; }
 }

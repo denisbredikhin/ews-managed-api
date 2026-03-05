@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the types of response the Autodiscover service can return.
+/// </summary>
+internal enum AutodiscoverResponseType
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The request returned an error.
+    /// </summary>
+    Error,
 
     /// <summary>
-    /// Defines the types of response the Autodiscover service can return.
+    /// A URL redirection is necessary.
     /// </summary>
-    internal enum AutodiscoverResponseType
-    {
-        /// <summary>
-        /// The request returned an error.
-        /// </summary>
-        Error,
+    RedirectUrl,
 
-        /// <summary>
-        /// A URL redirection is necessary.
-        /// </summary>
-        RedirectUrl,
+    /// <summary>
+    /// An address redirection is necessary.
+    /// </summary>
+    RedirectAddress,
 
-        /// <summary>
-        /// An address redirection is necessary.
-        /// </summary>
-        RedirectAddress,
-
-        /// <summary>
-        /// The request succeeded.
-        /// </summary>
-        Success
-    }
+    /// <summary>
+    /// The request succeeded.
+    /// </summary>
+    Success
 }

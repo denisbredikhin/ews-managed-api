@@ -23,42 +23,41 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents an exception that is thrown when the Autodiscover service could not be contacted.
+/// </summary>
+public class AutodiscoverLocalException : ServiceLocalException
+{
     /// <summary>
-    /// Represents an exception that is thrown when the Autodiscover service could not be contacted.
+    /// Initializes a new instance of the <see cref="AutodiscoverLocalException"/> class.
     /// </summary>
-    public class AutodiscoverLocalException : ServiceLocalException
+    public AutodiscoverLocalException()
+        : base()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutodiscoverLocalException"/> class.
-        /// </summary>
-        public AutodiscoverLocalException()
-            : base()
-        {
-        }
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutodiscoverLocalException"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        public AutodiscoverLocalException(string message)
-            : base(message)
-        {
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AutodiscoverLocalException"/> class.
+    /// </summary>
+    /// <param name="message">The message.</param>
+    public AutodiscoverLocalException(string message)
+        : base(message)
+    {
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AutodiscoverLocalException"/> class.
-        /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="innerException">The inner exception.</param>
-        public AutodiscoverLocalException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AutodiscoverLocalException"/> class.
+    /// </summary>
+    /// <param name="message">The message.</param>
+    /// <param name="innerException">The inner exception.</param>
+    public AutodiscoverLocalException(string message, Exception innerException)
+        : base(message, innerException)
+    {
 		}
 
 	}
-}

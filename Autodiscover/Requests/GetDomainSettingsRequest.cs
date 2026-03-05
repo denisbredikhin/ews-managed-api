@@ -23,212 +23,211 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using Microsoft.Exchange.WebServices.Data;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Versioning;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+
+/// <summary>
+/// Represents a GetDomainSettings request.
+/// </summary>
+[SupportedOSPlatform("windows")]
+internal class GetDomainSettingsRequest : AutodiscoverRequest
 {
-    using Microsoft.Exchange.WebServices.Data;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Runtime.Versioning;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Xml;
+    /// <summary>
+    /// Action Uri of Autodiscover.GetDomainSettings method.
+    /// </summary>
+    private const string GetDomainSettingsActionUri = EwsUtilities.AutodiscoverSoapNamespace + "/Autodiscover/GetDomainSettings";
+
+    private List<string> domains;
+    private List<DomainSettingName> settings;
+    private ExchangeVersion? requestedVersion;
 
     /// <summary>
-    /// Represents a GetDomainSettings request.
+    /// Initializes a new instance of the <see cref="GetDomainSettingsRequest"/> class.
     /// </summary>
-    [SupportedOSPlatform("windows")]
-    internal class GetDomainSettingsRequest : AutodiscoverRequest
+    /// <param name="service">Autodiscover service associated with this request.</param>
+    /// <param name="url">URL of Autodiscover service.</param>
+    internal GetDomainSettingsRequest(AutodiscoverService service, Uri url)
+        : base(service, url)
     {
-        /// <summary>
-        /// Action Uri of Autodiscover.GetDomainSettings method.
-        /// </summary>
-        private const string GetDomainSettingsActionUri = EwsUtilities.AutodiscoverSoapNamespace + "/Autodiscover/GetDomainSettings";
+    }
 
-        private List<string> domains;
-        private List<DomainSettingName> settings;
-        private ExchangeVersion? requestedVersion;
+    /// <summary>
+    /// Validates the request.
+    /// </summary>
+    internal override void Validate()
+    {
+        base.Validate();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetDomainSettingsRequest"/> class.
-        /// </summary>
-        /// <param name="service">Autodiscover service associated with this request.</param>
-        /// <param name="url">URL of Autodiscover service.</param>
-        internal GetDomainSettingsRequest(AutodiscoverService service, Uri url)
-            : base(service, url)
+        EwsUtilities.ValidateParam(this.Domains, "domains");
+        EwsUtilities.ValidateParam(this.Settings, "settings");
+
+        if (this.Settings.Count == 0)
         {
+            throw new ServiceValidationException(Strings.InvalidAutodiscoverSettingsCount);
         }
 
-        /// <summary>
-        /// Validates the request.
-        /// </summary>
-        internal override void Validate()
+        if (domains.Count == 0)
         {
-            base.Validate();
+            throw new ServiceValidationException(Strings.InvalidAutodiscoverDomainsCount);
+        }
 
-            EwsUtilities.ValidateParam(this.Domains, "domains");
-            EwsUtilities.ValidateParam(this.Settings, "settings");
-
-            if (this.Settings.Count == 0)
+        foreach (string domain in this.domains)
+        {
+            if (string.IsNullOrEmpty(domain))
             {
-                throw new ServiceValidationException(Strings.InvalidAutodiscoverSettingsCount);
-            }
-
-            if (domains.Count == 0)
-            {
-                throw new ServiceValidationException(Strings.InvalidAutodiscoverDomainsCount);
-            }
-
-            foreach (string domain in this.domains)
-            {
-                if (string.IsNullOrEmpty(domain))
-                {
-                    throw new ServiceValidationException(Strings.InvalidAutodiscoverDomain);
-                }
+                throw new ServiceValidationException(Strings.InvalidAutodiscoverDomain);
             }
         }
+    }
 
-        /// <summary>
-        /// Executes this instance.
-        /// </summary>
-        /// <returns></returns>
-        internal async Task<GetDomainSettingsResponseCollection> Execute()
+    /// <summary>
+    /// Executes this instance.
+    /// </summary>
+    /// <returns></returns>
+    internal async Task<GetDomainSettingsResponseCollection> Execute()
+    {
+        GetDomainSettingsResponseCollection responses = (GetDomainSettingsResponseCollection)(await this.InternalExecute());
+        if (responses.ErrorCode == AutodiscoverErrorCode.NoError)
         {
-            GetDomainSettingsResponseCollection responses = (GetDomainSettingsResponseCollection)(await this.InternalExecute());
-            if (responses.ErrorCode == AutodiscoverErrorCode.NoError)
-            {
-                this.PostProcessResponses(responses);
-            }
-            return responses;
+            this.PostProcessResponses(responses);
         }
+        return responses;
+    }
 
-        /// <summary>
-        /// Post-process responses to GetDomainSettings.
-        /// </summary>
-        /// <param name="responses">The GetDomainSettings responses.</param>
-        private void PostProcessResponses(GetDomainSettingsResponseCollection responses)
+    /// <summary>
+    /// Post-process responses to GetDomainSettings.
+    /// </summary>
+    /// <param name="responses">The GetDomainSettings responses.</param>
+    private void PostProcessResponses(GetDomainSettingsResponseCollection responses)
+    {
+        // Note:The response collection may not include all of the requested domains if the request has been throttled.
+        for (int index = 0; index < responses.Count; index++)
         {
-            // Note:The response collection may not include all of the requested domains if the request has been throttled.
-            for (int index = 0; index < responses.Count; index++)
-            {
-                responses[index].Domain = this.Domains[index];
-            }
+            responses[index].Domain = this.Domains[index];
         }
+    }
 
-        /// <summary>
-        /// Gets the name of the request XML element.
-        /// </summary>
-        /// <returns>Request XML element name.</returns>
-        internal override string GetRequestXmlElementName()
+    /// <summary>
+    /// Gets the name of the request XML element.
+    /// </summary>
+    /// <returns>Request XML element name.</returns>
+    internal override string GetRequestXmlElementName()
+    {
+        return XmlElementNames.GetDomainSettingsRequestMessage;
+    }
+
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>Response XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.GetDomainSettingsResponseMessage;
+    }
+
+    /// <summary>
+    /// Gets the WS-Addressing action name.
+    /// </summary>
+    /// <returns>WS-Addressing action name.</returns>
+    internal override string GetWsAddressingActionName()
+    {
+        return GetDomainSettingsActionUri;
+    }
+
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <returns>AutodiscoverResponse</returns>
+    internal override AutodiscoverResponse CreateServiceResponse()
+    {
+        return new GetDomainSettingsResponseCollection();
+    }
+
+    /// <summary>
+    /// Writes the attributes to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteAttributeValue(
+            "xmlns",
+            EwsUtilities.AutodiscoverSoapNamespacePrefix,
+            EwsUtilities.AutodiscoverSoapNamespace);
+    }
+
+    /// <summary>
+    /// Writes request to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Autodiscover, XmlElementNames.Request);
+
+        writer.WriteStartElement(XmlNamespace.Autodiscover, XmlElementNames.Domains);
+
+        foreach (string domain in this.Domains)
         {
-            return XmlElementNames.GetDomainSettingsRequestMessage;
-        }
-
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>Response XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.GetDomainSettingsResponseMessage;
-        }
-
-        /// <summary>
-        /// Gets the WS-Addressing action name.
-        /// </summary>
-        /// <returns>WS-Addressing action name.</returns>
-        internal override string GetWsAddressingActionName()
-        {
-            return GetDomainSettingsActionUri;
-        }
-
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <returns>AutodiscoverResponse</returns>
-        internal override AutodiscoverResponse CreateServiceResponse()
-        {
-            return new GetDomainSettingsResponseCollection();
-        }
-
-        /// <summary>
-        /// Writes the attributes to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteAttributeValue(
-                "xmlns",
-                EwsUtilities.AutodiscoverSoapNamespacePrefix,
-                EwsUtilities.AutodiscoverSoapNamespace);
-        }
-
-        /// <summary>
-        /// Writes request to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteStartElement(XmlNamespace.Autodiscover, XmlElementNames.Request);
-
-            writer.WriteStartElement(XmlNamespace.Autodiscover, XmlElementNames.Domains);
-
-            foreach (string domain in this.Domains)
-            {
-                if (!string.IsNullOrEmpty(domain))
-                {
-                    writer.WriteElementValue(
-                        XmlNamespace.Autodiscover,
-                        XmlElementNames.Domain,
-                        domain);
-                }
-            }
-            writer.WriteEndElement(); // Domains
-
-            writer.WriteStartElement(XmlNamespace.Autodiscover, XmlElementNames.RequestedSettings);
-            foreach (DomainSettingName setting in settings)
+            if (!string.IsNullOrEmpty(domain))
             {
                 writer.WriteElementValue(
                     XmlNamespace.Autodiscover,
-                    XmlElementNames.Setting,
-                    setting);
+                    XmlElementNames.Domain,
+                    domain);
             }
-
-            writer.WriteEndElement(); // RequestedSettings
-
-            if (this.requestedVersion.HasValue)
-            {
-                writer.WriteElementValue(XmlNamespace.Autodiscover, XmlElementNames.RequestedVersion, this.requestedVersion.Value);
-            }
-
-            writer.WriteEndElement(); // Request
         }
+        writer.WriteEndElement(); // Domains
 
-        /// <summary>
-        /// Gets or sets the domains.
-        /// </summary>
-        internal List<string> Domains
+        writer.WriteStartElement(XmlNamespace.Autodiscover, XmlElementNames.RequestedSettings);
+        foreach (DomainSettingName setting in settings)
         {
-            get { return domains; }
-            set { domains = value; }
+            writer.WriteElementValue(
+                XmlNamespace.Autodiscover,
+                XmlElementNames.Setting,
+                setting);
         }
 
-        /// <summary>
-        /// Gets or sets the settings.
-        /// </summary>
-        internal List<DomainSettingName> Settings
+        writer.WriteEndElement(); // RequestedSettings
+
+        if (this.requestedVersion.HasValue)
         {
-            get { return settings; }
-            set { settings = value; }
+            writer.WriteElementValue(XmlNamespace.Autodiscover, XmlElementNames.RequestedVersion, this.requestedVersion.Value);
         }
 
-        /// <summary>
-        /// Gets or sets the RequestedVersion.
-        /// </summary>
-        internal ExchangeVersion? RequestedVersion
-        {
-            get { return requestedVersion; }
-            set { requestedVersion = value; }
-        }
+        writer.WriteEndElement(); // Request
+    }
+
+    /// <summary>
+    /// Gets or sets the domains.
+    /// </summary>
+    internal List<string> Domains
+    {
+        get { return domains; }
+        set { domains = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the settings.
+    /// </summary>
+    internal List<DomainSettingName> Settings
+    {
+        get { return settings; }
+        set { settings = value; }
+    }
+
+    /// <summary>
+    /// Gets or sets the RequestedVersion.
+    /// </summary>
+    internal ExchangeVersion? RequestedVersion
+    {
+        get { return requestedVersion; }
+        set { requestedVersion = value; }
     }
 }

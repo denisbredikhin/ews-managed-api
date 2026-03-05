@@ -23,144 +23,143 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Xml;
+using Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents an Outlook configuration settings account.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
+internal sealed class OutlookAccount
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
+    #region Private constants
+    private const string Settings = "settings";
+    private const string RedirectAddr = "redirectAddr";
+    private const string RedirectUrl = "redirectUrl";
+    #endregion
+
+    #region Private fields
+    private Dictionary<OutlookProtocolType, OutlookProtocol> protocols;
+    private AlternateMailboxCollection alternateMailboxes;
+    #endregion
 
     /// <summary>
-    /// Represents an Outlook configuration settings account.
+    /// Initializes a new instance of the <see cref="OutlookAccount"/> class.
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    internal sealed class OutlookAccount
+    internal OutlookAccount()
     {
-        #region Private constants
-        private const string Settings = "settings";
-        private const string RedirectAddr = "redirectAddr";
-        private const string RedirectUrl = "redirectUrl";
-        #endregion
+        this.protocols = new Dictionary<OutlookProtocolType, OutlookProtocol>();
+        this.alternateMailboxes = new AlternateMailboxCollection();
+    }
 
-        #region Private fields
-        private Dictionary<OutlookProtocolType, OutlookProtocol> protocols;
-        private AlternateMailboxCollection alternateMailboxes;
-        #endregion
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OutlookAccount"/> class.
-        /// </summary>
-        internal OutlookAccount()
+    /// <summary>
+    /// Load from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal void LoadFromXml(EwsXmlReader reader)
+    {
+        do
         {
-            this.protocols = new Dictionary<OutlookProtocolType, OutlookProtocol>();
-            this.alternateMailboxes = new AlternateMailboxCollection();
-        }
+            reader.Read();
 
-        /// <summary>
-        /// Load from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal void LoadFromXml(EwsXmlReader reader)
-        {
-            do
+            if (reader.NodeType == XmlNodeType.Element)
             {
-                reader.Read();
-
-                if (reader.NodeType == XmlNodeType.Element)
+                switch (reader.LocalName)
                 {
-                    switch (reader.LocalName)
-                    {
-                        case XmlElementNames.AccountType:
-                            this.AccountType = reader.ReadElementValue();
-                            break;
-                        case XmlElementNames.Action:
-                            string xmlResponseType = reader.ReadElementValue();
+                    case XmlElementNames.AccountType:
+                        this.AccountType = reader.ReadElementValue();
+                        break;
+                    case XmlElementNames.Action:
+                        string xmlResponseType = reader.ReadElementValue();
 
-                            switch (xmlResponseType)
-                            {
-                                case OutlookAccount.Settings:
-                                    this.ResponseType = AutodiscoverResponseType.Success;
-                                    break;
-                                case OutlookAccount.RedirectUrl:
-                                    this.ResponseType = AutodiscoverResponseType.RedirectUrl;
-                                    break;
-                                case OutlookAccount.RedirectAddr:
-                                    this.ResponseType = AutodiscoverResponseType.RedirectAddress;
-                                    break;
-                                default:
-                                    this.ResponseType = AutodiscoverResponseType.Error;
-                                    break;
-                            }
+                        switch (xmlResponseType)
+                        {
+                            case OutlookAccount.Settings:
+                                this.ResponseType = AutodiscoverResponseType.Success;
+                                break;
+                            case OutlookAccount.RedirectUrl:
+                                this.ResponseType = AutodiscoverResponseType.RedirectUrl;
+                                break;
+                            case OutlookAccount.RedirectAddr:
+                                this.ResponseType = AutodiscoverResponseType.RedirectAddress;
+                                break;
+                            default:
+                                this.ResponseType = AutodiscoverResponseType.Error;
+                                break;
+                        }
 
-                            break;
-                        case XmlElementNames.Protocol:
-                            OutlookProtocol protocol = new OutlookProtocol();
-                            protocol.LoadFromXml(reader);
-                            if (this.protocols.ContainsKey(protocol.ProtocolType))
-                            {
-                                // There should be strictly one node per protocol type in the autodiscover response.
-                                throw new ServiceLocalException(Strings.InvalidAutodiscoverServiceResponse);
-                            }
-                            this.protocols.Add(protocol.ProtocolType, protocol);
-                            break;
-                        case XmlElementNames.RedirectAddr:
-                        case XmlElementNames.RedirectUrl:
-                            this.RedirectTarget = reader.ReadElementValue();
-                            break;
-                        case XmlElementNames.AlternateMailboxes:
-                            AlternateMailbox alternateMailbox = AlternateMailbox.LoadFromXml(reader);
-                            this.alternateMailboxes.Entries.Add(alternateMailbox);
-                            break;
+                        break;
+                    case XmlElementNames.Protocol:
+                        OutlookProtocol protocol = new OutlookProtocol();
+                        protocol.LoadFromXml(reader);
+                        if (this.protocols.ContainsKey(protocol.ProtocolType))
+                        {
+                            // There should be strictly one node per protocol type in the autodiscover response.
+                            throw new ServiceLocalException(Strings.InvalidAutodiscoverServiceResponse);
+                        }
+                        this.protocols.Add(protocol.ProtocolType, protocol);
+                        break;
+                    case XmlElementNames.RedirectAddr:
+                    case XmlElementNames.RedirectUrl:
+                        this.RedirectTarget = reader.ReadElementValue();
+                        break;
+                    case XmlElementNames.AlternateMailboxes:
+                        AlternateMailbox alternateMailbox = AlternateMailbox.LoadFromXml(reader);
+                        this.alternateMailboxes.Entries.Add(alternateMailbox);
+                        break;
 
-                        default:
-                            reader.SkipCurrentElement();
-                            break;
-                    }
+                    default:
+                        reader.SkipCurrentElement();
+                        break;
                 }
             }
-            while (!reader.IsEndElement(XmlNamespace.NotSpecified, XmlElementNames.Account));
         }
+        while (!reader.IsEndElement(XmlNamespace.NotSpecified, XmlElementNames.Account));
+    }
 
-        /// <summary>
-        /// Convert OutlookAccount to GetUserSettings response.
-        /// </summary>
-        /// <param name="requestedSettings">The requested settings.</param>
-        /// <param name="response">GetUserSettings response.</param>
-        internal void ConvertToUserSettings(List<UserSettingName> requestedSettings, GetUserSettingsResponse response)
+    /// <summary>
+    /// Convert OutlookAccount to GetUserSettings response.
+    /// </summary>
+    /// <param name="requestedSettings">The requested settings.</param>
+    /// <param name="response">GetUserSettings response.</param>
+    internal void ConvertToUserSettings(List<UserSettingName> requestedSettings, GetUserSettingsResponse response)
+    {
+        foreach (OutlookProtocol protocol in this.protocols.Values)
         {
-            foreach (OutlookProtocol protocol in this.protocols.Values)
-            {
-                protocol.ConvertToUserSettings(requestedSettings, response);
-            }
-
-            if (requestedSettings.Contains(UserSettingName.AlternateMailboxes))
-            {
-                response.Settings[UserSettingName.AlternateMailboxes] = this.alternateMailboxes;
-            }
+            protocol.ConvertToUserSettings(requestedSettings, response);
         }
 
-        /// <summary>
-        /// Gets or sets type of the account.
-        /// </summary>
-        internal string AccountType
+        if (requestedSettings.Contains(UserSettingName.AlternateMailboxes))
         {
-            get; set;
+            response.Settings[UserSettingName.AlternateMailboxes] = this.alternateMailboxes;
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the type of the response.
-        /// </summary>
-        internal AutodiscoverResponseType ResponseType
-        {
-            get; set;
-        }
+    /// <summary>
+    /// Gets or sets type of the account.
+    /// </summary>
+    internal string AccountType
+    {
+        get; set;
+    }
 
-        /// <summary>
-        /// Gets or sets the redirect target.
-        /// </summary>
-        internal string RedirectTarget
-        {
-            get; set;
-        }
+    /// <summary>
+    /// Gets or sets the type of the response.
+    /// </summary>
+    internal AutodiscoverResponseType ResponseType
+    {
+        get; set;
+    }
+
+    /// <summary>
+    /// Gets or sets the redirect target.
+    /// </summary>
+    internal string RedirectTarget
+    {
+        get; set;
     }
 }

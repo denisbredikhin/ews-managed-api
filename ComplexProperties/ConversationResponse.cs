@@ -23,71 +23,70 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// 
+/// </summary>
+public sealed class ConversationResponse : ComplexProperty
 {
-    using System;
-    using System.Collections.Generic;
+    /// <summary>
+    /// Property set used to fetch items in the conversation.
+    /// </summary>
+    private PropertySet propertySet;
 
     /// <summary>
-    /// 
+    /// Initializes a new instance of the <see cref="ConversationResponse"/> class.
     /// </summary>
-    public sealed class ConversationResponse : ComplexProperty
+    /// <param name="propertySet">The property set.</param>
+    internal ConversationResponse(PropertySet propertySet)
     {
-        /// <summary>
-        /// Property set used to fetch items in the conversation.
-        /// </summary>
-        private PropertySet propertySet;
+        this.propertySet = propertySet;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationResponse"/> class.
-        /// </summary>
-        /// <param name="propertySet">The property set.</param>
-        internal ConversationResponse(PropertySet propertySet)
+    /// <summary>
+    /// Gets the conversation id.
+    /// </summary>
+    public ConversationId ConversationId { get; internal set; }
+
+    /// <summary>
+    /// Gets the sync state.
+    /// </summary>
+    public string SyncState { get; internal set; }
+
+    /// <summary>
+    /// Gets the conversation nodes.
+    /// </summary>
+    public ConversationNodeCollection ConversationNodes { get; internal set; }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
-            this.propertySet = propertySet;
-        }
+            case XmlElementNames.ConversationId:
+                this.ConversationId = new ConversationId();
+                this.ConversationId.LoadFromXml(reader, XmlElementNames.ConversationId);
+                return true;
 
-        /// <summary>
-        /// Gets the conversation id.
-        /// </summary>
-        public ConversationId ConversationId { get; internal set; }
+            case XmlElementNames.SyncState:
+                this.SyncState = reader.ReadElementValue();
+                return true;
 
-        /// <summary>
-        /// Gets the sync state.
-        /// </summary>
-        public string SyncState { get; internal set; }
+            case XmlElementNames.ConversationNodes:
+                this.ConversationNodes = new ConversationNodeCollection(this.propertySet);
+                this.ConversationNodes.LoadFromXml(reader, XmlElementNames.ConversationNodes);
+                return true;
 
-        /// <summary>
-        /// Gets the conversation nodes.
-        /// </summary>
-        public ConversationNodeCollection ConversationNodes { get; internal set; }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.ConversationId:
-                    this.ConversationId = new ConversationId();
-                    this.ConversationId.LoadFromXml(reader, XmlElementNames.ConversationId);
-                    return true;
-
-                case XmlElementNames.SyncState:
-                    this.SyncState = reader.ReadElementValue();
-                    return true;
-
-                case XmlElementNames.ConversationNodes:
-                    this.ConversationNodes = new ConversationNodeCollection(this.propertySet);
-                    this.ConversationNodes.LoadFromXml(reader, XmlElementNames.ConversationNodes);
-                    return true;
-
-                default:
-                    return false;
-            }
+            default:
+                return false;
         }
     }
 }

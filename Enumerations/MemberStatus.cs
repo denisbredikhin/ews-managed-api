@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the status of group members.
+/// </summary>
+public enum MemberStatus
 {
     /// <summary>
-    /// Defines the status of group members.
+    /// The member is unrecognized.
     /// </summary>
-    public enum MemberStatus
-    {
-        /// <summary>
-        /// The member is unrecognized.
-        /// </summary>
-        Unrecognized,
+    Unrecognized,
 
-        /// <summary>
-        /// The member is normal.
-        /// </summary>
-        Normal,
+    /// <summary>
+    /// The member is normal.
+    /// </summary>
+    Normal,
 
-        /// <summary>
-        /// The member is demoted.
-        /// </summary>
-        Demoted
-    }
+    /// <summary>
+    /// The member is demoted.
+    /// </summary>
+    Demoted
 }

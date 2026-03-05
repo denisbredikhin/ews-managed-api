@@ -23,138 +23,137 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <content>
+/// Contains nested type Recurrence.MonthlyPattern.
+/// </content>
+public abstract partial class Recurrence
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
-    /// <content>
-    /// Contains nested type Recurrence.MonthlyPattern.
-    /// </content>
-    public abstract partial class Recurrence
+    /// <summary>
+    /// Represents a recurrence pattern where each occurrence happens on a specific day a specific number of
+    /// months after the previous one.
+    /// </summary>
+    public sealed class MonthlyPattern : IntervalPattern
     {
+        private int? dayOfMonth;
+
         /// <summary>
-        /// Represents a recurrence pattern where each occurrence happens on a specific day a specific number of
-        /// months after the previous one.
+        /// Initializes a new instance of the <see cref="MonthlyPattern"/> class.
         /// </summary>
-        public sealed class MonthlyPattern : IntervalPattern
+        public MonthlyPattern()
+            : base()
         {
-            private int? dayOfMonth;
+        }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MonthlyPattern"/> class.
-            /// </summary>
-            public MonthlyPattern()
-                : base()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MonthlyPattern"/> class.
+        /// </summary>
+        /// <param name="startDate">The date and time when the recurrence starts.</param>
+        /// <param name="interval">The number of months between each occurrence.</param>
+        /// <param name="dayOfMonth">The day of the month when each occurrence happens.</param>
+        public MonthlyPattern(
+            DateTime startDate,
+            int interval,
+            int dayOfMonth)
+            : base(startDate, interval)
+        {
+            this.DayOfMonth = dayOfMonth;
+        }
+
+        /// <summary>
+        /// Gets the name of the XML element.
+        /// </summary>
+        /// <value>The name of the XML element.</value>
+        internal override string XmlElementName
+        {
+            get { return XmlElementNames.AbsoluteMonthlyRecurrence; }
+        }
+
+        /// <summary>
+        /// Write properties to XML.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        internal override void InternalWritePropertiesToXml(EwsServiceXmlWriter writer)
+        {
+            base.InternalWritePropertiesToXml(writer);
+
+            writer.WriteElementValue(
+                XmlNamespace.Types,
+                XmlElementNames.DayOfMonth,
+                this.DayOfMonth);
+        }
+
+        /// <summary>
+        /// Tries to read element from XML.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>True if appropriate element was read.</returns>
+        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+        {
+            if (base.TryReadElementFromXml(reader))
             {
+                return true;
             }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="MonthlyPattern"/> class.
-            /// </summary>
-            /// <param name="startDate">The date and time when the recurrence starts.</param>
-            /// <param name="interval">The number of months between each occurrence.</param>
-            /// <param name="dayOfMonth">The day of the month when each occurrence happens.</param>
-            public MonthlyPattern(
-                DateTime startDate,
-                int interval,
-                int dayOfMonth)
-                : base(startDate, interval)
+            else
             {
-                this.DayOfMonth = dayOfMonth;
-            }
-
-            /// <summary>
-            /// Gets the name of the XML element.
-            /// </summary>
-            /// <value>The name of the XML element.</value>
-            internal override string XmlElementName
-            {
-                get { return XmlElementNames.AbsoluteMonthlyRecurrence; }
-            }
-
-            /// <summary>
-            /// Write properties to XML.
-            /// </summary>
-            /// <param name="writer">The writer.</param>
-            internal override void InternalWritePropertiesToXml(EwsServiceXmlWriter writer)
-            {
-                base.InternalWritePropertiesToXml(writer);
-
-                writer.WriteElementValue(
-                    XmlNamespace.Types,
-                    XmlElementNames.DayOfMonth,
-                    this.DayOfMonth);
-            }
-
-            /// <summary>
-            /// Tries to read element from XML.
-            /// </summary>
-            /// <param name="reader">The reader.</param>
-            /// <returns>True if appropriate element was read.</returns>
-            internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-            {
-                if (base.TryReadElementFromXml(reader))
+                switch (reader.LocalName)
                 {
-                    return true;
-                }
-                else
-                {
-                    switch (reader.LocalName)
-                    {
-                        case XmlElementNames.DayOfMonth:
-                            this.dayOfMonth = reader.ReadElementValue<int>();
-                            return true;
-                        default:
-                            return false;
-                    }
+                    case XmlElementNames.DayOfMonth:
+                        this.dayOfMonth = reader.ReadElementValue<int>();
+                        return true;
+                    default:
+                        return false;
                 }
             }
+        }
 
-            /// <summary>
-            /// Validates this instance.
-            /// </summary>
-            internal override void InternalValidate()
+        /// <summary>
+        /// Validates this instance.
+        /// </summary>
+        internal override void InternalValidate()
+        {
+            base.InternalValidate();
+
+            if (!this.dayOfMonth.HasValue)
             {
-                base.InternalValidate();
+                throw new ServiceValidationException(Strings.DayOfMonthMustBeBetween1And31);
+            }
+        }
 
-                if (!this.dayOfMonth.HasValue)
-                {
-                    throw new ServiceValidationException(Strings.DayOfMonthMustBeBetween1And31);
-                }
+        /// <summary>
+        /// Gets or sets the day of the month when each occurrence happens. DayOfMonth must be between 1 and 31.
+        /// </summary>
+        public int DayOfMonth
+        {
+            get
+            {
+                return this.GetFieldValueOrThrowIfNull<int>(this.dayOfMonth, "DayOfMonth");
             }
 
-            /// <summary>
-            /// Gets or sets the day of the month when each occurrence happens. DayOfMonth must be between 1 and 31.
-            /// </summary>
-            public int DayOfMonth
+            set
             {
-                get
+                if (value < 1 || value > 31)
                 {
-                    return this.GetFieldValueOrThrowIfNull<int>(this.dayOfMonth, "DayOfMonth");
+                    throw new ArgumentOutOfRangeException("DayOfMonth", Strings.DayOfMonthMustBeBetween1And31);
                 }
 
-                set
-                {
-                    if (value < 1 || value > 31)
-                    {
-                        throw new ArgumentOutOfRangeException("DayOfMonth", Strings.DayOfMonthMustBeBetween1And31);
-                    }
-
-                    this.SetFieldValue<int?>(ref this.dayOfMonth, value);
-                }
+                this.SetFieldValue<int?>(ref this.dayOfMonth, value);
             }
+        }
 
-            /// <summary>
-            /// Checks if two recurrence objects are identical. 
-            /// </summary>
-            /// <param name="otherRecurrence">The recurrence to compare this one to.</param>
-            /// <returns>true if the two recurrences are identical, false otherwise.</returns>
-            public override bool IsSame(Recurrence otherRecurrence)
-            {
-                return base.IsSame(otherRecurrence) && this.dayOfMonth == ((MonthlyPattern)otherRecurrence).dayOfMonth;
-            }
+        /// <summary>
+        /// Checks if two recurrence objects are identical. 
+        /// </summary>
+        /// <param name="otherRecurrence">The recurrence to compare this one to.</param>
+        /// <returns>true if the two recurrences are identical, false otherwise.</returns>
+        public override bool IsSame(Recurrence otherRecurrence)
+        {
+            return base.IsSame(otherRecurrence) && this.dayOfMonth == ((MonthlyPattern)otherRecurrence).dayOfMonth;
         }
     }
 }

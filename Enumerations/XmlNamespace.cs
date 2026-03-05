@@ -23,70 +23,69 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the namespaces as used by the EwsXmlReader, EwsServiceXmlReader, and EwsServiceXmlWriter classes.
+/// </summary>
+internal enum XmlNamespace
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The namespace is not specified.
+    /// </summary>
+    NotSpecified,
 
     /// <summary>
-    /// Defines the namespaces as used by the EwsXmlReader, EwsServiceXmlReader, and EwsServiceXmlWriter classes.
+    /// The EWS Messages namespace.
     /// </summary>
-    internal enum XmlNamespace
-    {
-        /// <summary>
-        /// The namespace is not specified.
-        /// </summary>
-        NotSpecified,
+    Messages,
 
-        /// <summary>
-        /// The EWS Messages namespace.
-        /// </summary>
-        Messages,
+    /// <summary>
+    /// The EWS Types namespace.
+    /// </summary>
+    Types,
 
-        /// <summary>
-        /// The EWS Types namespace.
-        /// </summary>
-        Types,
+    /// <summary>
+    /// The EWS Errors namespace.
+    /// </summary>
+    Errors,
 
-        /// <summary>
-        /// The EWS Errors namespace.
-        /// </summary>
-        Errors,
+    /// <summary>
+    /// The SOAP 1.1 namespace.
+    /// </summary>
+    Soap,
 
-        /// <summary>
-        /// The SOAP 1.1 namespace.
-        /// </summary>
-        Soap,
+    /// <summary>
+    /// The SOAP 1.2 namespace.
+    /// </summary>
+    Soap12,
 
-        /// <summary>
-        /// The SOAP 1.2 namespace.
-        /// </summary>
-        Soap12,
+    /// <summary>
+    /// XmlSchema-Instance namespace.
+    /// </summary>
+    XmlSchemaInstance,
 
-        /// <summary>
-        /// XmlSchema-Instance namespace.
-        /// </summary>
-        XmlSchemaInstance,
+    /// <summary>
+    /// The Passport SOAP services SOAP fault namespace.
+    /// </summary>
+    PassportSoapFault,
 
-        /// <summary>
-        /// The Passport SOAP services SOAP fault namespace.
-        /// </summary>
-        PassportSoapFault,
+    /// <summary>
+    /// The WS-Trust February 2005 namespace.
+    /// </summary>
+    WSTrustFebruary2005,
 
-        /// <summary>
-        /// The WS-Trust February 2005 namespace.
-        /// </summary>
-        WSTrustFebruary2005,
+    /// <summary>
+    /// The WS Addressing 1.0 namespace.
+    /// </summary>
+    WSAddressing,
 
-        /// <summary>
-        /// The WS Addressing 1.0 namespace.
-        /// </summary>
-        WSAddressing,
-
-        /// <summary>
-        /// The Autodiscover SOAP service namespace.
-        /// </summary>
-        Autodiscover,
-    }
+    /// <summary>
+    /// The Autodiscover SOAP service namespace.
+    /// </summary>
+    Autodiscover,
 }

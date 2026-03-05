@@ -23,41 +23,41 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents an error that occurs when the XML for a response cannot be deserialized.
+/// </summary>
+public sealed class ServiceXmlDeserializationException : ServiceLocalException
+{
     /// <summary>
-    /// Represents an error that occurs when the XML for a response cannot be deserialized.
+    /// ServiceXmlDeserializationException Constructor.
     /// </summary>
-    public sealed class ServiceXmlDeserializationException : ServiceLocalException
+    public ServiceXmlDeserializationException()
+        : base()
     {
-        /// <summary>
-        /// ServiceXmlDeserializationException Constructor.
-        /// </summary>
-        public ServiceXmlDeserializationException()
-            : base()
-        {
-        }
+    }
 
-        /// <summary>
-        /// ServiceXmlDeserializationException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        public ServiceXmlDeserializationException(string message)
-            : base(message)
-        {
-        }
+    /// <summary>
+    /// ServiceXmlDeserializationException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    public ServiceXmlDeserializationException(string message)
+        : base(message)
+    {
+    }
 
-        /// <summary>
-        /// ServiceXmlDeserializationException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public ServiceXmlDeserializationException(string message, Exception innerException)
-            : base(message, innerException)
-        {
+    /// <summary>
+    /// ServiceXmlDeserializationException Constructor.
+    /// </summary>
+    /// <param name="message">Error message text.</param>
+    /// <param name="innerException">Inner exception.</param>
+    public ServiceXmlDeserializationException(string message, Exception innerException)
+        : base(message, innerException)
+    {
 		}
 
 		/// <summary>
@@ -70,4 +70,3 @@ namespace Microsoft.Exchange.WebServices.Data
 	    {
 		}
 	}
-}

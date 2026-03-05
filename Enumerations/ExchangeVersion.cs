@@ -23,58 +23,57 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Defines the each available Exchange release version
+/// </summary>
+public enum ExchangeVersion
 {
-    using System;
+    /// <summary>
+    /// Microsoft Exchange 2007, Service Pack 1
+    /// </summary>
+    Exchange2007_SP1 = 0,
 
     /// <summary>
-    /// Defines the each available Exchange release version
+    /// Microsoft Exchange 2010
     /// </summary>
-    public enum ExchangeVersion
-    {
-        /// <summary>
-        /// Microsoft Exchange 2007, Service Pack 1
-        /// </summary>
-        Exchange2007_SP1 = 0,
+    Exchange2010 = 1,
 
-        /// <summary>
-        /// Microsoft Exchange 2010
-        /// </summary>
-        Exchange2010 = 1,
+    /// <summary>
+    /// Microsoft Exchange 2010, Service Pack 1
+    /// </summary>
+    Exchange2010_SP1 = 2,
 
-        /// <summary>
-        /// Microsoft Exchange 2010, Service Pack 1
-        /// </summary>
-        Exchange2010_SP1 = 2,
+    /// <summary>
+    /// Microsoft Exchange 2010, Service Pack 2
+    /// </summary>
+    Exchange2010_SP2 = 3,
 
-        /// <summary>
-        /// Microsoft Exchange 2010, Service Pack 2
-        /// </summary>
-        Exchange2010_SP2 = 3,
+    /// <summary>
+    /// Microsoft Exchange 2013
+    /// </summary>
+    Exchange2013 = 4,
 
-        /// <summary>
-        /// Microsoft Exchange 2013
-        /// </summary>
-        Exchange2013 = 4,
+    /// <summary>
+    /// Microsoft Exchange 2013 SP1
+    /// </summary>
+    Exchange2013_SP1 = 5,
 
-        /// <summary>
-        /// Microsoft Exchange 2013 SP1
-        /// </summary>
-        Exchange2013_SP1 = 5,
+    /// <summary>
+    /// Microsoft Exchange 2015 (aka Exchange 2016)
+    /// </summary>
+    Exchange2015 = 6,
 
-        /// <summary>
-        /// Microsoft Exchange 2015 (aka Exchange 2016)
-        /// </summary>
-        Exchange2015 = 6,
+    /// <summary>
+    /// Microsoft Exchange 2016
+    /// </summary>
+    Exchange2016 = 7,
 
-        /// <summary>
-        /// Microsoft Exchange 2016
-        /// </summary>
-        Exchange2016 = 7,
-
-        /// <summary>
-        /// Functionality starting 10/05/2015
-        /// </summary>
-        V2015_10_05 = 8,
-    }
+    /// <summary>
+    /// Functionality starting 10/05/2015
+    /// </summary>
+    V2015_10_05 = 8,
 }

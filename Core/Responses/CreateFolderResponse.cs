@@ -23,74 +23,73 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the response to an individual folder creation operation.
+/// </summary>
+internal sealed class CreateFolderResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private Folder folder;
 
     /// <summary>
-    /// Represents the response to an individual folder creation operation.
+    /// Initializes a new instance of the <see cref="CreateFolderResponse"/> class.
     /// </summary>
-    internal sealed class CreateFolderResponse : ServiceResponse
+    /// <param name="folder">The folder.</param>
+    internal CreateFolderResponse(Folder folder)
+        : base()
     {
-        private Folder folder;
+        this.folder = folder;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CreateFolderResponse"/> class.
-        /// </summary>
-        /// <param name="folder">The folder.</param>
-        internal CreateFolderResponse(Folder folder)
-            : base()
+    /// <summary>
+    /// Gets the object instance.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <returns>Folder.</returns>
+    private Folder GetObjectInstance(ExchangeService service, string xmlElementName)
+    {
+        if (this.folder != null)
         {
-            this.folder = folder;
+            return this.folder;
         }
-
-        /// <summary>
-        /// Gets the object instance.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <returns>Folder.</returns>
-        private Folder GetObjectInstance(ExchangeService service, string xmlElementName)
+        else
         {
-            if (this.folder != null)
-            {
-                return this.folder;
-            }
-            else
-            {
-                return EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(service, xmlElementName);
-            }
+            return EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(service, xmlElementName);
         }
+    }
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
+
+        List<Folder> folders = reader.ReadServiceObjectsCollectionFromXml<Folder>(
+            XmlElementNames.Folders,
+            this.GetObjectInstance,
+            false,  /* clearPropertyBag */
+            null,   /* requestedPropertySet */
+            false); /* summaryPropertiesOnly */
+
+        this.folder = folders[0];
+    }
+
+    /// <summary>
+    /// Clears the change log of the created folder if the creation succeeded.
+    /// </summary>
+    internal override void Loaded()
+    {
+        if (this.Result == ServiceResult.Success)
         {
-            base.ReadElementsFromXml(reader);
-
-            List<Folder> folders = reader.ReadServiceObjectsCollectionFromXml<Folder>(
-                XmlElementNames.Folders,
-                this.GetObjectInstance,
-                false,  /* clearPropertyBag */
-                null,   /* requestedPropertySet */
-                false); /* summaryPropertiesOnly */
-
-            this.folder = folders[0];
-        }
-
-        /// <summary>
-        /// Clears the change log of the created folder if the creation succeeded.
-        /// </summary>
-        internal override void Loaded()
-        {
-            if (this.Result == ServiceResult.Success)
-            {
-                this.folder.ClearChangeLog();
-            }
+            this.folder.ClearChangeLog();
         }
     }
 }

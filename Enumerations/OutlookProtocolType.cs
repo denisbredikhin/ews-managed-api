@@ -23,31 +23,30 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+/// <summary>
+/// Defines supported Outlook protocls.
+/// </summary>
+internal enum OutlookProtocolType
 {
     /// <summary>
-    /// Defines supported Outlook protocls.
+    /// The Remote Procedure Call (RPC) protocol.
     /// </summary>
-    internal enum OutlookProtocolType
-    {
-        /// <summary>
-        /// The Remote Procedure Call (RPC) protocol.
-        /// </summary>
-        Rpc,
+    Rpc,
 
-        /// <summary>
-        /// The Remote Procedure Call (RPC) over HTTP protocol.
-        /// </summary>
-        RpcOverHttp,
+    /// <summary>
+    /// The Remote Procedure Call (RPC) over HTTP protocol.
+    /// </summary>
+    RpcOverHttp,
 
-        /// <summary>
-        /// The Web protocol.
-        /// </summary>
-        Web,
+    /// <summary>
+    /// The Web protocol.
+    /// </summary>
+    Web,
 
-        /// <summary>
-        /// The protocol is unknown.
-        /// </summary>
-        Unknown,
-    }
+    /// <summary>
+    /// The protocol is unknown.
+    /// </summary>
+    Unknown,
 }

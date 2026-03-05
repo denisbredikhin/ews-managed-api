@@ -23,26 +23,25 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the flag status of a Conversation.
+/// </summary>
+public enum ConversationFlagStatus
 {
     /// <summary>
-    /// Defines the flag status of a Conversation.
+    /// Not Flagged.
     /// </summary>
-    public enum ConversationFlagStatus
-    {
-        /// <summary>
-        /// Not Flagged.
-        /// </summary>
-        NotFlagged,
+    NotFlagged,
 
-        /// <summary>
-        /// Flagged.
-        /// </summary>
-        Flagged,
+    /// <summary>
+    /// Flagged.
+    /// </summary>
+    Flagged,
 
-        /// <summary>
-        /// Complete.
-        /// </summary>
-        Complete
-    }
+    /// <summary>
+    /// Complete.
+    /// </summary>
+    Complete
 }

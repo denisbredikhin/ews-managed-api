@@ -34,10 +34,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="C:\Users\denis\source\repos\ews-managed-api\.editorconfig" />
     <None Include="license.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\denis\source\repos\ews-managed-api\.editorconfig" />
   </ItemGroup>
 
 </Project>

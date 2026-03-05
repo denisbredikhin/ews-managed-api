@@ -23,35 +23,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// TeamMailbox lifecycle state
+/// </summary>
+public enum TeamMailboxLifecycleState
 {
     /// <summary>
-    /// TeamMailbox lifecycle state
+    /// Active
     /// </summary>
-    public enum TeamMailboxLifecycleState
-    {
-        /// <summary>
-        /// Active
-        /// </summary>
-        [EwsEnum("Active")]
-        Active,
+    [EwsEnum("Active")]
+    Active,
 
-        /// <summary>
-        /// Closed
-        /// </summary>
-        [EwsEnum("Closed")]
-        Closed,
+    /// <summary>
+    /// Closed
+    /// </summary>
+    [EwsEnum("Closed")]
+    Closed,
 
-        /// <summary>
-        /// Unlinked
-        /// </summary>
-        [EwsEnum("Unlinked")]
-        Unlinked,
+    /// <summary>
+    /// Unlinked
+    /// </summary>
+    [EwsEnum("Unlinked")]
+    Unlinked,
 
-        /// <summary>
-        /// PendingDelete
-        /// </summary>
-        [EwsEnum("PendingDelete")]
-        PendingDelete,
-    }
+    /// <summary>
+    /// PendingDelete
+    /// </summary>
+    [EwsEnum("PendingDelete")]
+    PendingDelete,
 }

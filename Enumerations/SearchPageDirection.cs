@@ -23,25 +23,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the page direction for mailbox search.
+/// </summary>
+public enum SearchPageDirection
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Navigate to next page.
+    /// </summary>
+    Next,
 
     /// <summary>
-    /// Defines the page direction for mailbox search.
+    /// Navigate to previous page.
     /// </summary>
-    public enum SearchPageDirection
-    {
-        /// <summary>
-        /// Navigate to next page.
-        /// </summary>
-        Next,
-
-        /// <summary>
-        /// Navigate to previous page.
-        /// </summary>
-        Previous
-    }
+    Previous
 }

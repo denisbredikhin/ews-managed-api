@@ -23,59 +23,59 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
-{
-    using System;
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents a remote service exception that can have multiple service responses.
+/// </summary>
+/// <typeparam name="TResponse">The type of the response.</typeparam>
+public abstract class BatchServiceResponseException<TResponse> : ServiceRemoteException
+    where TResponse : ServiceResponse
+{
     /// <summary>
-    /// Represents a remote service exception that can have multiple service responses.
+    /// The list of responses returned by the web method.
     /// </summary>
-    /// <typeparam name="TResponse">The type of the response.</typeparam>
-    public abstract class BatchServiceResponseException<TResponse> : ServiceRemoteException
-        where TResponse : ServiceResponse
+    private readonly ServiceResponseCollection<TResponse> responses;
+
+    /// <summary>
+    /// Initializes a new instance of MultiServiceResponseException.
+    /// </summary>
+    /// <param name="serviceResponses">The list of responses to be associated with this exception.</param>
+    /// <param name="message">The message that describes the error.</param>
+    internal BatchServiceResponseException(
+        ServiceResponseCollection<TResponse> serviceResponses,
+        string message)
+        : base(message)
     {
-        /// <summary>
-        /// The list of responses returned by the web method.
-        /// </summary>
-        private readonly ServiceResponseCollection<TResponse> responses;
+        EwsUtilities.Assert(
+            serviceResponses != null,
+            "MultiServiceResponseException.ctor",
+            "serviceResponses is null");
 
-        /// <summary>
-        /// Initializes a new instance of MultiServiceResponseException.
-        /// </summary>
-        /// <param name="serviceResponses">The list of responses to be associated with this exception.</param>
-        /// <param name="message">The message that describes the error.</param>
-        internal BatchServiceResponseException(
-            ServiceResponseCollection<TResponse> serviceResponses,
-            string message)
-            : base(message)
-        {
-            EwsUtilities.Assert(
-                serviceResponses != null,
-                "MultiServiceResponseException.ctor",
-                "serviceResponses is null");
+        this.responses = serviceResponses;
+    }
 
-            this.responses = serviceResponses;
-        }
+    /// <summary>
+    /// Initializes a new instance of MultiServiceResponseException.
+    /// </summary>
+    /// <param name="serviceResponses">The list of responses to be associated with this exception.</param>
+    /// <param name="message">The message that describes the error.</param>
+    /// <param name="innerException">The exception that is the cause of the current exception.</param>
+    internal BatchServiceResponseException(
+        ServiceResponseCollection<TResponse> serviceResponses,
+        string message,
+        Exception innerException)
+        : base(message, innerException)
+    {
+        EwsUtilities.Assert(
+            serviceResponses != null,
+            "MultiServiceResponseException.ctor",
+            "serviceResponses is null");
 
-        /// <summary>
-        /// Initializes a new instance of MultiServiceResponseException.
-        /// </summary>
-        /// <param name="serviceResponses">The list of responses to be associated with this exception.</param>
-        /// <param name="message">The message that describes the error.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception.</param>
-        internal BatchServiceResponseException(
-            ServiceResponseCollection<TResponse> serviceResponses,
-            string message,
-            Exception innerException)
-            : base(message, innerException)
-        {
-            EwsUtilities.Assert(
-                serviceResponses != null,
-                "MultiServiceResponseException.ctor",
-                "serviceResponses is null");
-
-            this.responses = serviceResponses;
+        this.responses = serviceResponses;
 		}
 
 		/// <summary>
@@ -106,8 +106,7 @@ namespace Microsoft.Exchange.WebServices.Data
 		/// Gets a list of responses returned by the web method.
 		/// </summary>
 		public ServiceResponseCollection<TResponse> ServiceResponses
-        {
-            get { return this.responses; }
-        }
+    {
+        get { return this.responses; }
     }
 }

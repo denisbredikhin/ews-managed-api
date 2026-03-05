@@ -23,124 +23,123 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a GetUserOofSettings request.
+/// </summary>
+internal sealed class GetUserOofSettingsRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    private string smtpAddress;
 
     /// <summary>
-    /// Represents a GetUserOofSettings request.
+    /// Gets the name of the XML element.
     /// </summary>
-    internal sealed class GetUserOofSettingsRequest : SimpleServiceRequestBase
+    /// <returns>XML element name,</returns>
+    internal override string GetXmlElementName()
     {
-        private string smtpAddress;
+        return XmlElementNames.GetUserOofSettingsRequest;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetXmlElementName()
+    /// <summary>
+    /// Validate request.
+    /// </summary>
+    internal override void Validate()
+    {
+        base.Validate();
+
+        EwsUtilities.ValidateParam(this.SmtpAddress, "SmtpAddress");
+    }
+
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.Mailbox);
+        writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.Address, this.SmtpAddress);
+        writer.WriteEndElement(); // Mailbox
+    }
+
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name,</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.GetUserOofSettingsResponse;
+    }
+
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        GetUserOofSettingsResponse serviceResponse = new GetUserOofSettingsResponse();
+
+        serviceResponse.LoadFromXml(reader, XmlElementNames.ResponseMessage);
+
+        if (serviceResponse.ErrorCode == ServiceError.NoError)
         {
-            return XmlElementNames.GetUserOofSettingsRequest;
+            reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.OofSettings);
+
+            serviceResponse.OofSettings = new OofSettings();
+            serviceResponse.OofSettings.LoadFromXml(reader, reader.LocalName);
+
+            serviceResponse.OofSettings.AllowExternalOof = reader.ReadElementValue<OofExternalAudience>(
+                XmlNamespace.Messages,
+                XmlElementNames.AllowExternalOof);
         }
 
-        /// <summary>
-        /// Validate request.
-        /// </summary>
-        internal override void Validate()
-        {
-            base.Validate();
+        return serviceResponse;
+    }
 
-            EwsUtilities.ValidateParam(this.SmtpAddress, "SmtpAddress");
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2007_SP1;
+    }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.Mailbox);
-            writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.Address, this.SmtpAddress);
-            writer.WriteEndElement(); // Mailbox
-        }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GetUserOofSettingsRequest"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    internal GetUserOofSettingsRequest(ExchangeService service)
+        : base(service)
+    {
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name,</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.GetUserOofSettingsResponse;
-        }
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<GetUserOofSettingsResponse> Execute(CancellationToken token)
+    {
+        GetUserOofSettingsResponse serviceResponse = (GetUserOofSettingsResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            GetUserOofSettingsResponse serviceResponse = new GetUserOofSettingsResponse();
+        serviceResponse.ThrowIfNecessary();
 
-            serviceResponse.LoadFromXml(reader, XmlElementNames.ResponseMessage);
+        return serviceResponse;
+    }
 
-            if (serviceResponse.ErrorCode == ServiceError.NoError)
-            {
-                reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.OofSettings);
-
-                serviceResponse.OofSettings = new OofSettings();
-                serviceResponse.OofSettings.LoadFromXml(reader, reader.LocalName);
-
-                serviceResponse.OofSettings.AllowExternalOof = reader.ReadElementValue<OofExternalAudience>(
-                    XmlNamespace.Messages,
-                    XmlElementNames.AllowExternalOof);
-            }
-
-            return serviceResponse;
-        }
-
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2007_SP1;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserOofSettingsRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal GetUserOofSettingsRequest(ExchangeService service)
-            : base(service)
-        {
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<GetUserOofSettingsResponse> Execute(CancellationToken token)
-        {
-            GetUserOofSettingsResponse serviceResponse = (GetUserOofSettingsResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-
-            serviceResponse.ThrowIfNecessary();
-
-            return serviceResponse;
-        }
-
-        /// <summary>
-        /// Gets or sets the SMTP address.
-        /// </summary>
-        internal string SmtpAddress
-        {
-            get { return this.smtpAddress; }
-            set { this.smtpAddress = value; }
-        }
+    /// <summary>
+    /// Gets or sets the SMTP address.
+    /// </summary>
+    internal string SmtpAddress
+    {
+        get { return this.smtpAddress; }
+        set { this.smtpAddress = value; }
     }
 }

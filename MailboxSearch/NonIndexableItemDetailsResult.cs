@@ -23,69 +23,68 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents non indexable item details result.
+/// </summary>
+public sealed class NonIndexableItemDetailsResult
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
-    /// Represents non indexable item details result.
+    /// Load from xml
     /// </summary>
-    public sealed class NonIndexableItemDetailsResult
+    /// <param name="reader">The reader</param>
+    /// <returns>Non indexable item details result object</returns>
+    internal static NonIndexableItemDetailsResult LoadFromXml(EwsServiceXmlReader reader)
     {
-        /// <summary>
-        /// Load from xml
-        /// </summary>
-        /// <param name="reader">The reader</param>
-        /// <returns>Non indexable item details result object</returns>
-        internal static NonIndexableItemDetailsResult LoadFromXml(EwsServiceXmlReader reader)
+        NonIndexableItemDetailsResult nonIndexableItemDetailsResult = new NonIndexableItemDetailsResult();
+        reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.NonIndexableItemDetailsResult);
+
+        do
         {
-            NonIndexableItemDetailsResult nonIndexableItemDetailsResult = new NonIndexableItemDetailsResult();
-            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.NonIndexableItemDetailsResult);
+            reader.Read();
 
-            do
+            if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Items))
             {
-                reader.Read();
-
-                if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Items))
+                List<NonIndexableItem> nonIndexableItems = new List<NonIndexableItem>();
+                if (!reader.IsEmptyElement)
                 {
-                    List<NonIndexableItem> nonIndexableItems = new List<NonIndexableItem>();
-                    if (!reader.IsEmptyElement)
+                    do
                     {
-                        do
+                        reader.Read();
+                        NonIndexableItem nonIndexableItem = NonIndexableItem.LoadFromXml(reader);
+                        if (nonIndexableItem != null)
                         {
-                            reader.Read();
-                            NonIndexableItem nonIndexableItem = NonIndexableItem.LoadFromXml(reader);
-                            if (nonIndexableItem != null)
-                            {
-                                nonIndexableItems.Add(nonIndexableItem);
-                            }
+                            nonIndexableItems.Add(nonIndexableItem);
                         }
-                        while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Items));
-
-                        nonIndexableItemDetailsResult.Items = nonIndexableItems.ToArray();
                     }
-                }
+                    while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Items));
 
-                if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.FailedMailboxes))
-                {
-                    nonIndexableItemDetailsResult.FailedMailboxes = FailedSearchMailbox.LoadFailedMailboxesXml(XmlNamespace.Types, reader);
+                    nonIndexableItemDetailsResult.Items = nonIndexableItems.ToArray();
                 }
             }
-            while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.NonIndexableItemDetailsResult));
 
-            return nonIndexableItemDetailsResult;
+            if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.FailedMailboxes))
+            {
+                nonIndexableItemDetailsResult.FailedMailboxes = FailedSearchMailbox.LoadFailedMailboxesXml(XmlNamespace.Types, reader);
+            }
         }
+        while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.NonIndexableItemDetailsResult));
 
-        /// <summary>
-        /// Collection of items
-        /// </summary>
-        public NonIndexableItem[] Items { get; set; }
-
-        /// <summary>
-        /// Failed mailboxes
-        /// </summary>
-        public FailedSearchMailbox[] FailedMailboxes { get; set; }
+        return nonIndexableItemDetailsResult;
     }
+
+    /// <summary>
+    /// Collection of items
+    /// </summary>
+    public NonIndexableItem[] Items { get; set; }
+
+    /// <summary>
+    /// Failed mailboxes
+    /// </summary>
+    public FailedSearchMailbox[] FailedMailboxes { get; set; }
 }

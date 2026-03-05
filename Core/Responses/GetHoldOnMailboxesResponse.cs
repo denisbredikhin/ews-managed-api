@@ -23,44 +23,43 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the GetHoldOnMailboxes response.
+/// </summary>
+public sealed class GetHoldOnMailboxesResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    MailboxHoldResult holdResult = null;
 
     /// <summary>
-    /// Represents the GetHoldOnMailboxes response.
+    /// Initializes a new instance of the <see cref="GetHoldOnMailboxesResponse"/> class.
     /// </summary>
-    public sealed class GetHoldOnMailboxesResponse : ServiceResponse
+    internal GetHoldOnMailboxesResponse()
+        : base()
     {
-        MailboxHoldResult holdResult = null;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetHoldOnMailboxesResponse"/> class.
-        /// </summary>
-        internal GetHoldOnMailboxesResponse()
-            : base()
-        {
-        }
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            base.ReadElementsFromXml(reader);
+        this.holdResult = MailboxHoldResult.LoadFromXml(reader);
+    }
 
-            this.holdResult = MailboxHoldResult.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Mailbox hold result
-        /// </summary>
-        public MailboxHoldResult HoldResult
-        {
-            get { return this.holdResult; }
-        }
+    /// <summary>
+    /// Mailbox hold result
+    /// </summary>
+    public MailboxHoldResult HoldResult
+    {
+        get { return this.holdResult; }
     }
 }

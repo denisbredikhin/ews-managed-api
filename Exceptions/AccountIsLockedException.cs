@@ -23,27 +23,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
- namespace Microsoft.Exchange.WebServices.Data
-{
+ namespace Microsoft.Exchange.WebServices.Data;
+
 	using System;
 	using System.Runtime.Serialization;
 
+/// <summary>
+/// Represents an error that occurs when the account that is being accessed is locked and requires user interaction to be unlocked.
+/// </summary>
+public class AccountIsLockedException : ServiceRemoteException
+{
     /// <summary>
-    /// Represents an error that occurs when the account that is being accessed is locked and requires user interaction to be unlocked.
+    /// Initializes a new instance of the <see cref="AccountIsLockedException"/> class.
     /// </summary>
-    public class AccountIsLockedException : ServiceRemoteException
+    /// <param name="message">Error message text.</param>
+    /// <param name="accountUnlockUrl">URL for client to visit to unlock account.</param>
+    /// <param name="innerException">Inner exception.</param>
+    public AccountIsLockedException(string message, Uri accountUnlockUrl, Exception innerException)
+        : base(message, innerException)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountIsLockedException"/> class.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="accountUnlockUrl">URL for client to visit to unlock account.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public AccountIsLockedException(string message, Uri accountUnlockUrl, Exception innerException)
-            : base(message, innerException)
-        {
-            this.AccountUnlockUrl = accountUnlockUrl;
-        }
+        this.AccountUnlockUrl = accountUnlockUrl;
+    }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.AccountIsLockedException"/> class with serialized data.
@@ -78,4 +78,3 @@
 			private set;
 		}
 	}
-}

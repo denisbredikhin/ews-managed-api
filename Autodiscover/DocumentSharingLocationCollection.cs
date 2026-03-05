@@ -23,55 +23,54 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System.Collections.Generic;
+using System.Xml;
+using Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents a user setting that is a collection of alternate mailboxes.
+/// </summary>
+public sealed class DocumentSharingLocationCollection
 {
-    using System.Collections.Generic;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DocumentSharingLocationCollection"/> class.
+    /// </summary>
+    internal DocumentSharingLocationCollection()
+    {
+        this.Entries = new List<DocumentSharingLocation>();
+    }
 
     /// <summary>
-    /// Represents a user setting that is a collection of alternate mailboxes.
+    /// Loads instance of DocumentSharingLocationCollection from XML.
     /// </summary>
-    public sealed class DocumentSharingLocationCollection
+    /// <param name="reader">The reader.</param>
+    /// <returns>DocumentSharingLocationCollection</returns>
+    internal static DocumentSharingLocationCollection LoadFromXml(EwsXmlReader reader)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DocumentSharingLocationCollection"/> class.
-        /// </summary>
-        internal DocumentSharingLocationCollection()
-        {
-            this.Entries = new List<DocumentSharingLocation>();
-        }
+        DocumentSharingLocationCollection instance = new DocumentSharingLocationCollection();
 
-        /// <summary>
-        /// Loads instance of DocumentSharingLocationCollection from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>DocumentSharingLocationCollection</returns>
-        internal static DocumentSharingLocationCollection LoadFromXml(EwsXmlReader reader)
+        do
         {
-            DocumentSharingLocationCollection instance = new DocumentSharingLocationCollection();
+            reader.Read();
 
-            do
+            if ((reader.NodeType == XmlNodeType.Element) && (reader.LocalName == XmlElementNames.DocumentSharingLocation))
             {
-                reader.Read();
-
-                if ((reader.NodeType == XmlNodeType.Element) && (reader.LocalName == XmlElementNames.DocumentSharingLocation))
-                {
-                    DocumentSharingLocation location = DocumentSharingLocation.LoadFromXml(reader);
-                    instance.Entries.Add(location);
-                }
+                DocumentSharingLocation location = DocumentSharingLocation.LoadFromXml(reader);
+                instance.Entries.Add(location);
             }
-            while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.DocumentSharingLocations));
-
-            return instance;
         }
+        while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.DocumentSharingLocations));
 
-        /// <summary>
-        /// Gets the collection of alternate mailboxes.
-        /// </summary>
-        public List<DocumentSharingLocation> Entries
-        {
-            get; private set;
-        }
+        return instance;
+    }
+
+    /// <summary>
+    /// Gets the collection of alternate mailboxes.
+    /// </summary>
+    public List<DocumentSharingLocation> Entries
+    {
+        get; private set;
     }
 }

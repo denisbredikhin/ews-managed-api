@@ -25,21 +25,20 @@
 
 using System.Xml.Serialization;
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Defines the retention type.
+/// </summary>
+public enum RetentionType
 {
     /// <summary>
-    /// Defines the retention type.
+    /// Delete retention.
     /// </summary>
-    public enum RetentionType
-    {
-        /// <summary>
-        /// Delete retention.
-        /// </summary>
-        Delete = 0,
+    Delete = 0,
 
-        /// <summary>
-        /// Archive retention.
-        /// </summary>
-        Archive = 1,
-    }
+    /// <summary>
+    /// Archive retention.
+    /// </summary>
+    Archive = 1,
 }

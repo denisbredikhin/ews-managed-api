@@ -23,47 +23,46 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents the SearchMailboxes response.
+/// </summary>
+public sealed class SearchMailboxesResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    SearchMailboxesResult searchResult = null;
 
     /// <summary>
-    /// Represents the SearchMailboxes response.
+    /// Initializes a new instance of the <see cref="SearchMailboxesResponse"/> class.
     /// </summary>
-    public sealed class SearchMailboxesResponse : ServiceResponse
+    internal SearchMailboxesResponse()
+        : base()
     {
-        SearchMailboxesResult searchResult = null;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SearchMailboxesResponse"/> class.
-        /// </summary>
-        internal SearchMailboxesResponse()
-            : base()
-        {
-        }
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        this.searchResult = new SearchMailboxesResult();
 
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            this.searchResult = new SearchMailboxesResult();
+        base.ReadElementsFromXml(reader);
 
-            base.ReadElementsFromXml(reader);
+        this.searchResult = SearchMailboxesResult.LoadFromXml(reader);
+    }
 
-            this.searchResult = SearchMailboxesResult.LoadFromXml(reader);
-        }
-
-        /// <summary>
-        /// Search mailboxes result
-        /// </summary>
-        public SearchMailboxesResult SearchResult
-        {
-            get { return this.searchResult; }
-            internal set { this.searchResult = value; }
-        }
+    /// <summary>
+    /// Search mailboxes result
+    /// </summary>
+    public SearchMailboxesResult SearchResult
+    {
+        get { return this.searchResult; }
+        internal set { this.searchResult = value; }
     }
 }

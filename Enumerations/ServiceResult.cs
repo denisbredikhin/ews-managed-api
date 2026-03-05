@@ -23,31 +23,30 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the result of a call to an EWS method. Values in this enumeration have to
+/// be ordered from lowest to highest severity.
+/// </summary>
+public enum ServiceResult
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The call was successful
+    /// </summary>
+    Success,
 
     /// <summary>
-    /// Defines the result of a call to an EWS method. Values in this enumeration have to
-    /// be ordered from lowest to highest severity.
+    /// The call triggered at least one warning
     /// </summary>
-    public enum ServiceResult
-    {
-        /// <summary>
-        /// The call was successful
-        /// </summary>
-        Success,
+    Warning,
 
-        /// <summary>
-        /// The call triggered at least one warning
-        /// </summary>
-        Warning,
-
-        /// <summary>
-        /// The call triggered at least one error
-        /// </summary>
-        Error
-    }
+    /// <summary>
+    /// The call triggered at least one error
+    /// </summary>
+    Error
 }

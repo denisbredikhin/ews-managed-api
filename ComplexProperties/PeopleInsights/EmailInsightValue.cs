@@ -23,121 +23,120 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+using System.Xml;
+
+/// <summary>
+/// Represents the EmailInsightValue.
+/// </summary>
+public sealed class EmailInsightValue : InsightValue
 {
-    using System.Collections.Generic;
-    using System.Xml;
+    /// <summary>
+    /// Gets the Id
+    /// </summary>
+    public string Id
+    {
+        get;
+        internal set;
+    }
 
     /// <summary>
-    /// Represents the EmailInsightValue.
+    /// Gets the ThreadId
     /// </summary>
-    public sealed class EmailInsightValue : InsightValue
+    public string ThreadId
     {
-        /// <summary>
-        /// Gets the Id
-        /// </summary>
-        public string Id
+        get;
+        internal set;
+    }
+
+    /// <summary>
+    /// Gets the Subject
+    /// </summary>
+    public string Subject
+    {
+        get;
+        internal set;
+    }
+
+    /// <summary>
+    /// Gets the LastEmailDateUtcTicks
+    /// </summary>
+    public long LastEmailDateUtcTicks
+    {
+        get;
+        internal set;
+    }
+
+    /// <summary>
+    /// Gets the Body
+    /// </summary>
+    public string Body
+    {
+        get;
+        internal set;
+    }
+
+    /// <summary>
+    /// Gets the LastEmailSender
+    /// </summary>
+    public ProfileInsightValue LastEmailSender
+    {
+        get;
+        internal set;
+    }
+
+    /// <summary>
+    /// Gets the EmailsCount
+    /// </summary>
+    public int EmailsCount
+    {
+        get;
+        internal set;
+    }
+
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">XML reader</param>
+    /// <returns>Whether the element was read</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
-            get;
-            internal set;
+            case XmlElementNames.InsightSource:
+                this.InsightSource = reader.ReadElementValue<string>();
+                break;
+            case XmlElementNames.UpdatedUtcTicks:
+                this.UpdatedUtcTicks = reader.ReadElementValue<long>();
+                break;
+            case XmlElementNames.Id:
+                this.Id = reader.ReadElementValue();
+                break;
+            case XmlElementNames.ThreadId:
+                this.ThreadId = reader.ReadElementValue();
+                break;
+            case XmlElementNames.Subject:
+                this.Subject = reader.ReadElementValue();
+                break;
+            case XmlElementNames.LastEmailDateUtcTicks:
+                this.LastEmailDateUtcTicks = reader.ReadElementValue<long>();
+                break;
+            case XmlElementNames.Body:
+                this.Body = reader.ReadElementValue();
+                break;
+            case XmlElementNames.LastEmailSender:
+                this.LastEmailSender = new ProfileInsightValue();
+                this.LastEmailSender.LoadFromXml(reader, reader.LocalName);
+                break;
+            case XmlElementNames.EmailsCount:
+                this.EmailsCount = reader.ReadElementValue<int>();
+                break;
+            default:
+                return false;
         }
 
-        /// <summary>
-        /// Gets the ThreadId
-        /// </summary>
-        public string ThreadId
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the Subject
-        /// </summary>
-        public string Subject
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the LastEmailDateUtcTicks
-        /// </summary>
-        public long LastEmailDateUtcTicks
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the Body
-        /// </summary>
-        public string Body
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the LastEmailSender
-        /// </summary>
-        public ProfileInsightValue LastEmailSender
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Gets the EmailsCount
-        /// </summary>
-        public int EmailsCount
-        {
-            get;
-            internal set;
-        }
-
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">XML reader</param>
-        /// <returns>Whether the element was read</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.InsightSource:
-                    this.InsightSource = reader.ReadElementValue<string>();
-                    break;
-                case XmlElementNames.UpdatedUtcTicks:
-                    this.UpdatedUtcTicks = reader.ReadElementValue<long>();
-                    break;
-                case XmlElementNames.Id:
-                    this.Id = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.ThreadId:
-                    this.ThreadId = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.Subject:
-                    this.Subject = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.LastEmailDateUtcTicks:
-                    this.LastEmailDateUtcTicks = reader.ReadElementValue<long>();
-                    break;
-                case XmlElementNames.Body:
-                    this.Body = reader.ReadElementValue();
-                    break;
-                case XmlElementNames.LastEmailSender:
-                    this.LastEmailSender = new ProfileInsightValue();
-                    this.LastEmailSender.LoadFromXml(reader, reader.LocalName);
-                    break;
-                case XmlElementNames.EmailsCount:
-                    this.EmailsCount = reader.ReadElementValue<int>();
-                    break;
-                default:
-                    return false;
-            }
-
-            return true;
-        }
+        return true;
     }
 }

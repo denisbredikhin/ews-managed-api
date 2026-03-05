@@ -25,45 +25,44 @@
 
 using System.Threading.Tasks;
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Interface defintion of a group of methods that are common to items that return CalendarActionResults
+/// </summary>
+internal interface ICalendarActionProvider
 {
     /// <summary>
-    /// Interface defintion of a group of methods that are common to items that return CalendarActionResults
+    /// Implements the Accept method.
     /// </summary>
-    internal interface ICalendarActionProvider
-    {
-        /// <summary>
-        /// Implements the Accept method.
-        /// </summary>
-        /// <param name="sendResponse">Indicates whether to send a response to the organizer.</param>
-        /// <returns>A CalendarActionResults object containing the various items that were created or modified as a result of this operation.</returns>
-        Task<CalendarActionResults> Accept(bool sendResponse);
+    /// <param name="sendResponse">Indicates whether to send a response to the organizer.</param>
+    /// <returns>A CalendarActionResults object containing the various items that were created or modified as a result of this operation.</returns>
+    Task<CalendarActionResults> Accept(bool sendResponse);
 
-        /// <summary>
-        /// Implements the AcceptTentatively method.
-        /// </summary>
-        /// <param name="sendResponse">Indicates whether to send a response to the organizer.</param>
-        /// <returns>A CalendarActionResults object containing the various items that were created or modified as a result of this operation.</returns>
-        Task<CalendarActionResults> AcceptTentatively(bool sendResponse);
+    /// <summary>
+    /// Implements the AcceptTentatively method.
+    /// </summary>
+    /// <param name="sendResponse">Indicates whether to send a response to the organizer.</param>
+    /// <returns>A CalendarActionResults object containing the various items that were created or modified as a result of this operation.</returns>
+    Task<CalendarActionResults> AcceptTentatively(bool sendResponse);
 
-        /// <summary>
-        /// Implements the Decline method.
-        /// </summary>
-        /// <param name="sendResponse">Indicates whether to send a response to the organizer.</param>
-        /// <returns>A CalendarActionResults object containing the various items that were created or modified as a result of this operation.</returns>
-        Task<CalendarActionResults> Decline(bool sendResponse);
+    /// <summary>
+    /// Implements the Decline method.
+    /// </summary>
+    /// <param name="sendResponse">Indicates whether to send a response to the organizer.</param>
+    /// <returns>A CalendarActionResults object containing the various items that were created or modified as a result of this operation.</returns>
+    Task<CalendarActionResults> Decline(bool sendResponse);
 
-        /// <summary>
-        /// Implements the CreateAcceptMessage method.
-        /// </summary>
-        /// <param name="tentative">Indicates whether the new AcceptMeetingInvitationMessage should represent a Tentative accept response (as opposed to an Accept response).</param>
-        /// <returns>A new AcceptMeetingInvitationMessage.</returns>
-        AcceptMeetingInvitationMessage CreateAcceptMessage(bool tentative);
+    /// <summary>
+    /// Implements the CreateAcceptMessage method.
+    /// </summary>
+    /// <param name="tentative">Indicates whether the new AcceptMeetingInvitationMessage should represent a Tentative accept response (as opposed to an Accept response).</param>
+    /// <returns>A new AcceptMeetingInvitationMessage.</returns>
+    AcceptMeetingInvitationMessage CreateAcceptMessage(bool tentative);
 
-        /// <summary>
-        /// Implements the DeclineMeetingInvitationMessage method.
-        /// </summary>
-        /// <returns>A new DeclineMeetingInvitationMessage.</returns>
-        DeclineMeetingInvitationMessage CreateDeclineMessage();
-    }
+    /// <summary>
+    /// Implements the DeclineMeetingInvitationMessage method.
+    /// </summary>
+    /// <returns>A new DeclineMeetingInvitationMessage.</returns>
+    DeclineMeetingInvitationMessage CreateDeclineMessage();
 }

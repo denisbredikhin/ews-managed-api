@@ -23,213 +23,212 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Represents a request of a find persona operation
+/// </summary>
+internal sealed class FindPeopleRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="service">Exchange web service</param>
+    internal FindPeopleRequest(ExchangeService service)
+        : base(service)
+    {
+    }
 
     /// <summary>
-    /// Represents a request of a find persona operation
+    /// Accessors of the view controlling the number of personas returned.
     /// </summary>
-    internal sealed class FindPeopleRequest : SimpleServiceRequestBase
+    internal ViewBase View { get; set; }
+
+    /// <summary>
+    /// Folder Id accessors
+    /// </summary>
+    internal FolderId FolderId { get; set; }
+
+    /// <summary>
+    /// Search filter accessors
+    /// Available search filter classes include SearchFilter.IsEqualTo,
+    /// SearchFilter.ContainsSubstring and SearchFilter.SearchFilterCollection. If SearchFilter
+    /// is null, no search filters are applied.
+    /// </summary>
+    internal SearchFilter SearchFilter { get; set; }
+
+    /// <summary>
+    /// Query string accessors
+    /// </summary>
+    internal string QueryString { get; set; }
+
+    /// <summary>
+    /// Whether to search the people suggestion index
+    /// </summary>
+    internal bool SearchPeopleSuggestionIndex { get; set; }
+
+    /// <summary>
+    /// The context for suggestion index enabled queries
+    /// </summary>
+    internal Dictionary<string, string> Context { get; set; }
+
+    /// <summary>
+    /// The query mode for suggestion index enabled queries
+    /// </summary>
+    internal PeopleQueryMode QueryMode { get; set; }
+
+    /// <summary>
+    /// Validate request.
+    /// </summary>
+    internal override void Validate()
     {
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        /// <param name="service">Exchange web service</param>
-        internal FindPeopleRequest(ExchangeService service)
-            : base(service)
+        base.Validate();
+        this.View.InternalValidate(this);
+    }
+
+    /// <summary>
+    /// Writes XML attributes.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteAttributesToXml(writer);
+        this.View.WriteAttributesToXml(writer);
+    }
+
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        if (this.SearchFilter != null)
         {
+            // Emit the Restriction element
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.Restriction);
+            this.SearchFilter.WriteToXml(writer);
+            writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Accessors of the view controlling the number of personas returned.
-        /// </summary>
-        internal ViewBase View { get; set; }
+        // Emit the View element
+        this.View.WriteToXml(writer, null);
 
-        /// <summary>
-        /// Folder Id accessors
-        /// </summary>
-        internal FolderId FolderId { get; set; }
+        // Emit the SortOrder
+        this.View.WriteOrderByToXml(writer);
 
-        /// <summary>
-        /// Search filter accessors
-        /// Available search filter classes include SearchFilter.IsEqualTo,
-        /// SearchFilter.ContainsSubstring and SearchFilter.SearchFilterCollection. If SearchFilter
-        /// is null, no search filters are applied.
-        /// </summary>
-        internal SearchFilter SearchFilter { get; set; }
-
-        /// <summary>
-        /// Query string accessors
-        /// </summary>
-        internal string QueryString { get; set; }
-
-        /// <summary>
-        /// Whether to search the people suggestion index
-        /// </summary>
-        internal bool SearchPeopleSuggestionIndex { get; set; }
-
-        /// <summary>
-        /// The context for suggestion index enabled queries
-        /// </summary>
-        internal Dictionary<string, string> Context { get; set; }
-
-        /// <summary>
-        /// The query mode for suggestion index enabled queries
-        /// </summary>
-        internal PeopleQueryMode QueryMode { get; set; }
-
-        /// <summary>
-        /// Validate request.
-        /// </summary>
-        internal override void Validate()
+        // Emit the ParentFolderId element
+        if (this.FolderId != null)
         {
-            base.Validate();
-            this.View.InternalValidate(this);
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ParentFolderId);
+            this.FolderId.WriteToXml(writer);
+            writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Writes XML attributes.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+        if (!string.IsNullOrEmpty(this.QueryString))
         {
-            base.WriteAttributesToXml(writer);
-            this.View.WriteAttributesToXml(writer);
+            // Emit the QueryString element
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.QueryString);
+            writer.WriteValue(this.QueryString, XmlElementNames.QueryString);
+            writer.WriteEndElement();
         }
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        // Emit the SuggestionIndex-enabled elements
+        if (this.SearchPeopleSuggestionIndex)
         {
-            if (this.SearchFilter != null)
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleSuggestionIndex);
+            writer.WriteValue(this.SearchPeopleSuggestionIndex.ToString().ToLowerInvariant(), XmlElementNames.SearchPeopleSuggestionIndex);
+            writer.WriteEndElement();
+
+            // Write the Context key value pairs
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleContext);
+            foreach (KeyValuePair<string, string> contextItem in this.Context)
             {
-                // Emit the Restriction element
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.Restriction);
-                this.SearchFilter.WriteToXml(writer);
+                writer.WriteStartElement(XmlNamespace.Types, "ContextProperty");
+
+                writer.WriteStartElement(XmlNamespace.Types, "Key");
+                writer.WriteValue(contextItem.Key, "Key");
+                writer.WriteEndElement();
+
+                writer.WriteStartElement(XmlNamespace.Types, "Value");
+                writer.WriteValue(contextItem.Value, "Value");
+                writer.WriteEndElement();
+
                 writer.WriteEndElement();
             }
+            writer.WriteEndElement();
 
-            // Emit the View element
-            this.View.WriteToXml(writer, null);
-
-            // Emit the SortOrder
-            this.View.WriteOrderByToXml(writer);
-
-            // Emit the ParentFolderId element
-            if (this.FolderId != null)
+            // Write the Query Mode Sources
+            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleQuerySources);
+            foreach (string querySource in this.QueryMode.Sources)
             {
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.ParentFolderId);
-                this.FolderId.WriteToXml(writer);
+                writer.WriteStartElement(XmlNamespace.Types, "Source");
+                writer.WriteValue(querySource, "Source");
                 writer.WriteEndElement();
             }
+            writer.WriteEndElement();
+        }
 
-            if (!string.IsNullOrEmpty(this.QueryString))
+        if (this.Service.RequestedServerVersion >= this.GetMinimumRequiredServerVersion())
+        {
+            if (this.View.PropertySet != null)
             {
-                // Emit the QueryString element
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.QueryString);
-                writer.WriteValue(this.QueryString, XmlElementNames.QueryString);
-                writer.WriteEndElement();
-            }
-
-            // Emit the SuggestionIndex-enabled elements
-            if (this.SearchPeopleSuggestionIndex)
-            {
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleSuggestionIndex);
-                writer.WriteValue(this.SearchPeopleSuggestionIndex.ToString().ToLowerInvariant(), XmlElementNames.SearchPeopleSuggestionIndex);
-                writer.WriteEndElement();
-
-                // Write the Context key value pairs
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleContext);
-                foreach (KeyValuePair<string, string> contextItem in this.Context)
-                {
-                    writer.WriteStartElement(XmlNamespace.Types, "ContextProperty");
-
-                    writer.WriteStartElement(XmlNamespace.Types, "Key");
-                    writer.WriteValue(contextItem.Key, "Key");
-                    writer.WriteEndElement();
-
-                    writer.WriteStartElement(XmlNamespace.Types, "Value");
-                    writer.WriteValue(contextItem.Value, "Value");
-                    writer.WriteEndElement();
-
-                    writer.WriteEndElement();
-                }
-                writer.WriteEndElement();
-
-                // Write the Query Mode Sources
-                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleQuerySources);
-                foreach (string querySource in this.QueryMode.Sources)
-                {
-                    writer.WriteStartElement(XmlNamespace.Types, "Source");
-                    writer.WriteValue(querySource, "Source");
-                    writer.WriteEndElement();
-                }
-                writer.WriteEndElement();
-            }
-
-            if (this.Service.RequestedServerVersion >= this.GetMinimumRequiredServerVersion())
-            {
-                if (this.View.PropertySet != null)
-                {
-                    this.View.PropertySet.WriteToXml(writer, ServiceObjectType.Persona);
-                }
+                this.View.PropertySet.WriteToXml(writer, ServiceObjectType.Persona);
             }
         }
+    }
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader)
-        {
-            FindPeopleResponse response = new FindPeopleResponse();
-            response.LoadFromXml(reader, XmlElementNames.FindPeopleResponse);
-            return response;
-        }
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader)
+    {
+        FindPeopleResponse response = new FindPeopleResponse();
+        response.LoadFromXml(reader, XmlElementNames.FindPeopleResponse);
+        return response;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.FindPeople;
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.FindPeople;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.FindPeopleResponse;
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.FindPeopleResponse;
+    }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2013_SP1;
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2013_SP1;
+    }
 
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal async Task<FindPeopleResponse> Execute(CancellationToken token)
-        {
-            FindPeopleResponse serviceResponse = (FindPeopleResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
-            serviceResponse.ThrowIfNecessary();
-            return serviceResponse;
-        }
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal async Task<FindPeopleResponse> Execute(CancellationToken token)
+    {
+        FindPeopleResponse serviceResponse = (FindPeopleResponse)await this.InternalExecuteAsync(token).ConfigureAwait(false);
+        serviceResponse.ThrowIfNecessary();
+        return serviceResponse;
     }
 }

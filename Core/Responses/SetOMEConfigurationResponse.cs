@@ -23,19 +23,18 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents the response to a SetOMEConfigurationResponse operation.
+/// </summary>
+internal sealed class SetOMEConfigurationResponse : ServiceResponse
 {
     /// <summary>
-    /// Represents the response to a SetOMEConfigurationResponse operation.
+    /// Initializes a new instance of the <see cref="SetOMEConfigurationResponse"/> class.
     /// </summary>
-    internal sealed class SetOMEConfigurationResponse : ServiceResponse
+    public SetOMEConfigurationResponse()
+        : base()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetOMEConfigurationResponse"/> class.
-        /// </summary>
-        public SetOMEConfigurationResponse()
-            : base()
-        {
-        }
     }
 }

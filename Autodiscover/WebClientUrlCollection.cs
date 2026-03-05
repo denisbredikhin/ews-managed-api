@@ -23,55 +23,54 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Autodiscover
+namespace Microsoft.Exchange.WebServices.Autodiscover;
+
+using System.Collections.Generic;
+using System.Xml;
+using Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents a user setting that is a collection of Exchange web client URLs.
+/// </summary>
+public sealed class WebClientUrlCollection
 {
-    using System.Collections.Generic;
-    using System.Xml;
-    using Microsoft.Exchange.WebServices.Data;
+    private List<WebClientUrl> urls;
 
     /// <summary>
-    /// Represents a user setting that is a collection of Exchange web client URLs.
+    /// Initializes a new instance of the <see cref="WebClientUrlCollection"/> class.
     /// </summary>
-    public sealed class WebClientUrlCollection
+    internal WebClientUrlCollection()
     {
-        private List<WebClientUrl> urls;
+        this.urls = new List<WebClientUrl>();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WebClientUrlCollection"/> class.
-        /// </summary>
-        internal WebClientUrlCollection()
+    /// <summary>
+    /// Loads instance of WebClientUrlCollection from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal static WebClientUrlCollection LoadFromXml(EwsXmlReader reader)
+    {
+        WebClientUrlCollection instance = new WebClientUrlCollection();
+
+        do
         {
-            this.urls = new List<WebClientUrl>();
-        }
+            reader.Read();
 
-        /// <summary>
-        /// Loads instance of WebClientUrlCollection from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal static WebClientUrlCollection LoadFromXml(EwsXmlReader reader)
-        {
-            WebClientUrlCollection instance = new WebClientUrlCollection();
-
-            do
+            if ((reader.NodeType == XmlNodeType.Element) && (reader.LocalName == XmlElementNames.WebClientUrl))
             {
-                reader.Read();
-
-                if ((reader.NodeType == XmlNodeType.Element) && (reader.LocalName == XmlElementNames.WebClientUrl))
-                {
-                    instance.Urls.Add(WebClientUrl.LoadFromXml(reader));
-                }
+                instance.Urls.Add(WebClientUrl.LoadFromXml(reader));
             }
-            while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.WebClientUrls));
-
-            return instance;
         }
+        while (!reader.IsEndElement(XmlNamespace.Autodiscover, XmlElementNames.WebClientUrls));
 
-        /// <summary>
-        /// Gets the URLs.
-        /// </summary>
-        public List<WebClientUrl> Urls
-        {
-            get { return this.urls; }
-        }
+        return instance;
+    }
+
+    /// <summary>
+    /// Gets the URLs.
+    /// </summary>
+    public List<WebClientUrl> Urls
+    {
+        get { return this.urls; }
     }
 }

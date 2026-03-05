@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the type of Id of a ConnectingId object.
+/// </summary>
+public enum ConnectingIdType
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The connecting Id is a principal name.
+    /// </summary>
+    PrincipalName,
 
     /// <summary>
-    /// Defines the type of Id of a ConnectingId object.
+    /// The Id is an SID.
     /// </summary>
-    public enum ConnectingIdType
-    {
-        /// <summary>
-        /// The connecting Id is a principal name.
-        /// </summary>
-        PrincipalName,
+    SID,
 
-        /// <summary>
-        /// The Id is an SID.
-        /// </summary>
-        SID,
-
-        /// <summary>
-        /// The Id is an SMTP address.
-        /// </summary>
-        SmtpAddress
-    }
+    /// <summary>
+    /// The Id is an SMTP address.
+    /// </summary>
+    SmtpAddress
 }

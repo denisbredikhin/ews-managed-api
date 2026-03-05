@@ -23,53 +23,52 @@
 * DEALINGS IN THE SOFTWARE.
 */
 
-namespace Microsoft.Exchange.WebServices.Data.Credentials
+namespace Microsoft.Exchange.WebServices.Data.Credentials;
+
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+
+/// <summary>
+/// DualAuthCredentials wraps an instance of X509CertificateCollection and basic auth credentials used for client dual authentication.
+/// </summary>
+public sealed class DualAuthCredentials : ExchangeCredentials
 {
-    using System.Net;
-    using System.Security.Cryptography.X509Certificates;
+    /// <summary>
+    /// Collection of client certificates.
+    /// </summary>
+    private X509CertificateCollection clientCertificates;
+
+    private ICredentials credentials;
 
     /// <summary>
-    /// DualAuthCredentials wraps an instance of X509CertificateCollection and basic auth credentials used for client dual authentication.
+    /// Initializes a new instance of the <see cref="DualAuthCredentials"/> class.
     /// </summary>
-    public sealed class DualAuthCredentials : ExchangeCredentials
+    /// <param name="clientCertificates">The client certificates.</param>
+    /// <param name="userName">The username.</param>
+    /// <param name="password">The password.</param>
+    public DualAuthCredentials(X509CertificateCollection clientCertificates, string userName, string password)
     {
-        /// <summary>
-        /// Collection of client certificates.
-        /// </summary>
-        private X509CertificateCollection clientCertificates;
+        EwsUtilities.ValidateParam(clientCertificates, "clientCertificates");
 
-        private ICredentials credentials;
+        this.clientCertificates = clientCertificates;
+        this.credentials = new NetworkCredential(userName, password);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DualAuthCredentials"/> class.
-        /// </summary>
-        /// <param name="clientCertificates">The client certificates.</param>
-        /// <param name="userName">The username.</param>
-        /// <param name="password">The password.</param>
-        public DualAuthCredentials(X509CertificateCollection clientCertificates, string userName, string password)
-        {
-            EwsUtilities.ValidateParam(clientCertificates, "clientCertificates");
+    /// <summary>
+    /// This method is called to apply credentials to a service request before the request is made.
+    /// </summary>
+    /// <param name="request">The request.</param>
+    internal override void PrepareWebRequest(IEwsHttpWebRequest request)
+    {
+        request.ClientCertificates = this.ClientCertificates;
+        request.Credentials = this.credentials;
+    }
 
-            this.clientCertificates = clientCertificates;
-            this.credentials = new NetworkCredential(userName, password);
-        }
-
-        /// <summary>
-        /// This method is called to apply credentials to a service request before the request is made.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        internal override void PrepareWebRequest(IEwsHttpWebRequest request)
-        {
-            request.ClientCertificates = this.ClientCertificates;
-            request.Credentials = this.credentials;
-        }
-
-        /// <summary>
-        /// Gets the client certificates collection.
-        /// </summary>
-        public X509CertificateCollection ClientCertificates
-        {
-            get { return this.clientCertificates; }
-        }
+    /// <summary>
+    /// Gets the client certificates collection.
+    /// </summary>
+    public X509CertificateCollection ClientCertificates
+    {
+        get { return this.clientCertificates; }
     }
 }

@@ -23,56 +23,55 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a folder Id provided by a Folder object.
+/// </summary>
+internal class FolderWrapper : AbstractFolderIdWrapper
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The Folder object providing the Id.
+    /// </summary>
+    private Folder folder;
 
     /// <summary>
-    /// Represents a folder Id provided by a Folder object.
+    /// Initializes a new instance of FolderWrapper.
     /// </summary>
-    internal class FolderWrapper : AbstractFolderIdWrapper
+    /// <param name="folder">The Folder object provinding the Id.</param>
+    internal FolderWrapper(Folder folder)
     {
-        /// <summary>
-        /// The Folder object providing the Id.
-        /// </summary>
-        private Folder folder;
+        EwsUtilities.Assert(
+            folder != null,
+            "FolderWrapper.ctor",
+            "folder is null");
+        EwsUtilities.Assert(
+            !folder.IsNew,
+            "FolderWrapper.ctor",
+            "folder does not have an Id");
 
-        /// <summary>
-        /// Initializes a new instance of FolderWrapper.
-        /// </summary>
-        /// <param name="folder">The Folder object provinding the Id.</param>
-        internal FolderWrapper(Folder folder)
-        {
-            EwsUtilities.Assert(
-                folder != null,
-                "FolderWrapper.ctor",
-                "folder is null");
-            EwsUtilities.Assert(
-                !folder.IsNew,
-                "FolderWrapper.ctor",
-                "folder does not have an Id");
+        this.folder = folder;
+    }
 
-            this.folder = folder;
-        }
+    /// <summary>
+    /// Obtains the Folder object associated with the wrapper.
+    /// </summary>
+    /// <returns>The Folder object associated with the wrapper.</returns>
+    public override Folder GetFolder()
+    {
+        return this.folder;
+    }
 
-        /// <summary>
-        /// Obtains the Folder object associated with the wrapper.
-        /// </summary>
-        /// <returns>The Folder object associated with the wrapper.</returns>
-        public override Folder GetFolder()
-        {
-            return this.folder;
-        }
-
-        /// <summary>
-        /// Writes the Id encapsulated in the wrapper to XML.
-        /// </summary>
-        /// <param name="writer">The writer to write the Id to.</param>
-        internal override void WriteToXml(EwsServiceXmlWriter writer)
-        {
-            this.folder.Id.WriteToXml(writer);
-        }
+    /// <summary>
+    /// Writes the Id encapsulated in the wrapper to XML.
+    /// </summary>
+    /// <param name="writer">The writer to write the Id to.</param>
+    internal override void WriteToXml(EwsServiceXmlWriter writer)
+    {
+        this.folder.Id.WriteToXml(writer);
     }
 }

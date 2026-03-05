@@ -23,69 +23,68 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+
+/// <summary>
+/// Represents byte array property definition.
+/// </summary>
+internal sealed class ByteArrayPropertyDefinition : TypedPropertyDefinition
 {
-    using System;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ByteArrayPropertyDefinition"/> class.
+    /// </summary>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <param name="uri">The URI.</param>
+    /// <param name="flags">The flags.</param>
+    /// <param name="version">The version.</param>
+    internal ByteArrayPropertyDefinition(
+        string xmlElementName,
+        string uri,
+        PropertyDefinitionFlags flags,
+        ExchangeVersion version)
+        : base(
+            xmlElementName,
+            uri,
+            flags,
+            version)
+    {
+    }
 
     /// <summary>
-    /// Represents byte array property definition.
+    /// Parses the specified value.
     /// </summary>
-    internal sealed class ByteArrayPropertyDefinition : TypedPropertyDefinition
+    /// <param name="value">The value.</param>
+    /// <returns>Byte array value.</returns>
+    internal override object Parse(string value)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByteArrayPropertyDefinition"/> class.
-        /// </summary>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <param name="uri">The URI.</param>
-        /// <param name="flags">The flags.</param>
-        /// <param name="version">The version.</param>
-        internal ByteArrayPropertyDefinition(
-            string xmlElementName,
-            string uri,
-            PropertyDefinitionFlags flags,
-            ExchangeVersion version)
-            : base(
-                xmlElementName,
-                uri,
-                flags,
-                version)
-        {
-        }
+        return Convert.FromBase64String(value);
+    }
 
-        /// <summary>
-        /// Parses the specified value.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>Byte array value.</returns>
-        internal override object Parse(string value)
-        {
-            return Convert.FromBase64String(value);
-        }
+    /// <summary>
+    /// Converts byte array property to a string.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>Byte array value.</returns>
+    internal override string ToString(object value)
+    {
+        return Convert.ToBase64String((byte[])value);
+    }
 
-        /// <summary>
-        /// Converts byte array property to a string.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>Byte array value.</returns>
-        internal override string ToString(object value)
-        {
-            return Convert.ToBase64String((byte[])value);
-        }
+    /// <summary>
+    /// Gets a value indicating whether this property definition is for a nullable type (ref, int?, bool?...).
+    /// </summary>
+    internal override bool IsNullable
+    {
+        get { return true; }
+    }
 
-        /// <summary>
-        /// Gets a value indicating whether this property definition is for a nullable type (ref, int?, bool?...).
-        /// </summary>
-        internal override bool IsNullable
-        {
-            get { return true; }
-        }
-
-        /// <summary>
-        /// Gets the property type.
-        /// </summary>
-        public override Type Type
-        {
-            get { return typeof(byte[]); }
-        }
+    /// <summary>
+    /// Gets the property type.
+    /// </summary>
+    public override Type Type
+    {
+        get { return typeof(byte[]); }
     }
 }

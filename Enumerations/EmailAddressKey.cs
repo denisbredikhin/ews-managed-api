@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines e-mail address entries for a contact.
+/// </summary>
+public enum EmailAddressKey
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The first e-mail address.
+    /// </summary>
+    EmailAddress1,
 
     /// <summary>
-    /// Defines e-mail address entries for a contact.
+    /// The second e-mail address.
     /// </summary>
-    public enum EmailAddressKey
-    {
-        /// <summary>
-        /// The first e-mail address.
-        /// </summary>
-        EmailAddress1,
+    EmailAddress2,
 
-        /// <summary>
-        /// The second e-mail address.
-        /// </summary>
-        EmailAddress2,
-
-        /// <summary>
-        /// The third e-mail address.
-        /// </summary>
-        EmailAddress3
-    }
+    /// <summary>
+    /// The third e-mail address.
+    /// </summary>
+    EmailAddress3
 }

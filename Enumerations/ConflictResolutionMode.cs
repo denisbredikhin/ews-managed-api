@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines how conflict resolutions are handled in update operations.
+/// </summary>
+public enum ConflictResolutionMode
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Local property changes are discarded.
+    /// </summary>
+    NeverOverwrite,
 
     /// <summary>
-    /// Defines how conflict resolutions are handled in update operations.
+    /// Local property changes are applied to the server unless the server-side copy is more recent than the local copy.
     /// </summary>
-    public enum ConflictResolutionMode
-    {
-        /// <summary>
-        /// Local property changes are discarded.
-        /// </summary>
-        NeverOverwrite,
+    AutoResolve,
 
-        /// <summary>
-        /// Local property changes are applied to the server unless the server-side copy is more recent than the local copy.
-        /// </summary>
-        AutoResolve,
-
-        /// <summary>
-        /// Local property changes overwrite server-side changes. 
-        /// </summary>
-        AlwaysOverwrite
-    }
+    /// <summary>
+    /// Local property changes overwrite server-side changes. 
+    /// </summary>
+    AlwaysOverwrite
 }

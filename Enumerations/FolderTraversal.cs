@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the scope of FindFolders operations.
+/// </summary>
+public enum FolderTraversal
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// Only direct sub-folders are retrieved.
+    /// </summary>
+    Shallow,
 
     /// <summary>
-    /// Defines the scope of FindFolders operations.
+    /// The entire hierarchy of sub-folders is retrieved.
     /// </summary>
-    public enum FolderTraversal
-    {
-        /// <summary>
-        /// Only direct sub-folders are retrieved.
-        /// </summary>
-        Shallow,
+    Deep,
 
-        /// <summary>
-        /// The entire hierarchy of sub-folders is retrieved.
-        /// </summary>
-        Deep,
-
-        /// <summary>
-        /// Only soft deleted folders are retrieved.
-        /// </summary>
-        SoftDeleted
-    }
+    /// <summary>
+    /// Only soft deleted folders are retrieved.
+    /// </summary>
+    SoftDeleted
 }

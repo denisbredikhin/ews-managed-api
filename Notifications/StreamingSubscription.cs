@@ -23,64 +23,63 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Threading;
+
+/// <summary>
+/// Represents a streaming subscription.
+/// </summary>
+public sealed class StreamingSubscription : SubscriptionBase
 {
-    using System;
-    using System.Threading;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StreamingSubscription"/> class.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    internal StreamingSubscription(ExchangeService service)
+        : base(service)
+    {
+    }
 
     /// <summary>
-    /// Represents a streaming subscription.
+    /// Initializes a new instance with the specified subscription id, for continuing an existing subscription.
     /// </summary>
-    public sealed class StreamingSubscription : SubscriptionBase
+    /// <param name="service">The service.</param>
+    /// <param name="subscriptionId">The id of a previously created streaming subscription.</param>
+    public StreamingSubscription(ExchangeService service, string subscriptionId)
+        : base(service)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StreamingSubscription"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        internal StreamingSubscription(ExchangeService service)
-            : base(service)
-        {
-        }
+        this.Id = subscriptionId;
+    }
 
-        /// <summary>
-        /// Initializes a new instance with the specified subscription id, for continuing an existing subscription.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="subscriptionId">The id of a previously created streaming subscription.</param>
-        public StreamingSubscription(ExchangeService service, string subscriptionId)
-            : base(service)
-        {
-            this.Id = subscriptionId;
-        }
+    /// <summary>
+    /// Unsubscribes from the streaming subscription.
+    /// </summary>
+    public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default(CancellationToken))
+    {
+        return this.Service.Unsubscribe(this.Id, token);
+    }
 
-        /// <summary>
-        /// Unsubscribes from the streaming subscription.
-        /// </summary>
-        public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default(CancellationToken))
+    /// <summary>
+    /// Gets the service used to create this subscription.
+    /// </summary>
+    public new ExchangeService Service
+    {
+        get
         {
-            return this.Service.Unsubscribe(this.Id, token);
+            return base.Service;
         }
+    }
 
-        /// <summary>
-        /// Gets the service used to create this subscription.
-        /// </summary>
-        public new ExchangeService Service
+    /// <summary>
+    /// Gets a value indicating whether this subscription uses watermarks.
+    /// </summary>
+    protected override bool UsesWatermark
+    {
+        get
         {
-            get
-            {
-                return base.Service;
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether this subscription uses watermarks.
-        /// </summary>
-        protected override bool UsesWatermark
-        {
-            get
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

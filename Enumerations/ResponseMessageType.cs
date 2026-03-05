@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines the type of a ResponseMessage object.
+/// </summary>
+public enum ResponseMessageType
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The ResponseMessage is a reply to the sender of a message.
+    /// </summary>
+    Reply,
 
     /// <summary>
-    /// Defines the type of a ResponseMessage object.
+    /// The ResponseMessage is a reply to the sender and all the recipients of a message.
     /// </summary>
-    public enum ResponseMessageType
-    {
-        /// <summary>
-        /// The ResponseMessage is a reply to the sender of a message.
-        /// </summary>
-        Reply,
+    ReplyAll,
 
-        /// <summary>
-        /// The ResponseMessage is a reply to the sender and all the recipients of a message.
-        /// </summary>
-        ReplyAll,
-
-        /// <summary>
-        /// The ResponseMessage is a forward.
-        /// </summary>
-        Forward
-    }
+    /// <summary>
+    /// The ResponseMessage is a forward.
+    /// </summary>
+    Forward
 }

@@ -23,79 +23,78 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents a response to an individual item retrieval operation.
+/// </summary>
+public sealed class GetItemResponse : ServiceResponse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    private Item item;
+    private PropertySet propertySet;
 
     /// <summary>
-    /// Represents a response to an individual item retrieval operation.
+    /// Initializes a new instance of the <see cref="GetItemResponse"/> class.
     /// </summary>
-    public sealed class GetItemResponse : ServiceResponse
+    /// <param name="item">The item.</param>
+    /// <param name="propertySet">The property set.</param>
+    internal GetItemResponse(Item item, PropertySet propertySet)
+        : base()
     {
-        private Item item;
-        private PropertySet propertySet;
+        this.item = item;
+        this.propertySet = propertySet;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GetItemResponse"/> class.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="propertySet">The property set.</param>
-        internal GetItemResponse(Item item, PropertySet propertySet)
-            : base()
+        EwsUtilities.Assert(
+            this.propertySet != null,
+            "GetItemResponse.ctor",
+            "PropertySet should not be null");
+    }
+
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        base.ReadElementsFromXml(reader);
+
+        List<Item> items = reader.ReadServiceObjectsCollectionFromXml<Item>(
+            XmlElementNames.Items,
+            this.GetObjectInstance,
+            true,               /* clearPropertyBag */
+            this.propertySet,   /* requestedPropertySet */
+            false);             /* summaryPropertiesOnly */
+
+        this.item = items[0];
+    }
+
+    /// <summary>
+    /// Gets Item instance.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="xmlElementName">Name of the XML element.</param>
+    /// <returns>Item.</returns>
+    private Item GetObjectInstance(ExchangeService service, string xmlElementName)
+    {
+        if (this.Item != null)
         {
-            this.item = item;
-            this.propertySet = propertySet;
-
-            EwsUtilities.Assert(
-                this.propertySet != null,
-                "GetItemResponse.ctor",
-                "PropertySet should not be null");
+            return this.Item;
         }
-
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+        else
         {
-            base.ReadElementsFromXml(reader);
-
-            List<Item> items = reader.ReadServiceObjectsCollectionFromXml<Item>(
-                XmlElementNames.Items,
-                this.GetObjectInstance,
-                true,               /* clearPropertyBag */
-                this.propertySet,   /* requestedPropertySet */
-                false);             /* summaryPropertiesOnly */
-
-            this.item = items[0];
+            return EwsUtilities.CreateEwsObjectFromXmlElementName<Item>(service, xmlElementName);
         }
+    }
 
-        /// <summary>
-        /// Gets Item instance.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="xmlElementName">Name of the XML element.</param>
-        /// <returns>Item.</returns>
-        private Item GetObjectInstance(ExchangeService service, string xmlElementName)
-        {
-            if (this.Item != null)
-            {
-                return this.Item;
-            }
-            else
-            {
-                return EwsUtilities.CreateEwsObjectFromXmlElementName<Item>(service, xmlElementName);
-            }
-        }
-
-        /// <summary>
-        /// Gets the item that was retrieved.
-        /// </summary>
-        public Item Item
-        {
-            get { return this.item; }
-        }
+    /// <summary>
+    /// Gets the item that was retrieved.
+    /// </summary>
+    public Item Item
+    {
+        get { return this.item; }
     }
 }

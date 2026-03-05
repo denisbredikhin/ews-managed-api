@@ -23,130 +23,129 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents an MarkAllItemsAsRead request.
+/// </summary>
+internal sealed class MarkAllItemsAsReadRequest : MultiResponseServiceRequest<ServiceResponse>
 {
+    private FolderIdWrapperList folderIds = new FolderIdWrapperList();
+
     /// <summary>
-    /// Represents an MarkAllItemsAsRead request.
+    /// Initializes a new instance of the <see cref="MarkAllItemsAsReadRequest"/> class.
     /// </summary>
-    internal sealed class MarkAllItemsAsReadRequest : MultiResponseServiceRequest<ServiceResponse>
+    /// <param name="service">The service.</param>
+    /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
+    internal MarkAllItemsAsReadRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
+        : base(service, errorHandlingMode)
     {
-        private FolderIdWrapperList folderIds = new FolderIdWrapperList();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MarkAllItemsAsReadRequest"/> class.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="errorHandlingMode"> Indicates how errors should be handled.</param>
-        internal MarkAllItemsAsReadRequest(ExchangeService service, ServiceErrorHandling errorHandlingMode)
-            : base(service, errorHandlingMode)
-        {
-        }
+    /// <summary>
+    /// Validates request.
+    /// </summary>
+    internal override void Validate()
+    {
+        base.Validate();
+        EwsUtilities.ValidateParam(this.FolderIds, "FolderIds");
+        this.FolderIds.Validate(this.Service.RequestedServerVersion);
+    }
 
-        /// <summary>
-        /// Validates request.
-        /// </summary>
-        internal override void Validate()
-        {
-            base.Validate();
-            EwsUtilities.ValidateParam(this.FolderIds, "FolderIds");
-            this.FolderIds.Validate(this.Service.RequestedServerVersion);
-        }
+    /// <summary>
+    /// Gets the expected response message count.
+    /// </summary>
+    /// <returns>Number of expected response messages.</returns>
+    internal override int GetExpectedResponseMessageCount()
+    {
+        return this.FolderIds.Count;
+    }
 
-        /// <summary>
-        /// Gets the expected response message count.
-        /// </summary>
-        /// <returns>Number of expected response messages.</returns>
-        internal override int GetExpectedResponseMessageCount()
-        {
-            return this.FolderIds.Count;
-        }
+    /// <summary>
+    /// Creates the service response.
+    /// </summary>
+    /// <param name="service">The service.</param>
+    /// <param name="responseIndex">Index of the response.</param>
+    /// <returns>Service object.</returns>
+    internal override ServiceResponse CreateServiceResponse(ExchangeService service, int responseIndex)
+    {
+        return new ServiceResponse();
+    }
 
-        /// <summary>
-        /// Creates the service response.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="responseIndex">Index of the response.</param>
-        /// <returns>Service object.</returns>
-        internal override ServiceResponse CreateServiceResponse(ExchangeService service, int responseIndex)
-        {
-            return new ServiceResponse();
-        }
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.MarkAllItemsAsRead;
+    }
 
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.MarkAllItemsAsRead;
-        }
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.MarkAllItemsAsReadResponse;
+    }
 
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.MarkAllItemsAsReadResponse;
-        }
+    /// <summary>
+    /// Gets the name of the response message XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseMessageXmlElementName()
+    {
+        return XmlElementNames.MarkAllItemsAsReadResponseMessage;
+    }
 
-        /// <summary>
-        /// Gets the name of the response message XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseMessageXmlElementName()
-        {
-            return XmlElementNames.MarkAllItemsAsReadResponseMessage;
-        }
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.ReadFlag, this.ReadFlag);
+        writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.SuppressReadReceipts, this.SuppressReadReceipts);
 
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.ReadFlag, this.ReadFlag);
-            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.SuppressReadReceipts, this.SuppressReadReceipts);
+        this.FolderIds.WriteToXml(
+            writer,
+            XmlNamespace.Messages,
+            XmlElementNames.FolderIds);
+    }
 
-            this.FolderIds.WriteToXml(
-                writer,
-                XmlNamespace.Messages,
-                XmlElementNames.FolderIds);
-        }
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2013;
+    }
 
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2013;
-        }
+    /// <summary>
+    /// Gets the folder ids.
+    /// </summary>
+    internal FolderIdWrapperList FolderIds
+    {
+        get { return this.folderIds; }
+    }
 
-        /// <summary>
-        /// Gets the folder ids.
-        /// </summary>
-        internal FolderIdWrapperList FolderIds
-        {
-            get { return this.folderIds; }
-        }
+    /// <summary>
+    /// Gets or sets a value indicating whether items should be marked as read/unread.
+    /// </summary>
+    internal bool ReadFlag
+    {
+        get;
+        set;
+    }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether items should be marked as read/unread.
-        /// </summary>
-        internal bool ReadFlag
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether read receipts should be suppressed for items.
-        /// </summary>
-        internal bool SuppressReadReceipts
-        {
-            get;
-            set;
-        }
+    /// <summary>
+    /// Gets or sets a value indicating whether read receipts should be suppressed for items.
+    /// </summary>
+    internal bool SuppressReadReceipts
+    {
+        get;
+        set;
     }
 }

@@ -23,196 +23,195 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Net;
+using Microsoft.Exchange.WebServices.Data;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using System.Threading;
+
+/// <summary>
+/// Represents a request of a get user photo operation
+/// </summary>
+internal sealed class GetUserPhotoRequest : SimpleServiceRequestBase
 {
-    using System;
-    using System.Net;
-    using Microsoft.Exchange.WebServices.Data;
-    using System.Threading.Tasks;
-    using System.Net.Http.Headers;
-    using System.Threading;
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    /// <param name="service">Exchange web service</param>
+    internal GetUserPhotoRequest(ExchangeService service)
+        : base(service)
+    {
+    }
 
     /// <summary>
-    /// Represents a request of a get user photo operation
+    /// email address accessor
     /// </summary>
-    internal sealed class GetUserPhotoRequest : SimpleServiceRequestBase
+    internal string EmailAddress { get; set; }
+
+    /// <summary>
+    /// user photo size accessor
+    /// </summary>
+    internal string UserPhotoSize { get; set; }
+
+    /// <summary>
+    /// EntityTag accessor
+    /// </summary>
+    internal string EntityTag { get; set; }
+
+    /// <summary>
+    /// Creates a NotFound instance of the result
+    /// </summary>
+    /// <returns>The canonical NotFound result</returns>
+    internal static GetUserPhotoResponse GetNotFoundResponse()
     {
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        /// <param name="service">Exchange web service</param>
-        internal GetUserPhotoRequest(ExchangeService service)
-            : base(service)
+        GetUserPhotoResponse serviceResponse = new GetUserPhotoResponse();
+        serviceResponse.Results.Status = GetUserPhotoStatus.PhotoOrUserNotFound;
+
+        return serviceResponse;
+    }
+
+    /// <summary>
+    /// Validate request.
+    /// </summary>
+    internal override void Validate()
+    {
+        if (string.IsNullOrEmpty(this.EmailAddress))
         {
+            throw new ServiceLocalException(Strings.InvalidEmailAddress);
         }
 
-        /// <summary>
-        /// email address accessor
-        /// </summary>
-        internal string EmailAddress { get; set; }
-
-        /// <summary>
-        /// user photo size accessor
-        /// </summary>
-        internal string UserPhotoSize { get; set; }
-
-        /// <summary>
-        /// EntityTag accessor
-        /// </summary>
-        internal string EntityTag { get; set; }
-
-        /// <summary>
-        /// Creates a NotFound instance of the result
-        /// </summary>
-        /// <returns>The canonical NotFound result</returns>
-        internal static GetUserPhotoResponse GetNotFoundResponse()
+        if (string.IsNullOrEmpty(this.UserPhotoSize))
         {
-            GetUserPhotoResponse serviceResponse = new GetUserPhotoResponse();
-            serviceResponse.Results.Status = GetUserPhotoStatus.PhotoOrUserNotFound;
-
-            return serviceResponse;
+            throw new ServiceLocalException(Strings.UserPhotoSizeNotSpecified);
         }
 
-        /// <summary>
-        /// Validate request.
-        /// </summary>
-        internal override void Validate()
+        base.Validate();
+    }
+
+    /// <summary>
+    /// Writes XML attributes.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
+    {
+        base.WriteAttributesToXml(writer);
+    }
+
+    /// <summary>
+    /// Writes XML elements.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        // Emit the EmailAddress element
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.Email);
+        writer.WriteValue(this.EmailAddress, XmlElementNames.Email);
+        writer.WriteEndElement();
+
+        writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SizeRequested);
+        writer.WriteValue(this.UserPhotoSize, XmlElementNames.SizeRequested);
+        writer.WriteEndElement();
+    }
+
+    /// <summary>
+    /// Adds header values to the request
+    /// </summary>
+    /// <param name="webHeaderCollection">The collection of headers to add to</param>
+    internal override void AddHeaders(HttpRequestHeaders webHeaderCollection)
+    {
+        // Check if the ETag was specified
+        if (!string.IsNullOrEmpty(this.EntityTag))
         {
-            if (string.IsNullOrEmpty(this.EmailAddress))
+            // Ensure the ETag is wrapped in quotes
+            string quotedETag = this.EntityTag;
+            if (!this.EntityTag.StartsWith("\""))
             {
-                throw new ServiceLocalException(Strings.InvalidEmailAddress);
+                quotedETag = "\"" + quotedETag;
+            }
+            if (!this.EntityTag.EndsWith("\""))
+            {
+                quotedETag = quotedETag + "\"";
             }
 
-            if (string.IsNullOrEmpty(this.UserPhotoSize))
+            webHeaderCollection.IfNoneMatch.ParseAdd(quotedETag);
+        }
+    }
+
+    /// <summary>
+    /// Parses the response.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <param name="responseHeaders">The HTTP response headers</param>
+    /// <returns>Response object.</returns>
+    internal override object ParseResponse(EwsServiceXmlReader reader, HttpResponseHeaders responseHeaders)
+    {
+        GetUserPhotoResponse response = new GetUserPhotoResponse();
+        response.LoadFromXml(reader, XmlElementNames.GetUserPhotoResponse);
+        response.ReadHeader(responseHeaders);
+        return response;
+    }
+
+    /// <summary>
+    /// Gets the name of the XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetXmlElementName()
+    {
+        return XmlElementNames.GetUserPhoto;
+    }
+
+    /// <summary>
+    /// Gets the name of the response XML element.
+    /// </summary>
+    /// <returns>XML element name.</returns>
+    internal override string GetResponseXmlElementName()
+    {
+        return XmlElementNames.GetUserPhotoResponse;
+    }
+
+    /// <summary>
+    /// Gets the request version.
+    /// </summary>
+    /// <returns>Earliest Exchange version in which this request is supported.</returns>
+    internal override ExchangeVersion GetMinimumRequiredServerVersion()
+    {
+        return ExchangeVersion.Exchange2013;
+    }
+
+    /// <summary>
+    /// Executes this request.
+    /// </summary>
+    /// <returns>Service response.</returns>
+    internal Task<GetUserPhotoResponse> Execute(CancellationToken token)
+    {
+        return GetUserPhotoRequest.GetResultOrDefault(() => this.InternalExecuteAsync(token));
+    }
+
+            /// <summary>
+    private static async Task<GetUserPhotoResponse> GetResultOrDefault(Func<Task<object>> serviceResponseFactory)
+    {
+        try
+        {
+            return (GetUserPhotoResponse)await serviceResponseFactory().ConfigureAwait(false);
+        }
+        catch (ServiceRequestException ex)
+        {
+            // 404 is a valid return code in the case of GetUserPhoto when the photo is
+            // not found, so it is necessary to catch this exception here.
+            EwsHttpClientException webException = ex.InnerException as EwsHttpClientException;
+            if (webException != null)
             {
-                throw new ServiceLocalException(Strings.UserPhotoSizeNotSpecified);
-            }
-
-            base.Validate();
-        }
-
-        /// <summary>
-        /// Writes XML attributes.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
-        {
-            base.WriteAttributesToXml(writer);
-        }
-
-        /// <summary>
-        /// Writes XML elements.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            // Emit the EmailAddress element
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.Email);
-            writer.WriteValue(this.EmailAddress, XmlElementNames.Email);
-            writer.WriteEndElement();
-
-            writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SizeRequested);
-            writer.WriteValue(this.UserPhotoSize, XmlElementNames.SizeRequested);
-            writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Adds header values to the request
-        /// </summary>
-        /// <param name="webHeaderCollection">The collection of headers to add to</param>
-        internal override void AddHeaders(HttpRequestHeaders webHeaderCollection)
-        {
-            // Check if the ETag was specified
-            if (!string.IsNullOrEmpty(this.EntityTag))
-            {
-                // Ensure the ETag is wrapped in quotes
-                string quotedETag = this.EntityTag;
-                if (!this.EntityTag.StartsWith("\""))
+                var errorResponse = webException.Response;
+                if (errorResponse != null && errorResponse.StatusCode == HttpStatusCode.NotFound)
                 {
-                    quotedETag = "\"" + quotedETag;
+                    return GetUserPhotoRequest.GetNotFoundResponse();
                 }
-                if (!this.EntityTag.EndsWith("\""))
-                {
-                    quotedETag = quotedETag + "\"";
-                }
-
-                webHeaderCollection.IfNoneMatch.ParseAdd(quotedETag);
             }
-        }
 
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <param name="responseHeaders">The HTTP response headers</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(EwsServiceXmlReader reader, HttpResponseHeaders responseHeaders)
-        {
-            GetUserPhotoResponse response = new GetUserPhotoResponse();
-            response.LoadFromXml(reader, XmlElementNames.GetUserPhotoResponse);
-            response.ReadHeader(responseHeaders);
-            return response;
-        }
-
-        /// <summary>
-        /// Gets the name of the XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetXmlElementName()
-        {
-            return XmlElementNames.GetUserPhoto;
-        }
-
-        /// <summary>
-        /// Gets the name of the response XML element.
-        /// </summary>
-        /// <returns>XML element name.</returns>
-        internal override string GetResponseXmlElementName()
-        {
-            return XmlElementNames.GetUserPhotoResponse;
-        }
-
-        /// <summary>
-        /// Gets the request version.
-        /// </summary>
-        /// <returns>Earliest Exchange version in which this request is supported.</returns>
-        internal override ExchangeVersion GetMinimumRequiredServerVersion()
-        {
-            return ExchangeVersion.Exchange2013;
-        }
-
-        /// <summary>
-        /// Executes this request.
-        /// </summary>
-        /// <returns>Service response.</returns>
-        internal Task<GetUserPhotoResponse> Execute(CancellationToken token)
-        {
-            return GetUserPhotoRequest.GetResultOrDefault(() => this.InternalExecuteAsync(token));
-        }
-
-                /// <summary>
-        private static async Task<GetUserPhotoResponse> GetResultOrDefault(Func<Task<object>> serviceResponseFactory)
-        {
-            try
-            {
-                return (GetUserPhotoResponse)await serviceResponseFactory().ConfigureAwait(false);
-            }
-            catch (ServiceRequestException ex)
-            {
-                // 404 is a valid return code in the case of GetUserPhoto when the photo is
-                // not found, so it is necessary to catch this exception here.
-                EwsHttpClientException webException = ex.InnerException as EwsHttpClientException;
-                if (webException != null)
-                {
-                    var errorResponse = webException.Response;
-                    if (errorResponse != null && errorResponse.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return GetUserPhotoRequest.GetNotFoundResponse();
-                    }
-                }
-
-                throw;
-            }
+            throw;
         }
     }
 }

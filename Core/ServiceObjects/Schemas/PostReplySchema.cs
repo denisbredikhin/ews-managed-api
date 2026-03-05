@@ -23,34 +23,33 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Represents PostReply schema definition.
+/// </summary>
+internal sealed class PostReplySchema : ServiceObjectSchema
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    // This must be declared after the property definitions
+    internal static readonly PostReplySchema Instance = new PostReplySchema();
 
     /// <summary>
-    /// Represents PostReply schema definition.
+    /// Registers properties.
     /// </summary>
-    internal sealed class PostReplySchema : ServiceObjectSchema
+    /// <remarks>
+    /// IMPORTANT NOTE: PROPERTIES MUST BE REGISTERED IN SCHEMA ORDER (i.e. the same order as they are defined in types.xsd)
+    /// </remarks>
+    internal override void RegisterProperties()
     {
-        // This must be declared after the property definitions
-        internal static readonly PostReplySchema Instance = new PostReplySchema();
+        base.RegisterProperties();
 
-        /// <summary>
-        /// Registers properties.
-        /// </summary>
-        /// <remarks>
-        /// IMPORTANT NOTE: PROPERTIES MUST BE REGISTERED IN SCHEMA ORDER (i.e. the same order as they are defined in types.xsd)
-        /// </remarks>
-        internal override void RegisterProperties()
-        {
-            base.RegisterProperties();
-
-            this.RegisterProperty(ItemSchema.Subject);
-            this.RegisterProperty(ItemSchema.Body);
-            this.RegisterProperty(ResponseObjectSchema.ReferenceItemId);
-            this.RegisterProperty(ResponseObjectSchema.BodyPrefix);
-        }
+        this.RegisterProperty(ItemSchema.Subject);
+        this.RegisterProperty(ItemSchema.Body);
+        this.RegisterProperty(ResponseObjectSchema.ReferenceItemId);
+        this.RegisterProperty(ResponseObjectSchema.BodyPrefix);
     }
 }

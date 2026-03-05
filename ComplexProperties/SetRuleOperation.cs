@@ -23,96 +23,95 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents an operation to update an existing rule.
+/// </summary>
+public sealed class SetRuleOperation : RuleOperation
 {
     /// <summary>
-    /// Represents an operation to update an existing rule.
+    /// Inbox rule to be updated.
     /// </summary>
-    public sealed class SetRuleOperation : RuleOperation
+    private Rule rule;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SetRuleOperation"/> class.
+    /// </summary>
+    public SetRuleOperation()
+        : base()
     {
-        /// <summary>
-        /// Inbox rule to be updated.
-        /// </summary>
-        private Rule rule;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetRuleOperation"/> class.
-        /// </summary>
-        public SetRuleOperation()
-            : base()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SetRuleOperation"/> class.
+    /// </summary>
+    /// <param name="rule">The inbox rule to update.</param>
+    public SetRuleOperation(Rule rule)
+        : base()
+    {
+        this.rule = rule;
+    }
+
+    /// <summary>
+    /// Gets or sets the rule to be updated.
+    /// </summary>
+    public Rule Rule
+    {
+        get
         {
+            return this.rule;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SetRuleOperation"/> class.
-        /// </summary>
-        /// <param name="rule">The inbox rule to update.</param>
-        public SetRuleOperation(Rule rule)
-            : base()
+        set
         {
-            this.rule = rule;
+            this.SetFieldValue<Rule>(ref this.rule, value);
         }
+    }
 
-        /// <summary>
-        /// Gets or sets the rule to be updated.
-        /// </summary>
-        public Rule Rule
+    /// <summary>
+    /// Tries to read element from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    /// <returns>True if element was read.</returns>
+    internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+    {
+        switch (reader.LocalName)
         {
-            get
-            {
-                return this.rule;
-            }
-
-            set
-            {
-                this.SetFieldValue<Rule>(ref this.rule, value);
-            }
+            case XmlElementNames.Rule:
+                this.rule = new Rule();
+                this.rule.LoadFromXml(reader, reader.LocalName);
+                return true;
+            default:
+                return false;
         }
+    }
 
-        /// <summary>
-        /// Tries to read element from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <returns>True if element was read.</returns>
-        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
-        {
-            switch (reader.LocalName)
-            {
-                case XmlElementNames.Rule:
-                    this.rule = new Rule();
-                    this.rule.LoadFromXml(reader, reader.LocalName);
-                    return true;
-                default:
-                    return false;
-            }
-        }
+    /// <summary>
+    /// Writes elements to XML.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+    {
+        this.Rule.WriteToXml(writer, XmlElementNames.Rule);
+    }
 
-        /// <summary>
-        /// Writes elements to XML.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
-        {
-            this.Rule.WriteToXml(writer, XmlElementNames.Rule);
-        }
+    /// <summary>
+    ///  Validates this instance.
+    /// </summary>
+    internal override void InternalValidate()
+    {
+        EwsUtilities.ValidateParam(this.rule, "Rule");
+    }
 
-        /// <summary>
-        ///  Validates this instance.
-        /// </summary>
-        internal override void InternalValidate()
+    /// <summary>
+    /// Gets the Xml element name of the SetRuleOperation object.
+    /// </summary>
+    internal override string XmlElementName
+    {
+        get
         {
-            EwsUtilities.ValidateParam(this.rule, "Rule");
-        }
-
-        /// <summary>
-        /// Gets the Xml element name of the SetRuleOperation object.
-        /// </summary>
-        internal override string XmlElementName
-        {
-            get
-            {
-                return XmlElementNames.SetRuleOperation;
-            }
+            return XmlElementNames.SetRuleOperation;
         }
     }
 }

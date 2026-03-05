@@ -23,32 +23,31 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+/// <summary>
+/// Represents the results of an Persona search operation.
+/// </summary>
+public sealed class PeopleQueryResults : IPeopleQueryResults
 {
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
+    /// <summary>
+    /// Creates a new instance of the <see cref="PeopleQueryResults"/> class.
+    /// </summary>
+    internal PeopleQueryResults()
+    {
+        this.Personas = new List<Persona>();
+    }
 
     /// <summary>
-    /// Represents the results of an Persona search operation.
+    /// Gets the Personas that were found by the search operation.
     /// </summary>
-    public sealed class PeopleQueryResults : IPeopleQueryResults
-    {
-        /// <summary>
-        /// Creates a new instance of the <see cref="PeopleQueryResults"/> class.
-        /// </summary>
-        internal PeopleQueryResults()
-        {
-            this.Personas = new List<Persona>();
-        }
+    public IList<Persona> Personas { get; internal set; }
 
-        /// <summary>
-        /// Gets the Personas that were found by the search operation.
-        /// </summary>
-        public IList<Persona> Personas { get; internal set; }
-
-        /// <summary>
-        /// Gets the ID for this FindPeople call, which can be used for feedback
-        /// </summary>
-        public string TransactionId { get; internal set; }
-    }
+    /// <summary>
+    /// Gets the ID for this FindPeople call, which can be used for feedback
+    /// </summary>
+    public string TransactionId { get; internal set; }
 }

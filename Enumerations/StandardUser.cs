@@ -23,25 +23,24 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines a standard delegate user.
+/// </summary>
+public enum StandardUser
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The Default delegate user, used to define default delegation permissions.
+    /// </summary>
+    Default,
 
     /// <summary>
-    /// Defines a standard delegate user.
+    /// The Anonymous delegate user, used to define delegate permissions for unauthenticated users.
     /// </summary>
-    public enum StandardUser
-    {
-        /// <summary>
-        /// The Default delegate user, used to define default delegation permissions.
-        /// </summary>
-        Default,
-
-        /// <summary>
-        /// The Anonymous delegate user, used to define delegate permissions for unauthenticated users.
-        /// </summary>
-        Anonymous
-    }
+    Anonymous
 }

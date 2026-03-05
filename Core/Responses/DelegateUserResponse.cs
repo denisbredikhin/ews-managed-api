@@ -23,56 +23,55 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+/// <summary>
+/// Represents the response to an individual delegate user manipulation (add, remove, update) operation.
+/// </summary>
+public sealed class DelegateUserResponse : ServiceResponse
 {
+    private bool readDelegateUser;
+    private DelegateUser delegateUser;
+
     /// <summary>
-    /// Represents the response to an individual delegate user manipulation (add, remove, update) operation.
+    /// Initializes a new instance of the <see cref="DelegateUserResponse"/> class.
     /// </summary>
-    public sealed class DelegateUserResponse : ServiceResponse
+    /// <param name="readDelegateUser">if set to <c>true</c> [read delegate user].</param>
+    /// <param name="delegateUser">Existing DelegateUser to use (may be null).</param>
+    internal DelegateUserResponse(bool readDelegateUser, DelegateUser delegateUser)
+        : base()
     {
-        private bool readDelegateUser;
-        private DelegateUser delegateUser;
+        this.readDelegateUser = readDelegateUser;
+        this.delegateUser = delegateUser;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DelegateUserResponse"/> class.
-        /// </summary>
-        /// <param name="readDelegateUser">if set to <c>true</c> [read delegate user].</param>
-        /// <param name="delegateUser">Existing DelegateUser to use (may be null).</param>
-        internal DelegateUserResponse(bool readDelegateUser, DelegateUser delegateUser)
-            : base()
+    /// <summary>
+    /// Reads response elements from XML.
+    /// </summary>
+    /// <param name="reader">The reader.</param>
+    internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+    {
+        if (this.readDelegateUser)
         {
-            this.readDelegateUser = readDelegateUser;
-            this.delegateUser = delegateUser;
-        }
-
-        /// <summary>
-        /// Reads response elements from XML.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
-        {
-            if (this.readDelegateUser)
+            if (this.delegateUser == null)
             {
-                if (this.delegateUser == null)
-                {
-                    this.delegateUser = new DelegateUser();
-                }
-
-                reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.DelegateUser);
-
-                this.delegateUser.LoadFromXml(
-                    reader,
-                    XmlNamespace.Messages,
-                    reader.LocalName);
+                this.delegateUser = new DelegateUser();
             }
-        }
 
-        /// <summary>
-        /// The delegate user that was involved in the operation.
-        /// </summary>
-        public DelegateUser DelegateUser
-        {
-            get { return this.delegateUser; }
+            reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.DelegateUser);
+
+            this.delegateUser.LoadFromXml(
+                reader,
+                XmlNamespace.Messages,
+                reader.LocalName);
         }
+    }
+
+    /// <summary>
+    /// The delegate user that was involved in the operation.
+    /// </summary>
+    public DelegateUser DelegateUser
+    {
+        get { return this.delegateUser; }
     }
 }

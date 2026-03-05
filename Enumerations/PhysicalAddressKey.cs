@@ -23,30 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-namespace Microsoft.Exchange.WebServices.Data
+namespace Microsoft.Exchange.WebServices.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+/// <summary>
+/// Defines physical address entries for a contact.
+/// </summary>
+public enum PhysicalAddressKey
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    /// <summary>
+    /// The business address.
+    /// </summary>
+    Business,
 
     /// <summary>
-    /// Defines physical address entries for a contact.
+    /// The home address.
     /// </summary>
-    public enum PhysicalAddressKey
-    {
-        /// <summary>
-        /// The business address.
-        /// </summary>
-        Business,
+    Home,
 
-        /// <summary>
-        /// The home address.
-        /// </summary>
-        Home,
-
-        /// <summary>
-        /// An alternate address.
-        /// </summary>
-        Other
-    }
+    /// <summary>
+    /// An alternate address.
+    /// </summary>
+    Other
 }
