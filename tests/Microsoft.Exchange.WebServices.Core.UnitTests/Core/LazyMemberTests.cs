@@ -77,7 +77,7 @@ public class LazyMemberTests
     }
 
     [Fact]
-    public void Member_ConcurrentAccess_InitializesOnce()
+    public async SystemTask Member_ConcurrentAccess_InitializesOnce()
     {
         int callCount = 0;
         var lazy = new LazyMember<string>(() =>
@@ -91,7 +91,7 @@ public class LazyMemberTests
             .Select(_ => SystemTask.Run(() => lazy.Member))
             .ToArray();
 
-        SystemTask.WaitAll(tasks);
+        await SystemTask.WhenAll(tasks);
 
         callCount.Should().Be(1);
         tasks.All(t => t.Result == "value").Should().BeTrue();
