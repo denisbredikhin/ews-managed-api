@@ -1,3 +1,13 @@
 <Solution>
-  <Project Path="Microsoft.Exchange.WebServices.Core.csproj" />
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CONTRIBUTING.md" />
+    <File Path="Docs/License Terms.rtf" />
+    <File Path="Docs/README.htm" />
+    <File Path="Docs/Redist.txt" />
+    <File Path="license.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src\Microsoft.Exchange.WebServices.Core.csproj" />
 </Solution>
