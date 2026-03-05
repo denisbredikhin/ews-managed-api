@@ -59,13 +59,4 @@ public sealed class CreateAttachmentException : BatchServiceResponseException<Cr
     {
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.CreateAttachmentException"/> class with serialized data.
-		/// </summary>
-		/// <param name="info">The object that holds the serialized object data.</param>
-		/// <param name="context">The contextual information about the source or destination.</param>
-		private CreateAttachmentException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
 	}
