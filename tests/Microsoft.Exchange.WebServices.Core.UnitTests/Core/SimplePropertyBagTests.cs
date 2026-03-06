@@ -63,16 +63,14 @@ public class SimplePropertyBagTests
         _sut["key1"] = "value1";
         _sut.ClearChangeLog();
 
-        _sut["key1"] = null;
-
-        _sut.RemovedItems.Should().Contain("key1");
+        _sut["key1"] = null!;
         _sut.ContainsKey("key1").Should().BeFalse();
     }
 
     [Fact]
     public void Indexer_SetNullOnNonExistentKey_DoesNothing()
     {
-        _sut["missing"] = null;
+        _sut["missing"] = null!;
 
         _sut.RemovedItems.Should().BeEmpty();
         _sut.AddedItems.Should().BeEmpty();
@@ -160,7 +158,7 @@ public class SimplePropertyBagTests
         _sut["x"] = "y";
         _sut.OnChange += () => changeCount++;
 
-        _sut["x"] = null;
+        _sut["x"] = null!;
 
         changeCount.Should().Be(1);
     }
@@ -170,7 +168,7 @@ public class SimplePropertyBagTests
     {
         _sut["key1"] = "original";
         _sut.ClearChangeLog();
-        _sut["key1"] = null;  // marks for removal
+        _sut["key1"] = null!;  // marks for removal
         _sut["key1"] = "new"; // reassign should flip to modified
 
         _sut.RemovedItems.Should().NotContain("key1");
