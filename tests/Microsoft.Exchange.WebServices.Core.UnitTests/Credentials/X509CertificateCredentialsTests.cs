@@ -26,8 +26,13 @@
 namespace Microsoft.Exchange.WebServices.Core.UnitTests.Credentials;
 
 using System;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using System.Text;
+using System.Xml;
 
 using AwesomeAssertions;
 
@@ -158,6 +163,117 @@ public class X509CertificateCredentialsTests : IDisposable
     }
 
     // -------------------------------------------------------------------------
+    // Sign
+    // -------------------------------------------------------------------------
+
+    [Fact]
+    public void Sign_ValidSoapDocument_AppendsSignatureToSecurityNode()
+    {
+        var creds = new X509CertificateCredentials(_certWithKey);
+        using var stream = BuildSoapEnvelopeStream();
+
+        creds.Sign(stream);
+
+        var doc = LoadXmlFromStream(stream);
+        var securityNode = doc.SelectSingleNode(
+            "/soap:Envelope/soap:Header/wsse:Security",
+            WSSecurityBasedCredentials.NamespaceManager);
+
+        securityNode.Should().NotBeNull();
+        securityNode!.ChildNodes.Cast<XmlNode>()
+            .Should().Contain(n => n.LocalName == "Signature");
+    }
+
+    [Fact]
+    public void Sign_ValidSoapDocument_ToElementReceivesWsuId()
+    {
+        var creds = new X509CertificateCredentials(_certWithKey);
+        using var stream = BuildSoapEnvelopeStream();
+
+        creds.Sign(stream);
+
+        var doc = LoadXmlFromStream(stream);
+        var toElement = (XmlElement?)doc.SelectSingleNode(
+            "/soap:Envelope/soap:Header/wsa:To",
+            WSSecurityBasedCredentials.NamespaceManager);
+
+        toElement.Should().NotBeNull();
+        toElement!.GetAttribute("Id", EwsUtilities.WSSecurityUtilityNamespace)
+            .Should().NotBeNullOrEmpty("wsa:To must be stamped with a wsu:Id so it can be referenced in the signature");
+    }
+
+    [Fact]
+    public void Sign_ValidSoapDocument_TimestampElementReceivesWsuId()
+    {
+        var creds = new X509CertificateCredentials(_certWithKey);
+        using var stream = BuildSoapEnvelopeStream();
+
+        creds.Sign(stream);
+
+        var doc = LoadXmlFromStream(stream);
+        var tsElement = (XmlElement?)doc.SelectSingleNode(
+            "/soap:Envelope/soap:Header/wsse:Security/wsu:Timestamp",
+            WSSecurityBasedCredentials.NamespaceManager);
+
+        tsElement.Should().NotBeNull();
+        tsElement!.GetAttribute("Id", EwsUtilities.WSSecurityUtilityNamespace)
+            .Should().NotBeNullOrEmpty("wsu:Timestamp must be stamped with a wsu:Id so it can be referenced in the signature");
+    }
+
+    [Fact]
+    public void Sign_ValidSoapDocument_ProducesVerifiableSignature()
+    {
+        var creds = new X509CertificateCredentials(_certWithKey);
+        using var stream = BuildSoapEnvelopeStream();
+
+        creds.Sign(stream);
+
+        var doc = LoadXmlFromStream(stream);
+        var signatureNode = (XmlElement?)doc
+            .GetElementsByTagName("Signature", "http://www.w3.org/2000/09/xmldsig#")
+            .Item(0);
+
+        signatureNode.Should().NotBeNull();
+
+        // Use a helper that resolves wsu:Id references so CheckSignature can
+        // walk the signed references back to their elements.
+        var verifier = new WsuIdAwareSignedXml(doc);
+        verifier.LoadXml(signatureNode!);
+
+        verifier.CheckSignature(_certWithKey, verifySignatureOnly: true)
+            .Should().BeTrue("the signature must be verifiable with the signer's public key");
+    }
+
+    [Fact]
+    public void Sign_SoapMissingWsaToElement_DoesNotThrow()
+    {
+        // wsa:To is optional — its absence is tolerated; wsu:Timestamp is still signed.
+        var creds = new X509CertificateCredentials(_certWithKey);
+        using var stream = BuildSoapEnvelopeWithoutWsaToStream();
+
+        Action act = () => creds.Sign(stream);
+
+        act.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Sign_NonZeroInitialStreamPosition_StillProducesValidOutput()
+    {
+        // Sign resets the stream to position 0 before loading, so the caller's
+        // initial position should have no effect on the result.
+        var creds = new X509CertificateCredentials(_certWithKey);
+        using var stream = BuildSoapEnvelopeStream();
+        stream.Position = 10;
+
+        creds.Sign(stream);
+
+        // The stream must contain well-formed XML with a Signature element.
+        var doc = LoadXmlFromStream(stream);
+        doc.GetElementsByTagName("Signature", "http://www.w3.org/2000/09/xmldsig#")
+            .Count.Should().Be(1);
+    }
+
+    // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
 
@@ -179,5 +295,94 @@ public class X509CertificateCredentialsTests : IDisposable
             cert.Export(X509ContentType.Pfx),
             password: null,
             X509KeyStorageFlags.EphemeralKeySet);
+    }
+
+    /// <summary>
+    /// Builds a full SOAP envelope that contains every element referenced by Sign:
+    /// wsa:To, wsse:Security, and wsu:Timestamp.
+    /// </summary>
+    private static MemoryStream BuildSoapEnvelopeStream()
+    {
+        string xml =
+            $"<soap:Envelope" +
+            $" xmlns:soap=\"{EwsUtilities.EwsSoapNamespace}\"" +
+            $" xmlns:wsa=\"{EwsUtilities.WSAddressingNamespace}\"" +
+            $" xmlns:wsse=\"{EwsUtilities.WSSecuritySecExtNamespace}\"" +
+            $" xmlns:wsu=\"{EwsUtilities.WSSecurityUtilityNamespace}\">" +
+            "<soap:Header>" +
+            "<wsa:To>https://mail.example.com/EWS/Exchange.asmx</wsa:To>" +
+            "<wsse:Security>" +
+            "<wsu:Timestamp>" +
+            "<wsu:Created>2026-03-09T19:00:00Z</wsu:Created>" +
+            "<wsu:Expires>2026-03-09T19:05:00Z</wsu:Expires>" +
+            "</wsu:Timestamp>" +
+            "</wsse:Security>" +
+            "</soap:Header>" +
+            "<soap:Body>" +
+            "<GetItem xmlns=\"http://schemas.microsoft.com/exchange/services/2006/messages\"/>" +
+            "</soap:Body>" +
+            "</soap:Envelope>";
+
+        return ToStream(xml);
+    }
+
+    /// <summary>
+    /// SOAP envelope without wsa:To — exercises the path where one optional
+    /// reference target is absent but signing still proceeds on wsu:Timestamp.
+    /// </summary>
+    private static MemoryStream BuildSoapEnvelopeWithoutWsaToStream()
+    {
+        string xml =
+            $"<soap:Envelope" +
+            $" xmlns:soap=\"{EwsUtilities.EwsSoapNamespace}\"" +
+            $" xmlns:wsse=\"{EwsUtilities.WSSecuritySecExtNamespace}\"" +
+            $" xmlns:wsu=\"{EwsUtilities.WSSecurityUtilityNamespace}\">" +
+            "<soap:Header>" +
+            "<wsse:Security>" +
+            "<wsu:Timestamp>" +
+            "<wsu:Created>2026-03-09T19:00:00Z</wsu:Created>" +
+            "<wsu:Expires>2026-03-09T19:05:00Z</wsu:Expires>" +
+            "</wsu:Timestamp>" +
+            "</wsse:Security>" +
+            "</soap:Header>" +
+            "<soap:Body/>" +
+            "</soap:Envelope>";
+
+        return ToStream(xml);
+    }
+
+    private static MemoryStream ToStream(string xml)
+    {
+        var ms = new MemoryStream();
+        var bytes = Encoding.UTF8.GetBytes(xml);
+        ms.Write(bytes, 0, bytes.Length);
+        ms.Position = 0;
+        return ms;
+    }
+
+    private static XmlDocument LoadXmlFromStream(MemoryStream stream)
+    {
+        stream.Position = 0;
+        var doc = new XmlDocument { PreserveWhitespace = true };
+        doc.Load(stream);
+        return doc;
+    }
+
+    /// <summary>
+    /// A <see cref="SignedXml"/> subclass that resolves <c>wsu:Id</c> attributes
+    /// so that <see cref="SignedXml.CheckSignature"/> can walk back to the
+    /// elements that were signed by <see cref="X509CertificateCredentials.Sign"/>.
+    /// </summary>
+    private sealed class WsuIdAwareSignedXml : SignedXml
+    {
+        private readonly XmlDocument _doc;
+
+        public WsuIdAwareSignedXml(XmlDocument doc) : base(doc) => _doc = doc;
+
+        public override XmlElement? GetIdElement(XmlDocument document, string idValue)
+            => base.GetIdElement(document, idValue)
+               ?? (XmlElement?)_doc.SelectSingleNode(
+                   $"//*[@wsu:Id='{idValue}']",
+                   WSSecurityBasedCredentials.NamespaceManager);
     }
 }
