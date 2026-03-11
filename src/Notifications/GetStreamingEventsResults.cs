@@ -99,7 +99,7 @@ internal sealed class GetStreamingEventsResults
                         }
                         else
                         {
-                            this.LoadNotificationEventFromXml(
+                            LoadNotificationEventFromXml(
                                 reader,
                                 eventElementName,
                                 eventType,
@@ -126,7 +126,7 @@ internal sealed class GetStreamingEventsResults
     /// <param name="eventElementName">Name of the event XML element.</param>
     /// <param name="eventType">Type of the event.</param>
     /// <param name="notifications">Collection of notifications</param>
-    private void LoadNotificationEventFromXml(
+    private static void LoadNotificationEventFromXml(
         EwsServiceXmlReader reader,
         string eventElementName,
         EventType eventType,

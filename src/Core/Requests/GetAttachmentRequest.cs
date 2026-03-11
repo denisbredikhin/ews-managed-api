@@ -151,12 +151,12 @@ internal sealed class GetAttachmentRequest : MultiResponseServiceRequest<GetAtta
 
         foreach (Attachment attachment in this.Attachments)
         {
-            this.WriteAttachmentIdXml(writer, attachment.Id);
+            WriteAttachmentIdXml(writer, attachment.Id);
         }
 
         foreach (string attachmentId in this.AttachmentIds)
         {
-            this.WriteAttachmentIdXml(writer, attachmentId);
+            WriteAttachmentIdXml(writer, attachmentId);
         }
 
         writer.WriteEndElement();
@@ -229,7 +229,7 @@ internal sealed class GetAttachmentRequest : MultiResponseServiceRequest<GetAtta
     /// </summary>
     /// <param name="writer">The writer.</param>
     /// <param name="attachmentId">The attachment id.</param>
-    private void WriteAttachmentIdXml(EwsServiceXmlWriter writer, string attachmentId)
+    private static void WriteAttachmentIdXml(EwsServiceXmlWriter writer, string attachmentId)
     {
         writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.AttachmentId);
         writer.WriteAttributeValue(XmlAttributeNames.Id, attachmentId);

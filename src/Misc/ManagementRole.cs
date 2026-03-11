@@ -101,7 +101,7 @@ public sealed class ManagementRoles
     /// <param name="writer"></param>
     /// <param name="roles"></param>
     /// <param name="elementName"></param>
-    private void WriteRolesToXml(EwsServiceXmlWriter writer, string[] roles, string elementName)
+    private static void WriteRolesToXml(EwsServiceXmlWriter writer, string[] roles, string elementName)
     {
         if (roles != null)
         {

@@ -178,7 +178,7 @@ public abstract partial class Recurrence
         /// </summary>
         public DayOfWeek FirstDayOfWeek
         {
-            get { return this.GetFieldValueOrThrowIfNull<DayOfWeek>(this.firstDayOfWeek, "FirstDayOfWeek"); }
+            get { return GetFieldValueOrThrowIfNull(this.firstDayOfWeek, "FirstDayOfWeek"); }
             set { this.SetFieldValue<DayOfWeek?>(ref this.firstDayOfWeek, value); }
         }
     }

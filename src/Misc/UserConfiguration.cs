@@ -437,7 +437,7 @@ public class UserConfiguration
     /// </summary>
     /// <param name="bytes">The bytes.</param>
     /// <returns></returns>
-    private string GetBase64PropertyValue(byte[] bytes)
+    private static string GetBase64PropertyValue(byte[] bytes)
     {
         if (bytes == null ||
             bytes.Length == 0)

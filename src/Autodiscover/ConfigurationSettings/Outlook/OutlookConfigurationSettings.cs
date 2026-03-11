@@ -152,7 +152,7 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
                     response.ErrorMessage = string.Empty;
                     this.user.ConvertToUserSettings(requestedSettings, response);
                     this.account.ConvertToUserSettings(requestedSettings, response);
-                    this.ReportUnsupportedSettings(requestedSettings, response);
+                    ReportUnsupportedSettings(requestedSettings, response);
                     break;
                 case AutodiscoverResponseType.Error:
                     response.ErrorCode = AutodiscoverErrorCode.InternalServerError;
@@ -184,7 +184,7 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
     /// </summary>
     /// <param name="requestedSettings">The requested settings.</param>
     /// <param name="response">The response.</param>
-    private void ReportUnsupportedSettings(List<UserSettingName> requestedSettings, GetUserSettingsResponse response)
+    private static void ReportUnsupportedSettings(List<UserSettingName> requestedSettings, GetUserSettingsResponse response)
     {
         // In English: find settings listed in requestedSettings that are not supported by the Legacy provider.
         IEnumerable<UserSettingName> invalidSettingQuery = from setting in requestedSettings

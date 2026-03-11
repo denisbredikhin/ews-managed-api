@@ -356,11 +356,11 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
         string[] dictionaryObjectAsStringArray = dictionaryObject as string[];
         if (dictionaryObjectAsStringArray != null)
         {
-            this.WriteEntryTypeToXml(writer, UserConfigurationDictionaryObjectType.StringArray);
+            WriteEntryTypeToXml(writer, UserConfigurationDictionaryObjectType.StringArray);
 
             foreach (string arrayElement in dictionaryObjectAsStringArray)
             {
-                this.WriteEntryValueToXml(writer, arrayElement);
+                WriteEntryValueToXml(writer, arrayElement);
             }
         }
         else
@@ -381,8 +381,8 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
                 GetTypeCode(writer.Service, dictionaryObject, ref dictionaryObjectType, ref valueAsString);
             }
 
-            this.WriteEntryTypeToXml(writer, dictionaryObjectType);
-            this.WriteEntryValueToXml(writer, valueAsString);
+            WriteEntryTypeToXml(writer, dictionaryObjectType);
+            WriteEntryValueToXml(writer, valueAsString);
         }
     }
 
@@ -391,7 +391,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// </summary>
     /// <param name="writer">The writer.</param>
     /// <param name="dictionaryObjectType">Type to write.</param>
-    private void WriteEntryTypeToXml(EwsServiceXmlWriter writer, UserConfigurationDictionaryObjectType dictionaryObjectType)
+    private static void WriteEntryTypeToXml(EwsServiceXmlWriter writer, UserConfigurationDictionaryObjectType dictionaryObjectType)
     {
         writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.Type);
         writer.WriteValue(dictionaryObjectType.ToString(), XmlElementNames.Type);
@@ -403,7 +403,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// </summary>
     /// <param name="writer">The writer.</param>
     /// <param name="value">Value to write.</param>
-    private void WriteEntryValueToXml(EwsServiceXmlWriter writer, string value)
+    private static void WriteEntryValueToXml(EwsServiceXmlWriter writer, string value)
     {
         writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.Value);
 
@@ -487,7 +487,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// <param name="valueArray">The value array.</param>
     /// 
     /// <returns></returns>
-    private List<string> GetObjectValue(object[] valueArray)
+    private static List<string> GetObjectValue(object[] valueArray)
     {
         List<string> stringArray = new();
 
@@ -515,7 +515,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
 
         List<string> values = this.GetObjectValue(reader, type);
 
-        return this.ConstructObject(type, values, reader.Service);
+        return ConstructObject(type, values, reader.Service);
     }
 
     /// <summary>
@@ -597,7 +597,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// <param name="value">Value of the dictionary object as a string list</param>
     /// <param name="service">The service.</param>
     /// <returns>Dictionary object.</returns>
-    private object ConstructObject(
+    private static object ConstructObject(
         UserConfigurationDictionaryObjectType type, 
         List<string> value, 
         ExchangeService service)
@@ -702,11 +702,11 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
             Array dictionaryObjectAsArray = dictionaryObject as Array;
             if (dictionaryObjectAsArray != null)
             {
-                this.ValidateArrayObject(dictionaryObjectAsArray);
+                ValidateArrayObject(dictionaryObjectAsArray);
             }
             else
             {
-                this.ValidateObjectType(dictionaryObject.GetType());
+                ValidateObjectType(dictionaryObject.GetType());
             }
         }
     }
@@ -715,7 +715,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// Validate the array object.
     /// </summary>
     /// <param name="dictionaryObjectAsArray">Object to validate</param>
-    private void ValidateArrayObject(Array dictionaryObjectAsArray)
+    private static void ValidateArrayObject(Array dictionaryObjectAsArray)
     {
         // This logic is based on Microsoft.Exchange.Data.Storage.ConfigurationDictionary.CheckElementSupportedType().
         if (dictionaryObjectAsArray is string[])
@@ -754,7 +754,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// Validates the dictionary object type.
     /// </summary>
     /// <param name="type">Type to validate.</param>
-    private void ValidateObjectType(Type type)
+    private static void ValidateObjectType(Type type)
     {
         // This logic is based on Microsoft.Exchange.Data.Storage.ConfigurationDictionary.CheckElementSupportedType().
         bool isValidType = false;

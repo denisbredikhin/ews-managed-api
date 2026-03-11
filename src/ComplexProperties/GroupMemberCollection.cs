@@ -269,27 +269,27 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
             if (this.AddedItems.Count == 0)
             {
                 // Delete the whole members collection
-                this.WriteDeleteMembersCollectionToXml(writer);
+                WriteDeleteMembersCollectionToXml(writer);
             }
             else
             {
                 // The collection is cleared, so Set
-                this.WriteSetOrAppendMembersToXml(writer, this.AddedItems, true);
+                WriteSetOrAppendMembersToXml(writer, this.AddedItems, true);
             }
         }
         else
         {
             // The collection is not cleared, i.e. dl.Members.Clear() is not called.
             // Append AddedItems.
-            this.WriteSetOrAppendMembersToXml(writer, this.AddedItems, false);
+            WriteSetOrAppendMembersToXml(writer, this.AddedItems, false);
 
             // Since member replacement is not supported by server
             // Delete old ModifiedItems, then recreate new instead.
-            this.WriteDeleteMembersToXml(writer, this.ModifiedItems);
-            this.WriteSetOrAppendMembersToXml(writer, this.ModifiedItems, false);
+            WriteDeleteMembersToXml(writer, this.ModifiedItems);
+            WriteSetOrAppendMembersToXml(writer, this.ModifiedItems, false);
 
             // Delete RemovedItems.
-            this.WriteDeleteMembersToXml(writer, this.RemovedItems);
+            WriteDeleteMembersToXml(writer, this.RemovedItems);
         }
 
         return true;
@@ -339,7 +339,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     /// Delete the whole members collection.
     /// </summary>
     /// <param name="writer">Xml writer.</param>
-    private void WriteDeleteMembersCollectionToXml(EwsServiceXmlWriter writer)
+    private static void WriteDeleteMembersCollectionToXml(EwsServiceXmlWriter writer)
     {
         writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.DeleteItemField);
         ContactGroupSchema.Members.WriteToXml(writer);
@@ -351,7 +351,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     /// </summary>
     /// <param name="writer">Xml writer.</param>
     /// <param name="members">Members to delete.</param>
-    private void WriteDeleteMembersToXml(EwsServiceXmlWriter writer, List<GroupMember> members)
+    private static void WriteDeleteMembersToXml(EwsServiceXmlWriter writer, List<GroupMember> members)
     {
         if (members.Count != 0)
         {
@@ -377,7 +377,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     /// <param name="writer">Xml writer.</param>
     /// <param name="members">Members to set or append.</param>
     /// <param name="setMode">True - set members, false - append members.</param>
-    private void WriteSetOrAppendMembersToXml(EwsServiceXmlWriter writer, List<GroupMember> members, bool setMode)
+    private static void WriteSetOrAppendMembersToXml(EwsServiceXmlWriter writer, List<GroupMember> members, bool setMode)
     {
         if (members.Count != 0)
         {

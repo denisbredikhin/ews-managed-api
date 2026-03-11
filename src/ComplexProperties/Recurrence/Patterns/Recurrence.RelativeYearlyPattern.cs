@@ -174,7 +174,7 @@ public abstract partial class Recurrence
         /// </summary>
         public DayOfTheWeekIndex DayOfTheWeekIndex
         {
-            get { return this.GetFieldValueOrThrowIfNull<DayOfTheWeekIndex>(this.dayOfTheWeekIndex, "DayOfTheWeekIndex"); }
+            get { return GetFieldValueOrThrowIfNull(this.dayOfTheWeekIndex, "DayOfTheWeekIndex"); }
             set { this.SetFieldValue<DayOfTheWeekIndex?>(ref this.dayOfTheWeekIndex, value); }
         }
 
@@ -183,7 +183,7 @@ public abstract partial class Recurrence
         /// </summary>
         public DayOfTheWeek DayOfTheWeek
         {
-            get { return this.GetFieldValueOrThrowIfNull<DayOfTheWeek>(this.dayOfTheWeek, "DayOfTheWeek"); }
+            get { return GetFieldValueOrThrowIfNull(this.dayOfTheWeek, "DayOfTheWeek"); }
             set { this.SetFieldValue<DayOfTheWeek?>(ref this.dayOfTheWeek, value); }
         }
 
@@ -192,7 +192,7 @@ public abstract partial class Recurrence
         /// </summary>
         public Month Month
         {
-            get { return this.GetFieldValueOrThrowIfNull<Month>(this.month, "Month"); }
+            get { return GetFieldValueOrThrowIfNull(this.month, "Month"); }
             set { this.SetFieldValue<Month?>(ref this.month, value); }
         }
     }

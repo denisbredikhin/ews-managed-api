@@ -45,7 +45,7 @@ public sealed class OofSettings : ComplexProperty, ISelfValidate
     /// <param name="oofReply">The oof reply.</param>
     /// <param name="writer">The writer.</param>
     /// <param name="xmlElementName">Name of the XML element.</param>
-    private void SerializeOofReply(
+    private static void SerializeOofReply(
         OofReply oofReply,
         EwsServiceXmlWriter writer,
         string xmlElementName)
@@ -123,11 +123,11 @@ public sealed class OofSettings : ComplexProperty, ISelfValidate
             this.Duration.WriteToXml(writer, XmlElementNames.Duration);
         }
 
-        this.SerializeOofReply(
+        SerializeOofReply(
             this.InternalReply,
             writer,
             XmlElementNames.InternalReply);
-        this.SerializeOofReply(
+        SerializeOofReply(
             this.ExternalReply,
             writer,
             XmlElementNames.ExternalReply);

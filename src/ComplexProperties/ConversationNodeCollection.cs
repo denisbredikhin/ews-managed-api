@@ -62,6 +62,6 @@ public sealed class ConversationNodeCollection : ComplexPropertyCollection<Conve
     /// <returns>XML element name.</returns>
     internal override string GetCollectionItemXmlElementName(ConversationNode complexProperty)
     {
-        return complexProperty.GetXmlElementName();
+        return ConversationNode.GetXmlElementName();
     }
 }

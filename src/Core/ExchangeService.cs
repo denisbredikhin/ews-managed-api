@@ -4647,7 +4647,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         switch (response.ErrorCode)
         {
             case AutodiscoverErrorCode.NoError:
-                return this.GetEwsUrlFromResponse(response, autodiscoverService.IsExternal.GetValueOrDefault(true));
+                return GetEwsUrlFromResponse(response, autodiscoverService.IsExternal.GetValueOrDefault(true));
 
             case AutodiscoverErrorCode.InvalidUser:
                 throw new ServiceRemoteException(
@@ -4672,7 +4672,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="response">The response.</param>
     /// <param name="isExternal">If true, Autodiscover call was made externally.</param>
     /// <returns>EWS URL.</returns>
-    private Uri GetEwsUrlFromResponse(GetUserSettingsResponse response, bool isExternal)
+    private static Uri GetEwsUrlFromResponse(GetUserSettingsResponse response, bool isExternal)
     {
 
         // Figure out which URL to use: Internal or External.

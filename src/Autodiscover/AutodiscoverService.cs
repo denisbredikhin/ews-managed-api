@@ -201,7 +201,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
             {
                 using MemoryStream memoryStream = new();
                 using StreamWriter writer = new(memoryStream);
-                this.WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
+                WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
                 writer.Flush();
 
                 this.TraceXml(TraceFlags.AutodiscoverRequest, memoryStream);
@@ -211,7 +211,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
             else
             {
                 using StreamWriter writer = new(requestStream);
-                this.WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
+                WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
             }
             request.Content = new ByteArrayContent(requestStream.ToArray());
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml") { CharSet = "utf-8" };
@@ -260,7 +260,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <param name="emailAddress">The email address.</param>
     /// <param name="settings">The settings.</param>
     /// <param name="writer">The writer.</param>
-    private void WriteLegacyAutodiscoverRequest(
+    private static void WriteLegacyAutodiscoverRequest(
         string emailAddress,
         ConfigurationSettingsBase settings,
         StreamWriter writer)
@@ -1382,7 +1382,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
                     }
                     else
                     {
-                        endpoints = this.GetEndpointsFromHttpWebResponse(response);
+                        endpoints = GetEndpointsFromHttpWebResponse(response);
 
                         this.TraceMessage(
                             TraceFlags.AutodiscoverConfiguration,
@@ -1410,7 +1410,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// </summary>
     /// <param name="response">The response.</param>
     /// <returns>Endpoints enabled.</returns>
-    private AutodiscoverEndpoints GetEndpointsFromHttpWebResponse(IEwsHttpWebResponse response)
+    private static AutodiscoverEndpoints GetEndpointsFromHttpWebResponse(IEwsHttpWebResponse response)
     {
         AutodiscoverEndpoints endpoints = AutodiscoverEndpoints.Legacy;
         if (response.Headers.TryGetValues(AutodiscoverSoapEnabledHeaderName, out _))

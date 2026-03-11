@@ -106,7 +106,7 @@ public sealed class ConversationNode : ComplexProperty
     /// Gets the name of the XML element.
     /// </summary>
     /// <returns>XML element name.</returns>
-    internal string GetXmlElementName()
+    internal static string GetXmlElementName()
     {
         return XmlElementNames.ConversationNode;
     }

@@ -214,7 +214,7 @@ public abstract class ExchangeServiceBase
         }
     }
 
-    internal ExchangeCredentials AdjustLinuxAuthentication(Uri url, ExchangeCredentials serviceCredentials)
+    internal static ExchangeCredentials AdjustLinuxAuthentication(Uri url, ExchangeCredentials serviceCredentials)
     {
         if (!(serviceCredentials is WebCredentials))
             // Nothing to adjust
@@ -459,7 +459,7 @@ public abstract class ExchangeServiceBase
     /// </summary>
     /// <param name="value">The string value to parse.</param>
     /// <returns>The parsed DateTime value.</returns>
-    internal DateTime? ConvertStartDateToUnspecifiedDateTime(string value)
+    internal static DateTime? ConvertStartDateToUnspecifiedDateTime(string value)
     {
         if (string.IsNullOrEmpty(value))
         {

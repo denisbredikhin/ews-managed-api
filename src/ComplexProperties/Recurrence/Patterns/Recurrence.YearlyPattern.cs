@@ -156,7 +156,7 @@ public abstract partial class Recurrence
         /// </summary>
         public Month Month
         {
-            get { return this.GetFieldValueOrThrowIfNull<Month>(this.month, "Month"); }
+            get { return GetFieldValueOrThrowIfNull(this.month, "Month"); }
             set { this.SetFieldValue<Month?>(ref this.month, value); }
         }
 
@@ -167,7 +167,7 @@ public abstract partial class Recurrence
         {
             get
             {
-                return this.GetFieldValueOrThrowIfNull<int>(this.dayOfMonth, "DayOfMonth");
+                return GetFieldValueOrThrowIfNull(this.dayOfMonth, "DayOfMonth");
             }
 
             set

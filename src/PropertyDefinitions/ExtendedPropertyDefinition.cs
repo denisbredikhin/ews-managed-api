@@ -317,12 +317,12 @@ public sealed class ExtendedPropertyDefinition : PropertyDefinitionBase
     {
         StringBuilder sb = new();
         sb.Append("{");
-        sb.Append(FormatField<string>(NameFieldName, this.Name));
+        sb.Append(FormatField(NameFieldName, this.Name));
         sb.Append(FormatField<MapiPropertyType?>(MapiTypeFieldName, this.MapiType));
-        sb.Append(FormatField<int?>(IdFieldName, this.Id));
-        sb.Append(FormatField<DefaultExtendedPropertySet?>(PropertySetFieldName, this.PropertySet));
-        sb.Append(FormatField<Guid?>(PropertySetIdFieldName, this.PropertySetId));
-        sb.Append(FormatField<int?>(TagFieldName, this.Tag));
+        sb.Append(FormatField(IdFieldName, this.Id));
+        sb.Append(FormatField(PropertySetFieldName, this.PropertySet));
+        sb.Append(FormatField(PropertySetIdFieldName, this.PropertySetId));
+        sb.Append(FormatField(TagFieldName, this.Tag));
         sb.Append("}");
         return sb.ToString();
     }
@@ -334,7 +334,7 @@ public sealed class ExtendedPropertyDefinition : PropertyDefinitionBase
     /// <param name="name">The name.</param>
     /// <param name="fieldValue">The field value.</param>
     /// <returns>Formatted value.</returns>
-    internal string FormatField<T>(string name, T fieldValue)
+    internal static string FormatField<T>(string name, T fieldValue)
     {
         return (fieldValue != null)
                     ? string.Format(FieldFormat, name, fieldValue.ToString())

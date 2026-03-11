@@ -498,7 +498,7 @@ internal abstract class AutodiscoverRequest
         // Is this the ServerVersionInfo?
         if (reader.IsStartElement(XmlNamespace.Autodiscover, XmlElementNames.ServerVersionInfo))
         {
-            this.service.ServerInfo = this.ReadServerVersionInfo(reader);
+            this.service.ServerInfo = ReadServerVersionInfo(reader);
         }
     }
 
@@ -506,7 +506,7 @@ internal abstract class AutodiscoverRequest
     /// Read ServerVersionInfo SOAP header.
     /// </summary>
     /// <param name="reader">EwsXmlReader</param>
-    private ExchangeServerInfo ReadServerVersionInfo(EwsXmlReader reader)
+    private static ExchangeServerInfo ReadServerVersionInfo(EwsXmlReader reader)
     {
         ExchangeServerInfo serverInfo = new();
         do

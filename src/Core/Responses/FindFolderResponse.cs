@@ -88,7 +88,7 @@ public sealed class FindFolderResponse : ServiceResponse
     /// <param name="service">The service.</param>
     /// <param name="xmlElementName">Name of the XML element.</param>
     /// <returns>Folder</returns>
-    private Folder CreateFolderInstance(ExchangeService service, string xmlElementName)
+    private static Folder CreateFolderInstance(ExchangeService service, string xmlElementName)
     {
         return EwsUtilities.CreateEwsObjectFromXmlElementName<Folder>(service, xmlElementName);
     }

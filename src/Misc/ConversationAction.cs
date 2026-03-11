@@ -109,7 +109,7 @@ internal class ConversationAction
     /// Gets the name of the XML element.
     /// </summary>
     /// <returns>XML element name.</returns>
-    internal string GetXmlElementName()
+    internal static string GetXmlElementName()
     {
         return XmlElementNames.ApplyConversationAction;
     }

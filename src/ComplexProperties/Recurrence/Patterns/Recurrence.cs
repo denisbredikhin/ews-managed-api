@@ -114,7 +114,7 @@ public abstract partial class Recurrence : ComplexProperty
     /// <param name="value">The value.</param>
     /// <param name="name">The property name.</param>
     /// <returns>Property value</returns>
-    internal T GetFieldValueOrThrowIfNull<T>(Nullable<T> value, string name) where T : struct
+    internal static T GetFieldValueOrThrowIfNull<T>(Nullable<T> value, string name) where T : struct
     {
         if (value.HasValue)
         {
@@ -132,7 +132,7 @@ public abstract partial class Recurrence : ComplexProperty
     /// </summary>
     public DateTime StartDate
     {
-        get { return this.GetFieldValueOrThrowIfNull<DateTime>(this.startDate, "StartDate"); }
+        get { return GetFieldValueOrThrowIfNull(this.startDate, "StartDate"); }
         set { this.startDate = value; }
     }
 

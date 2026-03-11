@@ -130,7 +130,7 @@ public abstract partial class Recurrence
         {
             get
             {
-                return this.GetFieldValueOrThrowIfNull<int>(this.dayOfMonth, "DayOfMonth");
+                return GetFieldValueOrThrowIfNull(this.dayOfMonth, "DayOfMonth");
             }
 
             set

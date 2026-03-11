@@ -508,7 +508,7 @@ internal abstract class ServiceRequestBase
     /// <param name="ewsXmlReader">The EwsServiceXmlReader.</param>
     protected virtual void ReadPreamble(EwsServiceXmlReader ewsXmlReader)
     {
-        this.ReadXmlDeclaration(ewsXmlReader);
+        ReadXmlDeclaration(ewsXmlReader);
     }
 
     /// <summary>
@@ -517,7 +517,7 @@ internal abstract class ServiceRequestBase
     /// <param name="ewsXmlReader">The EwsServiceXmlReader.</param>
     protected virtual System.Threading.Tasks.Task ReadPreambleAsync(EwsServiceXmlReader ewsXmlReader, CancellationToken token)
     {
-        return this.ReadXmlDeclarationAsync(ewsXmlReader, token);
+        return ReadXmlDeclarationAsync(ewsXmlReader, token);
     }
 
     /// <summary>
@@ -575,7 +575,7 @@ internal abstract class ServiceRequestBase
 
         try
         {
-            this.ReadXmlDeclaration(reader);
+            ReadXmlDeclaration(reader);
 
             reader.Read();
             if (!reader.IsStartElement() || (reader.LocalName != XmlElementNames.SOAPEnvelopeElementName))
@@ -922,7 +922,7 @@ internal abstract class ServiceRequestBase
     /// Try to read the XML declaration. If it's not there, the server didn't return XML.
     /// </summary>
     /// <param name="reader">The reader.</param>
-    private void ReadXmlDeclaration(EwsServiceXmlReader reader)
+    private static void ReadXmlDeclaration(EwsServiceXmlReader reader)
     {
         try
         {
@@ -942,7 +942,7 @@ internal abstract class ServiceRequestBase
     /// Try to read the XML declaration. If it's not there, the server didn't return XML.
     /// </summary>
     /// <param name="reader">The reader.</param>
-    private async System.Threading.Tasks.Task ReadXmlDeclarationAsync(EwsServiceXmlReader reader, CancellationToken token)
+    private static async System.Threading.Tasks.Task ReadXmlDeclarationAsync(EwsServiceXmlReader reader, CancellationToken token)
     {
         try
         {

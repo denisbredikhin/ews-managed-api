@@ -72,7 +72,7 @@ internal class EwsServiceXmlReader : EwsXmlReader
     /// <returns>A DateTime representing the converted string.</returns>
     private DateTime? ConvertStringToUnspecifiedDate(string dateTimeString)
     {
-        return this.Service.ConvertStartDateToUnspecifiedDateTime(dateTimeString);
+        return ExchangeServiceBase.ConvertStartDateToUnspecifiedDateTime(dateTimeString);
     }
 
     /// <summary>

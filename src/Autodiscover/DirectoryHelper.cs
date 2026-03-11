@@ -222,7 +222,7 @@ internal class DirectoryHelper
                 string.Format("No SCP pointers found for '{0}' in configPath='{1}'", domainMatch, configPath));
 
             // Get the computer's current site.
-            string computerSiteName = this.GetSiteName();
+            string computerSiteName = GetSiteName();
 
             if (!string.IsNullOrEmpty(computerSiteName))
             {
@@ -347,7 +347,7 @@ internal class DirectoryHelper
     /// Get the local site name.
     /// </summary>
     /// <returns>Name of the local site.</returns>
-    private string GetSiteName()
+    private static string GetSiteName()
     {
         try
         {
