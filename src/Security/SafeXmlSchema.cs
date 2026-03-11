@@ -53,10 +53,8 @@ internal class SafeXmlSchema : XmlSchema
     /// <returns>The XmlSchema object representing the XML Schema.</returns>
     public static new XmlSchema Read(Stream stream, ValidationEventHandler validationEventHandler)
     {
-        using (XmlReader xr = XmlReader.Create(stream, SafeXmlSchema.defaultSettings))
-        {
-            return XmlSchema.Read(xr, validationEventHandler);
-        }
+        using XmlReader xr = XmlReader.Create(stream, SafeXmlSchema.defaultSettings);
+        return XmlSchema.Read(xr, validationEventHandler);
     }
 
     /// <summary>
@@ -67,10 +65,8 @@ internal class SafeXmlSchema : XmlSchema
     /// <returns>The XmlSchema object representing the XML Schema.</returns>
     public static new XmlSchema Read(TextReader reader, ValidationEventHandler validationEventHandler)
     {
-        using (XmlReader xr = XmlReader.Create(reader, SafeXmlSchema.defaultSettings))
-        {
-            return XmlSchema.Read(xr, validationEventHandler);
-        }
+        using XmlReader xr = XmlReader.Create(reader, SafeXmlSchema.defaultSettings);
+        return XmlSchema.Read(xr, validationEventHandler);
     }
 
     /// <summary>

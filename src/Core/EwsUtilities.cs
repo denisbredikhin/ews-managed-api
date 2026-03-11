@@ -426,17 +426,15 @@ internal static class EwsUtilities
         StringBuilder sb = new();
         using (StringWriter writer = new(sb))
         {
-            using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { Indent = true }))
-            {
-                EwsUtilities.WriteTraceStartElement(xmlWriter, entryKind, false);
+            using var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { Indent = true });
+            EwsUtilities.WriteTraceStartElement(xmlWriter, entryKind, false);
 
-                xmlWriter.WriteWhitespace(Environment.NewLine);
-                xmlWriter.WriteValue(logEntry);
-                xmlWriter.WriteWhitespace(Environment.NewLine);
+            xmlWriter.WriteWhitespace(Environment.NewLine);
+            xmlWriter.WriteValue(logEntry);
+            xmlWriter.WriteWhitespace(Environment.NewLine);
 
-                xmlWriter.WriteEndElement(); // Trace
-                xmlWriter.WriteWhitespace(Environment.NewLine);
-            }
+            xmlWriter.WriteEndElement(); // Trace
+            xmlWriter.WriteWhitespace(Environment.NewLine);
         }
         return sb.ToString();
     }
@@ -538,29 +536,23 @@ internal static class EwsUtilities
 
         try
         {
-            using (XmlReader reader = XmlReader.Create(memoryStream, settings))
+            using XmlReader reader = XmlReader.Create(memoryStream, settings);
+            reader.Read();
+            if (reader.NodeType == XmlNodeType.XmlDeclaration)
             {
                 reader.Read();
-                if (reader.NodeType == XmlNodeType.XmlDeclaration)
-                {
-                    reader.Read();
-                }
-                using (StringWriter writer = new(sb))
-                {
-                    using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { Indent = true }))
-                    {
-                        EwsUtilities.WriteTraceStartElement(xmlWriter, entryKind, true);
-
-                        while (!reader.EOF)
-                        {
-                            xmlWriter.WriteNode(reader, true);
-                        }
-
-                        xmlWriter.WriteEndElement(); // Trace
-                        xmlWriter.WriteWhitespace(Environment.NewLine);
-                    }
-                }
             }
+            using StringWriter writer = new(sb);
+            using var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { Indent = true });
+            EwsUtilities.WriteTraceStartElement(xmlWriter, entryKind, true);
+
+            while (!reader.EOF)
+            {
+                xmlWriter.WriteNode(reader, true);
+            }
+
+            xmlWriter.WriteEndElement(); // Trace
+            xmlWriter.WriteWhitespace(Environment.NewLine);
         }
         catch (XmlException)
         {

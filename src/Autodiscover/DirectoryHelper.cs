@@ -153,21 +153,19 @@ internal class DirectoryHelper
             using (DirectoryEntry configEntry = new("LDAP://" + configPath))
             {
                 // Use the configuration entry path to create a query.
-                using (DirectorySearcher configSearcher = new(configEntry))
-                {
-                    // Filter for Autodiscover SCP URLs and SCP pointers.
-                    configSearcher.Filter = ScpFilterString;
+                using DirectorySearcher configSearcher = new(configEntry);
+                // Filter for Autodiscover SCP URLs and SCP pointers.
+                configSearcher.Filter = ScpFilterString;
 
-                    // Identify properties to retrieve using the the query.
-                    configSearcher.PropertiesToLoad.Add("keywords");
-                    configSearcher.PropertiesToLoad.Add("serviceBindingInformation");
+                // Identify properties to retrieve using the the query.
+                configSearcher.PropertiesToLoad.Add("keywords");
+                configSearcher.PropertiesToLoad.Add("serviceBindingInformation");
 
-                    this.TraceMessage(
-                        string.Format("Searching for SCP entries in {0}", configEntry.Path));
+                this.TraceMessage(
+                    string.Format("Searching for SCP entries in {0}", configEntry.Path));
 
-                    // Query Active Directory for SCP entries.
-                    scpDirEntries = configSearcher.FindAll();
-                }
+                // Query Active Directory for SCP entries.
+                scpDirEntries = configSearcher.FindAll();
             }
 
             // Identify the domain to match.
@@ -356,10 +354,8 @@ internal class DirectoryHelper
     {
         try
         {
-            using (ActiveDirectorySite site = ActiveDirectorySite.GetComputerSite())
-            {
-                return site.Name;
-            }
+            using ActiveDirectorySite site = ActiveDirectorySite.GetComputerSite();
+            return site.Name;
         }
         catch (ActiveDirectoryObjectNotFoundException)  // object not found in directory store
         {

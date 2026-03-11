@@ -546,23 +546,21 @@ internal class EwsXmlReader
         byte[] buffer = new byte[ReadWriteBufferSize];
         int bytesRead;
 
-        using (MemoryStream memoryStream = new())
+        using MemoryStream memoryStream = new();
+        do
         {
-            do
-            {
-                bytesRead = this.xmlReader.ReadElementContentAsBase64(buffer, 0, ReadWriteBufferSize);
+            bytesRead = this.xmlReader.ReadElementContentAsBase64(buffer, 0, ReadWriteBufferSize);
 
-                if (bytesRead > 0)
-                {
-                    memoryStream.Write(buffer, 0, bytesRead);
-                }
+            if (bytesRead > 0)
+            {
+                memoryStream.Write(buffer, 0, bytesRead);
             }
-            while (bytesRead > 0);
-           
-            // Can use MemoryStream.GetBuffer() if the buffer's capacity and the number of bytes read
-            // are identical. Otherwise need to convert to byte array that's the size of the number of bytes read.
-            return memoryStream.ToArray();
         }
+        while (bytesRead > 0);
+
+        // Can use MemoryStream.GetBuffer() if the buffer's capacity and the number of bytes read
+        // are identical. Otherwise need to convert to byte array that's the size of the number of bytes read.
+        return memoryStream.ToArray();
     }
 
     /// <summary>

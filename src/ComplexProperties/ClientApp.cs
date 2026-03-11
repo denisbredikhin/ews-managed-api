@@ -67,15 +67,13 @@ public sealed class ClientApp : ComplexProperty
     /// <returns>The xml document</returns>
     internal static SafeXmlDocument ReadToXmlDocument(EwsServiceXmlReader reader)
     {
-        using (MemoryStream stream = new())
-        {
-            reader.ReadBase64ElementValue(stream);
-            stream.Position = 0;
+        using MemoryStream stream = new();
+        reader.ReadBase64ElementValue(stream);
+        stream.Position = 0;
 
-            SafeXmlDocument manifest = new();
-            manifest.Load(stream);
-            return manifest;
-        }
+        SafeXmlDocument manifest = new();
+        manifest.Load(stream);
+        return manifest;
     }
 
     /// <summary>

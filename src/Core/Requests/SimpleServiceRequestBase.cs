@@ -102,26 +102,22 @@ internal abstract class SimpleServiceRequestBase : ServiceRequestBase
             // MemoryStream.
             if (this.Service.IsTraceEnabledFor(TraceFlags.EwsResponse))
             {
-                using (MemoryStream memoryStream = new())
+                using MemoryStream memoryStream = new();
+                using (Stream serviceResponseStream = await ServiceRequestBase.GetResponseStream(response))
                 {
-                    using (Stream serviceResponseStream = await ServiceRequestBase.GetResponseStream(response))
-                    {
-                        // Copy response to in-memory stream and reset position to start.
-                        EwsUtilities.CopyStream(serviceResponseStream, memoryStream);
-                        memoryStream.Position = 0;
-                    }
-
-                    this.TraceResponseXml(response, memoryStream);
-
-                    serviceResponse = this.ReadResponseXml(memoryStream, response.Headers);
+                    // Copy response to in-memory stream and reset position to start.
+                    EwsUtilities.CopyStream(serviceResponseStream, memoryStream);
+                    memoryStream.Position = 0;
                 }
+
+                this.TraceResponseXml(response, memoryStream);
+
+                serviceResponse = this.ReadResponseXml(memoryStream, response.Headers);
             }
             else
             {
-                using (Stream responseStream = await ServiceRequestBase.GetResponseStream(response))
-                {
-                    serviceResponse = this.ReadResponseXml(responseStream, response.Headers);
-                }
+                using Stream responseStream = await ServiceRequestBase.GetResponseStream(response);
+                serviceResponse = this.ReadResponseXml(responseStream, response.Headers);
             }
         }
         catch (EwsHttpClientException e)

@@ -402,16 +402,14 @@ internal abstract class ServiceRequestBase
     /// <param name="request">The request.</param>
     private void EmitRequest(IEwsHttpWebRequest request)
     {
-        using (var memoryStream = new MemoryStream())
+        using var memoryStream = new MemoryStream();
+        using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
         {
-            using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
-            {
-                this.WriteToXml(writer);
-            }
-            memoryStream.Position = 0;
-            using (StreamReader reader = new(memoryStream, Encoding.UTF8, false, 4096, true))
-                request.Content = reader.ReadToEnd();
+            this.WriteToXml(writer);
         }
+        memoryStream.Position = 0;
+        using StreamReader reader = new(memoryStream, Encoding.UTF8, false, 4096, true);
+        request.Content = reader.ReadToEnd();
     }
 
     /// <summary>
@@ -422,28 +420,26 @@ internal abstract class ServiceRequestBase
     /// <param name="needTrace"></param>
     private void TraceAndEmitRequest(IEwsHttpWebRequest request, bool needSignature, bool needTrace)
     {
-        using (MemoryStream memoryStream = new())
+        using MemoryStream memoryStream = new();
+        using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
         {
-            using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
-            {
-                writer.RequireWSSecurityUtilityNamespace = needSignature;
-                this.WriteToXml(writer);
-            }
-
-            if (needSignature)
-            {
-                this.service.Credentials.Sign(memoryStream);
-            }
-
-            if (needTrace)
-            {
-                this.TraceXmlRequest(memoryStream);
-            }
-
-            memoryStream.Position = 0;
-            using (var reader = new StreamReader(memoryStream, Encoding.UTF8, false, 4096, true))
-                request.Content = reader.ReadToEnd();
+            writer.RequireWSSecurityUtilityNamespace = needSignature;
+            this.WriteToXml(writer);
         }
+
+        if (needSignature)
+        {
+            this.service.Credentials.Sign(memoryStream);
+        }
+
+        if (needTrace)
+        {
+            this.TraceXmlRequest(memoryStream);
+        }
+
+        memoryStream.Position = 0;
+        using var reader = new StreamReader(memoryStream, Encoding.UTF8, false, 4096, true);
+        request.Content = reader.ReadToEnd();
     }
 
     /// <summary>
@@ -823,85 +819,79 @@ internal abstract class ServiceRequestBase
     {
         if (webException.Response != null)
         {
-            using (IEwsHttpWebResponse httpWebResponse = this.Service.HttpWebRequestFactory.CreateExceptionResponse(webException))
+            using IEwsHttpWebResponse httpWebResponse = this.Service.HttpWebRequestFactory.CreateExceptionResponse(webException);
+            SoapFaultDetails soapFaultDetails = null;
+
+            if (httpWebResponse.StatusCode == HttpStatusCode.InternalServerError)
             {
-                SoapFaultDetails soapFaultDetails = null;
+                this.Service.ProcessHttpResponseHeaders(TraceFlags.EwsResponseHttpHeaders, httpWebResponse);
 
-                if (httpWebResponse.StatusCode == HttpStatusCode.InternalServerError)
+                // If tracing is enabled, we read the entire response into a MemoryStream so that we
+                // can pass it along to the ITraceListener. Then we parse the response from the 
+                // MemoryStream.
+                if (this.Service.IsTraceEnabledFor(TraceFlags.EwsResponse))
                 {
-                    this.Service.ProcessHttpResponseHeaders(TraceFlags.EwsResponseHttpHeaders, httpWebResponse);
-
-                    // If tracing is enabled, we read the entire response into a MemoryStream so that we
-                    // can pass it along to the ITraceListener. Then we parse the response from the 
-                    // MemoryStream.
-                    if (this.Service.IsTraceEnabledFor(TraceFlags.EwsResponse))
+                    using MemoryStream memoryStream = new();
+                    using (Stream serviceResponseStream = await ServiceRequestBase.GetResponseStream(httpWebResponse))
                     {
-                        using (MemoryStream memoryStream = new())
-                        {
-                            using (Stream serviceResponseStream = await ServiceRequestBase.GetResponseStream(httpWebResponse))
-                            {
-                                // Copy response to in-memory stream and reset position to start.
-                                EwsUtilities.CopyStream(serviceResponseStream, memoryStream);
-                                memoryStream.Position = 0;
-                            }
-
-                            this.TraceResponseXml(httpWebResponse, memoryStream);
-
-                            EwsServiceXmlReader reader = new(memoryStream, this.Service);
-                            soapFaultDetails = this.ReadSoapFault(reader);
-                        }
-                    }
-                    else
-                    {
-                        using (Stream stream = await ServiceRequestBase.GetResponseStream(httpWebResponse))
-                        {
-                            EwsServiceXmlReader reader = new(stream, this.Service);
-                            soapFaultDetails = this.ReadSoapFault(reader);
-                        }
+                        // Copy response to in-memory stream and reset position to start.
+                        EwsUtilities.CopyStream(serviceResponseStream, memoryStream);
+                        memoryStream.Position = 0;
                     }
 
-                    if (soapFaultDetails != null)
-                    {
-                        switch (soapFaultDetails.ResponseCode)
-                        {
-                            case ServiceError.ErrorInvalidServerVersion:
-                                throw new ServiceVersionException(Strings.ServerVersionNotSupported);
+                    this.TraceResponseXml(httpWebResponse, memoryStream);
 
-                            case ServiceError.ErrorSchemaValidation:
-                                // If we're talking to an E12 server (8.00.xxxx.xxx), a schema validation error is the same as a version mismatch error.
-                                // (Which only will happen if we send a request that's not valid for E12).
-                                if ((this.Service.ServerInfo != null) &&
-                                    (this.Service.ServerInfo.MajorVersion == 8) && (this.Service.ServerInfo.MinorVersion == 0))
-                                {
-                                    throw new ServiceVersionException(Strings.ServerVersionNotSupported);
-                                }
-
-                                break;
-
-                            case ServiceError.ErrorIncorrectSchemaVersion:
-                                // This shouldn't happen. It indicates that a request wasn't valid for the version that was specified.
-                                EwsUtilities.Assert(
-                                    false,
-                                    "ServiceRequestBase.ProcessEwsHttpClientException",
-                                    "Exchange server supports requested version but request was invalid for that version");
-                                break;
-
-                            case ServiceError.ErrorServerBusy:
-                                throw new ServerBusyException(new ServiceResponse(soapFaultDetails));
-
-                            default:
-                                // Other error codes will be reported as remote error
-                                break;
-                        }
-
-                        // General fall-through case: throw a ServiceResponseException
-                        throw new ServiceResponseException(new ServiceResponse(soapFaultDetails));
-                    }
+                    EwsServiceXmlReader reader = new(memoryStream, this.Service);
+                    soapFaultDetails = this.ReadSoapFault(reader);
                 }
                 else
                 {
-                    this.Service.ProcessHttpErrorResponse(httpWebResponse, webException);
+                    using Stream stream = await ServiceRequestBase.GetResponseStream(httpWebResponse);
+                    EwsServiceXmlReader reader = new(stream, this.Service);
+                    soapFaultDetails = this.ReadSoapFault(reader);
                 }
+
+                if (soapFaultDetails != null)
+                {
+                    switch (soapFaultDetails.ResponseCode)
+                    {
+                        case ServiceError.ErrorInvalidServerVersion:
+                            throw new ServiceVersionException(Strings.ServerVersionNotSupported);
+
+                        case ServiceError.ErrorSchemaValidation:
+                            // If we're talking to an E12 server (8.00.xxxx.xxx), a schema validation error is the same as a version mismatch error.
+                            // (Which only will happen if we send a request that's not valid for E12).
+                            if ((this.Service.ServerInfo != null) &&
+                                (this.Service.ServerInfo.MajorVersion == 8) && (this.Service.ServerInfo.MinorVersion == 0))
+                            {
+                                throw new ServiceVersionException(Strings.ServerVersionNotSupported);
+                            }
+
+                            break;
+
+                        case ServiceError.ErrorIncorrectSchemaVersion:
+                            // This shouldn't happen. It indicates that a request wasn't valid for the version that was specified.
+                            EwsUtilities.Assert(
+                                false,
+                                "ServiceRequestBase.ProcessEwsHttpClientException",
+                                "Exchange server supports requested version but request was invalid for that version");
+                            break;
+
+                        case ServiceError.ErrorServerBusy:
+                            throw new ServerBusyException(new ServiceResponse(soapFaultDetails));
+
+                        default:
+                            // Other error codes will be reported as remote error
+                            break;
+                    }
+
+                    // General fall-through case: throw a ServiceResponseException
+                    throw new ServiceResponseException(new ServiceResponse(soapFaultDetails));
+                }
+            }
+            else
+            {
+                this.Service.ProcessHttpErrorResponse(httpWebResponse, webException);
             }
         }
     }

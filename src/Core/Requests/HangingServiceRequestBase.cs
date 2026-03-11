@@ -186,45 +186,43 @@ internal abstract class HangingServiceRequestBase : ServiceRequestBase
             {
                 bool traceEwsResponse = this.Service.IsTraceEnabledFor(TraceFlags.EwsResponse);
 
-                using (Stream responseStream = await this.response.GetResponseStream())
-                {
-                    tracingStream = new HangingTraceStream(responseStream, this.Service) { ReadTimeout = 2 * this.heartbeatFrequencyMilliseconds };
+                using Stream responseStream = await this.response.GetResponseStream();
+                tracingStream = new HangingTraceStream(responseStream, this.Service) { ReadTimeout = 2 * this.heartbeatFrequencyMilliseconds };
 
-                    // EwsServiceMultiResponseXmlReader.Create causes a read.
+                // EwsServiceMultiResponseXmlReader.Create causes a read.
+                if (traceEwsResponse)
+                {
+                    responseCopy = new MemoryStream();
+                    tracingStream.SetResponseCopy(responseCopy);
+                }
+
+                EwsServiceMultiResponseXmlReader ewsXmlReader = EwsServiceMultiResponseXmlReader.Create(tracingStream, this.Service);
+
+                while (this.IsConnected)
+                {
+                    object responseObject = null;
                     if (traceEwsResponse)
                     {
-                        responseCopy = new MemoryStream();
-                        tracingStream.SetResponseCopy(responseCopy);
-                    }
-
-                    EwsServiceMultiResponseXmlReader ewsXmlReader = EwsServiceMultiResponseXmlReader.Create(tracingStream, this.Service);
-
-                    while (this.IsConnected)
-                    {
-                        object responseObject = null;
-                        if (traceEwsResponse)
-                        {
-                            try
-                            {
-                                responseObject = await this.ReadResponseAsync(ewsXmlReader, this.response.Headers, CancellationToken.None);
-                            }
-                            finally
-                            {
-                                this.Service.TraceXml(TraceFlags.EwsResponse, responseCopy);
-                            }
-
-                            // reset the stream collector.
-                            responseCopy.Dispose();
-                            responseCopy = new MemoryStream();
-                            tracingStream.SetResponseCopy(responseCopy);
-                        }
-                        else
+                        try
                         {
                             responseObject = await this.ReadResponseAsync(ewsXmlReader, this.response.Headers, CancellationToken.None);
                         }
+                        finally
+                        {
+                            this.Service.TraceXml(TraceFlags.EwsResponse, responseCopy);
+                        }
 
-                        this.responseHandler(responseObject);
+                        // reset the stream collector.
+                        responseCopy.Dispose();
+                        responseCopy = new MemoryStream();
+                        tracingStream.SetResponseCopy(responseCopy);
                     }
+                    else
+                    {
+                        responseObject = await this.ReadResponseAsync(ewsXmlReader, this.response.Headers, CancellationToken.None);
+                    }
+
+                    this.responseHandler(responseObject);
                 }
             }
             catch (TimeoutException ex)

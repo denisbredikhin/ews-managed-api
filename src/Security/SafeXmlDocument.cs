@@ -80,10 +80,8 @@ internal class SafeXmlDocument : XmlDocument
     /// <param name="inStream">The stream containing the XML document to load.</param>
     public override void Load(Stream inStream)
     {
-        using (XmlReader reader = XmlReader.Create(inStream, this.settings))
-        {
-            this.Load(reader);
-        }
+        using XmlReader reader = XmlReader.Create(inStream, this.settings);
+        this.Load(reader);
     }
 
     /// <summary>
@@ -92,10 +90,8 @@ internal class SafeXmlDocument : XmlDocument
     /// <param name="txtReader">The TextReader used to feed the XML data into the document.</param>
     public override void Load(TextReader txtReader)
     {
-        using (XmlReader reader = XmlReader.Create(txtReader, this.settings))
-        {
-            this.Load(reader);
-        }
+        using XmlReader reader = XmlReader.Create(txtReader, this.settings);
+        this.Load(reader);
     }
 
     /// <summary>
@@ -132,10 +128,8 @@ internal class SafeXmlDocument : XmlDocument
     /// <param name="xml">String containing the XML document to load.</param>
     public override void LoadXml(string xml)
     {
-        using (XmlReader reader = XmlReader.Create(new StringReader(xml), this.settings))
-        {
-            base.Load(reader);
-        }
+        using XmlReader reader = XmlReader.Create(new StringReader(xml), this.settings);
+        base.Load(reader);
     }
     #endregion
 }

@@ -117,61 +117,55 @@ internal abstract class AutodiscoverRequest
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml") { CharSet = "utf-8" };
                 }
 
-            using (var client = this.Service.PrepareHttpClient())
-            using (IEwsHttpWebResponse webResponse = new EwsHttpWebResponse(client.SendAsync(request).Result))
+            using var client = this.Service.PrepareHttpClient();
+            using IEwsHttpWebResponse webResponse = new EwsHttpWebResponse(client.SendAsync(request).Result);
+            if (AutodiscoverRequest.IsRedirectionResponse(webResponse))
             {
-                if (AutodiscoverRequest.IsRedirectionResponse(webResponse))
+                AutodiscoverResponse response = this.CreateRedirectionResponse(webResponse);
+                if (response != null)
                 {
-                    AutodiscoverResponse response = this.CreateRedirectionResponse(webResponse);
-                    if (response != null)
-                    {
-                        return response;
-                    }
-                    else
-                    {
-                        throw new ServiceRemoteException(Strings.InvalidRedirectionResponseReturned);
-                    }
+                    return response;
                 }
-
-                using (Stream responseStream = await AutodiscoverRequest.GetResponseStream(webResponse))
+                else
                 {
-                    using (MemoryStream memoryStream = new())
-                    {
-                        // Copy response stream to in-memory stream and reset to start
-                        EwsUtilities.CopyStream(responseStream, memoryStream);
-                        memoryStream.Position = 0;
-
-                        this.Service.TraceResponse(webResponse, memoryStream);                           
-
-                        EwsXmlReader ewsXmlReader = new(memoryStream);
-
-                        // WCF may not generate an XML declaration.
-                        ewsXmlReader.Read();
-                        if (ewsXmlReader.NodeType == XmlNodeType.XmlDeclaration)
-                        {
-                            ewsXmlReader.ReadStartElement(XmlNamespace.Soap, XmlElementNames.SOAPEnvelopeElementName);
-                        }
-                        else if ((ewsXmlReader.NodeType != XmlNodeType.Element) || (ewsXmlReader.LocalName != XmlElementNames.SOAPEnvelopeElementName) || (ewsXmlReader.NamespaceUri != EwsUtilities.GetNamespaceUri(XmlNamespace.Soap)))
-                        {
-                            throw new ServiceXmlDeserializationException(Strings.InvalidAutodiscoverServiceResponse);
-                        }
-
-                        this.ReadSoapHeaders(ewsXmlReader);
-
-                        AutodiscoverResponse response = this.ReadSoapBody(ewsXmlReader);
-
-                        ewsXmlReader.ReadEndElement(XmlNamespace.Soap, XmlElementNames.SOAPEnvelopeElementName);
-
-                        if (response.ErrorCode == AutodiscoverErrorCode.NoError)
-                        {
-                            return response;
-                        }
-                        else
-                        {
-                            throw new AutodiscoverResponseException(response.ErrorCode, response.ErrorMessage);
-                        }
-                    }
+                    throw new ServiceRemoteException(Strings.InvalidRedirectionResponseReturned);
                 }
+            }
+
+            using Stream responseStream = await AutodiscoverRequest.GetResponseStream(webResponse);
+            using MemoryStream memoryStream = new();
+            // Copy response stream to in-memory stream and reset to start
+            EwsUtilities.CopyStream(responseStream, memoryStream);
+            memoryStream.Position = 0;
+
+            this.Service.TraceResponse(webResponse, memoryStream);
+
+            EwsXmlReader ewsXmlReader = new(memoryStream);
+
+            // WCF may not generate an XML declaration.
+            ewsXmlReader.Read();
+            if (ewsXmlReader.NodeType == XmlNodeType.XmlDeclaration)
+            {
+                ewsXmlReader.ReadStartElement(XmlNamespace.Soap, XmlElementNames.SOAPEnvelopeElementName);
+            }
+            else if ((ewsXmlReader.NodeType != XmlNodeType.Element) || (ewsXmlReader.LocalName != XmlElementNames.SOAPEnvelopeElementName) || (ewsXmlReader.NamespaceUri != EwsUtilities.GetNamespaceUri(XmlNamespace.Soap)))
+            {
+                throw new ServiceXmlDeserializationException(Strings.InvalidAutodiscoverServiceResponse);
+            }
+
+            this.ReadSoapHeaders(ewsXmlReader);
+
+            AutodiscoverResponse response = this.ReadSoapBody(ewsXmlReader);
+
+            ewsXmlReader.ReadEndElement(XmlNamespace.Soap, XmlElementNames.SOAPEnvelopeElementName);
+
+            if (response.ErrorCode == AutodiscoverErrorCode.NoError)
+            {
+                return response;
+            }
+            else
+            {
+                throw new AutodiscoverResponseException(response.ErrorCode, response.ErrorMessage);
             }
         }
         catch (EwsHttpClientException ex)
@@ -239,28 +233,24 @@ internal abstract class AutodiscoverRequest
                 // MemoryStream.
                 if (this.Service.IsTraceEnabledFor(TraceFlags.AutodiscoverRequest))
                 {
-                    using (MemoryStream memoryStream = new())
+                    using MemoryStream memoryStream = new();
+                    using (Stream serviceResponseStream = await AutodiscoverRequest.GetResponseStream(httpWebResponse))
                     {
-                        using (Stream serviceResponseStream = await AutodiscoverRequest.GetResponseStream(httpWebResponse))
-                        {
-                            // Copy response to in-memory stream and reset position to start.
-                            EwsUtilities.CopyStream(serviceResponseStream, memoryStream);
-                            memoryStream.Position = 0;
-                        }
-
-                        this.Service.TraceResponse(httpWebResponse, memoryStream);
-
-                        EwsXmlReader reader = new(memoryStream);
-                        soapFaultDetails = this.ReadSoapFault(reader);
+                        // Copy response to in-memory stream and reset position to start.
+                        EwsUtilities.CopyStream(serviceResponseStream, memoryStream);
+                        memoryStream.Position = 0;
                     }
+
+                    this.Service.TraceResponse(httpWebResponse, memoryStream);
+
+                    EwsXmlReader reader = new(memoryStream);
+                    soapFaultDetails = this.ReadSoapFault(reader);
                 }
                 else
                 {
-                    using (Stream stream = await AutodiscoverRequest.GetResponseStream(httpWebResponse))
-                    {
-                        EwsXmlReader reader = new(stream);
-                        soapFaultDetails = this.ReadSoapFault(reader);
-                    }
+                    using Stream stream = await AutodiscoverRequest.GetResponseStream(httpWebResponse);
+                    EwsXmlReader reader = new(stream);
+                    soapFaultDetails = this.ReadSoapFault(reader);
                 }
 
                 if (soapFaultDetails != null)

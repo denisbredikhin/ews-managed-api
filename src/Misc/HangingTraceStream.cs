@@ -162,13 +162,11 @@ internal class HangingTraceStream : Stream
     /// <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed. </exception>
     public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
     {
-        using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
-        {
-            if (ReadTimeout != 0)
-                linkedTokenSource.CancelAfter(TimeSpan.FromMilliseconds(ReadTimeout));
-            int retVal = await this.underlyingStream.ReadAsync(buffer, offset, count, linkedTokenSource.Token);
-            return PostRead(buffer, offset, count, retVal);
-        }
+        using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        if (ReadTimeout != 0)
+            linkedTokenSource.CancelAfter(TimeSpan.FromMilliseconds(ReadTimeout));
+        int retVal = await this.underlyingStream.ReadAsync(buffer, offset, count, linkedTokenSource.Token);
+        return PostRead(buffer, offset, count, retVal);
     }
 
 

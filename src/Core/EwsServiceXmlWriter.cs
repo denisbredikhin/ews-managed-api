@@ -400,19 +400,17 @@ internal class EwsServiceXmlWriter : IDisposable
         byte[] buffer = new byte[BufferSize];
         int bytesRead;
 
-        using (BinaryReader reader = new(stream))
+        using BinaryReader reader = new(stream);
+        do
         {
-            do
-            {
-                bytesRead = reader.Read(buffer, 0, BufferSize);
+            bytesRead = reader.Read(buffer, 0, BufferSize);
 
-                if (bytesRead > 0)
-                {
-                    this.xmlWriter.WriteBase64(buffer, 0, bytesRead);
-                }
+            if (bytesRead > 0)
+            {
+                this.xmlWriter.WriteBase64(buffer, 0, bytesRead);
             }
-            while (bytesRead > 0);
         }
+        while (bytesRead > 0);
     }
 
     /// <summary>

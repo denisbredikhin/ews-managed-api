@@ -199,70 +199,60 @@ public sealed class AutodiscoverService : ExchangeServiceBase
             // the request stream.
             if (this.IsTraceEnabledFor(TraceFlags.AutodiscoverRequest))
             {
-                using (MemoryStream memoryStream = new())
-                {
-                    using (StreamWriter writer = new(memoryStream))
-                    {
-                        this.WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
-                        writer.Flush();
+                using MemoryStream memoryStream = new();
+                using StreamWriter writer = new(memoryStream);
+                this.WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
+                writer.Flush();
 
-                        this.TraceXml(TraceFlags.AutodiscoverRequest, memoryStream);
+                this.TraceXml(TraceFlags.AutodiscoverRequest, memoryStream);
 
-                        EwsUtilities.CopyStream(memoryStream, requestStream);
-                    }
-                }
+                EwsUtilities.CopyStream(memoryStream, requestStream);
             }
             else
             {
-                using (StreamWriter writer = new(requestStream))
-                {
-                    this.WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
-                }
+                using StreamWriter writer = new(requestStream);
+                this.WriteLegacyAutodiscoverRequest(emailAddress, settings, writer);
             }
             request.Content = new ByteArrayContent(requestStream.ToArray());
             request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml") { CharSet = "utf-8" };
         }
 
-        using (var client = this.PrepareHttpClient())
-        using (IEwsHttpWebResponse webResponse = new EwsHttpWebResponse(client.SendAsync(request).Result))
+        using var client = this.PrepareHttpClient();
+        using IEwsHttpWebResponse webResponse = new EwsHttpWebResponse(client.SendAsync(request).Result);
+        Uri redirectUrl;
+        if (this.TryGetRedirectionResponse(webResponse, out redirectUrl))
         {
-            Uri redirectUrl;
-            if (this.TryGetRedirectionResponse(webResponse, out redirectUrl))
-            {
-                settings.MakeRedirectionResponse(redirectUrl);
-                return settings;
-            }
-
-            using (Stream responseStream = await webResponse.GetResponseStream())
-            {
-                // If tracing is enabled, we read the entire response into a MemoryStream so that we
-                // can pass it along to the ITraceListener. Then we parse the response from the 
-                // MemoryStream.
-                if (this.IsTraceEnabledFor(TraceFlags.AutodiscoverResponse))
-                {
-                    using (MemoryStream memoryStream = new())
-                    {
-                        // Copy response stream to in-memory stream and reset to start
-                        EwsUtilities.CopyStream(responseStream, memoryStream);
-                        memoryStream.Position = 0;
-
-                        this.TraceResponse(webResponse, memoryStream);
-
-                        EwsXmlReader reader = new(memoryStream);
-                        reader.Read(XmlNodeType.XmlDeclaration);
-                        settings.LoadFromXml(reader);
-                    }
-                }
-                else
-                {
-                    EwsXmlReader reader = new(responseStream);
-                    reader.Read(XmlNodeType.XmlDeclaration);
-                    settings.LoadFromXml(reader);
-                }
-            }
-
+            settings.MakeRedirectionResponse(redirectUrl);
             return settings;
         }
+
+        using (Stream responseStream = await webResponse.GetResponseStream())
+        {
+            // If tracing is enabled, we read the entire response into a MemoryStream so that we
+            // can pass it along to the ITraceListener. Then we parse the response from the 
+            // MemoryStream.
+            if (this.IsTraceEnabledFor(TraceFlags.AutodiscoverResponse))
+            {
+                using MemoryStream memoryStream = new();
+                // Copy response stream to in-memory stream and reset to start
+                EwsUtilities.CopyStream(responseStream, memoryStream);
+                memoryStream.Position = 0;
+
+                this.TraceResponse(webResponse, memoryStream);
+
+                EwsXmlReader reader = new(memoryStream);
+                reader.Read(XmlNodeType.XmlDeclaration);
+                settings.LoadFromXml(reader);
+            }
+            else
+            {
+                EwsXmlReader reader = new(responseStream);
+                reader.Read(XmlNodeType.XmlDeclaration);
+                settings.LoadFromXml(reader);
+            }
+        }
+
+        return settings;
     }
 
     /// <summary>
@@ -301,13 +291,12 @@ public sealed class AutodiscoverService : ExchangeServiceBase
 
         try
         {
-            using (var client = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = false }) {
-                Timeout = AutodiscoverTimeout
-            })
+            using var client = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = false })
             {
-                var httpResponse = client.GetAsync(url).Result;
-                response = new EwsHttpWebResponse(httpResponse);
-            }
+                Timeout = AutodiscoverTimeout
+            };
+            var httpResponse = client.GetAsync(url).Result;
+            response = new EwsHttpWebResponse(httpResponse);
         }
         catch (Exception ex)
         {
@@ -1372,13 +1361,12 @@ public sealed class AutodiscoverService : ExchangeServiceBase
 
             try
             {
-                using (var client = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = false }) {
-                    Timeout = AutodiscoverTimeout
-                })
+                using var client = new HttpClient(new HttpClientHandler() { AllowAutoRedirect = false })
                 {
-                    var httpResponse = client.GetAsync(autoDiscoverUrl).Result;
-                    response = new EwsHttpWebResponse(httpResponse);
-                }
+                    Timeout = AutodiscoverTimeout
+                };
+                var httpResponse = client.GetAsync(autoDiscoverUrl).Result;
+                response = new EwsHttpWebResponse(httpResponse);
             }
             catch (Exception ex)
             {

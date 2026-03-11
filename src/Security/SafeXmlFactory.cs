@@ -124,10 +124,8 @@ internal class SafeXmlFactory
     /// <returns>A new instance of the XPathDocument class.</returns>
     public static XPathDocument CreateXPathDocument(Stream stream)
     {
-        using (XmlReader xr = XmlReader.Create(stream, SafeXmlFactory.defaultSettings))
-        {
-            return CreateXPathDocument(xr);
-        }
+        using XmlReader xr = XmlReader.Create(stream, SafeXmlFactory.defaultSettings);
+        return CreateXPathDocument(xr);
     }
 
     /// <summary>
@@ -137,10 +135,8 @@ internal class SafeXmlFactory
     /// <returns>A new instance of the XPathDocument class.</returns>
     public static XPathDocument CreateXPathDocument(string uri)
     {
-        using (XmlReader xr = XmlReader.Create(uri, SafeXmlFactory.defaultSettings))
-        {
-            return CreateXPathDocument(xr);
-        }
+        using XmlReader xr = XmlReader.Create(uri, SafeXmlFactory.defaultSettings);
+        return CreateXPathDocument(xr);
     }
 
     /// <summary>
@@ -150,10 +146,8 @@ internal class SafeXmlFactory
     /// <returns>A new instance of the XPathDocument class.</returns>
     public static XPathDocument CreateXPathDocument(TextReader textReader)
     {
-        using (XmlReader xr = XmlReader.Create(textReader, SafeXmlFactory.defaultSettings))
-        {
-            return CreateXPathDocument(xr);
-        }
+        using XmlReader xr = XmlReader.Create(textReader, SafeXmlFactory.defaultSettings);
+        return CreateXPathDocument(xr);
     }
 
     /// <summary>
@@ -183,10 +177,8 @@ internal class SafeXmlFactory
     /// <returns>A new instance of the XPathDocument class.</returns>
     public static XPathDocument CreateXPathDocument(string uri, XmlSpace space)
     {
-        using (XmlReader xr = XmlReader.Create(uri, SafeXmlFactory.defaultSettings))
-        {
-            return CreateXPathDocument(xr, space);
-        }
+        using XmlReader xr = XmlReader.Create(uri, SafeXmlFactory.defaultSettings);
+        return CreateXPathDocument(xr, space);
     }
 
     /// <summary>
