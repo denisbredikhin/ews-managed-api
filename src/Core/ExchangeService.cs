@@ -346,9 +346,9 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         Folder result = await this.BindToFolder(folderId, propertySet, token);
 
-        if (result is TFolder)
+        if (result is TFolder folder)
         {
-            return (TFolder)result;
+            return folder;
         }
         else
         {
@@ -1483,9 +1483,9 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         Item result = await this.BindToItem(itemId, propertySet, token).ConfigureAwait(false);
 
-        if (result is TItem)
+        if (result is TItem item)
         {
-            return (TItem)result;
+            return item;
         }
         else
         {
