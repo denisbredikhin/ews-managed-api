@@ -64,11 +64,9 @@ public sealed class ItemCollection<TItem> : ComplexProperty, IEnumerable<TItem>
 
                 if (reader.NodeType == XmlNodeType.Element)
                 {
-                    TItem item = EwsUtilities.CreateEwsObjectFromXmlElementName<Item>(
+                    if (EwsUtilities.CreateEwsObjectFromXmlElementName<Item>(
                         reader.Service,
-                        reader.LocalName) as TItem;
-
-                    if (item == null)
+                        reader.LocalName) is not TItem item)
                     {
                         reader.SkipCurrentElement();
                     }

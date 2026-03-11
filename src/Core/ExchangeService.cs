@@ -937,10 +937,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response collection.</returns>
     internal Task<ServiceResponseCollection<FindItemResponse<TItem>>> FindItems<TItem>(
         IEnumerable<FolderId> parentFolderIds,
-        SearchFilter searchFilter,
-        string queryString,
+        SearchFilter? searchFilter,
+        string? queryString,
         ViewBase view,
-        Grouping groupBy,
+        Grouping? groupBy,
         ServiceErrorHandling errorHandlingMode,
         CancellationToken token)
         where TItem : Item

@@ -576,8 +576,7 @@ internal static class EwsUtilities
     internal static void CopyStream(Stream source, Stream target)
     {
         // See if this is a MemoryStream -- we can use WriteTo.
-        MemoryStream memContentStream = source as MemoryStream;
-        if (memContentStream != null)
+        if (source is MemoryStream memContentStream)
         {
             memContentStream.WriteTo(target);
         }
@@ -1114,11 +1113,9 @@ internal static class EwsUtilities
     /// </summary>
     /// <param name="param">The param.</param>
     /// <param name="paramName">Name of the param.</param>
-    internal static void ValidateParamAllowNull(object param, string paramName)
+    internal static void ValidateParamAllowNull(object? param, string paramName)
     {
-        ISelfValidate selfValidate = param as ISelfValidate;
-
-        if (selfValidate != null)
+        if (param is ISelfValidate selfValidate)
         {
             try
             {
@@ -1133,9 +1130,8 @@ internal static class EwsUtilities
             }
         }
 
-        ServiceObject ewsObject = param as ServiceObject;
 
-        if (ewsObject != null)
+        if (param is ServiceObject ewsObject)
         {
             if (ewsObject.IsNew)
             {
@@ -1153,8 +1149,7 @@ internal static class EwsUtilities
     {
         bool isValid;
 
-        string strParam = param as string;
-        if (strParam != null)
+        if (param is string strParam)
         {
             isValid = !string.IsNullOrEmpty(strParam);
         }

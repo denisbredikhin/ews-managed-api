@@ -220,8 +220,7 @@ public abstract class ExchangeServiceBase
             // Nothing to adjust
             return serviceCredentials;
 
-        var networkCredentials = ((WebCredentials)serviceCredentials).Credentials as NetworkCredential;
-        if (networkCredentials != null)
+        if (((WebCredentials)serviceCredentials).Credentials is NetworkCredential networkCredentials)
         {
             CredentialCache credentialCache = new();
             credentialCache.Add(url, "NTLM", networkCredentials);

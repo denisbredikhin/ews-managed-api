@@ -329,8 +329,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
         // Process all of the item attachments in this collection.
         foreach (Attachment attachment in this)
         {
-            ItemAttachment itemAttachment = attachment as ItemAttachment;
-            if (itemAttachment != null)
+            if (attachment is ItemAttachment itemAttachment)
             {
                 // Make sure item was created/loaded before trying to create/delete sub-attachments
                 if (itemAttachment.Item != null)
@@ -419,9 +418,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
                 // 
                 if (this.owner.IsNew && this.owner.Service.RequestedServerVersion >= ExchangeVersion.Exchange2010_SP2)
                 {
-                    FileAttachment fileAttachment = attachment as FileAttachment;
-
-                    if (fileAttachment != null && fileAttachment.IsContactPhoto)
+                    if (attachment is FileAttachment fileAttachment && fileAttachment.IsContactPhoto)
                     {
                         if (contactPhotoFound)
                         {

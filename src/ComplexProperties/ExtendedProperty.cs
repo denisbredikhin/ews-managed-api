@@ -157,8 +157,7 @@ public sealed class ExtendedProperty : ComplexProperty
     {
         if (MapiTypeConverter.IsArrayType(this.PropertyDefinition.MapiType))
         {
-            Array array = this.Value as Array;
-            if (array == null)
+            if (this.Value is not Array array)
             {
                 return string.Empty;
             }
@@ -195,8 +194,7 @@ public sealed class ExtendedProperty : ComplexProperty
     /// <exception cref="T:System.NullReferenceException">The <paramref name="obj"/> parameter is null.</exception>
     public override bool Equals(object obj)
     {
-        ExtendedProperty other = obj as ExtendedProperty;
-        if ((other != null) && other.PropertyDefinition.Equals(this.PropertyDefinition))
+        if ((obj is ExtendedProperty other) && other.PropertyDefinition.Equals(this.PropertyDefinition))
         {
             return this.GetStringValue().Equals(other.GetStringValue());
         }

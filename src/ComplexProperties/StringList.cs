@@ -264,8 +264,7 @@ public sealed class StringList : ComplexProperty, IEnumerable<string>
     /// <exception cref="T:System.NullReferenceException">The <paramref name="obj"/> parameter is null.</exception>
     public override bool Equals(object obj)
     {
-        StringList other = obj as StringList;
-        if (other != null)
+        if (obj is StringList other)
         {
             return this.ToString().Equals(other.ToString());
         }

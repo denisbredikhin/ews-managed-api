@@ -88,12 +88,11 @@ internal class EwsServiceXmlWriter : IDisposable
         {
             // All value types should implement IConvertible. There are a couple of special cases 
             // that need to be handled directly. Otherwise use IConvertible.ToString()
-            IConvertible convertible = value as IConvertible;
             if (value.GetType().GetTypeInfo().IsEnum)
             {
                 strValue = EwsUtilities.SerializeEnum((Enum)value);
             }
-            else if (convertible != null)
+            else if (value is IConvertible convertible)
             {
                 switch (convertible.GetTypeCode())
                 {
@@ -114,8 +113,7 @@ internal class EwsServiceXmlWriter : IDisposable
             {
                 // If the value type doesn't implement IConvertible but implements IFormattable, use its
                 // ToString(format,formatProvider) method to convert to a string.
-                IFormattable formattable = value as IFormattable;
-                if (formattable != null)
+                if (value is IFormattable formattable)
                 {
                     // Null arguments mean that we use default format and default locale.
                     strValue = formattable.ToString(null, null);
@@ -128,7 +126,7 @@ internal class EwsServiceXmlWriter : IDisposable
                     // to see if it also implements ISearchStringProvider. We'll always use its IConvertible.ToString 
                     // or IFormattable.ToString method.
                     ISearchStringProvider searchStringProvider = value as ISearchStringProvider;
-                    strValue = searchStringProvider.GetSearchString();                        
+                    strValue = searchStringProvider.GetSearchString();
                 }
                 else if (value is byte[])
                 {

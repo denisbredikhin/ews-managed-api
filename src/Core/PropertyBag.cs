@@ -340,8 +340,7 @@ internal class PropertyBag
                 if (!this.Owner.IsNew)
                 {
                     // If owner is an item attachment, properties cannot be updated (EWS doesn't support updating item attachments)
-                    Item ownerItem = this.Owner as Item;
-                    if ((ownerItem != null) && ownerItem.IsAttachment)
+                    if ((this.Owner is Item ownerItem) && ownerItem.IsAttachment)
                     {
                         throw new ServiceObjectPropertyException(Strings.ItemAttachmentCannotBeUpdated, propertyDefinition);
                     }
@@ -678,9 +677,8 @@ internal class PropertyBag
             object propertyValue = this[propertyDefinition];
 
             bool handled = false;
-            ICustomUpdateSerializer updateSerializer = propertyValue as ICustomUpdateSerializer;
 
-            if (updateSerializer != null)
+            if (propertyValue is ICustomUpdateSerializer updateSerializer)
             {
                 handled = updateSerializer.WriteSetUpdateToXml(
                     writer,
@@ -720,9 +718,8 @@ internal class PropertyBag
         if (propertyDefinition.HasFlag(PropertyDefinitionFlags.CanDelete))
         {
             bool handled = false;
-            ICustomUpdateSerializer updateSerializer = propertyValue as ICustomUpdateSerializer;
 
-            if (updateSerializer != null)
+            if (propertyValue is ICustomUpdateSerializer updateSerializer)
             {
                 handled = updateSerializer.WriteDeleteUpdateToXml(writer, this.Owner);
             }

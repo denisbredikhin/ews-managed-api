@@ -161,9 +161,7 @@ public abstract class ServiceId : ComplexProperty
         }
         else
         {
-            ServiceId other = obj as ServiceId;
-
-            if (other == null)
+            if (obj is not ServiceId other)
             {
                 return false;
             }
@@ -171,7 +169,7 @@ public abstract class ServiceId : ComplexProperty
             {
                 return false;
             }
-            else 
+            else
             {
                 return this.UniqueId.Equals(other.UniqueId);
             }

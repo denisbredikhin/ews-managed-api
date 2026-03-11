@@ -81,8 +81,7 @@ internal class StartTimeZonePropertyDefinition : TimeZonePropertyDefinition
         {
             if (writer.Service.RequestedServerVersion == ExchangeVersion.Exchange2007_SP1)
             {
-                ExchangeService service = writer.Service as ExchangeService;
-                if (service != null && service.Exchange2007CompatibilityMode == false)
+                if (writer.Service is ExchangeService service && service.Exchange2007CompatibilityMode == false)
                 {
                     MeetingTimeZone meetingTimeZone = new((TimeZoneInfo)value);
                     meetingTimeZone.WriteToXml(writer, XmlElementNames.MeetingTimeZone);

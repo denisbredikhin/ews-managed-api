@@ -137,8 +137,7 @@ internal class AsyncRequestResult : IAsyncResult
         // Validate null first
         EwsUtilities.ValidateParam(asyncResult, nameof(asyncResult));
 
-        AsyncRequestResult asyncRequestResult = asyncResult as AsyncRequestResult;
-        if (asyncRequestResult == null)
+        if (asyncResult is not AsyncRequestResult asyncRequestResult)
         {
             // Strings.InvalidAsyncResult is copied from the error message of HttpWebRequest.EndGetResponse()
             // Just use this simple string for all kinds of invalid IAsyncResult parameters
@@ -158,8 +157,7 @@ internal class AsyncRequestResult : IAsyncResult
         }
 
         // Validate the request type
-        T serviceRequest = asyncRequestResult.ServiceRequest as T;
-        if (serviceRequest == null)
+        if (asyncRequestResult.ServiceRequest is not T serviceRequest)
         {
             throw new ArgumentException(Strings.InvalidAsyncResult, nameof(asyncResult));
         }

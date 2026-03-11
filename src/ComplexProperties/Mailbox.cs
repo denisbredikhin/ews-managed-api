@@ -181,9 +181,7 @@ public class Mailbox : ComplexProperty, ISearchStringProvider
         }
         else
         {
-            Mailbox other = obj as Mailbox;
-
-            if (other == null)
+            if (obj is not Mailbox other)
             {
                 return false;
             }

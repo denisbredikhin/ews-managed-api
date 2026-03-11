@@ -177,8 +177,7 @@ public class Contact : Item
         // Iterates in reverse order to remove file attachments that have IsContactPhoto set to true.
         for (int index = this.Attachments.Count - 1; index >= 0; index--)
         {
-            FileAttachment fileAttachment = this.Attachments[index] as FileAttachment;
-            if (fileAttachment != null)
+            if (this.Attachments[index] is FileAttachment fileAttachment)
             {
                 if (fileAttachment.IsContactPhoto)
                 {

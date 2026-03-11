@@ -200,8 +200,7 @@ internal sealed class GetUserPhotoRequest : SimpleServiceRequestBase
         {
             // 404 is a valid return code in the case of GetUserPhoto when the photo is
             // not found, so it is necessary to catch this exception here.
-            EwsHttpClientException webException = ex.InnerException as EwsHttpClientException;
-            if (webException != null)
+            if (ex.InnerException is EwsHttpClientException webException)
             {
                 var errorResponse = webException.Response;
                 if (errorResponse != null && errorResponse.StatusCode == HttpStatusCode.NotFound)

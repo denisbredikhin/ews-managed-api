@@ -310,9 +310,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <param name="response">The response.</param>
     private void HandleServiceResponseObject(object response)
     {
-        GetStreamingEventsResponse gseResponse = response as GetStreamingEventsResponse;
-
-        if (gseResponse == null)
+        if (response is not GetStreamingEventsResponse gseResponse)
         {
             throw new ArgumentException();
         }

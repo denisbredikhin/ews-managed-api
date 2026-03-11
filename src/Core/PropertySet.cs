@@ -516,8 +516,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     {
         foreach (PropertyDefinitionBase propDefBase in this.additionalProperties)
         {
-            PropertyDefinition propertyDefinition = propDefBase as PropertyDefinition;
-            if (propertyDefinition != null)
+            if (propDefBase is PropertyDefinition propertyDefinition)
             {
                 if (propertyDefinition.Version > request.Service.RequestedServerVersion)
                 {

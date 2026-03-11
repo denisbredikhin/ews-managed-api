@@ -186,9 +186,7 @@ public sealed class FolderId : ServiceId
         }
         else
         {
-            FolderId other = obj as FolderId;
-
-            if (other == null)
+            if (obj is not FolderId other)
             {
                 return false;
             }

@@ -178,8 +178,7 @@ internal class MapiTypeConverterMapEntry
     /// <param name="value">The value.</param>
     private void ValidateValueAsArray(object value)
     {
-        Array array = value as Array;
-        if (array == null)
+        if (value is not Array array)
         {
             throw new ArgumentException(
                 string.Format(

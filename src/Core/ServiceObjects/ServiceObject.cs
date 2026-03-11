@@ -110,9 +110,7 @@ public abstract class ServiceObject
                 {
                     foreach (Attribute attribute in this.GetType().GetTypeInfo().GetCustomAttributes(false))
                     {
-                        ServiceObjectDefinitionAttribute definitionAttribute = attribute as ServiceObjectDefinitionAttribute;
-
-                        if (definitionAttribute != null)
+                        if (attribute is ServiceObjectDefinitionAttribute definitionAttribute)
                         {
                             this.xmlElementName = definitionAttribute.XmlElementName;
                         }
@@ -332,9 +330,7 @@ public abstract class ServiceObject
     {
         get
         {
-
-            PropertyDefinition propDef = propertyDefinition as PropertyDefinition;
-            if (propDef != null)
+            if (propertyDefinition is PropertyDefinition propDef)
             {
                 return this.PropertyBag[propDef];
             }
@@ -406,8 +402,7 @@ public abstract class ServiceObject
     /// <returns>True if property retrieved, false otherwise.</returns>
     public bool TryGetProperty<T>(PropertyDefinitionBase propertyDefinition, out T propertyValue)
     {
-        PropertyDefinition propDef = propertyDefinition as PropertyDefinition;
-        if (propDef != null)
+        if (propertyDefinition is PropertyDefinition propDef)
         {
             return this.PropertyBag.TryGetProperty<T>(propDef, out propertyValue);
         }

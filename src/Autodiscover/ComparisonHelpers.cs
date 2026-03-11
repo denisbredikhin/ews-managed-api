@@ -43,8 +43,7 @@ internal static class ComparisonHelpers
     {
         foreach (object obj in collection)
         {
-            string str = obj as string;
-            if (str != null)
+            if (obj is string str)
             {
                 if (string.Compare(str, match, StringComparison.OrdinalIgnoreCase) == 0)
                 {

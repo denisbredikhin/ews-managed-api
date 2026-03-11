@@ -353,8 +353,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
         //   . datetime, boolean, byte, short, int, long, string, ushort, unint, ulong
         //
         // First check for a string array
-        string[] dictionaryObjectAsStringArray = dictionaryObject as string[];
-        if (dictionaryObjectAsStringArray != null)
+        if (dictionaryObject is string[] dictionaryObjectAsStringArray)
         {
             WriteEntryTypeToXml(writer, UserConfigurationDictionaryObjectType.StringArray);
 
@@ -369,8 +368,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
             UserConfigurationDictionaryObjectType dictionaryObjectType = UserConfigurationDictionaryObjectType.String;
             string valueAsString = null;
 
-            byte[] dictionaryObjectAsByteArray = dictionaryObject as byte[];
-            if (dictionaryObjectAsByteArray != null)
+            if (dictionaryObject is byte[] dictionaryObjectAsByteArray)
             {
                 // Convert byte array to base64 string
                 dictionaryObjectType = UserConfigurationDictionaryObjectType.ByteArray;
@@ -699,8 +697,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
         // Keys may not be null but we rely on the internal dictionary to throw if the key is null.
         if (dictionaryObject != null)
         {
-            Array dictionaryObjectAsArray = dictionaryObject as Array;
-            if (dictionaryObjectAsArray != null)
+            if (dictionaryObject is Array dictionaryObjectAsArray)
             {
                 ValidateArrayObject(dictionaryObjectAsArray);
             }

@@ -69,21 +69,19 @@ internal class WSSecurityUtilityIdSignedXml : SignedXml
     /// <param name="xpath">The XPath string.</param>
     public void AddReference(string xpath)
     {
-        XmlElement element = this.document.SelectSingleNode(
-            xpath, 
-            WSSecurityBasedCredentials.NamespaceManager) as XmlElement;
-
         // for now, ignore the error if the node is not found. 
         // EWS may want to sign extra header while such header is never present in autodiscover request.
         // but currently Credentials are unaware of the service type.
         // 
-        if (element != null)
+        if (this.document.SelectSingleNode(
+            xpath,
+            WSSecurityBasedCredentials.NamespaceManager) is XmlElement element)
         {
             string wsuId = GetUniqueId();
 
             XmlAttribute wsuIdAttribute = document.CreateAttribute(
-                EwsUtilities.WSSecurityUtilityNamespacePrefix, 
-                "Id", 
+                EwsUtilities.WSSecurityUtilityNamespacePrefix,
+                "Id",
                 EwsUtilities.WSSecurityUtilityNamespace);
 
             wsuIdAttribute.Value = wsuId;
