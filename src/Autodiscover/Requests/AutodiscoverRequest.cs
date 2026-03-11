@@ -459,11 +459,11 @@ internal abstract class AutodiscoverRequest
         string contentEncoding = response.ContentEncoding;
         Stream responseStream = await response.GetResponseStream();
 
-        if (contentEncoding.ToLowerInvariant().Contains("gzip"))
+        if (contentEncoding.Contains("gzip", StringComparison.InvariantCultureIgnoreCase))
         {
             return new GZipStream(responseStream, CompressionMode.Decompress);
         }
-        else if (contentEncoding.ToLowerInvariant().Contains("deflate"))
+        else if (contentEncoding.Contains("deflate", StringComparison.InvariantCultureIgnoreCase))
         {
             return new DeflateStream(responseStream, CompressionMode.Decompress);
         }
