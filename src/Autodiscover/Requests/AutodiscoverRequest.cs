@@ -92,44 +92,37 @@ internal abstract class AutodiscoverRequest
             bool needSignature = this.Service.Credentials != null && this.Service.Credentials.NeedSignature;
             bool needTrace = this.Service.IsTraceEnabledFor(TraceFlags.AutodiscoverRequest);
 
-                using (MemoryStream memoryStream = new())
+            using (MemoryStream memoryStreamRequest = new())
+            {
+                using (EwsServiceXmlWriter writer = new(this.Service, memoryStreamRequest))
                 {
-                    using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
-                    {
-                        writer.RequireWSSecurityUtilityNamespace = needSignature;
-                        this.WriteSoapRequest(
-                            this.Url, 
-                            writer);
-                    }
-
-                    if (needSignature)
-                    {
-                        this.service.Credentials.Sign(memoryStream);
-                    }
-
-                    if (needTrace)
-                    {
-                        memoryStream.Position = 0;
-                        this.Service.TraceXml(TraceFlags.AutodiscoverRequest, memoryStream);
-                    }
-
-                    request.Content = new ByteArrayContent(memoryStream.ToArray());
-                    request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml") { CharSet = "utf-8" };
+                    writer.RequireWSSecurityUtilityNamespace = needSignature;
+                    this.WriteSoapRequest(
+                        this.Url,
+                        writer);
                 }
+
+                if (needSignature)
+                {
+                    this.service.Credentials.Sign(memoryStreamRequest);
+                }
+
+                if (needTrace)
+                {
+                    memoryStreamRequest.Position = 0;
+                    this.Service.TraceXml(TraceFlags.AutodiscoverRequest, memoryStreamRequest);
+                }
+
+                request.Content = new ByteArrayContent(memoryStreamRequest.ToArray());
+                request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml") { CharSet = "utf-8" };
+            }
 
             using var client = this.Service.PrepareHttpClient();
             using IEwsHttpWebResponse webResponse = new EwsHttpWebResponse(client.SendAsync(request).Result);
             if (AutodiscoverRequest.IsRedirectionResponse(webResponse))
             {
-                AutodiscoverResponse response = this.CreateRedirectionResponse(webResponse);
-                if (response != null)
-                {
-                    return response;
-                }
-                else
-                {
-                    throw new ServiceRemoteException(Strings.InvalidRedirectionResponseReturned);
-                }
+                return this.CreateRedirectionResponse(webResponse) 
+                    ?? throw new ServiceRemoteException(Strings.InvalidRedirectionResponseReturned);
             }
 
             using Stream responseStream = await AutodiscoverRequest.GetResponseStream(webResponse);
@@ -180,7 +173,7 @@ internal abstract class AutodiscoverRequest
                         TraceFlags.AutodiscoverResponseHttpHeaders,
                         httpWebResponse);
 
-                    AutodiscoverResponse response = this.CreateRedirectionResponse(httpWebResponse);
+                    var response = this.CreateRedirectionResponse(httpWebResponse);
                     if (response != null)
                     {
                         return response;
@@ -224,7 +217,7 @@ internal abstract class AutodiscoverRequest
         if (webException.Response != null)
         {
             IEwsHttpWebResponse httpWebResponse = this.Service.HttpWebRequestFactory.CreateExceptionResponse(webException);
-            SoapFaultDetails soapFaultDetails;
+            SoapFaultDetails? soapFaultDetails;
 
             if (httpWebResponse.StatusCode == HttpStatusCode.InternalServerError)
             {
@@ -244,13 +237,13 @@ internal abstract class AutodiscoverRequest
                     this.Service.TraceResponse(httpWebResponse, memoryStream);
 
                     EwsXmlReader reader = new(memoryStream);
-                    soapFaultDetails = this.ReadSoapFault(reader);
+                    soapFaultDetails = ReadSoapFault(reader);
                 }
                 else
                 {
                     using Stream stream = await AutodiscoverRequest.GetResponseStream(httpWebResponse);
                     EwsXmlReader reader = new(stream);
-                    soapFaultDetails = this.ReadSoapFault(reader);
+                    soapFaultDetails = ReadSoapFault(reader);
                 }
 
                 if (soapFaultDetails != null)
@@ -269,7 +262,7 @@ internal abstract class AutodiscoverRequest
     /// Create a redirection response.
     /// </summary>
     /// <param name="httpWebResponse">The HTTP web response.</param>
-    private AutodiscoverResponse CreateRedirectionResponse(IEwsHttpWebResponse httpWebResponse)
+    private AutodiscoverResponse? CreateRedirectionResponse(IEwsHttpWebResponse httpWebResponse)
     {
         var location = httpWebResponse.Headers.Location;
         if (location != null)
@@ -311,9 +304,9 @@ internal abstract class AutodiscoverRequest
     /// </summary>
     /// <param name="reader">The reader.</param>
     /// <returns>SOAP fault details.</returns>
-    private SoapFaultDetails ReadSoapFault(EwsXmlReader reader)
+    private static SoapFaultDetails? ReadSoapFault(EwsXmlReader reader)
     {
-        SoapFaultDetails soapFaultDetails = null;
+        SoapFaultDetails? soapFaultDetails = null;
 
         try
         {
