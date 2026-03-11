@@ -27,6 +27,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Xml;
@@ -61,7 +62,7 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
     /// <remarks>The X509Certificate2 argument should have private key in order to sign the message.</remarks>
     /// <param name="certificate">The X509Certificate2 object.</param>
     public X509CertificateCredentials(X509Certificate2 certificate)
-        : base(null, true)
+        : base(null!, true)
     {
         EwsUtilities.ValidateParam(certificate, "certificate");
 
@@ -82,7 +83,7 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
         SafeXmlDocument doc = new SafeXmlDocument();
         doc.PreserveWhitespace = true;
         doc.LoadXml(string.Format(X509CertificateCredentials.KeyInfoClauseFormat, certId));
-        this.keyInfoClause = new KeyInfoNode(doc.DocumentElement);
+        this.keyInfoClause = new KeyInfoNode(doc.DocumentElement!);
     }
 
     /// <summary>
@@ -125,9 +126,15 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
         document.Load(memoryStream);
 
         WSSecurityUtilityIdSignedXml signedXml = new WSSecurityUtilityIdSignedXml(document);
-        signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
+        signedXml.SignedInfo!.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
 
-        signedXml.SigningKey = this.certificate.PrivateKey;
+        using AsymmetricAlgorithm signingKey =
+            (AsymmetricAlgorithm?)this.certificate.GetRSAPrivateKey() ??
+            (AsymmetricAlgorithm?)this.certificate.GetECDsaPrivateKey() ??
+            (AsymmetricAlgorithm?)this.certificate.GetDSAPrivateKey() ??
+            throw new ServiceValidationException(Strings.CertificateHasNoPrivateKey);
+
+        signedXml.SigningKey = signingKey;
         signedXml.AddReference("/soap:Envelope/soap:Header/wsa:To");
         signedXml.AddReference("/soap:Envelope/soap:Header/wsse:Security/wsu:Timestamp");
 
@@ -135,11 +142,16 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
         signedXml.ComputeSignature();
         XmlElement signature = signedXml.GetXml();
 
-        XmlNode wssecurityNode = document.SelectSingleNode(
+        XmlNode? wssecurityNode = document.SelectSingleNode(
             "/soap:Envelope/soap:Header/wsse:Security",
             WSSecurityBasedCredentials.NamespaceManager);
 
-        wssecurityNode.AppendChild(signature);
+        EwsUtilities.Assert(
+            wssecurityNode != null,
+            "X509CertificateCredentials.Sign",
+            "wsse:Security node not found in the SOAP envelope.");
+
+        wssecurityNode!.AppendChild(signature);
 
         memoryStream.Position = 0;
         document.Save(memoryStream);
