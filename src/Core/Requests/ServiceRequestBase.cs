@@ -55,7 +55,7 @@ internal abstract class ServiceRequestBase
     private const string AnchorMailboxHeaderName = "X-AnchorMailbox";
     private const string ExplicitLogonUserHeaderName = "X-OWA-ExplicitLogonUser";
    
-    private static readonly string[] RequestIdResponseHeaders = new[] { "RequestId", "request-id", };
+    private static readonly string[] RequestIdResponseHeaders = ["RequestId", "request-id",];
     private const string XMLSchemaNamespace = "http://www.w3.org/2001/XMLSchema";
     private const string XMLSchemaInstanceNamespace = "http://www.w3.org/2001/XMLSchema-instance";
     private const string ClientStatisticsRequestHeader = "X-ClientStatistics";

@@ -153,7 +153,7 @@ public class Conversation : ServiceObject
     public async System.Threading.Tasks.Task EnableAlwaysCategorizeItems(IEnumerable<string> categories, bool processSynchronously)
     {
         (await this.Service.EnableAlwaysCategorizeItemsInConversations(
-                new ConversationId[] { this.Id },
+                [this.Id],
                 categories,
                 processSynchronously).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -168,7 +168,7 @@ public class Conversation : ServiceObject
     public async System.Threading.Tasks.Task DisableAlwaysCategorizeItems(bool processSynchronously)
     {
         (await this.Service.DisableAlwaysCategorizeItemsInConversations(
-            new ConversationId[] { this.Id },
+            [this.Id],
             processSynchronously).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
 
@@ -182,7 +182,7 @@ public class Conversation : ServiceObject
     public async System.Threading.Tasks.Task EnableAlwaysDeleteItems(bool processSynchronously)
     {
         (await this.Service.EnableAlwaysDeleteItemsInConversations(
-            new ConversationId[] { this.Id },
+            [this.Id],
             processSynchronously).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
 
@@ -196,7 +196,7 @@ public class Conversation : ServiceObject
     public async System.Threading.Tasks.Task DisableAlwaysDeleteItems(bool processSynchronously)
     {
         (await this.Service.DisableAlwaysDeleteItemsInConversations(
-            new ConversationId[] { this.Id },
+            [this.Id],
             processSynchronously).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
 
@@ -212,7 +212,7 @@ public class Conversation : ServiceObject
     public async System.Threading.Tasks.Task EnableAlwaysMoveItems(FolderId destinationFolderId, bool processSynchronously)
     {
         (await this.Service.EnableAlwaysMoveItemsInConversations(
-                    new ConversationId[] { this.Id },
+                    [this.Id],
                     destinationFolderId,
                     processSynchronously).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -227,7 +227,7 @@ public class Conversation : ServiceObject
     public async System.Threading.Tasks.Task DisableAlwaysMoveItemsInConversation(bool processSynchronously)
     {
         (await this.Service.DisableAlwaysMoveItemsInConversations(
-            new ConversationId[] { this.Id },
+            [this.Id],
             processSynchronously).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
 
@@ -243,12 +243,11 @@ public class Conversation : ServiceObject
         DeleteMode deleteMode)
     {
         (await this.Service.DeleteItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             deleteMode).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -265,12 +264,11 @@ public class Conversation : ServiceObject
         FolderId destinationFolderId)
     {
         (await this.Service.MoveItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             destinationFolderId).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -286,12 +284,11 @@ public class Conversation : ServiceObject
         FolderId destinationFolderId)
     {
         (await this.Service.CopyItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             destinationFolderId).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -308,12 +305,11 @@ public class Conversation : ServiceObject
         bool isRead)
     {
         (await this.Service.SetReadStateForItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             isRead).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -332,12 +328,11 @@ public class Conversation : ServiceObject
         bool suppressReadReceipts)
     {
         (await this.Service.SetReadStateForItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             isRead,
             suppressReadReceipts).ConfigureAwait(false))[0].ThrowIfNecessary();
@@ -356,12 +351,11 @@ public class Conversation : ServiceObject
         Guid? retentionPolicyTagId)
     {
         (await this.Service.SetRetentionPolicyForItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             retentionPolicyType,
             retentionPolicyTagId).ConfigureAwait(false))[0].ThrowIfNecessary();
@@ -384,12 +378,11 @@ public class Conversation : ServiceObject
         }
 
         (await this.Service.SetFlagStatusForItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             flag).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -404,12 +397,11 @@ public class Conversation : ServiceObject
         Flag flag = new() { FlagStatus = ItemFlagStatus.NotFlagged };
 
         (await this.Service.SetFlagStatusForItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             flag).ConfigureAwait(false))[0].ThrowIfNecessary();
     }
@@ -437,12 +429,11 @@ public class Conversation : ServiceObject
         }
 
         (await this.Service.SetFlagStatusForItemsInConversations(
-            new KeyValuePair<ConversationId, DateTime?>[]
-            {
+            [
                 new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
-            },
+            ],
             contextFolderId,
             flag).ConfigureAwait(false))[0].ThrowIfNecessary();
     }

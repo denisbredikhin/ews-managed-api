@@ -63,7 +63,7 @@ public sealed class PeopleQueryMode
     /// </summary>
     private PeopleQueryMode()
     {
-        this.Sources = new HashSet<string>(new string[] { AutoSourceString });
+        this.Sources = new HashSet<string>([AutoSourceString]);
     }
 
     /// <summary>

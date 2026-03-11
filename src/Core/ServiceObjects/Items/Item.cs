@@ -143,7 +143,7 @@ public class Item : ServiceObject
         this.ThrowIfThisIsAttachment();
 
         return this.Service.InternalLoadPropertiesForItems(
-            new Item[] { this },
+            [this],
             propertySet,
             ServiceErrorHandling.ThrowOnError,
             token);

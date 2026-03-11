@@ -84,7 +84,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CreateResponseObjectRequest request = new(this, ServiceErrorHandling.ThrowOnError)
         {
             ParentFolderId = parentFolderId,
-            Items = new ServiceObject[] { responseObject },
+            Items = [responseObject],
             MessageDisposition = messageDisposition
         };
 
@@ -108,7 +108,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         CreateFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError)
         {
-            Folders = new Folder[] { folder },
+            Folders = [folder],
             ParentFolderId = parentFolderId
         };
 
@@ -214,7 +214,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
         ServiceResponseCollection<FindFolderResponse> responses = await this.InternalFindFolders(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             searchFilter,
             view,
             ServiceErrorHandling.ThrowOnError, token).ConfigureAwait(false);
@@ -258,7 +258,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(view, nameof(view));
 
         ServiceResponseCollection<FindFolderResponse> responses = await this.InternalFindFolders(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             null, /* searchFilter */
             view,
             ServiceErrorHandling.ThrowOnError,
@@ -325,7 +325,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(propertySet, nameof(propertySet));
 
         ServiceResponseCollection<GetFolderResponse> responses = await this.InternalBindToFolders(
-            new[] { folderId },
+            [folderId],
             propertySet,
             ServiceErrorHandling.ThrowOnError,
             token
@@ -555,7 +555,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CancellationToken token)
     {
         return this.InternalCreateItems(
-            new Item[] { item },
+            [item],
             parentFolderId,
             messageDisposition,
             sendInvitationsMode,
@@ -697,7 +697,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CancellationToken token)
     {
         ServiceResponseCollection<UpdateItemResponse> responses = await this.InternalUpdateItems(
-            new Item[] { item },
+            [item],
             savedItemsDestinationFolderId,
             conflictResolution,
             messageDisposition,
@@ -721,7 +721,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         SendItemRequest request = new(this, ServiceErrorHandling.ThrowOnError)
         {
-            Items = new Item[] { item },
+            Items = [item],
             SavedCopyDestinationFolderId = savedCopyDestinationFolderId
         };
 
@@ -808,7 +808,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CancellationToken token)
     {
         return (await this.InternalCopyItems(
-            new ItemId[] { itemId },
+            [itemId],
             destinationFolderId,
             null,
             ServiceErrorHandling.ThrowOnError,
@@ -896,7 +896,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CancellationToken token)
     {
         return (await this.InternalMoveItems(
-            new ItemId[] { itemId },
+            [itemId],
             destinationFolderId,
             null,
             ServiceErrorHandling.ThrowOnError,
@@ -974,7 +974,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(queryString, nameof(queryString));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.FindItems<Item>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             null, /* searchFilter */
             queryString,
             view,
@@ -998,7 +998,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     public async Task<FindItemsResults<Item>> FindItems(FolderId parentFolderId, string queryString, bool returnHighlightTerms, ViewBase view,
         CancellationToken token = default(CancellationToken))
     {
-        FolderId[] parentFolderIds = new FolderId[] { parentFolderId };
+        FolderId[] parentFolderIds = [parentFolderId];
 
         EwsUtilities.ValidateParamCollection(parentFolderIds, "parentFolderIds");
         EwsUtilities.ValidateParam(view, nameof(view));
@@ -1030,7 +1030,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>An object representing the results of the search operation.</returns>
     public async Task<GroupedFindItemsResults<Item>> FindItems(FolderId parentFolderId, string queryString, bool returnHighlightTerms, ViewBase view, Grouping groupBy, CancellationToken token = default(CancellationToken))
     {
-        FolderId[] parentFolderIds = new FolderId[] { parentFolderId };
+        FolderId[] parentFolderIds = [parentFolderId];
 
         EwsUtilities.ValidateParamCollection(parentFolderIds, "parentFolderIds");
         EwsUtilities.ValidateParam(view, nameof(view));
@@ -1065,7 +1065,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.FindItems<Item>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             searchFilter,
             null, /* queryString */
             view,
@@ -1085,7 +1085,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     public async Task<FindItemsResults<Item>> FindItems(FolderId parentFolderId, ViewBase view, CancellationToken token = default(CancellationToken))
     {
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.FindItems<Item>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             null, /* searchFilter */
             null, /* queryString */
             view,
@@ -1159,7 +1159,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(queryString, nameof(queryString));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.FindItems<Item>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             null, /* searchFilter */
             queryString,
             view,
@@ -1191,7 +1191,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.FindItems<Item>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             searchFilter,
             null, /* queryString */
             view,
@@ -1218,7 +1218,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(groupBy, nameof(groupBy));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.FindItems<Item>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             null, /* searchFilter */
             null, /* queryString */
             view,
@@ -1249,7 +1249,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         where TItem : Item
     {
         return this.FindItems<TItem>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             searchFilter,
             null, /* queryString */
             view,
@@ -1317,7 +1317,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     public async Task<FindItemsResults<Appointment>> FindAppointments(FolderId parentFolderId, CalendarView calendarView, CancellationToken token = default(CancellationToken))
     {
         ServiceResponseCollection<FindItemResponse<Appointment>> response = await this.FindItems<Appointment>(
-            new FolderId[] { parentFolderId },
+            [parentFolderId],
             null, /* searchFilter */
             null, /* queryString */
             calendarView,
@@ -1462,7 +1462,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(propertySet, nameof(propertySet));
 
         ServiceResponseCollection<GetItemResponse> responses = await this.InternalBindToItems(
-            new ItemId[] { itemId },
+            [itemId],
             propertySet,
             null, /* anchorMailbox */
             ServiceErrorHandling.ThrowOnError,
@@ -1609,7 +1609,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(itemId, nameof(itemId));
 
         return this.InternalDeleteItems(
-            new ItemId[] { itemId },
+            [itemId],
             deleteMode,
             sendCancellationsMode,
             affectedTaskOccurrences,
@@ -1946,7 +1946,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CancellationToken token)
     {
         return this.InternalGetAttachments(
-            new Attachment[] { attachment },
+            [attachment],
             bodyType,
             additionalProperties,
             ServiceErrorHandling.ThrowOnError,
@@ -3815,7 +3815,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(id, nameof(id));
 
         ServiceResponseCollection<ConvertIdResponse> responses = await this.InternalConvertIds(
-            new AlternateIdBase[] { id },
+            [id],
             destinationFormat,
             ServiceErrorHandling.ThrowOnError,
             token);

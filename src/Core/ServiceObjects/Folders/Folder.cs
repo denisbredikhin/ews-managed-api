@@ -360,7 +360,7 @@ public class Folder : ServiceObject
         this.ThrowIfThisIsNew();
 
         return this.Service.FindItems<TItem>(
-            new FolderId[] { this.Id },
+            [this.Id],
             null, /* searchFilter */
             queryString,
             view,
@@ -389,7 +389,7 @@ public class Folder : ServiceObject
         this.ThrowIfThisIsNew();
 
         return this.Service.FindItems<TItem>(
-            new FolderId[] { this.Id },
+            [this.Id],
             searchFilter,
             null, /* queryString */
             view,

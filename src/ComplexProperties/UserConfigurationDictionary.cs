@@ -748,7 +748,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
         }
     }
 
-    static readonly Type[] ValidTypes = new Type[] { typeof(Boolean), typeof(Byte), typeof(DateTime), typeof(Int32), typeof(Int64), typeof(String), typeof(UInt32), typeof(UInt64) };
+    static readonly Type[] ValidTypes = [typeof(Boolean), typeof(Byte), typeof(DateTime), typeof(Int32), typeof(Int64), typeof(String), typeof(UInt32), typeof(UInt64)];
 
     /// <summary>
     /// Validates the dictionary object type.

@@ -119,7 +119,7 @@ internal sealed class LegacyAvailabilityTimeZone : ComplexProperty
                 "Custom time zone",
                 "Standard time",
                 "Daylight time",
-                new AdjustmentRule[] { adjustmentRule });
+                [adjustmentRule]);
         }
         else
         {

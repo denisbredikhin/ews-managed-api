@@ -42,7 +42,7 @@ public sealed class ManagementRoles
     public ManagementRoles(string userRole)
     {
         EwsUtilities.ValidateParam(userRole, nameof(userRole));
-        this.userRoles = new string[] { userRole };
+        this.userRoles = [userRole];
     }
 
     /// <summary>
@@ -55,13 +55,13 @@ public sealed class ManagementRoles
         if (userRole != null)
         {
             EwsUtilities.ValidateParam(userRole, nameof(userRole));
-            this.userRoles = new string[] { userRole };
+            this.userRoles = [userRole];
         }
 
         if (applicationRole != null)
         {
             EwsUtilities.ValidateParam(applicationRole, nameof(applicationRole));
-            this.applicationRoles = new string[] { applicationRole };
+            this.applicationRoles = [applicationRole];
         }
     }
 

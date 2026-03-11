@@ -1823,8 +1823,8 @@ public sealed class AutodiscoverService : ExchangeServiceBase
 
         GetUserSettingsRequest request = new(this, this.Url, true)
         {
-            SmtpAddresses = new List<string>(new[] { smtpAddress }),
-            Settings = new List<UserSettingName>(new[] { UserSettingName.ExternalEwsUrl })
+            SmtpAddresses = new List<string>([smtpAddress]),
+            Settings = new List<UserSettingName>([UserSettingName.ExternalEwsUrl])
         };
 
         GetUserSettingsResponseCollection response = null;
