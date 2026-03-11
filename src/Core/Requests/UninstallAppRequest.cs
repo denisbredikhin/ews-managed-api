@@ -78,7 +78,7 @@ internal sealed class UninstallAppRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        UninstallAppResponse response = new UninstallAppResponse();
+        UninstallAppResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.UninstallAppResponse);
         return response;
     }

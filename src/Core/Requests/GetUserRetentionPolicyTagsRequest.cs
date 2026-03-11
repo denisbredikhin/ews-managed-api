@@ -67,7 +67,7 @@ internal sealed class GetUserRetentionPolicyTagsRequest : SimpleServiceRequestBa
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetUserRetentionPolicyTagsResponse response = new GetUserRetentionPolicyTagsResponse();
+        GetUserRetentionPolicyTagsResponse response = new();
         response.LoadFromXml(reader, this.GetResponseXmlElementName());
         return response;
     }

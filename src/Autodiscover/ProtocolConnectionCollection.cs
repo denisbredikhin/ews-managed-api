@@ -50,7 +50,7 @@ public sealed class ProtocolConnectionCollection
     /// <param name="reader">EwsServiceXmlReader</param>
     internal static ProtocolConnectionCollection LoadFromXml(EwsXmlReader reader)
     {
-        ProtocolConnectionCollection value = new ProtocolConnectionCollection();
+        ProtocolConnectionCollection value = new();
         ProtocolConnection connection = null;
 
         do

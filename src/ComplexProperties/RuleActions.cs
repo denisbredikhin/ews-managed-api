@@ -367,7 +367,7 @@ public sealed class RuleActions : ComplexProperty
                 this.redirectToRecipients.LoadFromXml(reader, reader.LocalName);
                 return true;
             case XmlElementNames.SendSMSAlertToRecipients:
-                EmailAddressCollection smsRecipientCollection = new EmailAddressCollection(XmlElementNames.Address);
+                EmailAddressCollection smsRecipientCollection = new(XmlElementNames.Address);
                 smsRecipientCollection.LoadFromXml(reader, reader.LocalName);
                 this.sendSMSAlertToRecipients = ConvertSMSRecipientsFromEmailAddressCollectionToMobilePhoneCollection(smsRecipientCollection);
                 return true;
@@ -497,7 +497,7 @@ public sealed class RuleActions : ComplexProperty
     /// <returns>A MobilePhone collection object containing all SMS recipient in MobilePhone type. </returns>
     private static Collection<MobilePhone> ConvertSMSRecipientsFromEmailAddressCollectionToMobilePhoneCollection(EmailAddressCollection emailCollection)
     {
-        Collection<MobilePhone> mobilePhoneCollection = new Collection<MobilePhone>();
+        Collection<MobilePhone> mobilePhoneCollection = new();
         foreach (EmailAddress emailAddress in emailCollection)
         {
             mobilePhoneCollection.Add(new MobilePhone(emailAddress.Name, emailAddress.Address));
@@ -513,10 +513,10 @@ public sealed class RuleActions : ComplexProperty
     /// <returns>An EmailAddressCollection object containing recipients with "MOBILE" address type. </returns>
     private static EmailAddressCollection ConvertSMSRecipientsFromMobilePhoneCollectionToEmailAddressCollection(Collection<MobilePhone> recipientCollection)
     {
-        EmailAddressCollection emailCollection = new EmailAddressCollection(XmlElementNames.Address);
+        EmailAddressCollection emailCollection = new(XmlElementNames.Address);
         foreach (MobilePhone recipient in recipientCollection)
         {
-            EmailAddress emailAddress = new EmailAddress(
+            EmailAddress emailAddress = new(
                 recipient.Name, 
                 recipient.PhoneNumber, 
                 RuleActions.MobileType);

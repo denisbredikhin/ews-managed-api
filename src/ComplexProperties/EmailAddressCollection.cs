@@ -87,7 +87,7 @@ public sealed class EmailAddressCollection : ComplexPropertyCollection<EmailAddr
     /// <returns>An EmailAddress object initialized with the provided SMTP address.</returns>
     public EmailAddress Add(string smtpAddress)
     {
-        EmailAddress emailAddress = new EmailAddress(smtpAddress);
+        EmailAddress emailAddress = new(smtpAddress);
 
         this.Add(emailAddress);
 
@@ -114,7 +114,7 @@ public sealed class EmailAddressCollection : ComplexPropertyCollection<EmailAddr
     /// <returns>An EmailAddress object initialized with the provided SMTP address.</returns>
     public EmailAddress Add(string name, string smtpAddress)
     {
-        EmailAddress emailAddress = new EmailAddress(name, smtpAddress);
+        EmailAddress emailAddress = new(name, smtpAddress);
 
         this.Add(emailAddress);
 

@@ -38,7 +38,7 @@ internal class SafeXmlSchema : XmlSchema
     /// <summary>
     /// Safe xml reader settings.
     /// </summary>
-    private static readonly XmlReaderSettings defaultSettings = new XmlReaderSettings()
+    private static readonly XmlReaderSettings defaultSettings = new()
     {
         DtdProcessing = DtdProcessing.Prohibit,
     };

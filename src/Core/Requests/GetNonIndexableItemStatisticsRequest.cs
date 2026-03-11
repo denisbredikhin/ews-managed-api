@@ -80,7 +80,7 @@ internal sealed class GetNonIndexableItemStatisticsRequest : SimpleServiceReques
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetNonIndexableItemStatisticsResponse response = new GetNonIndexableItemStatisticsResponse();
+        GetNonIndexableItemStatisticsResponse response = new();
         response.LoadFromXml(reader, GetResponseXmlElementName());
         return response;
     }

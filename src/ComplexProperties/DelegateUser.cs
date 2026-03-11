@@ -29,8 +29,8 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 public sealed class DelegateUser : ComplexProperty
 {
-    private UserId userId = new UserId();
-    private readonly DelegatePermissions permissions = new DelegatePermissions();
+    private UserId userId = new();
+    private readonly DelegatePermissions permissions = new();
     private bool receiveCopiesOfMeetingMessages;
     private bool viewPrivateItems;
 

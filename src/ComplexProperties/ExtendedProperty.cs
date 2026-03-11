@@ -83,7 +83,7 @@ public sealed class ExtendedProperty : ComplexProperty
                     "ExtendedProperty.TryReadElementFromXml",
                     "PropertyDefintion is missing");
 
-                StringList stringList = new StringList(XmlElementNames.Value);
+                StringList stringList = new(XmlElementNames.Value);
                 stringList.LoadFromXml(reader, reader.LocalName);
                 this.value = MapiTypeConverter.ConvertToValue(this.PropertyDefinition.MapiType, stringList);
                 return true;
@@ -164,7 +164,7 @@ public sealed class ExtendedProperty : ComplexProperty
             }
             else
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 sb.Append("[");
                 for (int index = array.GetLowerBound(0); index <= array.GetUpperBound(0); index++)
                 {

@@ -44,7 +44,7 @@ internal sealed class OutlookUser
     /// Converters to translate Outlook user settings.
     /// Each entry maps to a lambda expression used to get the matching property from the OutlookUser instance. 
     /// </summary>
-    private static readonly LazyMember<ConverterDictionary> converterDictionary = new LazyMember<ConverterDictionary>(
+    private static readonly LazyMember<ConverterDictionary> converterDictionary = new(
         delegate()
         {
             var results = new ConverterDictionary();

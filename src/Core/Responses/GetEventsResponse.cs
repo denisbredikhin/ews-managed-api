@@ -29,7 +29,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal sealed class GetEventsResponse : ServiceResponse
 {
-    private readonly GetEventsResults results = new GetEventsResults();
+    private readonly GetEventsResults results = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetEventsResponse"/> class.

@@ -76,7 +76,7 @@ internal sealed class GetRoomListsRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetRoomListsResponse response = new GetRoomListsResponse();
+        GetRoomListsResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetRoomListsResponse);
         return response;
     }

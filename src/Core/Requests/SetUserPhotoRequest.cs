@@ -113,7 +113,7 @@ internal sealed class SetUserPhotoRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader, HttpResponseHeaders responseHeaders)
     {
-        SetUserPhotoResponse response = new SetUserPhotoResponse();
+        SetUserPhotoResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.SetUserPhotoResponse);
         response.ReadHeader(responseHeaders);
         return response;

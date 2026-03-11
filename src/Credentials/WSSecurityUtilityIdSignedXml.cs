@@ -89,8 +89,10 @@ internal class WSSecurityUtilityIdSignedXml : SignedXml
             wsuIdAttribute.Value = wsuId;
             element.Attributes.Append(wsuIdAttribute);
 
-            Reference reference = new Reference();
-            reference.Uri = "#" + wsuId;
+            Reference reference = new()
+            {
+                Uri = "#" + wsuId
+            };
             reference.AddTransform(new XmlDsigExcC14NTransform());
 
             this.AddReference(reference);

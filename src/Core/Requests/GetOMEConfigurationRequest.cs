@@ -73,7 +73,7 @@ internal sealed class GetOMEConfigurationRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetOMEConfigurationResponse response = new GetOMEConfigurationResponse();
+        GetOMEConfigurationResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetOMEConfigurationResponse);
         return response;
     }

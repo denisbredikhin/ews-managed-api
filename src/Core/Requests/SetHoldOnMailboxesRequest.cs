@@ -85,7 +85,7 @@ internal sealed class SetHoldOnMailboxesRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        SetHoldOnMailboxesResponse response = new SetHoldOnMailboxesResponse();
+        SetHoldOnMailboxesResponse response = new();
         response.LoadFromXml(reader, GetResponseXmlElementName());
         return response;
     }

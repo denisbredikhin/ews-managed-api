@@ -36,12 +36,12 @@ internal sealed class GetAppManifestsResponse : ServiceResponse
     /// <summary>
     /// List of manifests returned in the response.
     /// </summary>
-    private readonly Collection<XmlDocument> manifests = new Collection<XmlDocument>();
+    private readonly Collection<XmlDocument> manifests = new();
 
     /// <summary>
     /// List of extensions returned in the response.
     /// </summary>
-    private readonly Collection<ClientApp> apps = new Collection<ClientApp>();
+    private readonly Collection<ClientApp> apps = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetAppManifestsResponse"/> class.
@@ -168,7 +168,7 @@ internal sealed class GetAppManifestsResponse : ServiceResponse
         ////  <m:Apps>    <----- reader should be at this node at the end of the loop
         while (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.App))
         {
-            ClientApp clientApp = new ClientApp();
+            ClientApp clientApp = new();
             clientApp.LoadFromXml(reader, XmlElementNames.App);
 
             this.Apps.Add(clientApp);

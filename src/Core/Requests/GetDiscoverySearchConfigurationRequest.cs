@@ -67,7 +67,7 @@ internal sealed class GetDiscoverySearchConfigurationRequest : SimpleServiceRequ
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetDiscoverySearchConfigurationResponse response = new GetDiscoverySearchConfigurationResponse();
+        GetDiscoverySearchConfigurationResponse response = new();
         response.LoadFromXml(reader, this.GetResponseXmlElementName());
         return response;
     }

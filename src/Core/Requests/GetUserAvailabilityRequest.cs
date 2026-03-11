@@ -102,7 +102,7 @@ internal sealed class GetUserAvailabilityRequest : SimpleServiceRequestBase
         // Against Exchange 2010, the time zone is emitted in the request's SOAP header.
         if (writer.Service.RequestedServerVersion == ExchangeVersion.Exchange2007_SP1)
         {
-            LegacyAvailabilityTimeZone legacyTimeZone = new LegacyAvailabilityTimeZone(writer.Service.TimeZone);
+            LegacyAvailabilityTimeZone legacyTimeZone = new(writer.Service.TimeZone);
 
             legacyTimeZone.WriteToXml(writer, XmlElementNames.TimeZone);
         }
@@ -135,7 +135,7 @@ internal sealed class GetUserAvailabilityRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetUserAvailabilityResults serviceResponse = new GetUserAvailabilityResults();
+        GetUserAvailabilityResults serviceResponse = new();
 
         if (this.IsFreeBusyViewRequested)
         {
@@ -149,7 +149,7 @@ internal sealed class GetUserAvailabilityRequest : SimpleServiceRequestBase
 
                 if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.FreeBusyResponse))
                 {
-                    AttendeeAvailability freeBusyResponse = new AttendeeAvailability();
+                    AttendeeAvailability freeBusyResponse = new();
 
                     freeBusyResponse.LoadFromXml(reader, XmlElementNames.ResponseMessage);
 

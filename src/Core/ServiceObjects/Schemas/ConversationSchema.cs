@@ -487,7 +487,7 @@ public class ConversationSchema : ServiceObjectSchema
             ExchangeVersion.Exchange2013);
 
     // This must be declared after the property definitions
-    internal static readonly ConversationSchema Instance = new ConversationSchema();
+    internal static readonly ConversationSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

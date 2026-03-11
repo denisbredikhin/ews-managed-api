@@ -80,7 +80,7 @@ internal sealed class PlayOnPhoneRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        PlayOnPhoneResponse serviceResponse = new PlayOnPhoneResponse(this.Service);
+        PlayOnPhoneResponse serviceResponse = new(this.Service);
         serviceResponse.LoadFromXml(reader, XmlElementNames.PlayOnPhoneResponse);
         return serviceResponse;
     }

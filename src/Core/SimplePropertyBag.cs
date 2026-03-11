@@ -33,10 +33,10 @@ using System.Collections.Generic;
 /// <typeparam name="TKey">The type of the key.</typeparam>
 internal class SimplePropertyBag<TKey> : IEnumerable<KeyValuePair<TKey, object>>
 {
-    private readonly Dictionary<TKey, object> items = new Dictionary<TKey, object>();
-    private readonly List<TKey> removedItems = new List<TKey>();
-    private readonly List<TKey> addedItems = new List<TKey>();
-    private readonly List<TKey> modifiedItems = new List<TKey>();
+    private readonly Dictionary<TKey, object> items = new();
+    private readonly List<TKey> removedItems = new();
+    private readonly List<TKey> addedItems = new();
+    private readonly List<TKey> modifiedItems = new();
 
     /// <summary>
     /// Add item to change list.

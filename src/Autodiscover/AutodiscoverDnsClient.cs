@@ -54,7 +54,7 @@ internal class AutodiscoverDnsClient
     /// <summary>
     /// Random selector in the case of ties.
     /// </summary>
-    private static readonly Random randomTieBreakerSelector = new Random();
+    private static readonly Random randomTieBreakerSelector = new();
     #endregion
 
     #region Instance fields

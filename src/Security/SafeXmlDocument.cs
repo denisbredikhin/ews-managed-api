@@ -38,7 +38,7 @@ internal class SafeXmlDocument : XmlDocument
     /// <summary>
     /// Xml settings object.
     /// </summary>
-    private readonly XmlReaderSettings settings = new XmlReaderSettings()
+    private readonly XmlReaderSettings settings = new()
     {
         DtdProcessing = DtdProcessing.Prohibit
     };

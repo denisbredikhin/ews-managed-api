@@ -81,12 +81,14 @@ public sealed class MailboxHoldResult
     /// <returns>Mailbox hold object</returns>
     internal static MailboxHoldResult LoadFromXml(EwsServiceXmlReader reader)
     {
-        List<MailboxHoldStatus> statuses = new List<MailboxHoldStatus>();
+        List<MailboxHoldStatus> statuses = new();
 
         reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.MailboxHoldResult);
 
-        MailboxHoldResult holdResult = new MailboxHoldResult();
-        holdResult.HoldId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.HoldId);
+        MailboxHoldResult holdResult = new()
+        {
+            HoldId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.HoldId)
+        };
 
         // the query could be empty means there won't be Query element, hence needs to read and check
         // if the next element is not Query, then it means already read MailboxHoldStatuses element

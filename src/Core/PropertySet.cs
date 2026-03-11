@@ -51,10 +51,10 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     /// <summary>
     /// Maps BasePropertySet values to EWS's BaseShape values.
     /// </summary>
-    private static readonly DefaultPropertySetDictionary defaultPropertySetMap = new DefaultPropertySetDictionary(
+    private static readonly DefaultPropertySetDictionary defaultPropertySetMap = new(
         delegate()
         {
-            Dictionary<BasePropertySet, string> result = new Dictionary<BasePropertySet, string>();
+            Dictionary<BasePropertySet, string> result = new();
             result.Add(BasePropertySet.IdOnly, "IdOnly");
             result.Add(BasePropertySet.FirstClassProperties, "AllProperties");
             return result;
@@ -68,7 +68,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     /// <summary>
     /// The list of additional properties included in this property set.
     /// </summary>
-    private readonly List<PropertyDefinitionBase> additionalProperties = new List<PropertyDefinitionBase>();
+    private readonly List<PropertyDefinitionBase> additionalProperties = new();
 
     /// <summary>
     /// The requested body type for get and find operations. If null, the "best body" is returned.
@@ -236,8 +236,10 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     /// <returns>PropertySet</returns>
     private static PropertySet CreateReadonlyPropertySet(BasePropertySet basePropertySet)
     {
-        PropertySet propertySet = new PropertySet(basePropertySet);
-        propertySet.isReadOnly = true;
+        PropertySet propertySet = new(basePropertySet)
+        {
+            isReadOnly = true
+        };
         return propertySet;
     }
 

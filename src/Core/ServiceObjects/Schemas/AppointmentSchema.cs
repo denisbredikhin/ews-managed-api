@@ -610,7 +610,7 @@ public class AppointmentSchema : ItemSchema
     /// <remarks>
     /// This must be after the declaration of property definitions.
     /// </remarks>
-    internal static new readonly AppointmentSchema Instance = new AppointmentSchema();
+    internal static new readonly AppointmentSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

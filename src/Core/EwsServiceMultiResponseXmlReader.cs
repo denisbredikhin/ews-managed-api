@@ -62,7 +62,7 @@ internal class EwsServiceMultiResponseXmlReader : EwsServiceXmlReader
     /// <returns>an instance of EwsServiceMultiResponseXmlReader wrapped around the input stream.</returns>
     internal static EwsServiceMultiResponseXmlReader Create(Stream stream, ExchangeService service)
     {
-        EwsServiceMultiResponseXmlReader reader = new EwsServiceMultiResponseXmlReader(stream, service);
+        EwsServiceMultiResponseXmlReader reader = new(stream, service);
 
         return reader;
     }
@@ -79,7 +79,7 @@ internal class EwsServiceMultiResponseXmlReader : EwsServiceXmlReader
         // it will do so. EWS doesn't use DTD references so we want to turn this off. Also, the XmlResolver property is
         // set to an instance of XmlUrlResolver by default. We don't want XmlTextReader to try to resolve this DTD reference 
         // so we disable the XmlResolver as well.
-        XmlReaderSettings settings = new XmlReaderSettings()
+        XmlReaderSettings settings = new()
         {
             Async = true,
             CheckCharacters = false,

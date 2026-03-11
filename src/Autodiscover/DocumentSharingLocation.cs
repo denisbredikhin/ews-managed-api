@@ -239,7 +239,7 @@ public sealed class DocumentSharingLocation
     /// <returns>DocumentSharingLocation.</returns>
     internal static DocumentSharingLocation LoadFromXml(EwsXmlReader reader)
     {
-        DocumentSharingLocation location = new DocumentSharingLocation();
+        DocumentSharingLocation location = new();
 
         do
         {
@@ -262,7 +262,7 @@ public sealed class DocumentSharingLocation
                         break;
 
                     case XmlElementNames.SupportedFileExtensions:
-                        List<string> fileExtensions = new List<string>();
+                        List<string> fileExtensions = new();
                         reader.Read();
                         while (reader.IsStartElement(XmlNamespace.Autodiscover, XmlElementNames.FileExtension))
                         {                                

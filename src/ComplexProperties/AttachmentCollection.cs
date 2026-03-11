@@ -111,9 +111,11 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// <returns>A FileAttachment instance.</returns>
     public FileAttachment AddFileAttachment(string name, string fileName)
     {
-        FileAttachment fileAttachment = new FileAttachment(this.owner);
-        fileAttachment.Name = name;
-        fileAttachment.FileName = fileName;
+        FileAttachment fileAttachment = new(this.owner)
+        {
+            Name = name,
+            FileName = fileName
+        };
 
         this.InternalAdd(fileAttachment);
 
@@ -128,9 +130,11 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// <returns>A FileAttachment instance.</returns>
     public FileAttachment AddFileAttachment(string name, Stream contentStream)
     {
-        FileAttachment fileAttachment = new FileAttachment(this.owner);
-        fileAttachment.Name = name;
-        fileAttachment.ContentStream = contentStream;
+        FileAttachment fileAttachment = new(this.owner)
+        {
+            Name = name,
+            ContentStream = contentStream
+        };
 
         this.InternalAdd(fileAttachment);
 
@@ -145,9 +149,11 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// <returns>A FileAttachment instance.</returns>
     public FileAttachment AddFileAttachment(string name, byte[] content)
     {
-        FileAttachment fileAttachment = new FileAttachment(this.owner);
-        fileAttachment.Name = name;
-        fileAttachment.Content = content;
+        FileAttachment fileAttachment = new(this.owner)
+        {
+            Name = name,
+            Content = content
+        };
 
         this.InternalAdd(fileAttachment);
 
@@ -164,10 +170,11 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
         string name, 
         string attachLongPathName)
     {
-        ReferenceAttachment referenceAttachment = new ReferenceAttachment(this.owner);
-
-        referenceAttachment.Name = name; 
-        referenceAttachment.AttachLongPathName = attachLongPathName;
+        ReferenceAttachment referenceAttachment = new(this.owner)
+        {
+            Name = name,
+            AttachLongPathName = attachLongPathName
+        };
 
         this.InternalAdd(referenceAttachment);
 
@@ -190,7 +197,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
                     typeof(TItem).Name));
         }
 
-        ItemAttachment<TItem> itemAttachment = new ItemAttachment<TItem>(this.owner);
+        ItemAttachment<TItem> itemAttachment = new(this.owner);
         itemAttachment.Item = (TItem)EwsUtilities.CreateItemFromItemClass(itemAttachment, typeof(TItem), true);
 
         this.InternalAdd(itemAttachment);
@@ -278,7 +285,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// </summary>
     internal async System.Threading.Tasks.Task Save(CancellationToken token = default(CancellationToken))
     {
-        List<Attachment> attachments = new List<Attachment>();
+        List<Attachment> attachments = new();
 
         // Retrieve a list of attachments that have to be deleted.
         foreach (Attachment attachment in this.RemovedItems)

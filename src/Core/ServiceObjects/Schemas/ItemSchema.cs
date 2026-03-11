@@ -681,7 +681,7 @@ public class ItemSchema : ServiceObjectSchema
             true);
 
     // This must be declared after the property definitions
-    internal static readonly ItemSchema Instance = new ItemSchema();
+    internal static readonly ItemSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 public sealed class GetSearchableMailboxesResponse : ServiceResponse
 {
-    readonly List<SearchableMailbox> searchableMailboxes = new List<SearchableMailbox>();
+    readonly List<SearchableMailbox> searchableMailboxes = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetSearchableMailboxesResponse"/> class.

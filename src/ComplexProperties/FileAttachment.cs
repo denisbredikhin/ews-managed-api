@@ -156,7 +156,7 @@ public sealed class FileAttachment : Attachment
 
         if (!string.IsNullOrEmpty(this.FileName))
         {
-            using (FileStream fileStream = new FileStream(this.FileName, FileMode.Open, FileAccess.Read))
+            using (FileStream fileStream = new(this.FileName, FileMode.Open, FileAccess.Read))
             {
                 writer.WriteBase64ElementValue(fileStream);
             }

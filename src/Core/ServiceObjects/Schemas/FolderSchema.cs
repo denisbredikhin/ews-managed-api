@@ -202,7 +202,7 @@ public class FolderSchema : ServiceObjectSchema
             delegate() { return new ArchiveTag(); });
 
     // This must be declared after the property definitions
-    internal static readonly FolderSchema Instance = new FolderSchema();
+    internal static readonly FolderSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

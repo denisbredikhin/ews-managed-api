@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal sealed class PostReplySchema : ServiceObjectSchema
 {
     // This must be declared after the property definitions
-    internal static readonly PostReplySchema Instance = new PostReplySchema();
+    internal static readonly PostReplySchema Instance = new();
 
     /// <summary>
     /// Registers properties.

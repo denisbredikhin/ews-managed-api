@@ -87,7 +87,7 @@ public sealed class AttributedStringCollection : ComplexPropertyCollection<Attri
     /// <returns>An AttributedString object initialized with the provided SMTP address.</returns>
     public AttributedString Add(string stringValue)
     {
-        AttributedString attributedString = new AttributedString(stringValue);
+        AttributedString attributedString = new(stringValue);
 
         this.Add(attributedString);
 
@@ -102,7 +102,7 @@ public sealed class AttributedStringCollection : ComplexPropertyCollection<Attri
     /// <returns>The added attributedString object</returns>
     public AttributedString Add(string stringValue, IList<string> attributions)
     {
-        AttributedString attributedString = new AttributedString(stringValue, attributions);
+        AttributedString attributedString = new(stringValue, attributions);
 
         this.Add(attributedString);
 

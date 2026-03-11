@@ -79,7 +79,7 @@ internal abstract class ServiceRequestBase
     /// <summary>
     /// Maintains the collection of client side statistics for requests already completed
     /// </summary>
-    private static readonly List<string> clientStatisticsCache = new List<string>();
+    private static readonly List<string> clientStatisticsCache = new();
 
     private readonly ExchangeService service;
 
@@ -404,12 +404,12 @@ internal abstract class ServiceRequestBase
     {
         using (var memoryStream = new MemoryStream())
         {
-            using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, memoryStream))
+            using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
             {
                 this.WriteToXml(writer);
             }
             memoryStream.Position = 0;
-            using (StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8, false, 4096, true))
+            using (StreamReader reader = new(memoryStream, Encoding.UTF8, false, 4096, true))
                 request.Content = reader.ReadToEnd();
         }
     }
@@ -422,9 +422,9 @@ internal abstract class ServiceRequestBase
     /// <param name="needTrace"></param>
     private void TraceAndEmitRequest(IEwsHttpWebRequest request, bool needSignature, bool needTrace)
     {
-        using (MemoryStream memoryStream = new MemoryStream())
+        using (MemoryStream memoryStream = new())
         {
-            using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, memoryStream))
+            using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
             {
                 writer.RequireWSSecurityUtilityNamespace = needSignature;
                 this.WriteToXml(writer);
@@ -708,7 +708,7 @@ internal abstract class ServiceRequestBase
                         }
                     }
 
-                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb = new();
                     sb.Append("MessageId=");
                     sb.Append(requestId);
                     sb.Append(",ResponseTime=");
@@ -836,7 +836,7 @@ internal abstract class ServiceRequestBase
                     // MemoryStream.
                     if (this.Service.IsTraceEnabledFor(TraceFlags.EwsResponse))
                     {
-                        using (MemoryStream memoryStream = new MemoryStream())
+                        using (MemoryStream memoryStream = new())
                         {
                             using (Stream serviceResponseStream = await ServiceRequestBase.GetResponseStream(httpWebResponse))
                             {
@@ -847,7 +847,7 @@ internal abstract class ServiceRequestBase
 
                             this.TraceResponseXml(httpWebResponse, memoryStream);
 
-                            EwsServiceXmlReader reader = new EwsServiceXmlReader(memoryStream, this.Service);
+                            EwsServiceXmlReader reader = new(memoryStream, this.Service);
                             soapFaultDetails = this.ReadSoapFault(reader);
                         }
                     }
@@ -855,7 +855,7 @@ internal abstract class ServiceRequestBase
                     {
                         using (Stream stream = await ServiceRequestBase.GetResponseStream(httpWebResponse))
                         {
-                            EwsServiceXmlReader reader = new EwsServiceXmlReader(stream, this.Service);
+                            EwsServiceXmlReader reader = new(stream, this.Service);
                             soapFaultDetails = this.ReadSoapFault(reader);
                         }
                     }

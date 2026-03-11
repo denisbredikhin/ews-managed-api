@@ -489,7 +489,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// <returns></returns>
     private List<string> GetObjectValue(object[] valueArray)
     {
-        List<string> stringArray = new List<string>();
+        List<string> stringArray = new();
 
         foreach (object value in valueArray)
         {
@@ -532,7 +532,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
             "UserConfigurationDictionary.LoadFromXml",
             "reader is null");
 
-        List<string> values = new List<string>();
+        List<string> values = new();
 
         reader.ReadStartElement(this.Namespace, XmlElementNames.Value);
 

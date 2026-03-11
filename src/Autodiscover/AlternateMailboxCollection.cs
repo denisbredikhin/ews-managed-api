@@ -49,7 +49,7 @@ public sealed class AlternateMailboxCollection
     /// <returns>AlternateMailboxCollection</returns>
     internal static AlternateMailboxCollection LoadFromXml(EwsXmlReader reader)
     {
-        AlternateMailboxCollection instance = new AlternateMailboxCollection();
+        AlternateMailboxCollection instance = new();
 
         do
         {

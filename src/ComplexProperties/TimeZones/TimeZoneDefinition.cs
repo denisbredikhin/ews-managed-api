@@ -41,9 +41,9 @@ public class TimeZoneDefinition : ComplexProperty
 
     private string name;
     private string id;
-    private readonly Dictionary<string, TimeZonePeriod> periods = new Dictionary<string, TimeZonePeriod>();
-    private readonly Dictionary<string, TimeZoneTransitionGroup> transitionGroups = new Dictionary<string, TimeZoneTransitionGroup>();
-    private readonly List<TimeZoneTransition> transitions = new List<TimeZoneTransition>();
+    private readonly Dictionary<string, TimeZonePeriod> periods = new();
+    private readonly Dictionary<string, TimeZoneTransitionGroup> transitionGroups = new();
+    private readonly List<TimeZoneTransition> transitions = new();
 
     /// <summary>
     /// Compares the transitions.
@@ -94,14 +94,16 @@ public class TimeZoneDefinition : ComplexProperty
 
         // TimeZoneInfo only supports one standard period, which bias is the time zone's base
         // offset to UTC.
-        TimeZonePeriod standardPeriod = new TimeZonePeriod();
-        standardPeriod.Id = TimeZonePeriod.StandardPeriodId;
-        standardPeriod.Name = TimeZonePeriod.StandardPeriodName;
-        standardPeriod.Bias = -timeZoneInfo.BaseUtcOffset;
-        
+        TimeZonePeriod standardPeriod = new()
+        {
+            Id = TimeZonePeriod.StandardPeriodId,
+            Name = TimeZonePeriod.StandardPeriodName,
+            Bias = -timeZoneInfo.BaseUtcOffset
+        };
+
         AdjustmentRule[] adjustmentRules = timeZoneInfo.GetAdjustmentRulesEx();
 
-        TimeZoneTransition transitionToStandardPeriod = new TimeZoneTransition(this, standardPeriod);
+        TimeZoneTransition transitionToStandardPeriod = new(this, standardPeriod);
 
         if (adjustmentRules.Length == 0)
         {
@@ -109,12 +111,12 @@ public class TimeZoneDefinition : ComplexProperty
 
             // If the time zone info doesn't support Daylight Saving Time, we just need to
             // create one transition to one group with one transition to the standard period.
-            TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this, "0");
+            TimeZoneTransitionGroup transitionGroup = new(this, "0");
             transitionGroup.Transitions.Add(transitionToStandardPeriod);
 
             this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
 
-            TimeZoneTransition initialTransition = new TimeZoneTransition(this, transitionGroup);
+            TimeZoneTransition initialTransition = new(this, transitionGroup);
 
             this.transitions.Add(initialTransition);
         }
@@ -122,7 +124,7 @@ public class TimeZoneDefinition : ComplexProperty
         {
             for (int i = 0; i < adjustmentRules.Length; i++)
             {
-                TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this, this.transitionGroups.Count.ToString());
+                TimeZoneTransitionGroup transitionGroup = new(this, this.transitionGroups.Count.ToString());
                 transitionGroup.InitializeFromAdjustmentRule(adjustmentRules[i], standardPeriod);
 
                 this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
@@ -136,14 +138,16 @@ public class TimeZoneDefinition : ComplexProperty
                     // period and a group containing the transitions mapping to the adjustment rule.
                     if (adjustmentRules[i].DateStart > DateTime.MinValue.Date)
                     {
-                        TimeZoneTransition transitionToDummyGroup = new TimeZoneTransition(
+                        TimeZoneTransition transitionToDummyGroup = new(
                             this,
                             this.CreateTransitionGroupToPeriod(standardPeriod));
 
                         this.transitions.Add(transitionToDummyGroup);
 
-                        AbsoluteDateTransition absoluteDateTransition = new AbsoluteDateTransition(this, transitionGroup);
-                        absoluteDateTransition.DateTime = adjustmentRules[i].DateStart;
+                        AbsoluteDateTransition absoluteDateTransition = new(this, transitionGroup)
+                        {
+                            DateTime = adjustmentRules[i].DateStart
+                        };
 
                         transition = absoluteDateTransition;
                         this.periods.Add(standardPeriod.Id, standardPeriod);
@@ -155,8 +159,10 @@ public class TimeZoneDefinition : ComplexProperty
                 }
                 else
                 {
-                    AbsoluteDateTransition absoluteDateTransition = new AbsoluteDateTransition(this, transitionGroup);
-                    absoluteDateTransition.DateTime = adjustmentRules[i].DateStart;
+                    AbsoluteDateTransition absoluteDateTransition = new(this, transitionGroup)
+                    {
+                        DateTime = adjustmentRules[i].DateStart
+                    };
 
                     transition = absoluteDateTransition;
                 }
@@ -172,10 +178,12 @@ public class TimeZoneDefinition : ComplexProperty
 
             if (lastAdjustmentRuleEndDate < DateTime.MaxValue.Date)
             {
-                AbsoluteDateTransition transitionToDummyGroup = new AbsoluteDateTransition(
+                AbsoluteDateTransition transitionToDummyGroup = new(
                     this,
-                    this.CreateTransitionGroupToPeriod(standardPeriod));
-                transitionToDummyGroup.DateTime = lastAdjustmentRuleEndDate.AddDays(1);
+                    this.CreateTransitionGroupToPeriod(standardPeriod))
+                {
+                    DateTime = lastAdjustmentRuleEndDate.AddDays(1)
+                };
 
                 this.transitions.Add(transitionToDummyGroup);
             }
@@ -189,9 +197,9 @@ public class TimeZoneDefinition : ComplexProperty
     /// <returns>A TimeZoneTransitionGroup.</returns>
     private TimeZoneTransitionGroup CreateTransitionGroupToPeriod(TimeZonePeriod timeZonePeriod)
     {
-        TimeZoneTransition transitionToPeriod = new TimeZoneTransition(this, timeZonePeriod);
+        TimeZoneTransition transitionToPeriod = new(this, timeZonePeriod);
 
-        TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this, this.transitionGroups.Count.ToString());
+        TimeZoneTransitionGroup transitionGroup = new(this, this.transitionGroups.Count.ToString());
         transitionGroup.Transitions.Add(transitionToPeriod);
 
         this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
@@ -247,7 +255,7 @@ public class TimeZoneDefinition : ComplexProperty
 
                     if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Period))
                     {
-                        TimeZonePeriod period = new TimeZonePeriod();
+                        TimeZonePeriod period = new();
                         period.LoadFromXml(reader);
 
                         // OM:1648848 Bad timezone data from clients can include duplicate rules
@@ -280,7 +288,7 @@ public class TimeZoneDefinition : ComplexProperty
 
                     if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.TransitionsGroup))
                     {
-                        TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this);
+                        TimeZoneTransitionGroup transitionGroup = new(this);
 
                         transitionGroup.LoadFromXml(reader);
 
@@ -439,7 +447,7 @@ public class TimeZoneDefinition : ComplexProperty
         TimeZoneTransitionGroup.CustomTimeZoneCreateParams creationParams =
             this.transitions[this.transitions.Count - 1].TargetGroup.GetCustomTimeZoneCreationParams();
 
-        List<AdjustmentRule> adjustmentRules = new List<AdjustmentRule>();
+        List<AdjustmentRule> adjustmentRules = new();
 
         DateTime startDate = DateTime.MinValue;
         DateTime endDate;

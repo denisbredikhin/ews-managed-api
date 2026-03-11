@@ -69,19 +69,21 @@ public sealed class DiscoverySearchConfiguration
     /// <returns>Discovery search configuration object</returns>
     internal static DiscoverySearchConfiguration LoadFromXml(EwsServiceXmlReader reader)
     {
-        List<SearchableMailbox> mailboxes = new List<SearchableMailbox>();
+        List<SearchableMailbox> mailboxes = new();
 
         reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.DiscoverySearchConfiguration);
 
-        DiscoverySearchConfiguration configuration = new DiscoverySearchConfiguration();
-        configuration.SearchId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.SearchId);
+        DiscoverySearchConfiguration configuration = new()
+        {
+            SearchId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.SearchId),
 
-        // the query could be empty means there won't be Query element, hence needs to read and check
-        // if the next element is not Query, then it means already read SearchableMailboxes element
-        configuration.SearchQuery = string.Empty;
-        configuration.InPlaceHoldIdentity = string.Empty;
-        configuration.ManagedByOrganization = string.Empty;
-        configuration.Language = string.Empty;
+            // the query could be empty means there won't be Query element, hence needs to read and check
+            // if the next element is not Query, then it means already read SearchableMailboxes element
+            SearchQuery = string.Empty,
+            InPlaceHoldIdentity = string.Empty,
+            ManagedByOrganization = string.Empty,
+            Language = string.Empty
+        };
 
         do
         {

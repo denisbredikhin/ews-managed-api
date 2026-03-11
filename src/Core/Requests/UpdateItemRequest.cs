@@ -33,7 +33,7 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>
 {
-    private readonly List<Item> items = new List<Item>();
+    private readonly List<Item> items = new();
     private FolderId savedItemsDestinationFolder;
     private ConflictResolutionMode conflictResolutionMode;
     private MessageDisposition? messageDisposition;

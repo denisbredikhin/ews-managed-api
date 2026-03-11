@@ -115,7 +115,7 @@ internal sealed class FindConversationResponse : ServiceResponse
 
                 if (reader.NodeType == XmlNodeType.Element)
                 {
-                    HighlightTerm term = new HighlightTerm();
+                    HighlightTerm term = new();
 
                     term.LoadFromXml(
                         reader,

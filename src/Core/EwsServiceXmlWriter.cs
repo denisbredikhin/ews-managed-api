@@ -62,10 +62,12 @@ internal class EwsServiceXmlWriter : IDisposable
     {
         this.service = service;
 
-        XmlWriterSettings settings = new XmlWriterSettings();
-        settings.Indent = true;
+        XmlWriterSettings settings = new()
+        {
+            Indent = true,
 
-        settings.Encoding = EwsServiceXmlWriter.utf8Encoding;
+            Encoding = EwsServiceXmlWriter.utf8Encoding
+        };
 
         this.xmlWriter = XmlWriter.Create(stream, settings);
     }
@@ -398,7 +400,7 @@ internal class EwsServiceXmlWriter : IDisposable
         byte[] buffer = new byte[BufferSize];
         int bytesRead;
 
-        using (BinaryReader reader = new BinaryReader(stream))
+        using (BinaryReader reader = new(stream))
         {
             do
             {

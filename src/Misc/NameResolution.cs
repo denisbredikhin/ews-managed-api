@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 public sealed class NameResolution
 {
     private readonly NameResolutionCollection owner;
-    private readonly EmailAddress mailbox = new EmailAddress();
+    private readonly EmailAddress mailbox = new();
     private Contact contact;
 
     /// <summary>

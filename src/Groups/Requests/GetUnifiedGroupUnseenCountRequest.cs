@@ -92,7 +92,7 @@ internal sealed class GetUnifiedGroupUnseenCountRequest : SimpleServiceRequestBa
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetUnifiedGroupUnseenCountResponse response = new GetUnifiedGroupUnseenCountResponse();
+        GetUnifiedGroupUnseenCountResponse response = new();
         response.LoadFromXml(reader, GetResponseXmlElementName());
         return response;
     }
@@ -103,7 +103,7 @@ internal sealed class GetUnifiedGroupUnseenCountRequest : SimpleServiceRequestBa
     /// <param name="writer">The writer.</param>
     internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
     {
-        UnifiedGroupIdentity groupIdentity = new UnifiedGroupIdentity(this.identityType, this.identityValue);
+        UnifiedGroupIdentity groupIdentity = new(this.identityType, this.identityValue);
 
         groupIdentity.WriteToXml(writer, XmlElementNames.GroupIdentity);
         writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.LastVisitedTimeUtc, this.lastVisitedTimeUtc.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ"));

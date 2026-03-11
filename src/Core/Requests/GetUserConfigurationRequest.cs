@@ -58,9 +58,11 @@ internal class GetUserConfigurationRequest : MultiResponseServiceRequest<GetUser
         // In the case of UserConfiguration.Load(), this.userConfiguration is set.
         if (this.userConfiguration == null)
         {
-            this.userConfiguration = new UserConfiguration(service, this.properties);
-            this.userConfiguration.Name = this.name;
-            this.userConfiguration.ParentFolderId = this.parentFolderId;
+            this.userConfiguration = new UserConfiguration(service, this.properties)
+            {
+                Name = this.name,
+                ParentFolderId = this.parentFolderId
+            };
         }
 
         return new GetUserConfigurationResponse(this.userConfiguration);

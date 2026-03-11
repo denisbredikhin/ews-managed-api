@@ -116,7 +116,7 @@ internal sealed class GetAppMarketplaceUrlRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetAppMarketplaceUrlResponse response = new GetAppMarketplaceUrlResponse();
+        GetAppMarketplaceUrlResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetAppMarketplaceUrlResponse);
         return response;
     }

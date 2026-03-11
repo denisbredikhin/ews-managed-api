@@ -42,7 +42,7 @@ public sealed class ExpandGroupResults : IEnumerable<EmailAddress>
     /// <summary>
     /// DL members.
     /// </summary>
-    private readonly Collection<EmailAddress> members = new Collection<EmailAddress>();
+    private readonly Collection<EmailAddress> members = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExpandGroupResults"/> class.
@@ -123,7 +123,7 @@ public sealed class ExpandGroupResults : IEnumerable<EmailAddress>
 
             for (int i = 0; i < totalItemsInView; i++)
             {
-                EmailAddress emailAddress = new EmailAddress();
+                EmailAddress emailAddress = new();
 
                 reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.Mailbox);
                 emailAddress.LoadFromXml(reader, XmlElementNames.Mailbox);

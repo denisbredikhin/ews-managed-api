@@ -79,12 +79,14 @@ public sealed class RetentionPolicyTag
     {
         reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.RetentionPolicyTag);
 
-        RetentionPolicyTag retentionPolicyTag = new RetentionPolicyTag();
-        retentionPolicyTag.DisplayName = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.DisplayName);
-        retentionPolicyTag.RetentionId = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.RetentionId));
-        retentionPolicyTag.RetentionPeriod = reader.ReadElementValue<int>(XmlNamespace.Types, XmlElementNames.RetentionPeriod);
-        retentionPolicyTag.Type = reader.ReadElementValue<ElcFolderType>(XmlNamespace.Types, XmlElementNames.Type);
-        retentionPolicyTag.RetentionAction = reader.ReadElementValue<RetentionActionType>(XmlNamespace.Types, XmlElementNames.RetentionAction);
+        RetentionPolicyTag retentionPolicyTag = new()
+        {
+            DisplayName = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.DisplayName),
+            RetentionId = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.RetentionId)),
+            RetentionPeriod = reader.ReadElementValue<int>(XmlNamespace.Types, XmlElementNames.RetentionPeriod),
+            Type = reader.ReadElementValue<ElcFolderType>(XmlNamespace.Types, XmlElementNames.Type),
+            RetentionAction = reader.ReadElementValue<RetentionActionType>(XmlNamespace.Types, XmlElementNames.RetentionAction)
+        };
 
         // Description is not a required property.
         reader.Read();

@@ -98,9 +98,11 @@ public class MessageBodyTests
     [Fact]
     public void Properties_CanBeChanged()
     {
-        var body = new MessageBody();
-        body.BodyType = BodyType.HTML;
-        body.Text = "<html/>";
+        var body = new MessageBody
+        {
+            BodyType = BodyType.HTML,
+            Text = "<html/>"
+        };
 
         body.BodyType.Should().Be(BodyType.HTML);
         body.Text.Should().Be("<html/>");

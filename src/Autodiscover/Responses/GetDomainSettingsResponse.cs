@@ -202,7 +202,7 @@ public sealed class GetDomainSettingsResponse : AutodiscoverResponse
 
                 if ((reader.NodeType == XmlNodeType.Element) && (reader.LocalName == XmlElementNames.DomainSettingError))
                 {
-                    DomainSettingError error = new DomainSettingError();
+                    DomainSettingError error = new();
                     error.LoadFromXml(reader);
                     domainSettingErrors.Add(error);
                 }

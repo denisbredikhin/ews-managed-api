@@ -66,7 +66,7 @@ internal sealed class GetUserPhotoRequest : SimpleServiceRequestBase
     /// <returns>The canonical NotFound result</returns>
     internal static GetUserPhotoResponse GetNotFoundResponse()
     {
-        GetUserPhotoResponse serviceResponse = new GetUserPhotoResponse();
+        GetUserPhotoResponse serviceResponse = new();
         serviceResponse.Results.Status = GetUserPhotoStatus.PhotoOrUserNotFound;
 
         return serviceResponse;
@@ -147,7 +147,7 @@ internal sealed class GetUserPhotoRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader, HttpResponseHeaders responseHeaders)
     {
-        GetUserPhotoResponse response = new GetUserPhotoResponse();
+        GetUserPhotoResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetUserPhotoResponse);
         response.ReadHeader(responseHeaders);
         return response;

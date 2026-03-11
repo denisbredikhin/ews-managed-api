@@ -33,7 +33,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal class GetServerTimeZonesResponse : ServiceResponse
 {
-    private readonly Collection<TimeZoneInfo> timeZones = new Collection<TimeZoneInfo>();
+    private readonly Collection<TimeZoneInfo> timeZones = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetServerTimeZonesResponse"/> class.
@@ -61,7 +61,7 @@ internal class GetServerTimeZonesResponse : ServiceResponse
 
                 if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.TimeZoneDefinition))
                 {
-                    TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition();
+                    TimeZoneDefinition timeZoneDefinition = new();
                     timeZoneDefinition.LoadFromXml(reader);
 
                     this.timeZones.Add(timeZoneDefinition.ToTimeZoneInfo(reader.Service));

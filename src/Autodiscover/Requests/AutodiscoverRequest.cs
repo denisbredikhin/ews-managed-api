@@ -92,9 +92,9 @@ internal abstract class AutodiscoverRequest
             bool needSignature = this.Service.Credentials != null && this.Service.Credentials.NeedSignature;
             bool needTrace = this.Service.IsTraceEnabledFor(TraceFlags.AutodiscoverRequest);
 
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (MemoryStream memoryStream = new())
                 {
-                    using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, memoryStream))
+                    using (EwsServiceXmlWriter writer = new(this.Service, memoryStream))
                     {
                         writer.RequireWSSecurityUtilityNamespace = needSignature;
                         this.WriteSoapRequest(
@@ -135,7 +135,7 @@ internal abstract class AutodiscoverRequest
 
                 using (Stream responseStream = await AutodiscoverRequest.GetResponseStream(webResponse))
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
+                    using (MemoryStream memoryStream = new())
                     {
                         // Copy response stream to in-memory stream and reset to start
                         EwsUtilities.CopyStream(responseStream, memoryStream);
@@ -143,7 +143,7 @@ internal abstract class AutodiscoverRequest
 
                         this.Service.TraceResponse(webResponse, memoryStream);                           
 
-                        EwsXmlReader ewsXmlReader = new EwsXmlReader(memoryStream);
+                        EwsXmlReader ewsXmlReader = new(memoryStream);
 
                         // WCF may not generate an XML declaration.
                         ewsXmlReader.Read();
@@ -239,7 +239,7 @@ internal abstract class AutodiscoverRequest
                 // MemoryStream.
                 if (this.Service.IsTraceEnabledFor(TraceFlags.AutodiscoverRequest))
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
+                    using (MemoryStream memoryStream = new())
                     {
                         using (Stream serviceResponseStream = await AutodiscoverRequest.GetResponseStream(httpWebResponse))
                         {
@@ -250,7 +250,7 @@ internal abstract class AutodiscoverRequest
 
                         this.Service.TraceResponse(httpWebResponse, memoryStream);
 
-                        EwsXmlReader reader = new EwsXmlReader(memoryStream);
+                        EwsXmlReader reader = new(memoryStream);
                         soapFaultDetails = this.ReadSoapFault(reader);
                     }
                 }
@@ -258,7 +258,7 @@ internal abstract class AutodiscoverRequest
                 {
                     using (Stream stream = await AutodiscoverRequest.GetResponseStream(httpWebResponse))
                     {
-                        EwsXmlReader reader = new EwsXmlReader(stream);
+                        EwsXmlReader reader = new(stream);
                         soapFaultDetails = this.ReadSoapFault(reader);
                     }
                 }
@@ -286,7 +286,7 @@ internal abstract class AutodiscoverRequest
         {
             try
             {
-                Uri redirectionUri = new Uri(this.Url, location);
+                Uri redirectionUri = new(this.Url, location);
                 if ((redirectionUri.Scheme == "http") || (redirectionUri.Scheme == "https"))
                 {
                     AutodiscoverResponse response = this.CreateServiceResponse();
@@ -531,7 +531,7 @@ internal abstract class AutodiscoverRequest
     /// <param name="reader">EwsXmlReader</param>
     private ExchangeServerInfo ReadServerVersionInfo(EwsXmlReader reader)
     {
-        ExchangeServerInfo serverInfo = new ExchangeServerInfo();
+        ExchangeServerInfo serverInfo = new();
         do
         {
             reader.Read();

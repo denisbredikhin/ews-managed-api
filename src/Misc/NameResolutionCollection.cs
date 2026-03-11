@@ -35,7 +35,7 @@ public sealed class NameResolutionCollection : IEnumerable<NameResolution>
 {
     private readonly ExchangeService service;
     private bool includesAllResolutions;
-    private readonly List<NameResolution> items = new List<NameResolution>();
+    private readonly List<NameResolution> items = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NameResolutionCollection"/> class.
@@ -64,7 +64,7 @@ public sealed class NameResolutionCollection : IEnumerable<NameResolution>
 
         for (int i = 0; i < totalItemsInView; i++)
         {
-            NameResolution nameResolution = new NameResolution(this);
+            NameResolution nameResolution = new(this);
 
             nameResolution.LoadFromXml(reader);
 

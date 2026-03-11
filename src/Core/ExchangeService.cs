@@ -81,11 +81,12 @@ public sealed class ExchangeService : ExchangeServiceBase
         MessageDisposition? messageDisposition,
         CancellationToken token)
     {
-        CreateResponseObjectRequest request = new CreateResponseObjectRequest(this, ServiceErrorHandling.ThrowOnError);
-
-        request.ParentFolderId = parentFolderId;
-        request.Items = new ServiceObject[] { responseObject };
-        request.MessageDisposition = messageDisposition;
+        CreateResponseObjectRequest request = new(this, ServiceErrorHandling.ThrowOnError)
+        {
+            ParentFolderId = parentFolderId,
+            Items = new ServiceObject[] { responseObject },
+            MessageDisposition = messageDisposition
+        };
 
         ServiceResponseCollection<CreateResponseObjectResponse> responses = await request.ExecuteAsync(token).ConfigureAwait(false);
 
@@ -105,10 +106,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         Folder folder,
         FolderId parentFolderId, CancellationToken token)
     {
-        CreateFolderRequest request = new CreateFolderRequest(this, ServiceErrorHandling.ThrowOnError);
-
-        request.Folders = new Folder[] { folder };
-        request.ParentFolderId = parentFolderId;
+        CreateFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError)
+        {
+            Folders = new Folder[] { folder },
+            ParentFolderId = parentFolderId
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -119,7 +121,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="folder">The folder.</param>
     internal System.Threading.Tasks.Task UpdateFolder(Folder folder, CancellationToken token)
     {
-        UpdateFolderRequest request = new UpdateFolderRequest(this, ServiceErrorHandling.ThrowOnError);
+        UpdateFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.Folders.Add(folder);
 
@@ -137,9 +139,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         FolderId destinationFolderId,
         CancellationToken token)
     {
-        CopyFolderRequest request = new CopyFolderRequest(this, ServiceErrorHandling.ThrowOnError);
-
-        request.DestinationFolderId = destinationFolderId;
+        CopyFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError)
+        {
+            DestinationFolderId = destinationFolderId
+        };
         request.FolderIds.Add(folderId);
 
         ServiceResponseCollection<MoveCopyFolderResponse> responses = await request.ExecuteAsync(token).ConfigureAwait(false);
@@ -158,9 +161,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         FolderId destinationFolderId,
         CancellationToken token)
     {
-        MoveFolderRequest request = new MoveFolderRequest(this, ServiceErrorHandling.ThrowOnError);
-
-        request.DestinationFolderId = destinationFolderId;
+        MoveFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError)
+        {
+            DestinationFolderId = destinationFolderId
+        };
         request.FolderIds.Add(folderId);
 
         ServiceResponseCollection<MoveCopyFolderResponse> responses = await request.ExecuteAsync(token).ConfigureAwait(false);
@@ -185,7 +189,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandlingMode,
         CancellationToken token)
     {
-        FindFolderRequest request = new FindFolderRequest(this, errorHandlingMode);
+        FindFolderRequest request = new(this, errorHandlingMode);
 
         request.ParentFolderIds.AddRange(parentFolderIds);
         request.SearchFilter = searchFilter;
@@ -301,7 +305,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(folder, "folder");
         EwsUtilities.ValidateParam(propertySet, "propertySet");
 
-        GetFolderRequestForLoad request = new GetFolderRequestForLoad(this, ServiceErrorHandling.ThrowOnError);
+        GetFolderRequestForLoad request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.FolderIds.Add(folder);
         request.PropertySet = propertySet;
@@ -391,7 +395,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
-        GetFolderRequest request = new GetFolderRequest(this, errorHandling);
+        GetFolderRequest request = new(this, errorHandling);
 
         request.FolderIds.AddRange(folderIds);
         request.PropertySet = propertySet;
@@ -411,7 +415,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(folderId, "folderId");
 
-        DeleteFolderRequest request = new DeleteFolderRequest(this, ServiceErrorHandling.ThrowOnError);
+        DeleteFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.FolderIds.Add(folderId);
         request.DeleteMode = deleteMode;
@@ -433,7 +437,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(folderId, "folderId");
 
-        EmptyFolderRequest request = new EmptyFolderRequest(this, ServiceErrorHandling.ThrowOnError);
+        EmptyFolderRequest request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.FolderIds.Add(folderId);
         request.DeleteMode = deleteMode;
@@ -457,7 +461,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(folderId, "folderId");
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013, "MarkAllItemsAsRead");
 
-        MarkAllItemsAsReadRequest request = new MarkAllItemsAsReadRequest(this, ServiceErrorHandling.ThrowOnError);
+        MarkAllItemsAsReadRequest request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.FolderIds.Add(folderId);
         request.ReadFlag = readFlag;
@@ -488,12 +492,13 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
-        CreateItemRequest request = new CreateItemRequest(this, errorHandling);
-
-        request.ParentFolderId = parentFolderId;
-        request.Items = items;
-        request.MessageDisposition = messageDisposition;
-        request.SendInvitationsMode = sendInvitationsMode;
+        CreateItemRequest request = new(this, errorHandling)
+        {
+            ParentFolderId = parentFolderId,
+            Items = items,
+            MessageDisposition = messageDisposition,
+            SendInvitationsMode = sendInvitationsMode
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -579,7 +584,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         bool suppressReadReceipt,
         CancellationToken token)
     {
-        UpdateItemRequest request = new UpdateItemRequest(this, errorHandling);
+        UpdateItemRequest request = new(this, errorHandling);
 
         request.Items.AddRange(items);
         request.SavedItemsDestinationFolder = savedItemsDestinationFolderId;
@@ -714,10 +719,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         FolderId savedCopyDestinationFolderId,
         CancellationToken token)
     {
-        SendItemRequest request = new SendItemRequest(this, ServiceErrorHandling.ThrowOnError);
-
-        request.Items = new Item[] { item };
-        request.SavedCopyDestinationFolderId = savedCopyDestinationFolderId;
+        SendItemRequest request = new(this, ServiceErrorHandling.ThrowOnError)
+        {
+            Items = new Item[] { item },
+            SavedCopyDestinationFolderId = savedCopyDestinationFolderId
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -737,7 +743,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
-        CopyItemRequest request = new CopyItemRequest(this, errorHandling);
+        CopyItemRequest request = new(this, errorHandling);
         request.ItemIds.AddRange(itemIds);
         request.DestinationFolderId = destinationFolderId;
         request.ReturnNewItemIds = returnNewItemIds;
@@ -824,7 +830,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling, 
         CancellationToken token)
     {
-        MoveItemRequest request = new MoveItemRequest(this, errorHandling);
+        MoveItemRequest request = new(this, errorHandling);
 
         request.ItemIds.AddRange(itemIds);
         request.DestinationFolderId = destinationFolderId;
@@ -908,7 +914,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         FolderId sourceFolderId,
         CancellationToken token = default(CancellationToken))
     {
-        ArchiveItemRequest request = new ArchiveItemRequest(this, ServiceErrorHandling.ReturnErrors);
+        ArchiveItemRequest request = new(this, ServiceErrorHandling.ReturnErrors);
 
         request.Ids.AddRange(itemIds);
         request.SourceFolderId = sourceFolderId;
@@ -945,7 +951,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(queryString, "queryString");
         EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
 
-        FindItemRequest<TItem> request = new FindItemRequest<TItem>(this, errorHandlingMode);
+        FindItemRequest<TItem> request = new(this, errorHandlingMode);
 
         request.ParentFolderIds.AddRange(parentFolderIds);
         request.SearchFilter = searchFilter;
@@ -1000,7 +1006,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(returnHighlightTerms, "returnHighlightTerms");
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013, "FindItems");
 
-        FindItemRequest<Item> request = new FindItemRequest<Item>(this, ServiceErrorHandling.ThrowOnError);
+        FindItemRequest<Item> request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.ParentFolderIds.AddRange(parentFolderIds);
         request.QueryString = queryString;
@@ -1033,7 +1039,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(returnHighlightTerms, "returnHighlightTerms");
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013, "FindItems");
 
-        FindItemRequest<Item> request = new FindItemRequest<Item>(this, ServiceErrorHandling.ThrowOnError);
+        FindItemRequest<Item> request = new(this, ServiceErrorHandling.ThrowOnError);
 
         request.ParentFolderIds.AddRange(parentFolderIds);
         request.QueryString = queryString;
@@ -1364,7 +1370,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
-        GetItemRequestForLoad request = new GetItemRequestForLoad(this, errorHandling);
+        GetItemRequestForLoad request = new(this, errorHandling);
 
         request.ItemIds.AddRange(items);
         request.PropertySet = propertySet;
@@ -1387,7 +1393,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
-        GetItemRequest request = new GetItemRequest(this, errorHandling);
+        GetItemRequest request = new(this, errorHandling);
 
         request.ItemIds.AddRange(itemIds);
         request.PropertySet = propertySet;
@@ -1510,7 +1516,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         bool suppressReadReceipts,
         CancellationToken token)
     {
-        DeleteItemRequest request = new DeleteItemRequest(this, errorHandling);
+        DeleteItemRequest request = new(this, errorHandling);
 
         request.ItemIds.AddRange(itemIds);
         request.DeleteMode = deleteMode;
@@ -1622,7 +1628,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     public Task<ServiceResponseCollection<MarkAsJunkResponse>> MarkAsJunk(IEnumerable<ItemId> itemIds, bool isJunk, bool moveItem,
         CancellationToken token = default(CancellationToken))
     {
-        MarkAsJunkRequest request = new MarkAsJunkRequest(this, ServiceErrorHandling.ReturnErrors);
+        MarkAsJunkRequest request = new(this, ServiceErrorHandling.ReturnErrors);
         request.ItemIds.AddRange(itemIds);
         request.IsJunk = isJunk;
         request.MoveItem = moveItem;
@@ -1652,12 +1658,13 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(queryString, "queryString");
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013_SP1, "FindPeople");
 
-        FindPeopleRequest request = new FindPeopleRequest(this);
-
-        request.FolderId = folderId;
-        request.SearchFilter = searchFilter;
-        request.View = view;
-        request.QueryString = queryString;
+        FindPeopleRequest request = new(this)
+        {
+            FolderId = folderId,
+            SearchFilter = searchFilter,
+            View = view,
+            QueryString = queryString
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Personas;
     }
@@ -1693,11 +1700,12 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(view, "view");
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013_SP1, "FindPeople");
 
-        FindPeopleRequest request = new FindPeopleRequest(this);
-
-        request.FolderId = folderId;
-        request.SearchFilter = searchFilter;
-        request.View = view;
+        FindPeopleRequest request = new(this)
+        {
+            FolderId = folderId,
+            SearchFilter = searchFilter,
+            View = view
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Results;
     }
@@ -1786,18 +1794,22 @@ public sealed class ExchangeService : ExchangeServiceBase
             queryMode = PeopleQueryMode.Auto;
         }
 
-        FindPeopleRequest request = new FindPeopleRequest(this);
-        request.View = view;
-        request.QueryString = queryString;
-        request.SearchPeopleSuggestionIndex = true;
-        request.Context = context;
-        request.QueryMode = queryMode;
+        FindPeopleRequest request = new(this)
+        {
+            View = view,
+            QueryString = queryString,
+            SearchPeopleSuggestionIndex = true,
+            Context = context,
+            QueryMode = queryMode
+        };
 
         FindPeopleResponse response = await request.Execute(token).ConfigureAwait(false);
 
-        PeopleQueryResults results = new PeopleQueryResults();
-        results.Personas = response.Personas.ToList();
-        results.TransactionId = response.TransactionId;
+        PeopleQueryResults results = new()
+        {
+            Personas = response.Personas.ToList(),
+            TransactionId = response.TransactionId
+        };
 
         return results;
     }
@@ -1816,11 +1828,12 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(userPhotoSize, "userPhotoSize");
         EwsUtilities.ValidateParamAllowNull(entityTag, "entityTag");
 
-        GetUserPhotoRequest request = new GetUserPhotoRequest(this);
-
-        request.EmailAddress = emailAddress;
-        request.UserPhotoSize = userPhotoSize;
-        request.EntityTag = entityTag;
+        GetUserPhotoRequest request = new(this)
+        {
+            EmailAddress = emailAddress,
+            UserPhotoSize = userPhotoSize,
+            EntityTag = entityTag
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Results;
     }
@@ -1836,7 +1849,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>The collection of Person objects containing the insight info</returns>
     public async Task<Collection<Person>> GetPeopleInsights(IEnumerable<string> emailAddresses, CancellationToken token = default(CancellationToken))
     {
-        GetPeopleInsightsRequest request = new GetPeopleInsightsRequest(this);
+        GetPeopleInsightsRequest request = new(this);
         request.Emailaddresses.AddRange(emailAddresses);
 
         return (await request.Execute(token).ConfigureAwait(false)).People;
@@ -1860,7 +1873,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
-        GetAttachmentRequest request = new GetAttachmentRequest(this, errorHandling);
+        GetAttachmentRequest request = new(this, errorHandling);
 
         request.Attachments.AddRange(attachments);
         request.BodyType = bodyType;
@@ -1907,7 +1920,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         IEnumerable<PropertyDefinitionBase> additionalProperties,
         CancellationToken token = default(CancellationToken))
     {
-        GetAttachmentRequest request = new GetAttachmentRequest(this, ServiceErrorHandling.ReturnErrors);
+        GetAttachmentRequest request = new(this, ServiceErrorHandling.ReturnErrors);
 
         request.AttachmentIds.AddRange(attachmentIds);
         request.BodyType = bodyType;
@@ -1951,9 +1964,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         IEnumerable<Attachment> attachments,
         CancellationToken token)
     {
-        CreateAttachmentRequest request = new CreateAttachmentRequest(this, ServiceErrorHandling.ReturnErrors);
-
-        request.ParentItemId = parentItemId;
+        CreateAttachmentRequest request = new(this, ServiceErrorHandling.ReturnErrors)
+        {
+            ParentItemId = parentItemId
+        };
         request.Attachments.AddRange(attachments);
 
         return request.ExecuteAsync(token);
@@ -1966,7 +1980,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response collection.</returns>
     internal Task<ServiceResponseCollection<DeleteAttachmentResponse>> DeleteAttachments(IEnumerable<Attachment> attachments, CancellationToken token)
     {
-        DeleteAttachmentRequest request = new DeleteAttachmentRequest(this, ServiceErrorHandling.ReturnErrors);
+        DeleteAttachmentRequest request = new(this, ServiceErrorHandling.ReturnErrors);
 
         request.Attachments.AddRange(attachments);
 
@@ -2043,10 +2057,11 @@ public sealed class ExchangeService : ExchangeServiceBase
             EwsUtilities.ValidateParamCollection(parentFolderIds, "parentFolderIds");
         }
 
-        ResolveNamesRequest request = new ResolveNamesRequest(this);
-
-        request.NameToResolve = nameToResolve;
-        request.ReturnFullContactData = returnContactDetails;
+        ResolveNamesRequest request = new(this)
+        {
+            NameToResolve = nameToResolve,
+            ReturnFullContactData = returnContactDetails
+        };
         request.ParentFolderIds.AddRange(parentFolderIds);
         request.SearchLocation = searchScope;
         request.ContactDataPropertySet = contactDataPropertySet;
@@ -2106,9 +2121,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(emailAddress, "emailAddress");
 
-        ExpandGroupRequest request = new ExpandGroupRequest(this);
-
-        request.EmailAddress = emailAddress;
+        ExpandGroupRequest request = new(this)
+        {
+            EmailAddress = emailAddress
+        };
 
         return (await request.ExecuteAsync(token).ConfigureAwait(false))[0].Members;
     }
@@ -2122,8 +2138,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(groupId, "groupId");
 
-        EmailAddress emailAddress = new EmailAddress();
-        emailAddress.Id = groupId;
+        EmailAddress emailAddress = new()
+        {
+            Id = groupId
+        };
 
         return this.ExpandGroup(emailAddress);
     }
@@ -2151,8 +2169,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(address, "address");
         EwsUtilities.ValidateParam(routingType, "routingType");
 
-        EmailAddress emailAddress = new EmailAddress(address);
-        emailAddress.RoutingType = routingType;
+        EmailAddress emailAddress = new(address)
+        {
+            RoutingType = routingType
+        };
 
         return this.ExpandGroup(emailAddress);
     }
@@ -2164,8 +2184,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>The password expiration date.</returns>
     public async Task<DateTime?> GetPasswordExpirationDate(string mailboxSmtpAddress, CancellationToken token = default(CancellationToken))
     {
-        GetPasswordExpirationDateRequest request = new GetPasswordExpirationDateRequest(this);
-        request.MailboxSmtpAddress = mailboxSmtpAddress;
+        GetPasswordExpirationDateRequest request = new(this)
+        {
+            MailboxSmtpAddress = mailboxSmtpAddress
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).PasswordExpirationDate;
     }
@@ -2244,7 +2266,7 @@ public sealed class ExchangeService : ExchangeServiceBase
 
         EwsUtilities.ValidateParamCollection(eventTypes, "eventTypes");
 
-        SubscribeToPullNotificationsRequest request = new SubscribeToPullNotificationsRequest(this);
+        SubscribeToPullNotificationsRequest request = new(this);
 
         if (folderIds != null)
         {
@@ -2276,9 +2298,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(subscriptionId, "subscriptionId");
 
-        UnsubscribeRequest request = new UnsubscribeRequest(this);
-
-        request.SubscriptionId = subscriptionId;
+        UnsubscribeRequest request = new(this)
+        {
+            SubscriptionId = subscriptionId
+        };
 
         return request;
     }
@@ -2307,10 +2330,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(subscriptionId, "subscriptionId");
         EwsUtilities.ValidateParam(watermark, "watermark");
 
-        GetEventsRequest request = new GetEventsRequest(this);
-
-        request.SubscriptionId = subscriptionId;
-        request.Watermark = watermark;
+        GetEventsRequest request = new(this)
+        {
+            SubscriptionId = subscriptionId,
+            Watermark = watermark
+        };
 
         return request;
     }
@@ -2424,7 +2448,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         CancellationToken token = default(CancellationToken),
         params EventType[] eventTypes)
     {
-        var folderIds = new FolderId[] { new FolderId(WellKnownFolderName.Inbox, new Mailbox(groupMailboxSmtp)) };
+        var folderIds = new FolderId[] { new(WellKnownFolderName.Inbox, new Mailbox(groupMailboxSmtp)) };
         return (await this.BuildSubscribeToPushNotificationsRequest(
             folderIds,
             url,
@@ -2488,7 +2512,7 @@ public sealed class ExchangeService : ExchangeServiceBase
             throw new ArgumentNullException("sharePointSiteUrl");
         }
 
-        SetTeamMailboxRequest request = new SetTeamMailboxRequest(this, emailAddress, sharePointSiteUrl, state);
+        SetTeamMailboxRequest request = new(this, emailAddress, sharePointSiteUrl, state);
         return request.Execute(token);
     }
 
@@ -2505,7 +2529,7 @@ public sealed class ExchangeService : ExchangeServiceBase
             throw new ArgumentNullException("emailAddress");
         }
 
-        UnpinTeamMailboxRequest request = new UnpinTeamMailboxRequest(this, emailAddress);
+        UnpinTeamMailboxRequest request = new(this, emailAddress);
         return request.Execute(token);
     }
 
@@ -2538,8 +2562,10 @@ public sealed class ExchangeService : ExchangeServiceBase
 
         EwsUtilities.ValidateParamCollection(eventTypes, "eventTypes");
 
-        SubscribeToPushNotificationsRequest request = new SubscribeToPushNotificationsRequest(this);
-        request.AnchorMailbox = anchorMailbox;
+        SubscribeToPushNotificationsRequest request = new(this)
+        {
+            AnchorMailbox = anchorMailbox
+        };
 
         if (folderIds != null)
         {
@@ -2605,7 +2631,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParamCollection(eventTypes, "eventTypes");
 
-        SubscribeToStreamingNotificationsRequest request = new SubscribeToStreamingNotificationsRequest(this);
+        SubscribeToStreamingNotificationsRequest request = new(this);
 
         if (folderIds != null)
         {
@@ -2703,10 +2729,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(syncFolderId, "syncFolderId");
         EwsUtilities.ValidateParam(propertySet, "propertySet");
 
-        SyncFolderItemsRequest request = new SyncFolderItemsRequest(this);
-
-        request.SyncFolderId = syncFolderId;
-        request.PropertySet = propertySet;
+        SyncFolderItemsRequest request = new(this)
+        {
+            SyncFolderId = syncFolderId,
+            PropertySet = propertySet
+        };
         if (ignoredItemIds != null)
         {
             request.IgnoredItemIds.AddRange(ignoredItemIds);
@@ -2767,11 +2794,12 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(syncFolderId, "syncFolderId");  // Null syncFolderId is allowed
         EwsUtilities.ValidateParam(propertySet, "propertySet");
 
-        SyncFolderHierarchyRequest request = new SyncFolderHierarchyRequest(this);
-
-        request.PropertySet = propertySet;
-        request.SyncFolderId = syncFolderId;
-        request.SyncState = syncState;
+        SyncFolderHierarchyRequest request = new(this)
+        {
+            PropertySet = propertySet,
+            SyncFolderId = syncFolderId,
+            SyncState = syncState
+        };
 
         return request;
     }
@@ -2789,9 +2817,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(smtpAddress, "smtpAddress");
 
-        GetUserOofSettingsRequest request = new GetUserOofSettingsRequest(this);
-
-        request.SmtpAddress = smtpAddress;
+        GetUserOofSettingsRequest request = new(this)
+        {
+            SmtpAddress = smtpAddress
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).OofSettings;
     }
@@ -2806,10 +2835,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(smtpAddress, "smtpAddress");
         EwsUtilities.ValidateParam(oofSettings, "oofSettings");
 
-        SetUserOofSettingsRequest request = new SetUserOofSettingsRequest(this);
-
-        request.SmtpAddress = smtpAddress;
-        request.OofSettings = oofSettings;
+        SetUserOofSettingsRequest request = new(this)
+        {
+            SmtpAddress = smtpAddress,
+            OofSettings = oofSettings
+        };
 
         return request.Execute(token);
     }
@@ -2837,12 +2867,13 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(timeWindow, "timeWindow");
         EwsUtilities.ValidateParam(options, "options");
 
-        GetUserAvailabilityRequest request = new GetUserAvailabilityRequest(this);
-
-        request.Attendees = attendees;
-        request.TimeWindow = timeWindow;
-        request.RequestedData = requestedData;
-        request.Options = options;
+        GetUserAvailabilityRequest request = new(this)
+        {
+            Attendees = attendees,
+            TimeWindow = timeWindow,
+            RequestedData = requestedData,
+            Options = options
+        };
 
         return request.Execute(token);
     }
@@ -2876,7 +2907,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>An EmailAddressCollection containing all the room lists in the organization.</returns>
     public async Task<EmailAddressCollection> GetRoomLists(CancellationToken token = default(CancellationToken))
     {
-        GetRoomListsRequest request = new GetRoomListsRequest(this);
+        GetRoomListsRequest request = new(this);
 
         return (await request.Execute(token).ConfigureAwait(false)).RoomLists;
     }
@@ -2890,9 +2921,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(emailAddress, "emailAddress");
 
-        GetRoomsRequest request = new GetRoomsRequest(this);
-
-        request.RoomList = emailAddress;
+        GetRoomsRequest request = new(this)
+        {
+            RoomList = emailAddress
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Rooms;
     }
@@ -2914,10 +2946,11 @@ public sealed class ExchangeService : ExchangeServiceBase
                                         ExchangeVersion.Exchange2010_SP1,
                                         "FindConversation");
 
-        FindConversationRequest request = new FindConversationRequest(this);
-
-        request.View = view;
-        request.FolderId = new FolderIdWrapper(folderId);
+        FindConversationRequest request = new(this)
+        {
+            View = view,
+            FolderId = new FolderIdWrapper(folderId)
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Conversations;
     }
@@ -2947,11 +2980,12 @@ public sealed class ExchangeService : ExchangeServiceBase
                                         ExchangeVersion.Exchange2015,
                                         "FindConversation");
 
-        FindConversationRequest request = new FindConversationRequest(this);
-
-        request.View = view;
-        request.FolderId = new FolderIdWrapper(folderId);
-        request.AnchorMailbox = anchorMailbox;
+        FindConversationRequest request = new(this)
+        {
+            View = view,
+            FolderId = new FolderIdWrapper(folderId),
+            AnchorMailbox = anchorMailbox
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Conversations;
     }
@@ -2973,11 +3007,12 @@ public sealed class ExchangeService : ExchangeServiceBase
                                         ExchangeVersion.Exchange2013, // This method is only applicable for Exchange2013
                                         "FindConversation");
 
-        FindConversationRequest request = new FindConversationRequest(this);
-
-        request.View = view;
-        request.FolderId = new FolderIdWrapper(folderId);
-        request.QueryString = queryString;
+        FindConversationRequest request = new(this)
+        {
+            View = view,
+            FolderId = new FolderIdWrapper(folderId),
+            QueryString = queryString
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Conversations;
     }
@@ -3002,12 +3037,13 @@ public sealed class ExchangeService : ExchangeServiceBase
                                         ExchangeVersion.Exchange2013, // This method is only applicable for Exchange2013
                                         "FindConversation");
 
-        FindConversationRequest request = new FindConversationRequest(this);
-
-        request.View = view;
-        request.FolderId = new FolderIdWrapper(folderId);
-        request.QueryString = queryString;
-        request.ReturnHighlightTerms = returnHighlightTerms;
+        FindConversationRequest request = new(this)
+        {
+            View = view,
+            FolderId = new FolderIdWrapper(folderId),
+            QueryString = queryString,
+            ReturnHighlightTerms = returnHighlightTerms
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Results;
     }
@@ -3034,13 +3070,14 @@ public sealed class ExchangeService : ExchangeServiceBase
                                         ExchangeVersion.Exchange2013, // This method is only applicable for Exchange2013
                                         "FindConversation");
 
-        FindConversationRequest request = new FindConversationRequest(this);
-
-        request.View = view;
-        request.FolderId = new FolderIdWrapper(folderId);
-        request.QueryString = queryString;
-        request.ReturnHighlightTerms = returnHighlightTerms;
-        request.MailboxScope = mailboxScope;
+        FindConversationRequest request = new(this)
+        {
+            View = view,
+            FolderId = new FolderIdWrapper(folderId),
+            QueryString = queryString,
+            ReturnHighlightTerms = returnHighlightTerms,
+            MailboxScope = mailboxScope
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Results;
     }
@@ -3076,14 +3113,16 @@ public sealed class ExchangeService : ExchangeServiceBase
                                         ExchangeVersion.Exchange2013,
                                         "GetConversationItems");
 
-        GetConversationItemsRequest request = new GetConversationItemsRequest(this, errorHandling);
-        request.ItemProperties = propertySet;
-        request.FoldersToIgnore = new FolderIdCollection(foldersToIgnore);
-        request.SortOrder = sortOrder;
-        request.MailboxScope = mailboxScope;
-        request.MaxItemsToReturn = maxItemsToReturn;
-        request.AnchorMailbox = anchorMailbox;
-        request.Conversations = conversations.ToList();
+        GetConversationItemsRequest request = new(this, errorHandling)
+        {
+            ItemProperties = propertySet,
+            FoldersToIgnore = new FolderIdCollection(foldersToIgnore),
+            SortOrder = sortOrder,
+            MailboxScope = mailboxScope,
+            MaxItemsToReturn = maxItemsToReturn,
+            AnchorMailbox = anchorMailbox,
+            Conversations = conversations.ToList()
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -3132,7 +3171,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                                             ConversationSortOrder? sortOrder,
                                             CancellationToken token = default(CancellationToken))
     {
-        List<ConversationRequest> conversations = new List<ConversationRequest>();
+        List<ConversationRequest> conversations = new();
         conversations.Add(new ConversationRequest(conversationId, syncState));
 
         return (await this.InternalGetConversationItems(
@@ -3172,7 +3211,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(anchorMailbox, "anchorMailbox");
 
-        List<ConversationRequest> conversations = new List<ConversationRequest>();
+        List<ConversationRequest> conversations = new();
         conversations.Add(new ConversationRequest(conversationId, syncState));
 
         return (await this.InternalGetConversationItems(
@@ -3255,18 +3294,19 @@ public sealed class ExchangeService : ExchangeServiceBase
                             ExchangeVersion.Exchange2010_SP1,
                             "ApplyConversationAction");
 
-        ApplyConversationActionRequest request = new ApplyConversationActionRequest(this, errorHandlingMode);
+        ApplyConversationActionRequest request = new(this, errorHandlingMode);
 
         foreach (var conversationId in conversationIds)
         {
-            ConversationAction action = new ConversationAction();
-
-            action.Action = actionType;
-            action.ConversationId = conversationId;
-            action.ProcessRightAway = processRightAway;
-            action.Categories = categories;
-            action.EnableAlwaysDelete = enableAlwaysDelete;
-            action.DestinationFolderId = destinationFolderId != null ? new FolderIdWrapper(destinationFolderId) : null;
+            ConversationAction action = new()
+            {
+                Action = actionType,
+                ConversationId = conversationId,
+                ProcessRightAway = processRightAway,
+                Categories = categories,
+                EnableAlwaysDelete = enableAlwaysDelete,
+                DestinationFolderId = destinationFolderId != null ? new FolderIdWrapper(destinationFolderId) : null
+            };
 
             request.ConversationActions.Add(action);
         }
@@ -3320,23 +3360,24 @@ public sealed class ExchangeService : ExchangeServiceBase
                             ExchangeVersion.Exchange2010_SP1,
                             "ApplyConversationAction");
 
-        ApplyConversationActionRequest request = new ApplyConversationActionRequest(this, errorHandlingMode);
+        ApplyConversationActionRequest request = new(this, errorHandlingMode);
 
         foreach (var idTimePair in idTimePairs)
         {
-            ConversationAction action = new ConversationAction();
-
-            action.Action = actionType;
-            action.ConversationId = idTimePair.Key;
-            action.ContextFolderId = contextFolderId != null ? new FolderIdWrapper(contextFolderId) : null;
-            action.DestinationFolderId = destinationFolderId != null ? new FolderIdWrapper(destinationFolderId) : null;
-            action.ConversationLastSyncTime = idTimePair.Value;
-            action.IsRead = isRead;
-            action.DeleteType = deleteType;
-            action.RetentionPolicyType = retentionPolicyType;
-            action.RetentionPolicyTagId = retentionPolicyTagId;
-            action.Flag = flag;
-            action.SuppressReadReceipts = suppressReadReceipts;
+            ConversationAction action = new()
+            {
+                Action = actionType,
+                ConversationId = idTimePair.Key,
+                ContextFolderId = contextFolderId != null ? new FolderIdWrapper(contextFolderId) : null,
+                DestinationFolderId = destinationFolderId != null ? new FolderIdWrapper(destinationFolderId) : null,
+                ConversationLastSyncTime = idTimePair.Value,
+                IsRead = isRead,
+                DeleteType = deleteType,
+                RetentionPolicyType = retentionPolicyType,
+                RetentionPolicyTagId = retentionPolicyTagId,
+                Flag = flag,
+                SuppressReadReceipts = suppressReadReceipts
+            };
 
             request.ConversationActions.Add(action);
         }
@@ -3738,7 +3779,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParamCollection(ids, "ids");
 
-        ConvertIdRequest request = new ConvertIdRequest(this, errorHandling);
+        ConvertIdRequest request = new(this, errorHandling);
 
         request.Ids.AddRange(ids);
         request.DestinationFormat = destinationFormat;
@@ -3820,9 +3861,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(mailbox, "mailbox");
         EwsUtilities.ValidateParamCollection(delegateUsers, "delegateUsers");
 
-        AddDelegateRequest request = new AddDelegateRequest(this);
-
-        request.Mailbox = mailbox;
+        AddDelegateRequest request = new(this)
+        {
+            Mailbox = mailbox
+        };
         request.DelegateUsers.AddRange(delegateUsers);
         request.MeetingRequestsDeliveryScope = meetingRequestsDeliveryScope;
 
@@ -3865,9 +3907,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(mailbox, "mailbox");
         EwsUtilities.ValidateParamCollection(delegateUsers, "delegateUsers");
 
-        UpdateDelegateRequest request = new UpdateDelegateRequest(this);
-
-        request.Mailbox = mailbox;
+        UpdateDelegateRequest request = new(this)
+        {
+            Mailbox = mailbox
+        };
         request.DelegateUsers.AddRange(delegateUsers);
         request.MeetingRequestsDeliveryScope = meetingRequestsDeliveryScope;
 
@@ -3897,9 +3940,10 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(mailbox, "mailbox");
         EwsUtilities.ValidateParamCollection(userIds, "userIds");
 
-        RemoveDelegateRequest request = new RemoveDelegateRequest(this);
-
-        request.Mailbox = mailbox;
+        RemoveDelegateRequest request = new(this)
+        {
+            Mailbox = mailbox
+        };
         request.UserIds.AddRange(userIds);
 
         DelegateManagementResponse response = await request.Execute(token).ConfigureAwait(false);
@@ -3940,14 +3984,15 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(mailbox, "mailbox");
 
-        GetDelegateRequest request = new GetDelegateRequest(this);
-
-        request.Mailbox = mailbox;
+        GetDelegateRequest request = new(this)
+        {
+            Mailbox = mailbox
+        };
         request.UserIds.AddRange(userIds);
         request.IncludePermissions = includePermissions;
 
         GetDelegateResponse response = await request.Execute(token).ConfigureAwait(false);
-        DelegateInformation delegateInformation = new DelegateInformation(
+        DelegateInformation delegateInformation = new(
             response.DelegateUserResponses,
             response.MeetingRequestsDeliveryScope);
 
@@ -3966,9 +4011,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(userConfiguration, "userConfiguration");
 
-        CreateUserConfigurationRequest request = new CreateUserConfigurationRequest(this);
-
-        request.UserConfiguration = userConfiguration;
+        CreateUserConfigurationRequest request = new(this)
+        {
+            UserConfiguration = userConfiguration
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -3983,10 +4029,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(name, "name");
         EwsUtilities.ValidateParam(parentFolderId, "parentFolderId");
 
-        DeleteUserConfigurationRequest request = new DeleteUserConfigurationRequest(this);
-
-        request.Name = name;
-        request.ParentFolderId = parentFolderId;
+        DeleteUserConfigurationRequest request = new(this)
+        {
+            Name = name,
+            ParentFolderId = parentFolderId
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -4007,11 +4054,12 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(name, "name");
         EwsUtilities.ValidateParam(parentFolderId, "parentFolderId");
 
-        GetUserConfigurationRequest request = new GetUserConfigurationRequest(this);
-
-        request.Name = name;
-        request.ParentFolderId = parentFolderId;
-        request.Properties = properties;
+        GetUserConfigurationRequest request = new(this)
+        {
+            Name = name,
+            ParentFolderId = parentFolderId,
+            Properties = properties
+        };
 
         return (await request.ExecuteAsync(token).ConfigureAwait(false))[0].UserConfiguration;
     }
@@ -4029,10 +4077,11 @@ public sealed class ExchangeService : ExchangeServiceBase
             "ExchangeService.LoadPropertiesForUserConfiguration",
             "userConfiguration is null");
 
-        GetUserConfigurationRequest request = new GetUserConfigurationRequest(this);
-
-        request.UserConfiguration = userConfiguration;
-        request.Properties = properties;
+        GetUserConfigurationRequest request = new(this)
+        {
+            UserConfiguration = userConfiguration,
+            Properties = properties
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -4045,9 +4094,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(userConfiguration, "userConfiguration");
 
-        UpdateUserConfigurationRequest request = new UpdateUserConfigurationRequest(this);
-
-        request.UserConfiguration = userConfiguration;
+        UpdateUserConfigurationRequest request = new(this)
+        {
+            UserConfiguration = userConfiguration
+        };
 
         return request.ExecuteAsync(token);
     }
@@ -4061,7 +4111,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A RuleCollection object containing the authenticated user's inbox rules.</returns>
     public async Task<RuleCollection> GetInboxRules(CancellationToken token = default(CancellationToken))
     {
-        GetInboxRulesRequest request = new GetInboxRulesRequest(this);
+        GetInboxRulesRequest request = new(this);
 
         return (await request.Execute(token).ConfigureAwait(false)).Rules;
     }
@@ -4075,8 +4125,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(mailboxSmtpAddress, "MailboxSmtpAddress");
 
-        GetInboxRulesRequest request = new GetInboxRulesRequest(this);
-        request.MailboxSmtpAddress = mailboxSmtpAddress;
+        GetInboxRulesRequest request = new(this)
+        {
+            MailboxSmtpAddress = mailboxSmtpAddress
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Rules;
     }
@@ -4091,9 +4143,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         bool removeOutlookRuleBlob,
         CancellationToken token = default(CancellationToken))
     {
-        UpdateInboxRulesRequest request = new UpdateInboxRulesRequest(this);
-        request.InboxRuleOperations = operations;
-        request.RemoveOutlookRuleBlob = removeOutlookRuleBlob;
+        UpdateInboxRulesRequest request = new(this)
+        {
+            InboxRuleOperations = operations,
+            RemoveOutlookRuleBlob = removeOutlookRuleBlob
+        };
         return request.Execute(token);
     }
 
@@ -4109,10 +4163,12 @@ public sealed class ExchangeService : ExchangeServiceBase
         string mailboxSmtpAddress,
         CancellationToken token = default(CancellationToken))
     {
-        UpdateInboxRulesRequest request = new UpdateInboxRulesRequest(this);
-        request.InboxRuleOperations = operations;
-        request.RemoveOutlookRuleBlob = removeOutlookRuleBlob;
-        request.MailboxSmtpAddress = mailboxSmtpAddress;
+        UpdateInboxRulesRequest request = new(this)
+        {
+            InboxRuleOperations = operations,
+            RemoveOutlookRuleBlob = removeOutlookRuleBlob,
+            MailboxSmtpAddress = mailboxSmtpAddress
+        };
         return request.Execute(token);
     }
     #endregion
@@ -4128,10 +4184,12 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<GetDiscoverySearchConfigurationResponse> GetDiscoverySearchConfiguration(string searchId, bool expandGroupMembership, bool inPlaceHoldConfigurationOnly, CancellationToken token = default(CancellationToken))
     {
-        GetDiscoverySearchConfigurationRequest request = new GetDiscoverySearchConfigurationRequest(this);
-        request.SearchId = searchId;
-        request.ExpandGroupMembership = expandGroupMembership;
-        request.InPlaceHoldConfigurationOnly = inPlaceHoldConfigurationOnly;
+        GetDiscoverySearchConfigurationRequest request = new(this)
+        {
+            SearchId = searchId,
+            ExpandGroupMembership = expandGroupMembership,
+            InPlaceHoldConfigurationOnly = inPlaceHoldConfigurationOnly
+        };
 
         return request.Execute(token);
     }
@@ -4144,9 +4202,11 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<GetSearchableMailboxesResponse> GetSearchableMailboxes(string searchFilter, bool expandGroupMembership, CancellationToken token = default(CancellationToken))
     {
-        GetSearchableMailboxesRequest request = new GetSearchableMailboxesRequest(this);
-        request.SearchFilter = searchFilter;
-        request.ExpandGroupMembership = expandGroupMembership;
+        GetSearchableMailboxesRequest request = new(this)
+        {
+            SearchFilter = searchFilter,
+            ExpandGroupMembership = expandGroupMembership
+        };
 
         return request.Execute(token);
     }
@@ -4159,7 +4219,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Collection of search mailboxes response object</returns>
     public Task<ServiceResponseCollection<SearchMailboxesResponse>> SearchMailboxes(IEnumerable<MailboxQuery> mailboxQueries, SearchResultType resultType, CancellationToken token = default(CancellationToken))
     {
-        SearchMailboxesRequest request = new SearchMailboxesRequest(this, ServiceErrorHandling.ReturnErrors);
+        SearchMailboxesRequest request = new(this, ServiceErrorHandling.ReturnErrors);
         if (mailboxQueries != null)
         {
             request.SearchQueries.AddRange(mailboxQueries);
@@ -4191,7 +4251,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         string pageItemReference,
         CancellationToken token = default(CancellationToken))
     {
-        SearchMailboxesRequest request = new SearchMailboxesRequest(this, ServiceErrorHandling.ReturnErrors);
+        SearchMailboxesRequest request = new(this, ServiceErrorHandling.ReturnErrors);
         if (mailboxQueries != null)
         {
             request.SearchQueries.AddRange(mailboxQueries);
@@ -4231,12 +4291,14 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<SetHoldOnMailboxesResponse> SetHoldOnMailboxes(string holdId, HoldAction actionType, string query, string[] mailboxes, CancellationToken token = default(CancellationToken))
     {
-        SetHoldOnMailboxesRequest request = new SetHoldOnMailboxesRequest(this);
-        request.HoldId = holdId;
-        request.ActionType = actionType;
-        request.Query = query;
-        request.Mailboxes = mailboxes;
-        request.InPlaceHoldIdentity = null;
+        SetHoldOnMailboxesRequest request = new(this)
+        {
+            HoldId = holdId,
+            ActionType = actionType,
+            Query = query,
+            Mailboxes = mailboxes,
+            InPlaceHoldIdentity = null
+        };
 
         return request.Execute(token);
     }
@@ -4265,13 +4327,15 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<SetHoldOnMailboxesResponse> SetHoldOnMailboxes(string holdId, HoldAction actionType, string query, string inPlaceHoldIdentity, string itemHoldPeriod, CancellationToken token = default(CancellationToken))
     {
-        SetHoldOnMailboxesRequest request = new SetHoldOnMailboxesRequest(this);
-        request.HoldId = holdId;
-        request.ActionType = actionType;
-        request.Query = query;
-        request.Mailboxes = null;
-        request.InPlaceHoldIdentity = inPlaceHoldIdentity;
-        request.ItemHoldPeriod = itemHoldPeriod;
+        SetHoldOnMailboxesRequest request = new(this)
+        {
+            HoldId = holdId,
+            ActionType = actionType,
+            Query = query,
+            Mailboxes = null,
+            InPlaceHoldIdentity = inPlaceHoldIdentity,
+            ItemHoldPeriod = itemHoldPeriod
+        };
 
         return request.Execute(token);
     }
@@ -4285,13 +4349,15 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(parameters, "parameters");
 
-        SetHoldOnMailboxesRequest request = new SetHoldOnMailboxesRequest(this);
-        request.HoldId = parameters.HoldId;
-        request.ActionType = parameters.ActionType;
-        request.Query = parameters.Query;
-        request.Mailboxes = parameters.Mailboxes;
-        request.Language = parameters.Language;
-        request.InPlaceHoldIdentity = parameters.InPlaceHoldIdentity;
+        SetHoldOnMailboxesRequest request = new(this)
+        {
+            HoldId = parameters.HoldId,
+            ActionType = parameters.ActionType,
+            Query = parameters.Query,
+            Mailboxes = parameters.Mailboxes,
+            Language = parameters.Language,
+            InPlaceHoldIdentity = parameters.InPlaceHoldIdentity
+        };
 
         return request.Execute(token);
     }
@@ -4303,8 +4369,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<GetHoldOnMailboxesResponse> GetHoldOnMailboxes(string holdId, CancellationToken token = default(CancellationToken))
     {
-        GetHoldOnMailboxesRequest request = new GetHoldOnMailboxesRequest(this);
-        request.HoldId = holdId;
+        GetHoldOnMailboxesRequest request = new(this)
+        {
+            HoldId = holdId
+        };
 
         return request.Execute(token);
     }
@@ -4329,7 +4397,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<GetNonIndexableItemDetailsResponse> GetNonIndexableItemDetails(string[] mailboxes, int? pageSize, string pageItemReference, SearchPageDirection? pageDirection)
     {
-        GetNonIndexableItemDetailsParameters parameters = new GetNonIndexableItemDetailsParameters
+        GetNonIndexableItemDetailsParameters parameters = new()
         {
             Mailboxes = mailboxes,
             PageSize = pageSize,
@@ -4360,7 +4428,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object</returns>
     public Task<GetNonIndexableItemStatisticsResponse> GetNonIndexableItemStatistics(string[] mailboxes)
     {
-        GetNonIndexableItemStatisticsParameters parameters = new GetNonIndexableItemStatisticsParameters
+        GetNonIndexableItemStatisticsParameters parameters = new()
         {
             Mailboxes = mailboxes,
             SearchArchiveOnly = false,
@@ -4391,12 +4459,14 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(parameters, "parameters");
         EwsUtilities.ValidateParam(parameters.Mailboxes, "parameters.Mailboxes");
 
-        GetNonIndexableItemDetailsRequest request = new GetNonIndexableItemDetailsRequest(this);
-        request.Mailboxes = parameters.Mailboxes;
-        request.PageSize = parameters.PageSize;
-        request.PageItemReference = parameters.PageItemReference;
-        request.PageDirection = parameters.PageDirection;
-        request.SearchArchiveOnly = parameters.SearchArchiveOnly;
+        GetNonIndexableItemDetailsRequest request = new(this)
+        {
+            Mailboxes = parameters.Mailboxes,
+            PageSize = parameters.PageSize,
+            PageItemReference = parameters.PageItemReference,
+            PageDirection = parameters.PageDirection,
+            SearchArchiveOnly = parameters.SearchArchiveOnly
+        };
 
         return request;
     }
@@ -4411,9 +4481,11 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(parameters, "parameters");
         EwsUtilities.ValidateParam(parameters.Mailboxes, "parameters.Mailboxes");
 
-        GetNonIndexableItemStatisticsRequest request = new GetNonIndexableItemStatisticsRequest(this);
-        request.Mailboxes = parameters.Mailboxes;
-        request.SearchArchiveOnly = parameters.SearchArchiveOnly;
+        GetNonIndexableItemStatisticsRequest request = new(this)
+        {
+            Mailboxes = parameters.Mailboxes,
+            SearchArchiveOnly = parameters.SearchArchiveOnly
+        };
 
         return request;
     }
@@ -4425,7 +4497,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>request object</returns>
     private SearchMailboxesRequest CreateSearchMailboxesRequest(SearchMailboxesParameters searchParameters)
     {
-        SearchMailboxesRequest request = new SearchMailboxesRequest(this, ServiceErrorHandling.ReturnErrors);
+        SearchMailboxesRequest request = new(this, ServiceErrorHandling.ReturnErrors);
         request.SearchQueries.AddRange(searchParameters.SearchQueries);
         request.ResultType = searchParameters.ResultType;
         request.PreviewItemResponseShape = searchParameters.PreviewItemResponseShape;
@@ -4449,7 +4521,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Service response object.</returns>
     public Task<GetUserRetentionPolicyTagsResponse> GetUserRetentionPolicyTags(CancellationToken token = default(CancellationToken))
     {
-        GetUserRetentionPolicyTagsRequest request = new GetUserRetentionPolicyTagsRequest(this);
+        GetUserRetentionPolicyTagsRequest request = new(this);
 
         return request.Execute(token);
     }
@@ -4561,7 +4633,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         ExchangeVersion requestedServerVersion,
         AutodiscoverRedirectionUrlValidationCallback validateRedirectionUrlCallback)
     {
-        AutodiscoverService autodiscoverService = new AutodiscoverService(this, requestedServerVersion)
+        AutodiscoverService autodiscoverService = new(this, requestedServerVersion)
         {
             RedirectionUrlValidationCallback = validateRedirectionUrlCallback,
             EnableScpLookup = this.EnableScpLookup
@@ -4635,11 +4707,11 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A ServiceResponseCollection providing token results for each of the specified id and types.</returns>
     public Task<ServiceResponseCollection<GetClientAccessTokenResponse>> GetClientAccessToken(IEnumerable<KeyValuePair<string, ClientAccessTokenType>> idAndTypes)
     {
-        GetClientAccessTokenRequest request = new GetClientAccessTokenRequest(this, ServiceErrorHandling.ReturnErrors);
-        List<ClientAccessTokenRequest> requestList = new List<ClientAccessTokenRequest>();
+        GetClientAccessTokenRequest request = new(this, ServiceErrorHandling.ReturnErrors);
+        List<ClientAccessTokenRequest> requestList = new();
         foreach (KeyValuePair<string, ClientAccessTokenType> idAndType in idAndTypes)
         {
-            ClientAccessTokenRequest clientAccessTokenRequest = new ClientAccessTokenRequest(idAndType.Key, idAndType.Value);
+            ClientAccessTokenRequest clientAccessTokenRequest = new(idAndType.Key, idAndType.Value);
             requestList.Add(clientAccessTokenRequest);
         }
 
@@ -4653,8 +4725,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A ServiceResponseCollection providing token results for each of the specified id and types.</returns>
     public Task<ServiceResponseCollection<GetClientAccessTokenResponse>> GetClientAccessToken(ClientAccessTokenRequest[] tokenRequests, CancellationToken token = default(CancellationToken))
     {
-        GetClientAccessTokenRequest request = new GetClientAccessTokenRequest(this, ServiceErrorHandling.ReturnErrors);
-        request.TokenRequests = tokenRequests;
+        GetClientAccessTokenRequest request = new(this, ServiceErrorHandling.ReturnErrors)
+        {
+            TokenRequests = tokenRequests
+        };
         return request.ExecuteAsync(token);
     }
 
@@ -4668,7 +4742,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Collection of manifests</returns>
     public async Task<Collection<XmlDocument>> GetAppManifests(CancellationToken token = default(CancellationToken))
     {
-        GetAppManifestsRequest request = new GetAppManifestsRequest(this);
+        GetAppManifestsRequest request = new(this);
         return (await request.Execute(token).ConfigureAwait(false)).Manifests;
     }
 
@@ -4680,9 +4754,11 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Collection of manifests</returns>
     public async Task<Collection<ClientApp>> GetAppManifests(string apiVersionSupported, string schemaVersionSupported, CancellationToken token = default(CancellationToken))
     {
-        GetAppManifestsRequest request = new GetAppManifestsRequest(this);
-        request.ApiVersionSupported = apiVersionSupported;
-        request.SchemaVersionSupported = schemaVersionSupported;
+        GetAppManifestsRequest request = new(this)
+        {
+            ApiVersionSupported = apiVersionSupported,
+            SchemaVersionSupported = schemaVersionSupported
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).Apps;
     }
@@ -4724,7 +4800,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(manifestStream, "manifestStream");
 
-        InstallAppRequest request = new InstallAppRequest(this, manifestStream, marketplaceAssetId, marketplaceContentMarket, false);
+        InstallAppRequest request = new(this, manifestStream, marketplaceAssetId, marketplaceContentMarket, false);
 
         InstallAppResponse response = await request.Execute(token).ConfigureAwait(false);
 
@@ -4740,7 +4816,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(id, "id");
 
-        UninstallAppRequest request = new UninstallAppRequest(this, id);
+        UninstallAppRequest request = new(this, id);
 
         return request.Execute(token);
     }
@@ -4756,7 +4832,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(id, "id");
         EwsUtilities.ValidateParam(disableReason, "disableReason");
 
-        DisableAppRequest request = new DisableAppRequest(this, id, disableReason);
+        DisableAppRequest request = new(this, id, disableReason);
 
         return request.Execute(token);
     }
@@ -4772,7 +4848,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(id, "id");
         EwsUtilities.ValidateParam(state, "state");
 
-        RegisterConsentRequest request = new RegisterConsentRequest(this, id, state);
+        RegisterConsentRequest request = new(this, id, state);
 
         return request.Execute(token);
     }
@@ -4794,9 +4870,11 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <remarks>Exception will be thrown for errors. </remarks>
     public async Task<string> GetAppMarketplaceUrl(string apiVersionSupported, string schemaVersionSupported, CancellationToken token = default(CancellationToken))
     {
-        GetAppMarketplaceUrlRequest request = new GetAppMarketplaceUrlRequest(this);
-        request.ApiVersionSupported = apiVersionSupported;
-        request.SchemaVersionSupported = schemaVersionSupported;
+        GetAppMarketplaceUrlRequest request = new(this)
+        {
+            ApiVersionSupported = apiVersionSupported,
+            SchemaVersionSupported = schemaVersionSupported
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).AppMarketplaceUrl;
     }
@@ -4833,7 +4911,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         bool isDebug,
         CancellationToken token = default(CancellationToken))
     {
-        GetClientExtensionRequest request = new GetClientExtensionRequest(
+        GetClientExtensionRequest request = new(
             this,
             requestedExtensionIds,
             shouldReturnEnabledOnly,
@@ -4852,7 +4930,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>OME Configuration response object</returns>
     public Task<GetOMEConfigurationResponse> GetOMEConfiguration(CancellationToken token = default(CancellationToken))
     {
-        GetOMEConfigurationRequest request = new GetOMEConfigurationRequest(this);
+        GetOMEConfigurationRequest request = new(this);
 
         return request.Execute(token);
     }
@@ -4863,7 +4941,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="xml">The xml</param>
     public System.Threading.Tasks.Task SetOMEConfiguration(string xml, CancellationToken token = default(CancellationToken))
     {
-        SetOMEConfigurationRequest request = new SetOMEConfigurationRequest(this, xml);
+        SetOMEConfigurationRequest request = new(this, xml);
 
         return request.Execute(token);
     }
@@ -4875,7 +4953,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="actions">List of actions to execute.</param>
     public System.Threading.Tasks.Task SetClientExtension(List<SetClientExtensionAction> actions, CancellationToken token = default(CancellationToken))
     {
-        SetClientExtensionRequest request = new SetClientExtensionRequest(this, actions);
+        SetClientExtensionRequest request = new(this, actions);
 
         return request.ExecuteAsync(token);
     }
@@ -4921,7 +4999,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                         IEnumerable<RequestedUnifiedGroupsSet> requestedUnifiedGroupsSets,
                         string userSmtpAddress, CancellationToken token)
     {
-        GetUserUnifiedGroupsRequest request = new GetUserUnifiedGroupsRequest(this);
+        GetUserUnifiedGroupsRequest request = new(this);
 
         if (!string.IsNullOrEmpty(userSmtpAddress))
         {
@@ -4946,10 +5024,11 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(groupMailboxSmtpAddress, "groupMailboxSmtpAddress");
 
-        GetUnifiedGroupUnseenCountRequest request = new GetUnifiedGroupUnseenCountRequest(
-            this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
-
-        request.AnchorMailbox = groupMailboxSmtpAddress;
+        GetUnifiedGroupUnseenCountRequest request = new(
+            this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress)
+        {
+            AnchorMailbox = groupMailboxSmtpAddress
+        };
 
         return (await request.Execute(token).ConfigureAwait(false)).UnseenCount;
     }
@@ -4964,7 +5043,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(groupMailboxSmtpAddress, "groupMailboxSmtpAddress");
 
-        SetUnifiedGroupLastVisitedTimeRequest request = new SetUnifiedGroupLastVisitedTimeRequest(this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
+        SetUnifiedGroupLastVisitedTimeRequest request = new(this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
 
         return request.Execute(token);
     }
@@ -4981,9 +5060,11 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns></returns>
     internal async Task<XmlDocument> ExecuteDiagnosticMethod(string verb, XmlNode parameter, CancellationToken token)
     {
-        ExecuteDiagnosticMethodRequest request = new ExecuteDiagnosticMethodRequest(this);
-        request.Verb = verb;
-        request.Parameter = parameter;
+        ExecuteDiagnosticMethodRequest request = new(this)
+        {
+            Verb = verb,
+            Parameter = parameter
+        };
 
         return (await request.ExecuteAsync(token).ConfigureAwait(false))[0].ReturnValue;
     }

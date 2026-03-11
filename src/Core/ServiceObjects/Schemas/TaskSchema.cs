@@ -315,7 +315,7 @@ public class TaskSchema : ItemSchema
             true);  // isNullable
 
     // This must be declared after the property definitions
-    internal static new readonly TaskSchema Instance = new TaskSchema();
+    internal static new readonly TaskSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

@@ -110,7 +110,7 @@ internal static class DiscoverySchemaChanges
         /// <param name="serverBuild">The server build.</param>
         internal SchemaChange(string serverBuild)
         {
-            Version version = new Version(serverBuild);
+            Version version = new(serverBuild);
 
             this.MinimumServerVersion = (version.Build & 0x7FFF) |
                                         ((version.Minor & 0x3F) << 16) |

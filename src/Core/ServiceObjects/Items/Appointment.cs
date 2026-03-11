@@ -140,7 +140,7 @@ public class Appointment : Item, ICalendarActionProvider
         int occurenceIndex,
         PropertySet propertySet)
     {
-        AppointmentOccurrenceId occurenceId = new AppointmentOccurrenceId(recurringMasterId.UniqueId, occurenceIndex);
+        AppointmentOccurrenceId occurenceId = new(recurringMasterId.UniqueId, occurenceIndex);
         return Appointment.Bind(
             service,
             occurenceId,
@@ -175,7 +175,7 @@ public class Appointment : Item, ICalendarActionProvider
         ItemId occurrenceId,
         PropertySet propertySet)
         {
-            RecurringAppointmentMasterId recurringMasterId = new RecurringAppointmentMasterId(occurrenceId.UniqueId);
+            RecurringAppointmentMasterId recurringMasterId = new(occurrenceId.UniqueId);
             return Appointment.Bind(
                 service,
                 recurringMasterId,

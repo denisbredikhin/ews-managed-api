@@ -41,7 +41,7 @@ public sealed class OAuthCredentials : ExchangeCredentials
 {
     private const string BearerAuthenticationType = "Bearer";
 
-    private static readonly Regex validTokenPattern = new Regex(
+    private static readonly Regex validTokenPattern = new(
         @"^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$",
         RegexOptions.Compiled);
 

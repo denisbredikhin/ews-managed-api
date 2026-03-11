@@ -36,7 +36,7 @@ internal class TimeZoneTransitionGroup : ComplexProperty
 {
     private readonly TimeZoneDefinition timeZoneDefinition;
     private string id;
-    private readonly List<TimeZoneTransition> transitions = new List<TimeZoneTransition>();
+    private readonly List<TimeZoneTransition> transitions = new();
     private TimeZoneTransition transitionToStandard;
     private TimeZoneTransition transitionToDaylight;
 
@@ -122,13 +122,15 @@ internal class TimeZoneTransitionGroup : ComplexProperty
         {
             // If the time zone info doesn't support Daylight Saving Time, we just need to
             // create one transition to one group with one transition to the standard period.
-            TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
-            standardPeriodToSet.Id = string.Format(
-                "{0}/{1}",
-                standardPeriod.Id,
-                adjustmentRule.DateStart.Year);
-            standardPeriodToSet.Name = standardPeriod.Name;
-            standardPeriodToSet.Bias = standardPeriod.Bias;
+            TimeZonePeriod standardPeriodToSet = new()
+            {
+                Id = string.Format(
+                    "{0}/{1}",
+                    standardPeriod.Id,
+                    adjustmentRule.DateStart.Year),
+                Name = standardPeriod.Name,
+                Bias = standardPeriod.Bias
+            };
             this.timeZoneDefinition.Periods.AddOrUpdate(standardPeriodToSet.Id, standardPeriodToSet);
 
             this.transitionToStandard = new TimeZoneTransition(this.timeZoneDefinition, standardPeriodToSet);
@@ -136,15 +138,16 @@ internal class TimeZoneTransitionGroup : ComplexProperty
         }
         else
         {
-            TimeZonePeriod daylightPeriod = new TimeZonePeriod();
-
-            // Generate an Id of the form "Daylight/2008"
-            daylightPeriod.Id = string.Format(
-                "{0}/{1}",
-                TimeZonePeriod.DaylightPeriodId,
-                adjustmentRule.DateStart.Year);
-            daylightPeriod.Name = TimeZonePeriod.DaylightPeriodName;
-            daylightPeriod.Bias = standardPeriod.Bias - adjustmentRule.DaylightDelta;
+            TimeZonePeriod daylightPeriod = new()
+            {
+                // Generate an Id of the form "Daylight/2008"
+                Id = string.Format(
+                    "{0}/{1}",
+                    TimeZonePeriod.DaylightPeriodId,
+                    adjustmentRule.DateStart.Year),
+                Name = TimeZonePeriod.DaylightPeriodName,
+                Bias = standardPeriod.Bias - adjustmentRule.DaylightDelta
+            };
 
             this.timeZoneDefinition.Periods.AddOrUpdate(daylightPeriod.Id, daylightPeriod);
 
@@ -153,13 +156,15 @@ internal class TimeZoneTransitionGroup : ComplexProperty
                 daylightPeriod,
                 adjustmentRule.DaylightTransitionStart);
 
-            TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
-            standardPeriodToSet.Id = string.Format(
-                "{0}/{1}",
-                standardPeriod.Id,
-                adjustmentRule.DateStart.Year);
-            standardPeriodToSet.Name = standardPeriod.Name;
-            standardPeriodToSet.Bias = standardPeriod.Bias;
+            TimeZonePeriod standardPeriodToSet = new()
+            {
+                Id = string.Format(
+                    "{0}/{1}",
+                    standardPeriod.Id,
+                    adjustmentRule.DateStart.Year),
+                Name = standardPeriod.Name,
+                Bias = standardPeriod.Bias
+            };
             this.timeZoneDefinition.Periods.AddOrUpdate(standardPeriodToSet.Id, standardPeriodToSet);
 
             this.transitionToStandard = TimeZoneTransition.CreateTimeZoneTransition(
@@ -334,7 +339,7 @@ internal class TimeZoneTransitionGroup : ComplexProperty
     /// </summary>
     internal CustomTimeZoneCreateParams GetCustomTimeZoneCreationParams()
     {
-        CustomTimeZoneCreateParams result = new CustomTimeZoneCreateParams();
+        CustomTimeZoneCreateParams result = new();
 
         if (this.TransitionToDaylight != null)
         {

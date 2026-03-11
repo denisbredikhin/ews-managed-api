@@ -76,9 +76,11 @@ public sealed class SearchableMailbox
     {
         reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.SearchableMailbox);
 
-        SearchableMailbox searchableMailbox = new SearchableMailbox();
-        searchableMailbox.Guid = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Guid));
-        searchableMailbox.SmtpAddress = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.PrimarySmtpAddress);
+        SearchableMailbox searchableMailbox = new()
+        {
+            Guid = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Guid)),
+            SmtpAddress = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.PrimarySmtpAddress)
+        };
         bool isExternalMailbox = false;
         bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsExternalMailbox), out isExternalMailbox);
         searchableMailbox.IsExternalMailbox = isExternalMailbox;

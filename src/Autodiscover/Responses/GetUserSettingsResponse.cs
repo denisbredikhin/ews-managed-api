@@ -248,7 +248,7 @@ public sealed class GetUserSettingsResponse : AutodiscoverResponse
 
                 if ((reader.NodeType == XmlNodeType.Element) && (reader.LocalName == XmlElementNames.UserSettingError))
                 {
-                    UserSettingError error = new UserSettingError();
+                    UserSettingError error = new();
                     error.LoadFromXml(reader);
                     this.UserSettingErrors.Add(error);
                 }

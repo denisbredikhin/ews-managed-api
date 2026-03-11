@@ -67,7 +67,7 @@ internal sealed class GetPeopleInsightsResponse : ServiceResponse
 
                 if (reader.NodeType == XmlNodeType.Element)
                 {
-                    Person item = new Person();
+                    Person item = new();
                     item.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.Person);
                     this.People.Add(item);
                 }

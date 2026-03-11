@@ -100,7 +100,7 @@ internal sealed class RegisterConsentRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        RegisterConsentResponse response = new RegisterConsentResponse();
+        RegisterConsentResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.RegisterConsentResponse);
         return response;
     }

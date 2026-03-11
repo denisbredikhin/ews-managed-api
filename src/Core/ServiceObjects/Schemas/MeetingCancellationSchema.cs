@@ -76,7 +76,7 @@ public class MeetingCancellationSchema : MeetingMessageSchema
         AppointmentSchema.EnhancedLocation;
 
     // This must be after the declaration of property definitions
-    internal static new readonly MeetingCancellationSchema Instance = new MeetingCancellationSchema();
+    internal static new readonly MeetingCancellationSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

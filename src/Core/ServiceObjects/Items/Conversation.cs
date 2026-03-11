@@ -245,7 +245,7 @@ public class Conversation : ServiceObject
         (await this.Service.DeleteItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -267,7 +267,7 @@ public class Conversation : ServiceObject
         (await this.Service.MoveItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -288,7 +288,7 @@ public class Conversation : ServiceObject
         (await this.Service.CopyItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -310,7 +310,7 @@ public class Conversation : ServiceObject
         (await this.Service.SetReadStateForItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -334,7 +334,7 @@ public class Conversation : ServiceObject
         (await this.Service.SetReadStateForItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -358,7 +358,7 @@ public class Conversation : ServiceObject
         (await this.Service.SetRetentionPolicyForItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -377,7 +377,7 @@ public class Conversation : ServiceObject
         FolderId contextFolderId,
         DateTime? completeDate)
     {
-        Flag flag = new Flag() { FlagStatus = ItemFlagStatus.Complete };
+        Flag flag = new() { FlagStatus = ItemFlagStatus.Complete };
         if (completeDate.HasValue)
         {
             flag.CompleteDate = completeDate.Value;
@@ -386,7 +386,7 @@ public class Conversation : ServiceObject
         (await this.Service.SetFlagStatusForItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -401,12 +401,12 @@ public class Conversation : ServiceObject
     /// null, flags for items in conversation across the entire mailbox are cleared.</param>
     public async System.Threading.Tasks.Task ClearItemFlags(FolderId contextFolderId)
     {
-        Flag flag = new Flag() { FlagStatus = ItemFlagStatus.NotFlagged };
+        Flag flag = new() { FlagStatus = ItemFlagStatus.NotFlagged };
 
         (await this.Service.SetFlagStatusForItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },
@@ -426,7 +426,7 @@ public class Conversation : ServiceObject
         DateTime? startDate,
         DateTime? dueDate)
     {
-        Flag flag = new Flag() { FlagStatus = ItemFlagStatus.Flagged };
+        Flag flag = new() { FlagStatus = ItemFlagStatus.Flagged };
         if (startDate.HasValue)
         {
             flag.StartDate = startDate.Value;
@@ -439,7 +439,7 @@ public class Conversation : ServiceObject
         (await this.Service.SetFlagStatusForItemsInConversations(
             new KeyValuePair<ConversationId, DateTime?>[]
             {
-                new KeyValuePair<ConversationId, DateTime?>(
+                new(
                     this.Id,
                     this.GlobalLastDeliveryTime)
             },

@@ -101,7 +101,7 @@ internal sealed class InstallAppRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        InstallAppResponse response = new InstallAppResponse();
+        InstallAppResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.InstallAppResponse);
         return response;
     }

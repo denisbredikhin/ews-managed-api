@@ -283,7 +283,7 @@ public class EmailMessageSchema : ItemSchema
             delegate() { return new EmailAddressCollection(); });
 
     // This must be after the declaration of property definitions
-    internal static new readonly EmailMessageSchema Instance = new EmailMessageSchema();
+    internal static new readonly EmailMessageSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

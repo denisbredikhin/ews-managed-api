@@ -44,7 +44,7 @@ internal abstract class MultiResponseServiceRequest<TResponse> : SimpleServiceRe
     /// <returns>Service response collection.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        ServiceResponseCollection<TResponse> serviceResponses = new ServiceResponseCollection<TResponse>();
+        ServiceResponseCollection<TResponse> serviceResponses = new();
 
         reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
 

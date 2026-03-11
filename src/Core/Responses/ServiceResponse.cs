@@ -37,8 +37,8 @@ public class ServiceResponse
     private ServiceResult result;
     private ServiceError errorCode;
     private string errorMessage;
-    private readonly Dictionary<string, string> errorDetails = new Dictionary<string, string>();
-    private readonly Collection<PropertyDefinitionBase> errorProperties = new Collection<PropertyDefinitionBase>();
+    private readonly Dictionary<string, string> errorDetails = new();
+    private readonly Collection<PropertyDefinitionBase> errorProperties = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ServiceResponse"/> class.
@@ -172,7 +172,7 @@ public class ServiceResponse
                         break;
 
                     case XmlElementNames.ExtendedFieldURI:
-                        ExtendedPropertyDefinition extendedPropDef = new ExtendedPropertyDefinition();
+                        ExtendedPropertyDefinition extendedPropDef = new();
                         extendedPropDef.LoadFromXml(reader);
                         this.errorProperties.Add(extendedPropDef);
                         break;

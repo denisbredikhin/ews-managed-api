@@ -59,7 +59,7 @@ internal class MeetingTimeZonePropertyDefinition : PropertyDefinition
     /// <param name="propertyBag">The property bag.</param>
     internal override sealed void LoadPropertyValueFromXml(EwsServiceXmlReader reader, PropertyBag propertyBag)
     {
-        MeetingTimeZone meetingTimeZone = new MeetingTimeZone();
+        MeetingTimeZone meetingTimeZone = new();
         meetingTimeZone.LoadFromXml(reader, this.XmlElementName);
 
         propertyBag[AppointmentSchema.StartTimeZone] = meetingTimeZone.ToTimeZoneInfo();

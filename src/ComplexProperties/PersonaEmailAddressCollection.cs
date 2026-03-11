@@ -90,7 +90,7 @@ public sealed class PersonaEmailAddressCollection : ComplexPropertyCollection<Pe
     /// <returns>An PersonaEmailAddress object initialized with the provided SMTP address.</returns>
     public PersonaEmailAddress Add(string smtpAddress)
     {
-        PersonaEmailAddress emailAddress = new PersonaEmailAddress(smtpAddress);
+        PersonaEmailAddress emailAddress = new(smtpAddress);
 
         this.Add(emailAddress);
 
@@ -120,7 +120,7 @@ public sealed class PersonaEmailAddressCollection : ComplexPropertyCollection<Pe
     /// <returns>An PersonaEmailAddress object initialized with the provided SMTP address.</returns>
     public PersonaEmailAddress Add(string name, string smtpAddress)
     {
-        PersonaEmailAddress emailAddress = new PersonaEmailAddress(name, smtpAddress);
+        PersonaEmailAddress emailAddress = new(name, smtpAddress);
 
         this.Add(emailAddress);
 

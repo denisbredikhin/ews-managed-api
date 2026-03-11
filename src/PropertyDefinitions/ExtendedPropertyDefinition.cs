@@ -315,7 +315,7 @@ public sealed class ExtendedPropertyDefinition : PropertyDefinitionBase
     /// </returns>
     internal override string GetPrintableName()
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         sb.Append("{");
         sb.Append(FormatField<string>(NameFieldName, this.Name));
         sb.Append(FormatField<MapiPropertyType?>(MapiTypeFieldName, this.MapiType));

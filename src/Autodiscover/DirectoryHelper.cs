@@ -132,13 +132,13 @@ internal class DirectoryHelper
         string configPath = null;
 
         // The list of SCP URLs.
-        List<string> scpUrlList = new List<string>();
+        List<string> scpUrlList = new();
 
         // Get the LDAP root path.
         rootDsePath = (ldapPath == null) ? "LDAP://RootDSE" : ldapPath + "/RootDSE";
 
         // Get the root directory entry.
-        using (DirectoryEntry rootDseEntry = new DirectoryEntry(rootDsePath))
+        using (DirectoryEntry rootDseEntry = new(rootDsePath))
         {
             // Get the configuration path.
             configPath = rootDseEntry.Properties["configurationNamingContext"].Value as string;
@@ -150,10 +150,10 @@ internal class DirectoryHelper
         try
         {
             // Get the configuration entry path.
-            using (DirectoryEntry configEntry = new DirectoryEntry("LDAP://" + configPath))
+            using (DirectoryEntry configEntry = new("LDAP://" + configPath))
             {
                 // Use the configuration entry path to create a query.
-                using (DirectorySearcher configSearcher = new DirectorySearcher(configEntry))
+                using (DirectorySearcher configSearcher = new(configEntry))
                 {
                     // Filter for Autodiscover SCP URLs and SCP pointers.
                     configSearcher.Filter = ScpFilterString;
@@ -231,7 +231,7 @@ internal class DirectoryHelper
                 // Search for SCP entries.
                 string sitePrefix = "Site=";
                 string siteMatch = sitePrefix + computerSiteName;
-                List<string> scpListNoSiteMatch = new List<string>();
+                List<string> scpListNoSiteMatch = new();
 
                 this.TraceMessage(
                     string.Format("Scanning for SCP urls for the current computer {0}", siteMatch));

@@ -355,7 +355,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     {
         if (members.Count != 0)
         {
-            GroupMemberPropertyDefinition memberPropDef = new GroupMemberPropertyDefinition();
+            GroupMemberPropertyDefinition memberPropDef = new();
 
             foreach (GroupMember member in members)
             {

@@ -57,12 +57,14 @@ public sealed class ExchangeServerInfo
                             "ExchangeServerVersion.Parse",
                             "Current element doesn't have attributes");
 
-        ExchangeServerInfo info = new ExchangeServerInfo();
-        info.MajorVersion = reader.ReadAttributeValue<int>("MajorVersion");
-        info.MinorVersion = reader.ReadAttributeValue<int>("MinorVersion");
-        info.MajorBuildNumber = reader.ReadAttributeValue<int>("MajorBuildNumber");
-        info.MinorBuildNumber = reader.ReadAttributeValue<int>("MinorBuildNumber");
-        info.VersionString = reader.ReadAttributeValue("Version");
+        ExchangeServerInfo info = new()
+        {
+            MajorVersion = reader.ReadAttributeValue<int>("MajorVersion"),
+            MinorVersion = reader.ReadAttributeValue<int>("MinorVersion"),
+            MajorBuildNumber = reader.ReadAttributeValue<int>("MajorBuildNumber"),
+            MinorBuildNumber = reader.ReadAttributeValue<int>("MinorBuildNumber"),
+            VersionString = reader.ReadAttributeValue("Version")
+        };
         return info;
     }
 

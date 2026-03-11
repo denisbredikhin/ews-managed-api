@@ -36,7 +36,7 @@ public sealed class FindFoldersResults : IEnumerable<Folder>
     private int totalCount;
     private int? nextPageOffset;
     private bool moreAvailable;
-    private readonly Collection<Folder> folders = new Collection<Folder>();
+    private readonly Collection<Folder> folders = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FindFoldersResults"/> class.

@@ -73,7 +73,7 @@ internal abstract class SimpleServiceRequestBase : ServiceRequestBase
 
         if (wrappedState != null && wrappedState.AsyncCallback != null)
         {
-            AsyncRequestResult asyncRequestResult = new AsyncRequestResult(
+            AsyncRequestResult asyncRequestResult = new(
                 wrappedState.ServiceRequest,
                 wrappedState.WebRequest,
                 webAsyncResult, /* web async result */
@@ -102,7 +102,7 @@ internal abstract class SimpleServiceRequestBase : ServiceRequestBase
             // MemoryStream.
             if (this.Service.IsTraceEnabledFor(TraceFlags.EwsResponse))
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (MemoryStream memoryStream = new())
                 {
                     using (Stream serviceResponseStream = await ServiceRequestBase.GetResponseStream(response))
                     {
@@ -169,7 +169,7 @@ internal abstract class SimpleServiceRequestBase : ServiceRequestBase
     private object ReadResponseXml(Stream responseStream, HttpResponseHeaders responseHeaders)
     {
         object serviceResponse;
-        EwsServiceXmlReader ewsXmlReader = new EwsServiceXmlReader(responseStream, this.Service);
+        EwsServiceXmlReader ewsXmlReader = new(responseStream, this.Service);
         serviceResponse = this.ReadResponse(ewsXmlReader, responseHeaders);
         return serviceResponse;
     }

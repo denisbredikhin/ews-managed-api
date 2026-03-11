@@ -139,11 +139,13 @@ public class EmailAddressTests
     [Fact]
     public void Properties_CanBeSetAfterConstruction()
     {
-        var email = new EmailAddress();
-        email.Name = "Test";
-        email.Address = "test@test.com";
-        email.RoutingType = "SMTP";
-        email.MailboxType = MailboxType.Mailbox;
+        var email = new EmailAddress
+        {
+            Name = "Test",
+            Address = "test@test.com",
+            RoutingType = "SMTP",
+            MailboxType = MailboxType.Mailbox
+        };
 
         email.Name.Should().Be("Test");
         email.Address.Should().Be("test@test.com");

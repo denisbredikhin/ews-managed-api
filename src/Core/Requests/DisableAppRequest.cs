@@ -107,7 +107,7 @@ internal sealed class DisableAppRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        DisableAppResponse response = new DisableAppResponse();
+        DisableAppResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.DisableAppResponse);
         return response;
     }

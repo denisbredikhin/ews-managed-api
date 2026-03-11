@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class VotingInformation : ComplexProperty
 {
-    private readonly Collection<VotingOptionData> userOptions = new Collection<VotingOptionData>();
+    private readonly Collection<VotingOptionData> userOptions = new();
     private string votingResponse;
 
     /// <summary>
@@ -60,7 +60,7 @@ public sealed class VotingInformation : ComplexProperty
 
                         if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.VotingOptionData))
                         {
-                            VotingOptionData option = new VotingOptionData();
+                            VotingOptionData option = new();
                             option.LoadFromXml(reader, reader.LocalName);
                             this.userOptions.Add(option);
                         }

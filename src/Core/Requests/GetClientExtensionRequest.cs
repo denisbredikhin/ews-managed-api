@@ -179,7 +179,7 @@ internal sealed class GetClientExtensionRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetClientExtensionResponse response = new GetClientExtensionResponse();
+        GetClientExtensionResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetClientExtensionResponse);
         return response;
     }

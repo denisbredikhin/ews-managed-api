@@ -73,10 +73,12 @@ internal sealed class FindItemResponse<TItem> : ServiceResponse
 
         if (!this.isGrouped)
         {
-            this.results = new FindItemsResults<TItem>();
-            this.results.TotalCount = totalItemsInView;
-            this.results.NextPageOffset = nextPageOffset;
-            this.results.MoreAvailable = moreItemsAvailable;
+            this.results = new FindItemsResults<TItem>
+            {
+                TotalCount = totalItemsInView,
+                NextPageOffset = nextPageOffset,
+                MoreAvailable = moreItemsAvailable
+            };
             InternalReadItemsFromXml(
                 reader,
                 this.propertySet,
@@ -84,10 +86,12 @@ internal sealed class FindItemResponse<TItem> : ServiceResponse
         }
         else
         {
-            this.groupedFindResults = new GroupedFindItemsResults<TItem>();
-            this.groupedFindResults.TotalCount = totalItemsInView;
-            this.groupedFindResults.NextPageOffset = nextPageOffset;
-            this.groupedFindResults.MoreAvailable = moreItemsAvailable;
+            this.groupedFindResults = new GroupedFindItemsResults<TItem>
+            {
+                TotalCount = totalItemsInView,
+                NextPageOffset = nextPageOffset,
+                MoreAvailable = moreItemsAvailable
+            };
 
             reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.Groups);
 
@@ -101,7 +105,7 @@ internal sealed class FindItemResponse<TItem> : ServiceResponse
                     {
                         string groupIndex = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.GroupIndex);
 
-                        List<TItem> itemList = new List<TItem>();
+                        List<TItem> itemList = new();
                         InternalReadItemsFromXml(
                             reader,
                             this.propertySet,
@@ -129,7 +133,7 @@ internal sealed class FindItemResponse<TItem> : ServiceResponse
 
                 if (reader.NodeType == XmlNodeType.Element)
                 {
-                    HighlightTerm term = new HighlightTerm();
+                    HighlightTerm term = new();
 
                     term.LoadFromXml(
                         reader,

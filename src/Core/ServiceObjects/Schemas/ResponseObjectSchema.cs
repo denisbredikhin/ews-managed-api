@@ -45,7 +45,7 @@ internal class ResponseObjectSchema : ServiceObjectSchema
             delegate() { return new MessageBody(); });
 
     // This must be declared after the property definitions
-    internal static readonly ResponseObjectSchema Instance = new ResponseObjectSchema();
+    internal static readonly ResponseObjectSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

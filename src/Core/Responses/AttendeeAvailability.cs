@@ -33,8 +33,8 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class AttendeeAvailability : ServiceResponse
 {
-    private readonly Collection<CalendarEvent> calendarEvents = new Collection<CalendarEvent>();
-    private readonly Collection<LegacyFreeBusyStatus> mergedFreeBusyStatus = new Collection<LegacyFreeBusyStatus>();
+    private readonly Collection<CalendarEvent> calendarEvents = new();
+    private readonly Collection<LegacyFreeBusyStatus> mergedFreeBusyStatus = new();
     private FreeBusyViewType viewType;
     private WorkingHours workingHours;
 
@@ -97,7 +97,7 @@ public sealed class AttendeeAvailability : ServiceResponse
 
                             if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.CalendarEvent))
                             {
-                                CalendarEvent calendarEvent = new CalendarEvent();
+                                CalendarEvent calendarEvent = new();
 
                                 calendarEvent.LoadFromXml(reader, XmlElementNames.CalendarEvent);
 

@@ -29,7 +29,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal sealed class MarkAsJunkRequest : MultiResponseServiceRequest<MarkAsJunkResponse>
 {
-    private readonly ItemIdWrapperList itemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList itemIds = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MarkAsJunkRequest"/> class.

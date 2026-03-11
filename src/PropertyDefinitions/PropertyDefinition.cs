@@ -131,7 +131,7 @@ public abstract class PropertyDefinition : ServiceObjectPropertyDefinition
     /// </remarks>
     internal List<PropertyDefinition> GetAssociatedInternalProperties()
     {
-        List<PropertyDefinition> properties = new List<PropertyDefinition>();
+        List<PropertyDefinition> properties = new();
 
         this.RegisterAssociatedInternalProperties(properties);
 

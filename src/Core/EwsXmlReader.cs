@@ -67,7 +67,7 @@ internal class EwsXmlReader
         // it will do so. EWS doesn't use DTD references so we want to turn this off. Also, the XmlResolver property is
         // set to an instance of XmlUrlResolver by default. We don't want XmlTextReader to try to resolve this DTD reference 
         // so we disable the XmlResolver as well.
-        XmlReaderSettings settings = new XmlReaderSettings()
+        XmlReaderSettings settings = new()
         {
             Async = true,
             CheckCharacters = false,
@@ -546,7 +546,7 @@ internal class EwsXmlReader
         byte[] buffer = new byte[ReadWriteBufferSize];
         int bytesRead;
 
-        using (MemoryStream memoryStream = new MemoryStream())
+        using (MemoryStream memoryStream = new())
         {
             do
             {

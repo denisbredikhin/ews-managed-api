@@ -54,7 +54,7 @@ public sealed class AlternateMailbox
     /// <returns>AlternateMailbox.</returns>
     internal static AlternateMailbox LoadFromXml(EwsXmlReader reader)
     {
-        AlternateMailbox altMailbox = new AlternateMailbox();
+        AlternateMailbox altMailbox = new();
 
         do
         {

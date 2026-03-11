@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 /// </summary>
 public abstract class ServiceObject
 {
-    private readonly object lockObject = new object();
+    private readonly object lockObject = new();
     private ExchangeService service;
     private readonly PropertyBag propertyBag;
     private string xmlElementName;
@@ -435,7 +435,7 @@ public abstract class ServiceObject
     /// <returns>Collection of property definitions.</returns>
     public Collection<PropertyDefinitionBase> GetLoadedPropertyDefinitions()
     {
-        Collection<PropertyDefinitionBase> propDefs = new Collection<PropertyDefinitionBase>();
+        Collection<PropertyDefinitionBase> propDefs = new();
         foreach (PropertyDefinition propDef in this.PropertyBag.Properties.Keys)
         {
             propDefs.Add(propDef);

@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal sealed class GetRoomsResponse : ServiceResponse
 {
-    private readonly Collection<EmailAddress> rooms = new Collection<EmailAddress>();
+    private readonly Collection<EmailAddress> rooms = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetRoomsResponse"/> class.
@@ -70,7 +70,7 @@ internal sealed class GetRoomsResponse : ServiceResponse
             {
                 reader.Read(); // skip the start <Room>
 
-                EmailAddress emailAddress = new EmailAddress();
+                EmailAddress emailAddress = new();
                 emailAddress.LoadFromXml(reader, XmlElementNames.RoomId);
                 this.Rooms.Add(emailAddress);
 

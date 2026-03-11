@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal class ResponseMessageSchema : ServiceObjectSchema
 {
     // This must be declared after the property definitions
-    internal static readonly ResponseMessageSchema Instance = new ResponseMessageSchema();
+    internal static readonly ResponseMessageSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

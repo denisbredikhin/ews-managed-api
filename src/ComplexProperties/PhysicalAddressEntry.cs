@@ -157,7 +157,7 @@ public sealed class PhysicalAddressEntry : DictionaryEntryProperty<PhysicalAddre
         ServiceObject ewsObject,
         string ownerDictionaryXmlElementName)
     {
-        List<string> fieldsToSet = new List<string>();
+        List<string> fieldsToSet = new();
 
         foreach (string xmlElementName in this.propertyBag.AddedItems)
         {
@@ -282,10 +282,10 @@ public sealed class PhysicalAddressEntry : DictionaryEntryProperty<PhysicalAddre
         /// <summary>
         /// List of XML element names.
         /// </summary>
-        private static readonly LazyMember<List<string>> xmlElementNames = new LazyMember<List<string>>(
+        private static readonly LazyMember<List<string>> xmlElementNames = new(
             delegate()
             {
-                List<string> result = new List<string>();
+                List<string> result = new();
                 result.Add(Street);
                 result.Add(City);
                 result.Add(State);

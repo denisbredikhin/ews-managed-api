@@ -50,7 +50,7 @@ public sealed class WebClientUrlCollection
     /// <param name="reader">The reader.</param>
     internal static WebClientUrlCollection LoadFromXml(EwsXmlReader reader)
     {
-        WebClientUrlCollection instance = new WebClientUrlCollection();
+        WebClientUrlCollection instance = new();
 
         do
         {

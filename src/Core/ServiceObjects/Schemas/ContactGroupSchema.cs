@@ -62,7 +62,7 @@ public class ContactGroupSchema : ItemSchema
     /// <summary>
     /// This must be declared after the property definitions.
     /// </summary>
-    internal static new readonly ContactGroupSchema Instance = new ContactGroupSchema();
+    internal static new readonly ContactGroupSchema Instance = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ContactGroupSchema"/> class.

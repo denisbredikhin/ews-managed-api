@@ -38,7 +38,7 @@ internal class CancelMeetingMessageSchema : ServiceObjectSchema
             delegate() { return new MessageBody(); });
 
     // This must be declared after the property definitions
-    internal static readonly CancelMeetingMessageSchema Instance = new CancelMeetingMessageSchema();
+    internal static readonly CancelMeetingMessageSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal abstract class GetItemRequestBase<TResponse> : GetRequest<Item, TResponse>
     where TResponse : ServiceResponse
 {
-    private readonly ItemIdWrapperList itemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList itemIds = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetItemRequestBase&lt;TResponse&gt;"/> class.

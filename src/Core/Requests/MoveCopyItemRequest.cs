@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal abstract class MoveCopyItemRequest<TResponse> : MoveCopyRequest<Item, TResponse>
     where TResponse : ServiceResponse
 {
-    private readonly ItemIdWrapperList itemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList itemIds = new();
 
     /// <summary>
     /// Validates request.

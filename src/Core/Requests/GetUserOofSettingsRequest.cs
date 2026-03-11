@@ -81,7 +81,7 @@ internal sealed class GetUserOofSettingsRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetUserOofSettingsResponse serviceResponse = new GetUserOofSettingsResponse();
+        GetUserOofSettingsResponse serviceResponse = new();
 
         serviceResponse.LoadFromXml(reader, XmlElementNames.ResponseMessage);
 

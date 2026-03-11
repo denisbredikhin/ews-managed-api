@@ -59,7 +59,7 @@ internal class TimeZonePropertyDefinition : PropertyDefinition
     /// <param name="propertyBag">The property bag.</param>
     internal override void LoadPropertyValueFromXml(EwsServiceXmlReader reader, PropertyBag propertyBag)
     {
-        TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition();
+        TimeZoneDefinition timeZoneDefinition = new();
         timeZoneDefinition.LoadFromXml(reader, this.XmlElementName);
 
         propertyBag[this] = timeZoneDefinition.ToTimeZoneInfo(reader.Service);
@@ -85,7 +85,7 @@ internal class TimeZonePropertyDefinition : PropertyDefinition
             // is being emitted.
             if (!writer.IsTimeZoneHeaderEmitted || value != writer.Service.TimeZone)
             {
-                TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition(value);
+                TimeZoneDefinition timeZoneDefinition = new(value);
 
                 timeZoneDefinition.WriteToXml(writer, this.XmlElementName);
             }

@@ -76,7 +76,7 @@ internal sealed class GetPasswordExpirationDateRequest : SimpleServiceRequestBas
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetPasswordExpirationDateResponse response = new GetPasswordExpirationDateResponse();
+        GetPasswordExpirationDateResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetPasswordExpirationDateResponse);
         return response;
     }

@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class ApplyConversationActionRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    private readonly List<ConversationAction> conversationActions = new List<ConversationAction>();
+    private readonly List<ConversationAction> conversationActions = new();
 
     public List<ConversationAction> ConversationActions
     {

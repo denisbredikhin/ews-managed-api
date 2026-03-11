@@ -105,7 +105,7 @@ internal sealed class GetPeopleInsightsRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetPeopleInsightsResponse response = new GetPeopleInsightsResponse();
+        GetPeopleInsightsResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetPeopleInsightsResponse);
         return response;
     }

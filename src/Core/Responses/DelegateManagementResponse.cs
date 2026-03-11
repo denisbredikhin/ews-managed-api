@@ -76,7 +76,7 @@ internal class DelegateManagementResponse : ServiceResponse
                             delegateUser = this.delegateUsers[delegateUserIndex];
                         }
 
-                        DelegateUserResponse delegateUserResponse = new DelegateUserResponse(readDelegateUsers, delegateUser);
+                        DelegateUserResponse delegateUserResponse = new(readDelegateUsers, delegateUser);
 
                         delegateUserResponse.LoadFromXml(reader, XmlElementNames.DelegateUserResponseMessageType);
 

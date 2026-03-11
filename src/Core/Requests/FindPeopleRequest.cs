@@ -188,7 +188,7 @@ internal sealed class FindPeopleRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        FindPeopleResponse response = new FindPeopleResponse();
+        FindPeopleResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.FindPeopleResponse);
         return response;
     }

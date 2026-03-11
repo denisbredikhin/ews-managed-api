@@ -86,7 +86,7 @@ public sealed class FailedSearchMailbox
     /// <returns>Array of failed mailboxes</returns>
     internal static FailedSearchMailbox[] LoadFailedMailboxesXml(XmlNamespace rootXmlNamespace, EwsServiceXmlReader reader)
     {
-        List<FailedSearchMailbox> failedMailboxes = new List<FailedSearchMailbox>();
+        List<FailedSearchMailbox> failedMailboxes = new();
 
         reader.EnsureCurrentNodeIsStartElement(rootXmlNamespace, XmlElementNames.FailedMailboxes);
         do

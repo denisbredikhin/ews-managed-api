@@ -85,8 +85,10 @@ internal class EwsHttpWebRequest : IEwsHttpWebRequest
     /// </returns>
     public async Task<IEwsHttpWebResponse> GetResponse(CancellationToken token)
     {
-        var message = new HttpRequestMessage(new HttpMethod(Method), RequestUri);
-        message.Content = new StringContent(Content);
+        var message = new HttpRequestMessage(new HttpMethod(Method), RequestUri)
+        {
+            Content = new StringContent(Content)
+        };
 
         if (!string.IsNullOrEmpty(ContentType)) {
           message.Content.Headers.ContentType = null;

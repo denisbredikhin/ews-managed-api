@@ -256,7 +256,7 @@ internal sealed class FindConversationRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        FindConversationResponse response = new FindConversationResponse();
+        FindConversationResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.FindConversationResponse);
         return response;
     }

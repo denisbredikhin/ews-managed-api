@@ -355,7 +355,7 @@ public class MeetingRequestSchema : MeetingMessageSchema
         AppointmentSchema.NetShowUrl;
 
     // This must be after the declaration of property definitions
-    internal static new readonly MeetingRequestSchema Instance = new MeetingRequestSchema();
+    internal static new readonly MeetingRequestSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

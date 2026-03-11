@@ -78,7 +78,7 @@ internal sealed class GetPhoneCallRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetPhoneCallResponse response = new GetPhoneCallResponse(Service);
+        GetPhoneCallResponse response = new(Service);
         response.LoadFromXml(reader, XmlElementNames.GetPhoneCallResponse);
         return response;
     }

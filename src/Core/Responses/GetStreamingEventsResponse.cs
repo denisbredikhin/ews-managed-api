@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class GetStreamingEventsResponse : ServiceResponse
 {
-    private readonly GetStreamingEventsResults results = new GetStreamingEventsResults();
+    private readonly GetStreamingEventsResults results = new();
     private readonly HangingServiceRequestBase request;
 
     /// <summary>

@@ -49,7 +49,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Map from XML element names to ServiceObject type and constructors. 
     /// </summary>
-    private static readonly LazyMember<ServiceObjectInfo> serviceObjectInfo = new LazyMember<ServiceObjectInfo>(
+    private static readonly LazyMember<ServiceObjectInfo> serviceObjectInfo = new(
         delegate()
         {
             return new ServiceObjectInfo();
@@ -58,7 +58,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Version of API binary.
     /// </summary>
-    private static readonly LazyMember<string> buildVersion = new LazyMember<string>(
+    private static readonly LazyMember<string> buildVersion = new(
         delegate()
         {
             try
@@ -78,7 +78,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary of enum type to ExchangeVersion maps. 
     /// </summary>
-    private static readonly LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>> enumVersionDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>>(
+    private static readonly LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>> enumVersionDictionaries = new(
         () => new Dictionary<Type, Dictionary<Enum, ExchangeVersion>>()
         {
             { typeof(WellKnownFolderName), BuildEnumDict(typeof(WellKnownFolderName)) },
@@ -93,7 +93,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary of enum type to schema-name-to-enum-value maps.
     /// </summary>
-    private static readonly LazyMember<Dictionary<Type, Dictionary<string, Enum>>> schemaToEnumDictionaries = new LazyMember<Dictionary<Type, Dictionary<string, Enum>>>(
+    private static readonly LazyMember<Dictionary<Type, Dictionary<string, Enum>>> schemaToEnumDictionaries = new(
         () => new Dictionary<Type, Dictionary<string, Enum>>
         {
             { typeof(EventType), BuildSchemaToEnumDict(typeof(EventType)) },
@@ -106,7 +106,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary of enum type to enum-value-to-schema-name maps.
     /// </summary>
-    private static readonly LazyMember<Dictionary<Type, Dictionary<Enum, string>>> enumToSchemaDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, string>>>(
+    private static readonly LazyMember<Dictionary<Type, Dictionary<Enum, string>>> enumToSchemaDictionaries = new(
         () => new Dictionary<Type, Dictionary<Enum, string>>
         {
             { typeof(EventType), BuildEnumToSchemaDict(typeof(EventType)) },
@@ -119,7 +119,7 @@ internal static class EwsUtilities
     /// <summary>
     /// Dictionary to map from special CLR type names to their "short" names.
     /// </summary>
-    private static readonly LazyMember<Dictionary<string, string>> typeNameToShortNameMap = new LazyMember<Dictionary<string, string>>(
+    private static readonly LazyMember<Dictionary<string, string>> typeNameToShortNameMap = new(
         () => new Dictionary<string, string>
         {
             { "Boolean", "bool" },
@@ -423,8 +423,8 @@ internal static class EwsUtilities
     /// <returns>XML log entry as a string.</returns>
     internal static string FormatLogMessage(string entryKind, string logEntry)
     {
-        StringBuilder sb = new StringBuilder();
-        using (StringWriter writer = new StringWriter(sb))
+        StringBuilder sb = new();
+        using (StringWriter writer = new(sb))
         {
             using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { Indent = true }))
             {
@@ -465,7 +465,7 @@ internal static class EwsUtilities
     /// <param name="request">The HTTP request.</param>
     internal static string FormatHttpRequestHeaders(IEwsHttpWebRequest request)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         sb.Append(string.Format("{0} {1} HTTP/1.1\n", request.Method, request.RequestUri.AbsolutePath));
         EwsUtilities.FormatHttpHeaders(sb, request.Headers);
         sb.Append("\n");
@@ -479,7 +479,7 @@ internal static class EwsUtilities
     /// <param name="response">The HTTP response.</param>
     internal static string FormatHttpResponseHeaders(IEwsHttpWebResponse response)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         sb.Append(
             string.Format(
                 "HTTP/{0} {1} {2}\n",
@@ -499,7 +499,7 @@ internal static class EwsUtilities
     /// <returns>Headers as a string</returns>
     private static string FormatHttpHeaders(HttpHeaders headers)
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         foreach(var item in headers)
         foreach(var value in item.Value)
         {
@@ -520,14 +520,16 @@ internal static class EwsUtilities
     /// <returns>XML log entry as a string.</returns>
     internal static string FormatLogMessageWithXmlContent(string entryKind, MemoryStream memoryStream)
     {
-        StringBuilder sb = new StringBuilder();
-        XmlReaderSettings settings = new XmlReaderSettings();
-        settings.ConformanceLevel = ConformanceLevel.Fragment;
-        settings.IgnoreComments = true;
-        settings.IgnoreWhitespace = true;
-        settings.CloseInput = false;
+        StringBuilder sb = new();
+        XmlReaderSettings settings = new()
+        {
+            ConformanceLevel = ConformanceLevel.Fragment,
+            IgnoreComments = true,
+            IgnoreWhitespace = true,
+            CloseInput = false
+        };
 
-        
+
         // Remember the current location in the MemoryStream.
         long lastPosition = memoryStream.Position;
 
@@ -543,7 +545,7 @@ internal static class EwsUtilities
                 {
                     reader.Read();
                 }
-                using (StringWriter writer = new StringWriter(sb))
+                using (StringWriter writer = new(sb))
                 {
                     using (var xmlWriter = XmlWriter.Create(writer, new XmlWriterSettings() { Indent = true }))
                     {
@@ -934,7 +936,7 @@ internal static class EwsUtilities
     /// <returns>System.TimeSpan structure</returns>
     internal static TimeSpan XSDurationToTimeSpan(string xsDuration)
     {
-        Regex timeSpanParser = new Regex(
+        Regex timeSpanParser = new(
             "(?<pos>-)?" +
             "P" +
             "((?<year>[0-9]+)Y)?" +
@@ -1023,7 +1025,7 @@ internal static class EwsUtilities
         // Year = 365 days
         // Month = 30 days
         day = day + (year * 365) + (month * 30);
-        TimeSpan retval = new TimeSpan(day, hour, minute, seconds, milliseconds);
+        TimeSpan retval = new(day, hour, minute, seconds, milliseconds);
 
         if (negative)
         {
@@ -1061,7 +1063,7 @@ internal static class EwsUtilities
         {
             // Convert generic type to printable form (e.g. List<Item>)
             string genericPrefix = type.Name.Substring(0, type.Name.IndexOf('`'));
-            StringBuilder nameBuilder = new StringBuilder(genericPrefix);
+            StringBuilder nameBuilder = new(genericPrefix);
 
             // Note: building array of generic parameters is done recursively. Each parameter could be any type.
             string[] genericArgs = type.GetGenericArguments().ToList<Type>().Select(t => GetPrintableTypeName(t)).ToArray<string>();
@@ -1075,7 +1077,7 @@ internal static class EwsUtilities
         {
             // Convert array type to printable form.
             string arrayPrefix = type.Name.Substring(0, type.Name.IndexOf('['));
-            StringBuilder nameBuilder = new StringBuilder(EwsUtilities.GetSimplifiedTypeName(arrayPrefix));
+            StringBuilder nameBuilder = new(EwsUtilities.GetSimplifiedTypeName(arrayPrefix));
             for (int rank = 0; rank < type.GetArrayRank(); rank++)
             {
                 nameBuilder.Append("[]");
@@ -1367,7 +1369,7 @@ internal static class EwsUtilities
     {
         if (domainName != null)
         {
-            Regex regex = new Regex(DomainRegex);
+            Regex regex = new(DomainRegex);
 
             if (!regex.IsMatch(domainName))
             {
@@ -1408,7 +1410,7 @@ internal static class EwsUtilities
     /// <returns>Dictionary of enum values to versions.</returns>
     private static Dictionary<Enum, ExchangeVersion> BuildEnumDict(Type enumType)
     {
-        Dictionary<Enum, ExchangeVersion> dict = new Dictionary<Enum, ExchangeVersion>();
+        Dictionary<Enum, ExchangeVersion> dict = new();
         string[] names = Enum.GetNames(enumType);
         foreach (string name in names)
         {
@@ -1451,7 +1453,7 @@ internal static class EwsUtilities
     /// <returns>The mapping from enum to schema name</returns>
     private static Dictionary<string, Enum> BuildSchemaToEnumDict(Type enumType)
     {
-        Dictionary<string, Enum> dict = new Dictionary<string, Enum>();
+        Dictionary<string, Enum> dict = new();
         string[] names = Enum.GetNames(enumType);
         foreach (string name in names)
         {
@@ -1473,7 +1475,7 @@ internal static class EwsUtilities
     /// <returns>The mapping from enum to schema name</returns>
     private static Dictionary<Enum, string> BuildEnumToSchemaDict(Type enumType)
     {
-        Dictionary<Enum, string> dict = new Dictionary<Enum, string>();
+        Dictionary<Enum, string> dict = new();
         string[] names = Enum.GetNames(enumType);
         foreach (string name in names)
         {

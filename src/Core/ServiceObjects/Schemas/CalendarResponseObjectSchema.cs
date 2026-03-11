@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal class CalendarResponseObjectSchema : ServiceObjectSchema
 {
     // This must be declared after the property definitions
-    internal static readonly CalendarResponseObjectSchema Instance = new CalendarResponseObjectSchema();
+    internal static readonly CalendarResponseObjectSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

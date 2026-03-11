@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class GetClientExtensionResponse : ServiceResponse
 {
-    private readonly Collection<ClientExtension> clientExtension = new Collection<ClientExtension>();
+    private readonly Collection<ClientExtension> clientExtension = new();
 
     private string rawMasterTableXml;
 
@@ -79,7 +79,7 @@ public sealed class GetClientExtensionResponse : ServiceResponse
 
             while (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.ClientExtension))
             {
-                ClientExtension clientExtension = new ClientExtension();
+                ClientExtension clientExtension = new();
                 clientExtension.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.ClientExtension);
                 this.ClientExtensions.Add(clientExtension);
 

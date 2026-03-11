@@ -133,7 +133,7 @@ public class MeetingMessageSchema : EmailMessageSchema
             ExchangeVersion.Exchange2013);
 
     // This must be after the declaration of property definitions
-    internal static new readonly MeetingMessageSchema Instance = new MeetingMessageSchema();
+    internal static new readonly MeetingMessageSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

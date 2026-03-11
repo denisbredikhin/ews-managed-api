@@ -116,7 +116,7 @@ internal sealed class GetAppManifestsRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetAppManifestsResponse response = new GetAppManifestsResponse();
+        GetAppManifestsResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetAppManifestsResponse);
         return response;
     }

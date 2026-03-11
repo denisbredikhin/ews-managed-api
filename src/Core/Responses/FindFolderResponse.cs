@@ -32,7 +32,7 @@ using System.Xml;
 /// </summary>
 public sealed class FindFolderResponse : ServiceResponse
 {
-    private readonly FindFoldersResults results = new FindFoldersResults();
+    private readonly FindFoldersResults results = new();
     private readonly PropertySet propertySet;
 
     /// <summary>

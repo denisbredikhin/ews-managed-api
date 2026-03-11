@@ -62,7 +62,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <summary>
     /// Lock object
     /// </summary>
-    private readonly object lockObject = new object();
+    private readonly object lockObject = new();
 
     /// <summary>
     /// Represents a delegate that is invoked when notifications are received from the server
@@ -146,7 +146,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     {
         get
         {
-            List<StreamingSubscription> result = new List<StreamingSubscription>();
+            List<StreamingSubscription> result = new();
             lock (this.lockObject)
             {
                 result.AddRange(this.subscriptions.Values);
@@ -353,7 +353,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <param name="gseResponse">The GetStreamingEvents response.</param>
     private void IssueSubscriptionFailures(GetStreamingEventsResponse gseResponse)
     {
-        ServiceResponseException exception = new ServiceResponseException(gseResponse);
+        ServiceResponseException exception = new(gseResponse);
 
         foreach (string id in gseResponse.ErrorSubscriptionIds)
         {
@@ -370,7 +370,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
 
             if (subscription != null)
             {
-                SubscriptionErrorEventArgs eventArgs = new SubscriptionErrorEventArgs(
+                SubscriptionErrorEventArgs eventArgs = new(
                     subscription,
                     exception);
 
@@ -401,7 +401,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <param name="gseResponse">The GetStreamingEvents response.</param>
     private void IssueGeneralFailure(GetStreamingEventsResponse gseResponse)
     {
-        SubscriptionErrorEventArgs eventArgs = new SubscriptionErrorEventArgs(
+        SubscriptionErrorEventArgs eventArgs = new(
             null,
             new ServiceResponseException(gseResponse));
 
@@ -432,7 +432,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
 
             if (subscription != null)
             {
-                NotificationEventArgs eventArgs = new NotificationEventArgs(
+                NotificationEventArgs eventArgs = new(
                     subscription,
                     events.Events);
 

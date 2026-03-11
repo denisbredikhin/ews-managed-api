@@ -52,7 +52,7 @@ internal sealed class GetStreamingEventsResults
     /// <summary>
     /// Collection of notification events.
     /// </summary>
-    private readonly Collection<NotificationGroup> events = new Collection<NotificationGroup>();
+    private readonly Collection<NotificationGroup> events = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetStreamingEventsResults"/> class.
@@ -71,9 +71,11 @@ internal sealed class GetStreamingEventsResults
 
         do
         {
-            NotificationGroup notifications = new NotificationGroup();
-            notifications.SubscriptionId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.SubscriptionId);
-            notifications.Events = new Collection<NotificationEvent>();
+            NotificationGroup notifications = new()
+            {
+                SubscriptionId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.SubscriptionId),
+                Events = new Collection<NotificationEvent>()
+            };
 
             lock (this)
             {

@@ -58,7 +58,7 @@ public sealed class AttendeeCollection : ComplexPropertyCollection<Attendee>
     /// <returns>An Attendee instance initialized with the provided SMTP address.</returns>
     public Attendee Add(string smtpAddress)
     {
-        Attendee result = new Attendee(smtpAddress);
+        Attendee result = new(smtpAddress);
 
         this.InternalAdd(result);
 
@@ -73,7 +73,7 @@ public sealed class AttendeeCollection : ComplexPropertyCollection<Attendee>
     /// <returns>An Attendee instance initialized with the provided name and SMTP address.</returns>
     public Attendee Add(string name, string smtpAddress)
     {
-        Attendee result = new Attendee(name, smtpAddress);
+        Attendee result = new(name, smtpAddress);
 
         this.InternalAdd(result);
 

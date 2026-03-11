@@ -109,7 +109,7 @@ public sealed class RuleCollection : ComplexProperty, IEnumerable<Rule>
     {
         if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Rule))
         {
-            Rule rule = new Rule();
+            Rule rule = new();
             rule.LoadFromXml(reader, XmlElementNames.Rule);
             this.rules.Add(rule);
             return true;

@@ -35,7 +35,7 @@ internal sealed class GetUserUnifiedGroupsResponse : ServiceResponse
     /// <summary>
     /// The UnifiedGroups Sets associated with this response
     /// </summary>
-    private readonly Collection<UnifiedGroupsSet> groupsSets = new Collection<UnifiedGroupsSet>();
+    private readonly Collection<UnifiedGroupsSet> groupsSets = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetUserUnifiedGroupsResponse"/> class.
@@ -72,7 +72,7 @@ internal sealed class GetUserUnifiedGroupsResponse : ServiceResponse
              reader.Read();
              while (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.UnifiedGroupsSet))
              {
-                 UnifiedGroupsSet unifiedGroupsSet = new UnifiedGroupsSet();
+                 UnifiedGroupsSet unifiedGroupsSet = new();
                  unifiedGroupsSet.LoadFromXml(reader, XmlElementNames.UnifiedGroupsSet);
                  this.groupsSets.Add(unifiedGroupsSet);
              }

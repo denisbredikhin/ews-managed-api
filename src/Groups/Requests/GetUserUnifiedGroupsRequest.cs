@@ -77,7 +77,7 @@ internal sealed class GetUserUnifiedGroupsRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetUserUnifiedGroupsResponse response = new GetUserUnifiedGroupsResponse();
+        GetUserUnifiedGroupsResponse response = new();
         response.LoadFromXml(reader, GetResponseXmlElementName());
         return response;
     }

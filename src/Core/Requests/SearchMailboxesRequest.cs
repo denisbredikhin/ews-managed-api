@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class SearchMailboxesRequest : MultiResponseServiceRequest<SearchMailboxesResponse>, IDiscoveryVersionable
 {
-    private List<MailboxQuery> searchQueries = new List<MailboxQuery>();
+    private List<MailboxQuery> searchQueries = new();
     private SearchResultType searchResultType = SearchResultType.PreviewOnly;
     private SortDirection sortOrder = SortDirection.Ascending;
     private string sortByProperty;
@@ -145,7 +145,7 @@ internal sealed class SearchMailboxesRequest : MultiResponseServiceRequest<Searc
     /// <returns>Service response collection.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        ServiceResponseCollection<SearchMailboxesResponse> serviceResponses = new ServiceResponseCollection<SearchMailboxesResponse>();
+        ServiceResponseCollection<SearchMailboxesResponse> serviceResponses = new();
 
         reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
 
@@ -158,7 +158,7 @@ internal sealed class SearchMailboxesRequest : MultiResponseServiceRequest<Searc
                 break;
             }
 
-            SearchMailboxesResponse response = new SearchMailboxesResponse();
+            SearchMailboxesResponse response = new();
             response.LoadFromXml(reader, this.GetResponseMessageXmlElementName());
             serviceResponses.Add(response);
         }

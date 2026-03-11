@@ -38,7 +38,7 @@ using System.Xml;
 public sealed class ItemCollection<TItem> : ComplexProperty, IEnumerable<TItem>
     where TItem : Item
 {
-    private readonly List<TItem> items = new List<TItem>();
+    private readonly List<TItem> items = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ItemCollection&lt;TItem&gt;"/> class.

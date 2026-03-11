@@ -64,7 +64,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
     /// <param name="localElementName">Name of the local element.</param>
     internal override void LoadFromXml(EwsServiceXmlReader reader, string localElementName)
     {
-        ExtendedProperty extendedProperty = new ExtendedProperty();
+        ExtendedProperty extendedProperty = new();
 
         extendedProperty.LoadFromXml(reader, reader.LocalName);
         this.InternalAdd(extendedProperty);
@@ -190,7 +190,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
         ServiceObject ewsObject,
         PropertyDefinition propertyDefinition)
     {
-        List<ExtendedProperty> propertiesToSet = new List<ExtendedProperty>();
+        List<ExtendedProperty> propertiesToSet = new();
 
         propertiesToSet.AddRange(this.AddedItems);
         propertiesToSet.AddRange(this.ModifiedItems);

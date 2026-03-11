@@ -134,7 +134,7 @@ internal class EwsServiceXmlReader : EwsXmlReader
         PropertySet requestedPropertySet,
         bool summaryPropertiesOnly) where TServiceObject : ServiceObject
     {
-        List<TServiceObject> serviceObjects = new List<TServiceObject>();
+        List<TServiceObject> serviceObjects = new();
         TServiceObject serviceObject = null;
 
         if (!this.IsStartElement(collectionXmlNamespace, collectionXmlElementName))

@@ -94,7 +94,7 @@ internal sealed class OutlookAccount
 
                         break;
                     case XmlElementNames.Protocol:
-                        OutlookProtocol protocol = new OutlookProtocol();
+                        OutlookProtocol protocol = new();
                         protocol.LoadFromXml(reader);
                         if (this.protocols.ContainsKey(protocol.ProtocolType))
                         {

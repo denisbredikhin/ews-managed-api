@@ -102,7 +102,7 @@ public sealed class PostItemSchema : ItemSchema
         EmailMessageSchema.Sender;
 
     // This must be after the declaration of property definitions
-    internal static new readonly PostItemSchema Instance = new PostItemSchema();
+    internal static new readonly PostItemSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

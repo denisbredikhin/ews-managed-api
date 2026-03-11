@@ -55,12 +55,14 @@ public sealed class UnifiedMessaging
         EwsUtilities.ValidateParam(itemId, "itemId");
         EwsUtilities.ValidateParam(dialString, "dialString");
 
-        PlayOnPhoneRequest request = new PlayOnPhoneRequest(service);
-        request.DialString = dialString;
-        request.ItemId = itemId;
+        PlayOnPhoneRequest request = new(service)
+        {
+            DialString = dialString,
+            ItemId = itemId
+        };
         PlayOnPhoneResponse serviceResponse = await request.Execute(token).ConfigureAwait(false);
 
-        PhoneCall callInformation = new PhoneCall(service, serviceResponse.PhoneCallId);
+        PhoneCall callInformation = new(service, serviceResponse.PhoneCallId);
 
         return callInformation;
     }
@@ -72,8 +74,10 @@ public sealed class UnifiedMessaging
     /// <returns>An object providing status for the phone call.</returns>
     internal async Task<PhoneCall> GetPhoneCallInformation(PhoneCallId id, CancellationToken token)
     {
-        GetPhoneCallRequest request = new GetPhoneCallRequest(service);
-        request.Id = id;
+        GetPhoneCallRequest request = new(service)
+        {
+            Id = id
+        };
         GetPhoneCallResponse response = await request.Execute(token).ConfigureAwait(false);
 
         return response.PhoneCall;
@@ -85,8 +89,10 @@ public sealed class UnifiedMessaging
     /// <param name="id">The Id of the phone call.</param>
     internal System.Threading.Tasks.Task DisconnectPhoneCall(PhoneCallId id, CancellationToken token)
     {
-        DisconnectPhoneCallRequest request = new DisconnectPhoneCallRequest(service);
-        request.Id = id;
+        DisconnectPhoneCallRequest request = new(service)
+        {
+            Id = id
+        };
         return request.Execute(token);
     }
 }

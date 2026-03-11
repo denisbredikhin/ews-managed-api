@@ -34,7 +34,7 @@ using System.Linq;
 internal sealed class CreateAttachmentRequest : MultiResponseServiceRequest<CreateAttachmentResponse>
 {
     private string parentItemId;
-    private readonly List<Attachment> attachments = new List<Attachment>();
+    private readonly List<Attachment> attachments = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateAttachmentRequest"/> class.

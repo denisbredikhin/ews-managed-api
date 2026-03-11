@@ -61,7 +61,7 @@ public sealed class WebClientUrl
     /// <returns>WebClientUrl.</returns>
     internal static WebClientUrl LoadFromXml(EwsXmlReader reader)
     {
-        WebClientUrl webClientUrl = new WebClientUrl();
+        WebClientUrl webClientUrl = new();
 
         do
         {

@@ -36,7 +36,7 @@ public sealed class Suggestion : ComplexProperty
 {
     private DateTime date;
     private SuggestionQuality quality;
-    private readonly Collection<TimeSuggestion> timeSuggestions = new Collection<TimeSuggestion>();
+    private readonly Collection<TimeSuggestion> timeSuggestions = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Suggestion"/> class.
@@ -81,7 +81,7 @@ public sealed class Suggestion : ComplexProperty
 
                         if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Suggestion))
                         {
-                            TimeSuggestion timeSuggestion = new TimeSuggestion();
+                            TimeSuggestion timeSuggestion = new();
 
                             timeSuggestion.LoadFromXml(reader, reader.LocalName);
 

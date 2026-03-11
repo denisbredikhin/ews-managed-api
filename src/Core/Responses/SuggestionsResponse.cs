@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal sealed class SuggestionsResponse : ServiceResponse
 {
-    private readonly Collection<Suggestion> daySuggestions = new Collection<Suggestion>();
+    private readonly Collection<Suggestion> daySuggestions = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SuggestionsResponse"/> class.
@@ -56,7 +56,7 @@ internal sealed class SuggestionsResponse : ServiceResponse
 
             if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.SuggestionDayResult))
             {
-                Suggestion daySuggestion = new Suggestion();
+                Suggestion daySuggestion = new();
 
                 daySuggestion.LoadFromXml(reader, reader.LocalName);
 

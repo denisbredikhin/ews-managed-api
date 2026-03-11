@@ -78,7 +78,7 @@ internal sealed class DisconnectPhoneCallRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        ServiceResponse serviceResponse = new ServiceResponse();
+        ServiceResponse serviceResponse = new();
         serviceResponse.LoadFromXml(reader, XmlElementNames.DisconnectPhoneCallResponse);
         return serviceResponse;
     }

@@ -54,7 +54,7 @@ public class SearchFolderSchema : FolderSchema
             delegate() { return new SearchFolderParameters(); });
 
     // This must be declared after the property definitions
-    internal static new readonly SearchFolderSchema Instance = new SearchFolderSchema();
+    internal static new readonly SearchFolderSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

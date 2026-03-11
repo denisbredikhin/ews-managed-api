@@ -115,7 +115,7 @@ public class MeetingResponseSchema : MeetingMessageSchema
         AppointmentSchema.EnhancedLocation;
 
     // This must be after the declaration of property definitions
-    internal static new readonly MeetingResponseSchema Instance = new MeetingResponseSchema();
+    internal static new readonly MeetingResponseSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

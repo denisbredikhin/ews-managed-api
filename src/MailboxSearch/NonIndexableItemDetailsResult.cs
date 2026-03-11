@@ -39,7 +39,7 @@ public sealed class NonIndexableItemDetailsResult
     /// <returns>Non indexable item details result object</returns>
     internal static NonIndexableItemDetailsResult LoadFromXml(EwsServiceXmlReader reader)
     {
-        NonIndexableItemDetailsResult nonIndexableItemDetailsResult = new NonIndexableItemDetailsResult();
+        NonIndexableItemDetailsResult nonIndexableItemDetailsResult = new();
         reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.NonIndexableItemDetailsResult);
 
         do
@@ -48,7 +48,7 @@ public sealed class NonIndexableItemDetailsResult
 
             if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Items))
             {
-                List<NonIndexableItem> nonIndexableItems = new List<NonIndexableItem>();
+                List<NonIndexableItem> nonIndexableItems = new();
                 if (!reader.IsEmptyElement)
                 {
                     do

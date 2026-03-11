@@ -80,8 +80,10 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
             certId,
             Convert.ToBase64String(this.certificate.GetRawCertData()));
 
-        SafeXmlDocument doc = new SafeXmlDocument();
-        doc.PreserveWhitespace = true;
+        SafeXmlDocument doc = new()
+        {
+            PreserveWhitespace = true
+        };
         doc.LoadXml(string.Format(X509CertificateCredentials.KeyInfoClauseFormat, certId));
         this.keyInfoClause = new KeyInfoNode(doc.DocumentElement!);
     }
@@ -121,11 +123,13 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
     {
         memoryStream.Position = 0;
 
-        SafeXmlDocument document = new SafeXmlDocument();
-        document.PreserveWhitespace = true;
+        SafeXmlDocument document = new()
+        {
+            PreserveWhitespace = true
+        };
         document.Load(memoryStream);
 
-        WSSecurityUtilityIdSignedXml signedXml = new WSSecurityUtilityIdSignedXml(document);
+        WSSecurityUtilityIdSignedXml signedXml = new(document);
         signedXml.SignedInfo!.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
 
         using AsymmetricAlgorithm signingKey =

@@ -67,7 +67,7 @@ internal sealed class GetSearchableMailboxesRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetSearchableMailboxesResponse response = new GetSearchableMailboxesResponse();
+        GetSearchableMailboxesResponse response = new();
         response.LoadFromXml(reader, this.GetResponseXmlElementName());
         return response;
     }

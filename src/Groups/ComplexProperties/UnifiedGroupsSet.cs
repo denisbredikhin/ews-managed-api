@@ -36,7 +36,7 @@ public class UnifiedGroupsSet : ComplexProperty
     /// <summary>
     /// The list of unifiedGroups in this set.
     /// </summary>
-    private readonly List<UnifiedGroup> unifiedGroups = new List<UnifiedGroup>();
+    private readonly List<UnifiedGroup> unifiedGroups = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnifiedGroupsSet"/> class.
@@ -91,7 +91,7 @@ public class UnifiedGroupsSet : ComplexProperty
                      reader.Read();
                      while (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.UnifiedGroup))
                      {
-                         UnifiedGroup unifiedGroup = new UnifiedGroup();
+                         UnifiedGroup unifiedGroup = new();
                          unifiedGroup.LoadFromXml(reader, XmlElementNames.UnifiedGroup);
                          this.unifiedGroups.Add(unifiedGroup);
                      }

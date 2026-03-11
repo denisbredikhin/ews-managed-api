@@ -51,8 +51,10 @@ internal sealed class PartnerTokenCredentials : WSSecurityBasedCredentials
         EwsUtilities.ValidateParam(securityToken, "securityToken");
         EwsUtilities.ValidateParam(securityTokenReference, "securityTokenReference");
 
-        SafeXmlDocument doc = new SafeXmlDocument();
-        doc.PreserveWhitespace = true;
+        SafeXmlDocument doc = new()
+        {
+            PreserveWhitespace = true
+        };
         doc.LoadXml(securityTokenReference);
         this.keyInfoNode = new KeyInfoNode(doc.DocumentElement);
     }
@@ -92,11 +94,13 @@ internal sealed class PartnerTokenCredentials : WSSecurityBasedCredentials
     {
         memoryStream.Position = 0;
 
-        SafeXmlDocument document = new SafeXmlDocument();
-        document.PreserveWhitespace = true;
+        SafeXmlDocument document = new()
+        {
+            PreserveWhitespace = true
+        };
         document.Load(memoryStream);
 
-        WSSecurityUtilityIdSignedXml signedXml = new WSSecurityUtilityIdSignedXml(document);
+        WSSecurityUtilityIdSignedXml signedXml = new(document);
         signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
 
         //signedXml.AddReference("/soap:Envelope/soap:Header/t:ExchangeImpersonation");

@@ -92,7 +92,7 @@ internal sealed class SetUnifiedGroupLastVisitedTimeRequest : SimpleServiceReque
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        ServiceResponse response = new ServiceResponse();
+        ServiceResponse response = new();
         response.LoadFromXml(reader, GetResponseXmlElementName());
         return response;
     }
@@ -103,7 +103,7 @@ internal sealed class SetUnifiedGroupLastVisitedTimeRequest : SimpleServiceReque
     /// <param name="writer">The writer.</param>
     internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
     {
-        UnifiedGroupIdentity groupIdentity = new UnifiedGroupIdentity(this.identityType, this.identityValue);
+        UnifiedGroupIdentity groupIdentity = new(this.identityType, this.identityValue);
 
         groupIdentity.WriteToXml(writer, XmlElementNames.GroupIdentity);
 

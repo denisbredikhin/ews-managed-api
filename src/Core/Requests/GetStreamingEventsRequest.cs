@@ -116,7 +116,7 @@ internal class GetStreamingEventsRequest : HangingServiceRequestBase
     {
         reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.ResponseMessages);
 
-        GetStreamingEventsResponse response = new GetStreamingEventsResponse(this);
+        GetStreamingEventsResponse response = new(this);
         response.LoadFromXml(reader, XmlElementNames.GetStreamingEventsResponseMessage);
 
         reader.ReadEndElementIfNecessary(XmlNamespace.Messages, XmlElementNames.ResponseMessages);

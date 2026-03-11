@@ -55,10 +55,11 @@ public sealed class AutodiscoverError
     /// <returns>An Autodiscover error.</returns>
     internal static AutodiscoverError Parse(EwsXmlReader reader)
     {
-        AutodiscoverError error = new AutodiscoverError();
-
-        error.time = reader.ReadAttributeValue(XmlAttributeNames.Time);
-        error.id = reader.ReadAttributeValue(XmlAttributeNames.Id);
+        AutodiscoverError error = new()
+        {
+            time = reader.ReadAttributeValue(XmlAttributeNames.Time),
+            id = reader.ReadAttributeValue(XmlAttributeNames.Id)
+        };
 
         do
         {

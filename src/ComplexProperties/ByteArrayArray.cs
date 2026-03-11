@@ -33,7 +33,7 @@ using System.Collections.Generic;
 public sealed class ByteArrayArray : ComplexProperty
 {
     private const string ItemXmlElementName = "Base64Binary";
-    private readonly List<byte[]> content = new List<byte[]>();
+    private readonly List<byte[]> content = new();
 
     #region Properties
 

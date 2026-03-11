@@ -93,7 +93,7 @@ internal sealed class GetInboxRulesRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        GetInboxRulesResponse response = new GetInboxRulesResponse();
+        GetInboxRulesResponse response = new();
         response.LoadFromXml(reader, XmlElementNames.GetInboxRulesResponse);
         return response;
     }

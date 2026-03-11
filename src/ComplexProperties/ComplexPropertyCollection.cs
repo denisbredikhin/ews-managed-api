@@ -38,10 +38,10 @@ using System.Reflection;
 public abstract class ComplexPropertyCollection<TComplexProperty> : ComplexProperty, IEnumerable<TComplexProperty>, ICustomUpdateSerializer
     where TComplexProperty : ComplexProperty
 {
-    private readonly List<TComplexProperty> items = new List<TComplexProperty>();
-    private readonly List<TComplexProperty> addedItems = new List<TComplexProperty>();
-    private readonly List<TComplexProperty> modifiedItems = new List<TComplexProperty>();
-    private readonly List<TComplexProperty> removedItems = new List<TComplexProperty>();
+    private readonly List<TComplexProperty> items = new();
+    private readonly List<TComplexProperty> addedItems = new();
+    private readonly List<TComplexProperty> modifiedItems = new();
+    private readonly List<TComplexProperty> removedItems = new();
 
     /// <summary>
     /// Creates the complex property.

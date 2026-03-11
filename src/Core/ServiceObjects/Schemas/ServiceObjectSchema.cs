@@ -41,7 +41,7 @@ using SchemaTypeList = LazyMember<System.Collections.Generic.List<System.Type>>;
 [EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
 {
-    private static readonly object lockObject = new object();
+    private static readonly object lockObject = new();
 
     /// <summary>
     /// List of all schema types.
@@ -50,10 +50,10 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     /// If you add a new ServiceObject subclass that has an associated schema, add the schema type
     /// to the list below.
     /// </remarks>
-    private static readonly SchemaTypeList allSchemaTypes = new SchemaTypeList(
+    private static readonly SchemaTypeList allSchemaTypes = new(
         delegate()
         {
-            List<Type> typeList = new List<Type>();
+            List<Type> typeList = new();
             typeList.Add(typeof(AppointmentSchema));
             typeList.Add(typeof(CalendarResponseObjectSchema));
             typeList.Add(typeof(CancelMeetingMessageSchema));
@@ -93,10 +93,10 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     /// <summary>
     /// Dictionary of all property definitions.
     /// </summary>
-    private static readonly PropertyDefinitionDictionary allSchemaProperties = new PropertyDefinitionDictionary(
+    private static readonly PropertyDefinitionDictionary allSchemaProperties = new(
         delegate()
         {
-            Dictionary<string, PropertyDefinitionBase> propDefDictionary = new Dictionary<string, PropertyDefinitionBase>();
+            Dictionary<string, PropertyDefinitionBase> propDefDictionary = new();
             foreach (Type type in ServiceObjectSchema.allSchemaTypes.Member)
             {
                 ServiceObjectSchema.AddSchemaPropertiesToDictionary(type, propDefDictionary);
@@ -231,11 +231,11 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
             ExchangeVersion.Exchange2007_SP1,
             delegate() { return new ExtendedPropertyCollection(); });
 
-    private readonly Dictionary<string, PropertyDefinition> properties = new Dictionary<string, PropertyDefinition>();
-    private readonly List<PropertyDefinition> visibleProperties = new List<PropertyDefinition>();
-    private readonly List<PropertyDefinition> firstClassProperties = new List<PropertyDefinition>();
-    private readonly List<PropertyDefinition> firstClassSummaryProperties = new List<PropertyDefinition>();
-    private readonly List<IndexedPropertyDefinition> indexedProperties = new List<IndexedPropertyDefinition>();
+    private readonly Dictionary<string, PropertyDefinition> properties = new();
+    private readonly List<PropertyDefinition> visibleProperties = new();
+    private readonly List<PropertyDefinition> firstClassProperties = new();
+    private readonly List<PropertyDefinition> firstClassSummaryProperties = new();
+    private readonly List<IndexedPropertyDefinition> indexedProperties = new();
 
     /// <summary>
     /// Registers a schema property.

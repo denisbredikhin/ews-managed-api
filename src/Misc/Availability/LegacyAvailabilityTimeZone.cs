@@ -67,20 +67,24 @@ internal sealed class LegacyAvailabilityTimeZone : ComplexProperty
             // If there are no adjustment rules (which is the case for UTC), we have to come up with two
             // dummy time changes which both have a delta of zero and happen at two hard coded dates. This
             // simulates a time zone in which there are no time changes.
-            this.daylightTime = new LegacyAvailabilityTimeZoneTime();
-            this.daylightTime.Delta = TimeSpan.Zero;
-            this.daylightTime.DayOrder = 1;
-            this.daylightTime.DayOfTheWeek = DayOfTheWeek.Sunday;
-            this.daylightTime.Month = 10;
-            this.daylightTime.TimeOfDay = TimeSpan.FromHours(2);
-            this.daylightTime.Year = 0;
+            this.daylightTime = new LegacyAvailabilityTimeZoneTime
+            {
+                Delta = TimeSpan.Zero,
+                DayOrder = 1,
+                DayOfTheWeek = DayOfTheWeek.Sunday,
+                Month = 10,
+                TimeOfDay = TimeSpan.FromHours(2),
+                Year = 0
+            };
 
-            this.standardTime = new LegacyAvailabilityTimeZoneTime();
-            this.standardTime.Delta = TimeSpan.Zero;
-            this.standardTime.DayOrder = 1;
-            this.standardTime.DayOfTheWeek = DayOfTheWeek.Sunday;
-            this.standardTime.Month = 3;
-            this.standardTime.TimeOfDay = TimeSpan.FromHours(2);
+            this.standardTime = new LegacyAvailabilityTimeZoneTime
+            {
+                Delta = TimeSpan.Zero,
+                DayOrder = 1,
+                DayOfTheWeek = DayOfTheWeek.Sunday,
+                Month = 3,
+                TimeOfDay = TimeSpan.FromHours(2)
+            };
             this.daylightTime.Year = 0;
         }
         else

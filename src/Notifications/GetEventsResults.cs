@@ -41,10 +41,10 @@ public sealed class GetEventsResults
     /// <remarks>
     /// If you add a new notification event type, you'll need to add a new entry to the dictionary here.
     /// </remarks>
-    private static readonly LazyMember<Dictionary<string, EventType>> xmlElementNameToEventTypeMap = new LazyMember<Dictionary<string, EventType>>(
+    private static readonly LazyMember<Dictionary<string, EventType>> xmlElementNameToEventTypeMap = new(
         delegate()
         {
-            Dictionary<string, EventType> result = new Dictionary<string, EventType>();
+            Dictionary<string, EventType> result = new();
 
             result.Add(XmlElementNames.CopiedEvent, EventType.Copied);
             result.Add(XmlElementNames.CreatedEvent, EventType.Created);
@@ -93,7 +93,7 @@ public sealed class GetEventsResults
     /// <summary>
     /// Collection of notification events.
     /// </summary>
-    private readonly Collection<NotificationEvent> events = new Collection<NotificationEvent>();
+    private readonly Collection<NotificationEvent> events = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetEventsResults"/> class.

@@ -35,7 +35,7 @@ using System.Collections.ObjectModel;
 public sealed class WorkingHours : ComplexProperty
 {
     private TimeZoneInfo timeZone;
-    private readonly Collection<DayOfTheWeek> daysOfTheWeek = new Collection<DayOfTheWeek>();
+    private readonly Collection<DayOfTheWeek> daysOfTheWeek = new();
     private TimeSpan startTime;
     private TimeSpan endTime;
 
@@ -57,14 +57,14 @@ public sealed class WorkingHours : ComplexProperty
         switch (reader.LocalName)
         {
             case XmlElementNames.TimeZone:
-                LegacyAvailabilityTimeZone legacyTimeZone = new LegacyAvailabilityTimeZone();
+                LegacyAvailabilityTimeZone legacyTimeZone = new();
                 legacyTimeZone.LoadFromXml(reader, reader.LocalName);
 
                 this.timeZone = legacyTimeZone.ToTimeZoneInfo();
                 
                 return true;
             case XmlElementNames.WorkingPeriodArray:
-                List<WorkingPeriod> workingPeriods = new List<WorkingPeriod>();
+                List<WorkingPeriod> workingPeriods = new();
 
                 do
                 {
@@ -72,7 +72,7 @@ public sealed class WorkingHours : ComplexProperty
 
                     if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.WorkingPeriod))
                     {
-                        WorkingPeriod workingPeriod = new WorkingPeriod();
+                        WorkingPeriod workingPeriod = new();
 
                         workingPeriod.LoadFromXml(reader, reader.LocalName);
 

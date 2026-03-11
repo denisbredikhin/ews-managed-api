@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 public sealed class GetUserRetentionPolicyTagsResponse : ServiceResponse
 {
-    readonly List<RetentionPolicyTag> retentionPolicyTags = new List<RetentionPolicyTag>();
+    readonly List<RetentionPolicyTag> retentionPolicyTags = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetUserRetentionPolicyTagsResponse"/> class.

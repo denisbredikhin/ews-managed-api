@@ -43,7 +43,7 @@ using System.Xml;
 public abstract class ExchangeServiceBase
 {
     #region Const members
-    private static readonly object lockObj = new object();
+    private static readonly object lockObj = new();
 
     private readonly ExchangeVersion requestedServerVersion = ExchangeVersion.Exchange2013_SP1;
 
@@ -88,7 +88,7 @@ public abstract class ExchangeServiceBase
     private string connectionGroupName;
     private string clientRequestId;
     private bool returnClientRequestId;
-    private CookieContainer cookieContainer = new CookieContainer();
+    private CookieContainer cookieContainer = new();
     private readonly TimeZoneInfo timeZone;
     private TimeZoneDefinition timeZoneDefinition;
     private ExchangeServerInfo serverInfo;
@@ -223,7 +223,7 @@ public abstract class ExchangeServiceBase
         var networkCredentials = ((WebCredentials)serviceCredentials).Credentials as NetworkCredential;
         if (networkCredentials != null)
         {
-            CredentialCache credentialCache = new CredentialCache();
+            CredentialCache credentialCache = new();
             credentialCache.Add(url, "NTLM", networkCredentials);
             credentialCache.Add(url, "Digest", networkCredentials);
             credentialCache.Add(url, "Basic", networkCredentials);

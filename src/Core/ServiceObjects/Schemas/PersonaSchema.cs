@@ -374,7 +374,7 @@ public class PersonaSchema : ItemSchema
             delegate() { return new AttributedStringCollection(); });
 
     // This must be declared after the property definitions
-    internal static new readonly PersonaSchema Instance = new PersonaSchema();
+    internal static new readonly PersonaSchema Instance = new();
 
     /// <summary>
     /// Registers properties.

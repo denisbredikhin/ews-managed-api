@@ -32,10 +32,10 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveNamesResponse>
 {
-    private static readonly LazyMember<Dictionary<ResolveNameSearchLocation, string>> searchScopeMap = new LazyMember<Dictionary<ResolveNameSearchLocation, string>>(
+    private static readonly LazyMember<Dictionary<ResolveNameSearchLocation, string>> searchScopeMap = new(
         delegate
         {
-            Dictionary<ResolveNameSearchLocation, string> map = new Dictionary<ResolveNameSearchLocation, string>();
+            Dictionary<ResolveNameSearchLocation, string> map = new();
 
             map.Add(ResolveNameSearchLocation.DirectoryOnly, "ActiveDirectory");
             map.Add(ResolveNameSearchLocation.DirectoryThenContacts, "ActiveDirectoryContacts");
@@ -49,7 +49,7 @@ internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveN
     private bool returnFullContactData;
     private ResolveNameSearchLocation searchLocation;
     private PropertySet contactDataPropertySet;
-    private readonly FolderIdWrapperList parentFolderIds = new FolderIdWrapperList();
+    private readonly FolderIdWrapperList parentFolderIds = new();
 
     /// <summary>
     /// Asserts the valid.

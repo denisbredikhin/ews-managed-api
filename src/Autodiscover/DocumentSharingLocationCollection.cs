@@ -49,7 +49,7 @@ public sealed class DocumentSharingLocationCollection
     /// <returns>DocumentSharingLocationCollection</returns>
     internal static DocumentSharingLocationCollection LoadFromXml(EwsXmlReader reader)
     {
-        DocumentSharingLocationCollection instance = new DocumentSharingLocationCollection();
+        DocumentSharingLocationCollection instance = new();
 
         do
         {

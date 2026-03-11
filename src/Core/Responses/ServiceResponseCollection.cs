@@ -34,7 +34,7 @@ using System.Collections.Generic;
 /// <typeparam name="TResponse">The type of response stored in the list.</typeparam>
 public sealed class ServiceResponseCollection<TResponse> : IEnumerable<TResponse> where TResponse : ServiceResponse
 {
-    private readonly List<TResponse> responses = new List<TResponse>();
+    private readonly List<TResponse> responses = new();
     private ServiceResult overallResult = ServiceResult.Success;
 
     /// <summary>

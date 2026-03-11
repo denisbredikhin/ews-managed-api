@@ -51,7 +51,7 @@ public sealed class PeopleQueryMode
     /// <summary>
     /// The field for the auto mode
     /// </summary>
-    private static readonly PeopleQueryMode autoInstance = new PeopleQueryMode();
+    private static readonly PeopleQueryMode autoInstance = new();
 
     /// <summary>
     /// The sources used for this mode.

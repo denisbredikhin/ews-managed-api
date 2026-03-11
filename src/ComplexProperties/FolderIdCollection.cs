@@ -103,7 +103,7 @@ public sealed class FolderIdCollection : ComplexPropertyCollection<FolderId>
             throw new ArgumentException(Strings.IdAlreadyInList, "folderName");
         }
 
-        FolderId folderId = new FolderId(folderName);
+        FolderId folderId = new(folderName);
 
         this.InternalAdd(folderId);
 

@@ -36,7 +36,7 @@ internal class SyncFolderItemsRequest : MultiResponseServiceRequest<SyncFolderIt
     private FolderId syncFolderId;
     private SyncFolderItemsScope syncScope;
     private string syncState;
-    private readonly ItemIdWrapperList ignoredItemIds = new ItemIdWrapperList();
+    private readonly ItemIdWrapperList ignoredItemIds = new();
     private int maxChangesReturned = 100;
     private int numberOfDays = 0;
 

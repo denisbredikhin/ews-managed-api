@@ -61,7 +61,7 @@ internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
     internal const string SuccessfulReqstatus = "0x0";
     
     // The default Windows Live URL.
-    internal static readonly Uri DefaultWindowsLiveUrl = new Uri("https://login.live.com/rst2.srf");
+    internal static readonly Uri DefaultWindowsLiveUrl = new("https://login.live.com/rst2.srf");
 
     // The reference we use for creating the XML signature.
     internal const string XmlSignatureReference = "_EWSTKREF";
@@ -234,7 +234,7 @@ internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
         
         // Create a security timestamp valid for 5 minutes to send with the request.
         DateTime now = DateTime.UtcNow;
-        SecurityTimestamp securityTimestamp = new SecurityTimestamp(now, now.AddMinutes(5), "Timestamp");
+        SecurityTimestamp securityTimestamp = new(now, now.AddMinutes(5), "Timestamp");
 
         // Format the request string to send to the server, filling in all the bits.
         string requestToSend = String.Format(
@@ -317,7 +317,7 @@ internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
         // MemoryStream.
         if (this.TraceEnabled)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (MemoryStream memoryStream = new())
             {
                 //using (Stream responseStream = e.Response.Content.ReadAsStreamAsync())
                 //{
@@ -551,7 +551,7 @@ internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
             // Always start fresh (nulls in all the data we're going to fill in).
             this.SecurityToken = null;
 
-            EwsXmlReader rstResponse = new EwsXmlReader(responseStream);
+            EwsXmlReader rstResponse = new(responseStream);
 
             rstResponse.Read(XmlNodeType.XmlDeclaration);
             rstResponse.ReadStartElement(

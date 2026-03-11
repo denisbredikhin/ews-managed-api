@@ -39,10 +39,10 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
     /// <summary>
     /// All user settings that are available from the Outlook provider.
     /// </summary>
-    private static readonly LazyMember<List<UserSettingName>> allOutlookProviderSettings = new LazyMember<List<UserSettingName>>(
+    private static readonly LazyMember<List<UserSettingName>> allOutlookProviderSettings = new(
         () =>
         {
-            List<UserSettingName> results = new List<UserSettingName>();
+            List<UserSettingName> results = new();
             results.AddRange(OutlookUser.AvailableUserSettings);
             results.AddRange(OutlookProtocol.AvailableUserSettings);
             results.Add(UserSettingName.AlternateMailboxes);
@@ -133,8 +133,10 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
     /// <returns>GetUserSettingsResponse</returns>
     internal override GetUserSettingsResponse ConvertSettings(string smtpAddress, List<UserSettingName> requestedSettings)
     {
-        GetUserSettingsResponse response = new GetUserSettingsResponse();
-        response.SmtpAddress = smtpAddress;
+        GetUserSettingsResponse response = new()
+        {
+            SmtpAddress = smtpAddress
+        };
 
         if (this.Error != null)
         {
@@ -192,7 +194,7 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
         // Add any unsupported settings to the UserSettingsError collection.
         foreach (UserSettingName invalidSetting in invalidSettingQuery)
         {
-            UserSettingError settingError = new UserSettingError()
+            UserSettingError settingError = new()
             {
                 ErrorCode = AutodiscoverErrorCode.InvalidSetting,
                 SettingName = invalidSetting.ToString(),

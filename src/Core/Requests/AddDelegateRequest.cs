@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal class AddDelegateRequest : DelegateManagementRequestBase<DelegateManagementResponse>
 {
-    private readonly List<DelegateUser> delegateUsers = new List<DelegateUser>();
+    private readonly List<DelegateUser> delegateUsers = new();
     private MeetingRequestsDeliveryScope? meetingRequestsDeliveryScope;
 
     /// <summary>

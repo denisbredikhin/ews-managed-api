@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal class GetDelegateRequest : DelegateManagementRequestBase<GetDelegateResponse>
 {
-    private readonly List<UserId> userIds = new List<UserId>();
+    private readonly List<UserId> userIds = new();
     private bool includePermissions;
 
     /// <summary>

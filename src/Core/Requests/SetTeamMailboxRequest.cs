@@ -110,7 +110,7 @@ internal sealed class SetTeamMailboxRequest : SimpleServiceRequestBase
     /// <returns>Response object.</returns>
     internal override object ParseResponse(EwsServiceXmlReader reader)
     {
-        ServiceResponse response = new ServiceResponse();
+        ServiceResponse response = new();
         response.LoadFromXml(reader, GetResponseXmlElementName());
         return response;
     }
