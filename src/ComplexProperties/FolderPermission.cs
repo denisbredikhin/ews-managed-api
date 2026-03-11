@@ -327,7 +327,7 @@ public sealed class FolderPermission : ComplexProperty
     /// <param name="permissionLevel">The level of the permission.</param>
     public FolderPermission(UserId userId, FolderPermissionLevel permissionLevel)
     {
-        EwsUtilities.ValidateParam(userId, "userId");
+        EwsUtilities.ValidateParam(userId, nameof(userId));
 
         this.userId = userId;
         this.PermissionLevel = permissionLevel;

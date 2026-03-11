@@ -170,7 +170,7 @@ public abstract partial class SearchFilter
         {
             if (searchFilter == null)
             {
-                throw new ArgumentNullException("searchFilter");
+                throw new ArgumentNullException(nameof(searchFilter));
             }
 
             searchFilter.OnChange += this.SearchFilterChanged;
@@ -186,7 +186,7 @@ public abstract partial class SearchFilter
         {
             if (searchFilters == null)
             {
-                throw new ArgumentNullException("searchFilters");
+                throw new ArgumentNullException(nameof(searchFilters));
             }
 
             foreach (SearchFilter searchFilter in searchFilters)
@@ -231,7 +231,7 @@ public abstract partial class SearchFilter
         {
             if (searchFilter == null)
             {
-                throw new ArgumentNullException("searchFilter");
+                throw new ArgumentNullException(nameof(searchFilter));
             }
 
             if (this.Contains(searchFilter))
@@ -250,7 +250,7 @@ public abstract partial class SearchFilter
         {
             if (index < 0 || index >= this.Count)
             {
-                throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
             }
 
             this[index].OnChange -= this.SearchFilterChanged;
@@ -277,7 +277,7 @@ public abstract partial class SearchFilter
             {
                 if (index < 0 || index >= this.Count)
                 {
-                    throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
                 }
 
                 return this.searchFilters[index];
@@ -287,7 +287,7 @@ public abstract partial class SearchFilter
             {
                 if (index < 0 || index >= this.Count)
                 {
-                    throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
                 }
 
                 this.searchFilters[index] = value;

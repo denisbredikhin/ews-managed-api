@@ -79,7 +79,7 @@ public sealed class OofReply
     /// <returns>A string containing the message of the specified OofReply.</returns>
     public static implicit operator string(OofReply oofReply)
     {
-        EwsUtilities.ValidateParam(oofReply, "oofReply");
+        EwsUtilities.ValidateParam(oofReply, nameof(oofReply));
 
         return oofReply.Message;
     }

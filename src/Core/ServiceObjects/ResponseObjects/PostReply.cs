@@ -140,7 +140,7 @@ public sealed class PostReply : ServiceObject
     /// <returns>A PostItem representing the posted reply.</returns>
     public async Task<PostItem> Save(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return (PostItem)await this.InternalCreate(destinationFolderId, null, token).ConfigureAwait(false);
     }

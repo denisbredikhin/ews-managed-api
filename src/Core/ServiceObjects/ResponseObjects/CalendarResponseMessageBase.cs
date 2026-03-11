@@ -56,7 +56,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// </returns>
     public new async Task<CalendarActionResults> Save(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return new CalendarActionResults(await this.InternalCreate(destinationFolderId, MessageDisposition.SaveOnly, token).ConfigureAwait(false));
     }
@@ -108,7 +108,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// </returns>
     public new async Task<CalendarActionResults> SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return new CalendarActionResults(await this.InternalCreate(destinationFolderId, MessageDisposition.SendAndSaveCopy, token).ConfigureAwait(false));
     }

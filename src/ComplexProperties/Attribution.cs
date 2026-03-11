@@ -97,8 +97,8 @@ public sealed class Attribution : ComplexProperty
     public Attribution(string id, ItemId sourceId, string displayName, bool isWritable, bool isQuickContact, bool isHidden, FolderId folderId)
         : this()
     {
-        EwsUtilities.ValidateParam(id, "id");
-        EwsUtilities.ValidateParam(displayName, "displayName");
+        EwsUtilities.ValidateParam(id, nameof(id));
+        EwsUtilities.ValidateParam(displayName, nameof(displayName));
 
         this.Id = id;
         this.SourceId = sourceId;

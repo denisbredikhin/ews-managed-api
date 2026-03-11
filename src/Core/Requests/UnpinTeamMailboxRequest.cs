@@ -49,7 +49,7 @@ internal sealed class UnpinTeamMailboxRequest : SimpleServiceRequestBase
     {
         if (emailAddress == null)
         {
-            throw new ArgumentNullException("emailAddress");
+            throw new ArgumentNullException(nameof(emailAddress));
         }
 
         this.emailAddress = emailAddress;

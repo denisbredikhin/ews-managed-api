@@ -54,7 +54,7 @@ internal sealed class Time
         {
             throw new ArgumentException(
                 Strings.MinutesMustBeBetween0And1439,
-                "minutes");
+                nameof(minutes));
         }
 
         this.Hours = minutes / 60;

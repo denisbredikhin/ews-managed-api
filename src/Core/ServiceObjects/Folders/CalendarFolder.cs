@@ -121,7 +121,7 @@ public class CalendarFolder : Folder
     /// <returns>An object representing the results of the search operation.</returns>
     public async Task<FindItemsResults<Appointment>> FindAppointments(CalendarView view, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(view, "view");
+        EwsUtilities.ValidateParam(view, nameof(view));
 
         ServiceResponseCollection<FindItemResponse<Appointment>> responses = await this.InternalFindItems<Appointment>(
             (SearchFilter)null,

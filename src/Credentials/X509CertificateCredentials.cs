@@ -64,7 +64,7 @@ public sealed class X509CertificateCredentials : WSSecurityBasedCredentials
     public X509CertificateCredentials(X509Certificate2 certificate)
         : base(null!, true)
     {
-        EwsUtilities.ValidateParam(certificate, "certificate");
+        EwsUtilities.ValidateParam(certificate, nameof(certificate));
 
         if (!certificate.HasPrivateKey)
         {

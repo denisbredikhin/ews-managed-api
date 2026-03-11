@@ -353,7 +353,7 @@ public class Item : ServiceObject
     /// <param name="parentFolderId">The Id of the folder in which to save this item.</param>
     public System.Threading.Tasks.Task Save(FolderId parentFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(parentFolderId, "parentFolderId");
+        EwsUtilities.ValidateParam(parentFolderId, nameof(parentFolderId));
 
         return this.InternalCreate(
             parentFolderId,
@@ -430,7 +430,7 @@ public class Item : ServiceObject
         this.ThrowIfThisIsNew();
         this.ThrowIfThisIsAttachment();
 
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.Service.CopyItem(this.Id, destinationFolderId, token);
     }
@@ -463,7 +463,7 @@ public class Item : ServiceObject
         this.ThrowIfThisIsNew();
         this.ThrowIfThisIsAttachment();
 
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.Service.MoveItem(this.Id, destinationFolderId, token);
     }

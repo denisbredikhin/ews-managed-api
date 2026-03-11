@@ -43,7 +43,7 @@ public abstract class SubscriptionBase
     /// <param name="service">The service.</param>
     internal SubscriptionBase(ExchangeService service)
     {
-        EwsUtilities.ValidateParam(service, "service");
+        EwsUtilities.ValidateParam(service, nameof(service));
 
         this.service = service;
     }
@@ -56,7 +56,7 @@ public abstract class SubscriptionBase
     internal SubscriptionBase(ExchangeService service, string id)
         : this(service)
     {
-        EwsUtilities.ValidateParam(id, "id");
+        EwsUtilities.ValidateParam(id, nameof(id));
 
         this.id = id;
     }

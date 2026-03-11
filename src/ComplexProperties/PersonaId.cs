@@ -59,7 +59,7 @@ public sealed class PersonaId : ServiceId
     {
         if (PersonaId == null)
         {
-            throw new ArgumentNullException("PersonaId");
+            throw new ArgumentNullException(nameof(PersonaId));
         }
 
         if (String.IsNullOrEmpty(PersonaId.UniqueId))

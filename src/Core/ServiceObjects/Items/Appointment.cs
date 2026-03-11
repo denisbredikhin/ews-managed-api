@@ -374,7 +374,7 @@ public class Appointment : Item, ICalendarActionProvider
     /// <param name="sendInvitationsMode">Specifies if and how invitations should be sent if this appointment is a meeting.</param>
     public System.Threading.Tasks.Task Save(FolderId destinationFolderId, SendInvitationsMode sendInvitationsMode, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.InternalCreate(
             destinationFolderId,

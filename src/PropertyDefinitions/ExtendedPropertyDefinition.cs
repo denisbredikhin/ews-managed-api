@@ -86,7 +86,7 @@ public sealed class ExtendedPropertyDefinition : PropertyDefinitionBase
     {
         if (tag < 0 || tag > UInt16.MaxValue)
         {
-            throw new ArgumentOutOfRangeException("tag", Strings.TagValueIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(tag), Strings.TagValueIsOutOfRange);
         }
         this.tag = tag;
     }
@@ -103,7 +103,7 @@ public sealed class ExtendedPropertyDefinition : PropertyDefinitionBase
         MapiPropertyType mapiType)
         : this(mapiType)
     {
-        EwsUtilities.ValidateParam(name, "name");
+        EwsUtilities.ValidateParam(name, nameof(name));
 
         this.propertySet = propertySet;
         this.name = name;
@@ -137,7 +137,7 @@ public sealed class ExtendedPropertyDefinition : PropertyDefinitionBase
         MapiPropertyType mapiType)
         : this(mapiType)
     {
-        EwsUtilities.ValidateParam(name, "name");
+        EwsUtilities.ValidateParam(name, nameof(name));
 
         this.propertySetId = propertySetId;
         this.name = name;

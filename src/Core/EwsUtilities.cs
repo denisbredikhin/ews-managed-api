@@ -876,7 +876,7 @@ internal static class EwsUtilities
         {
             throw new ArgumentException(
                 string.Format("Cannot convert {0} to System.DayOfWeek enum value", dayOfTheWeek),
-                "dayOfTheWeek");
+                nameof(dayOfTheWeek));
         }
         else
         {
@@ -1530,7 +1530,7 @@ internal static class EwsUtilities
             count++;
         }
 
-        throw new ArgumentOutOfRangeException("index", Strings.IEnumerableDoesNotContainThatManyObject);
+        throw new ArgumentOutOfRangeException(nameof(index), Strings.IEnumerableDoesNotContainThatManyObject);
     }
 
     #endregion

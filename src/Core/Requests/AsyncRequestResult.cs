@@ -46,9 +46,9 @@ internal class AsyncRequestResult : IAsyncResult
         IAsyncResult webAsyncResult,
         object asyncState)
     {
-        EwsUtilities.ValidateParam(serviceRequest, "serviceRequest");
-        EwsUtilities.ValidateParam(webRequest, "webRequest");
-        EwsUtilities.ValidateParam(webAsyncResult, "webAsyncResult");
+        EwsUtilities.ValidateParam(serviceRequest, nameof(serviceRequest));
+        EwsUtilities.ValidateParam(webRequest, nameof(webRequest));
+        EwsUtilities.ValidateParam(webAsyncResult, nameof(webAsyncResult));
 
         this.ServiceRequest = serviceRequest;
         this.WebAsyncResult = webAsyncResult;
@@ -135,33 +135,33 @@ internal class AsyncRequestResult : IAsyncResult
     public static T ExtractServiceRequest<T>(ExchangeService exchangeService, IAsyncResult asyncResult) where T : SimpleServiceRequestBase
     {
         // Validate null first
-        EwsUtilities.ValidateParam(asyncResult, "asyncResult");
+        EwsUtilities.ValidateParam(asyncResult, nameof(asyncResult));
 
         AsyncRequestResult asyncRequestResult = asyncResult as AsyncRequestResult;
         if (asyncRequestResult == null)
         {
             // Strings.InvalidAsyncResult is copied from the error message of HttpWebRequest.EndGetResponse()
             // Just use this simple string for all kinds of invalid IAsyncResult parameters
-            throw new ArgumentException(Strings.InvalidAsyncResult, "asyncResult");
+            throw new ArgumentException(Strings.InvalidAsyncResult, nameof(asyncResult));
         }
 
         // Validate the service request
         if (asyncRequestResult.ServiceRequest == null)
         {
-            throw new ArgumentException(Strings.InvalidAsyncResult, "asyncResult");
+            throw new ArgumentException(Strings.InvalidAsyncResult, nameof(asyncResult));
         }
 
         //Validate the service object
         if (!Object.ReferenceEquals(asyncRequestResult.ServiceRequest.Service, exchangeService))
         {
-            throw new ArgumentException(Strings.InvalidAsyncResult, "asyncResult");
+            throw new ArgumentException(Strings.InvalidAsyncResult, nameof(asyncResult));
         }
 
         // Validate the request type
         T serviceRequest = asyncRequestResult.ServiceRequest as T;
         if (serviceRequest == null)
         {
-            throw new ArgumentException(Strings.InvalidAsyncResult, "asyncResult");
+            throw new ArgumentException(Strings.InvalidAsyncResult, nameof(asyncResult));
         }
 
         return serviceRequest;
@@ -186,8 +186,8 @@ internal class WebAsyncCallStateAnchor
         AsyncCallback asyncCallback,
         object asyncState)
     {
-        EwsUtilities.ValidateParam(serviceRequest, "serviceRequest");
-        EwsUtilities.ValidateParam(webRequest, "webRequest");
+        EwsUtilities.ValidateParam(serviceRequest, nameof(serviceRequest));
+        EwsUtilities.ValidateParam(webRequest, nameof(webRequest));
 
         this.ServiceRequest = serviceRequest;
         this.WebRequest = webRequest;

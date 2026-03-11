@@ -48,7 +48,7 @@ public sealed class UniqueBody : ComplexProperty
     /// <returns>A string containing the text of the UniqueBody.</returns>
     public static implicit operator string(UniqueBody messageBody)
     {
-        EwsUtilities.ValidateParam(messageBody, "messageBody");
+        EwsUtilities.ValidateParam(messageBody, nameof(messageBody));
         return messageBody.Text;
     }
 

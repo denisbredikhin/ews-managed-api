@@ -158,7 +158,7 @@ public sealed class FolderPermissionCollection : ComplexPropertyCollection<Folde
     /// <param name="permissions">The permissions to add.</param>
     public void AddRange(IEnumerable<FolderPermission> permissions)
     {
-        EwsUtilities.ValidateParam(permissions, "permissions");
+        EwsUtilities.ValidateParam(permissions, nameof(permissions));
 
         foreach (FolderPermission permission in permissions)
         {

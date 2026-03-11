@@ -51,7 +51,7 @@ public sealed class WebCredentials : ExchangeCredentials
     /// <param name="credentials">Credentials to use.</param>
     public WebCredentials(ICredentials credentials)
     {
-        EwsUtilities.ValidateParam(credentials, "credentials");
+        EwsUtilities.ValidateParam(credentials, nameof(credentials));
 
         this.credentials = credentials;
     }

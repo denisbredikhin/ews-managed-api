@@ -197,7 +197,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     public void Add(PropertyDefinitionBase property)
     {
         this.ThrowIfReadonly();
-        EwsUtilities.ValidateParam(property, "property");
+        EwsUtilities.ValidateParam(property, nameof(property));
 
         if (!this.additionalProperties.Contains(property))
         {
@@ -212,7 +212,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     public void AddRange(IEnumerable<PropertyDefinitionBase> properties)
     {
         this.ThrowIfReadonly();
-        EwsUtilities.ValidateParamCollection(properties, "properties");
+        EwsUtilities.ValidateParamCollection(properties, nameof(properties));
         
         foreach (PropertyDefinitionBase property in properties)
         {

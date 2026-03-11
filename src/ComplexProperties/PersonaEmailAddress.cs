@@ -46,7 +46,7 @@ public sealed class PersonaEmailAddress : ComplexProperty, ISearchStringProvider
     public PersonaEmailAddress(string smtpAddress)
         : this()
     {
-        EwsUtilities.ValidateParam(smtpAddress, "smtpAddress");
+        EwsUtilities.ValidateParam(smtpAddress, nameof(smtpAddress));
         this.Address = smtpAddress;
     }
 
@@ -58,7 +58,7 @@ public sealed class PersonaEmailAddress : ComplexProperty, ISearchStringProvider
     public PersonaEmailAddress(string name, string smtpAddress)
         : this(smtpAddress)
     {
-        EwsUtilities.ValidateParam(name, "name");
+        EwsUtilities.ValidateParam(name, nameof(name));
         this.Name = name;
     }
 

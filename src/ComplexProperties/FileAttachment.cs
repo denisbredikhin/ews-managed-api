@@ -289,14 +289,14 @@ public sealed class FileAttachment : Attachment
     {
         get 
         {
-            EwsUtilities.ValidatePropertyVersion(this.Service, ExchangeVersion.Exchange2010, "IsContactPhoto");
+            EwsUtilities.ValidatePropertyVersion(this.Service, ExchangeVersion.Exchange2010, nameof(IsContactPhoto));
 
             return this.isContactPhoto;
         }
 
         set
         {
-            EwsUtilities.ValidatePropertyVersion(this.Service, ExchangeVersion.Exchange2010, "IsContactPhoto");
+            EwsUtilities.ValidatePropertyVersion(this.Service, ExchangeVersion.Exchange2010, nameof(IsContactPhoto));
 
             this.ThrowIfThisIsNotNew();
 

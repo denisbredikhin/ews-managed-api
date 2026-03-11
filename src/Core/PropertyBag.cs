@@ -212,7 +212,7 @@ internal class PropertyBag
                 Strings.PropertyDefinitionTypeMismatch,
                 EwsUtilities.GetPrintableTypeName(propertyDefinition.Type),
                 EwsUtilities.GetPrintableTypeName(typeof(T)));
-            throw new ArgumentException(errorMessage, "propertyDefinition");
+            throw new ArgumentException(errorMessage, nameof(propertyDefinition));
         }
 
         object value;

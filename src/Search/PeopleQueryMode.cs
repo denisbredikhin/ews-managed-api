@@ -72,7 +72,7 @@ public sealed class PeopleQueryMode
     /// <param name="sources">The sources to use. See <see cref="PeopleQuerySource"/> for sources</param>
     public PeopleQueryMode(IEnumerable<string> sources)
     {
-        EwsUtilities.ValidateParam(sources, "sources");
+        EwsUtilities.ValidateParam(sources, nameof(sources));
 
         this.Sources = new HashSet<string>(sources);
 

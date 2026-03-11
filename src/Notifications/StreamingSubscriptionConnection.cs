@@ -102,7 +102,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
         ExchangeService service,
         int lifetime)
     {
-        EwsUtilities.ValidateParam(service, "service");
+        EwsUtilities.ValidateParam(service, nameof(service));
 
         EwsUtilities.ValidateClassVersion(
             service,
@@ -111,7 +111,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
 
         if (lifetime < 1 || lifetime > 30)
         {
-            throw new ArgumentOutOfRangeException("lifetime");
+            throw new ArgumentOutOfRangeException(nameof(lifetime));
         }
 
         this.session = service;
@@ -131,7 +131,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
         int lifetime) :
         this(service, lifetime)
     {
-        EwsUtilities.ValidateParamCollection(subscriptions, "subscriptions");
+        EwsUtilities.ValidateParamCollection(subscriptions, nameof(subscriptions));
 
         foreach (StreamingSubscription subscription in subscriptions)
         {
@@ -165,7 +165,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     {
         this.ThrowIfDisposed();
 
-        EwsUtilities.ValidateParam(subscription, "subscription");
+        EwsUtilities.ValidateParam(subscription, nameof(subscription));
         
         this.ValidateConnectionState(false, Strings.CannotAddSubscriptionToLiveConnection);
 
@@ -188,7 +188,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     {
         this.ThrowIfDisposed();
 
-        EwsUtilities.ValidateParam(subscription, "subscription");
+        EwsUtilities.ValidateParam(subscription, nameof(subscription));
         
         this.ValidateConnectionState(false, Strings.CannotRemoveSubscriptionFromLiveConnection);
 

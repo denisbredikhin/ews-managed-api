@@ -36,7 +36,7 @@ public sealed class TokenCredentials : WSSecurityBasedCredentials
     public TokenCredentials(string securityToken) 
         : base(securityToken)
     {
-        EwsUtilities.ValidateParam(securityToken, "securityToken");
+        EwsUtilities.ValidateParam(securityToken, nameof(securityToken));
     }
     
     /// <summary>

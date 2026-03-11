@@ -263,7 +263,7 @@ public class Folder : ServiceObject
     {
         this.ThrowIfThisIsNotNew();
 
-        EwsUtilities.ValidateParam(parentFolderId, "parentFolderId");
+        EwsUtilities.ValidateParam(parentFolderId, nameof(parentFolderId));
 
         if (this.IsDirty)
         {
@@ -303,7 +303,7 @@ public class Folder : ServiceObject
     {
         this.ThrowIfThisIsNew();
 
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.Service.CopyFolder(this.Id, destinationFolderId, token);
     }
@@ -327,7 +327,7 @@ public class Folder : ServiceObject
     {
         this.ThrowIfThisIsNew();
 
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.Service.MoveFolder(this.Id, destinationFolderId, token);
     }
@@ -408,7 +408,7 @@ public class Folder : ServiceObject
     /// <returns>An object representing the results of the search operation.</returns>
     public async Task<FindItemsResults<Item>> FindItems(SearchFilter searchFilter, ItemView view, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+        EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.InternalFindItems<Item>(
             searchFilter,
@@ -427,7 +427,7 @@ public class Folder : ServiceObject
     /// <returns>An object representing the results of the search operation.</returns>
     public async Task<FindItemsResults<Item>> FindItems(string queryString, ItemView view, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParamAllowNull(queryString, "queryString");
+        EwsUtilities.ValidateParamAllowNull(queryString, nameof(queryString));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.InternalFindItems<Item>(queryString, view, null /* groupBy */, token).ConfigureAwait(false);
 
@@ -460,8 +460,8 @@ public class Folder : ServiceObject
     /// <returns>A collection of grouped items representing the contents of this folder.</returns>
     public async Task<GroupedFindItemsResults<Item>> FindItems(SearchFilter searchFilter, ItemView view, Grouping groupBy, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(groupBy, "groupBy");
-        EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+        EwsUtilities.ValidateParam(groupBy, nameof(groupBy));
+        EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.InternalFindItems<Item>(
             searchFilter,
@@ -481,7 +481,7 @@ public class Folder : ServiceObject
     /// <returns>A collection of grouped items representing the contents of this folder.</returns>
     public async Task<GroupedFindItemsResults<Item>> FindItems(string queryString, ItemView view, Grouping groupBy, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(groupBy, "groupBy");
+        EwsUtilities.ValidateParam(groupBy, nameof(groupBy));
 
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.InternalFindItems<Item>(queryString, view, groupBy, token).ConfigureAwait(false);
 
@@ -523,7 +523,7 @@ public class Folder : ServiceObject
     /// <returns>A collection of grouped items representing the contents of this folder.</returns>
     public Task<GroupedFindItemsResults<Item>> FindItems(ItemView view, Grouping groupBy)
     {
-        EwsUtilities.ValidateParam(groupBy, "groupBy");
+        EwsUtilities.ValidateParam(groupBy, nameof(groupBy));
 
         return this.FindItems(
             (SearchFilter)null,

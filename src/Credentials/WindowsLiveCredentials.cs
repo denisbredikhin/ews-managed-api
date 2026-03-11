@@ -75,11 +75,11 @@ internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
     {
         if (windowsLiveId == null)
         {
-            throw new ArgumentNullException("windowsLiveId");
+            throw new ArgumentNullException(nameof(windowsLiveId));
         }
         if (password == null)
         {
-            throw new ArgumentNullException("password");
+            throw new ArgumentNullException(nameof(password));
         }
         
         this.windowsLiveId = windowsLiveId;

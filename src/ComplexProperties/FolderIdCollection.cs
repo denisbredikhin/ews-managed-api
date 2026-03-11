@@ -81,11 +81,11 @@ public sealed class FolderIdCollection : ComplexPropertyCollection<FolderId>
     /// <param name="folderId">The folder Id to add.</param>
     public void Add(FolderId folderId)
     {
-        EwsUtilities.ValidateParam(folderId, "folderId");
+        EwsUtilities.ValidateParam(folderId, nameof(folderId));
 
         if (this.Contains(folderId))
         {
-            throw new ArgumentException(Strings.IdAlreadyInList, "folderId");
+            throw new ArgumentException(Strings.IdAlreadyInList, nameof(folderId));
         }
 
         this.InternalAdd(folderId);
@@ -100,7 +100,7 @@ public sealed class FolderIdCollection : ComplexPropertyCollection<FolderId>
     {
         if (this.Contains(folderName))
         {
-            throw new ArgumentException(Strings.IdAlreadyInList, "folderName");
+            throw new ArgumentException(Strings.IdAlreadyInList, nameof(folderName));
         }
 
         FolderId folderId = new(folderName);
@@ -126,7 +126,7 @@ public sealed class FolderIdCollection : ComplexPropertyCollection<FolderId>
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.InternalRemoveAt(index);
@@ -139,7 +139,7 @@ public sealed class FolderIdCollection : ComplexPropertyCollection<FolderId>
     /// <returns>True if the folder id was successfully removed from the collection, false otherwise.</returns>
     public bool Remove(FolderId folderId)
     {
-        EwsUtilities.ValidateParam(folderId, "folderId");
+        EwsUtilities.ValidateParam(folderId, nameof(folderId));
 
         return this.InternalRemove(folderId);
     }

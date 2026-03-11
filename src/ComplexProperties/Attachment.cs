@@ -150,14 +150,14 @@ public abstract class Attachment : ComplexProperty
     {
         get
         {
-            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, "Size");
+            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, nameof(Size));
 
             return this.size;
         }
 
         internal set
         {
-            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, "Size");
+            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, nameof(Size));
 
             this.SetFieldValue<int>(ref this.size, value);
         }
@@ -170,14 +170,14 @@ public abstract class Attachment : ComplexProperty
     {
         get
         {
-            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, "LastModifiedTime");
+            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, nameof(LastModifiedTime));
 
             return this.lastModifiedTime;
         }
 
         internal set
         {
-            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, "LastModifiedTime");
+            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, nameof(LastModifiedTime));
 
             this.SetFieldValue<DateTime>(ref this.lastModifiedTime, value);
         }
@@ -191,14 +191,14 @@ public abstract class Attachment : ComplexProperty
     {
         get
         {
-            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, "IsInline");
+            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, nameof(IsInline));
 
             return this.isInline;
         }
 
         set
         {
-            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, "IsInline");
+            EwsUtilities.ValidatePropertyVersion(this.service, ExchangeVersion.Exchange2010, nameof(IsInline));
 
             this.SetFieldValue<bool>(ref this.isInline, value);
         }

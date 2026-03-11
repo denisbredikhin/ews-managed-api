@@ -142,7 +142,7 @@ public class UserConfiguration
     /// <param name="requestedProperties">The properties requested for this user configuration.</param>
     internal UserConfiguration(ExchangeService service, UserConfigurationProperties requestedProperties)
     {
-        EwsUtilities.ValidateParam(service, "service");
+        EwsUtilities.ValidateParam(service, nameof(service));
 
         if (service.RequestedServerVersion < UserConfiguration.ObjectVersion)
         {
@@ -305,8 +305,8 @@ public class UserConfiguration
     /// <param name="parentFolderId">The Id of the folder in which to save the user configuration.</param>
     public async System.Threading.Tasks.Task Save(string name, FolderId parentFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(name, "name");
-        EwsUtilities.ValidateParam(parentFolderId, "parentFolderId");
+        EwsUtilities.ValidateParam(name, nameof(name));
+        EwsUtilities.ValidateParam(parentFolderId, nameof(parentFolderId));
 
         parentFolderId.Validate(this.service.RequestedServerVersion);
 

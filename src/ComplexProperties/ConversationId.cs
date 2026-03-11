@@ -59,7 +59,7 @@ public class ConversationId : ServiceId
     {
         if (conversationId == null)
         {
-            throw new ArgumentNullException("conversationId");
+            throw new ArgumentNullException(nameof(conversationId));
         }
 
         if (String.IsNullOrEmpty(conversationId.UniqueId))

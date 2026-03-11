@@ -55,7 +55,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     /// <returns>The member with the specified key.</returns>
     public GroupMember Find(string key)
     {
-        EwsUtilities.ValidateParam(key, "key");
+        EwsUtilities.ValidateParam(key, nameof(key));
 
         foreach (GroupMember item in this.Items)
         {
@@ -84,7 +84,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     /// <param name="member">The member to add.</param>
     public void Add(GroupMember member)
     {
-        EwsUtilities.ValidateParam(member, "member");
+        EwsUtilities.ValidateParam(member, nameof(member));
 
         EwsUtilities.Assert(
             member.Key == null,
@@ -105,7 +105,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     /// <param name="members">The members to add.</param>
     public void AddRange(IEnumerable<GroupMember> members)
     {
-        EwsUtilities.ValidateParam(members, "members");
+        EwsUtilities.ValidateParam(members, nameof(members));
 
         foreach (GroupMember member in members)
         {
@@ -236,7 +236,7 @@ public sealed class GroupMemberCollection : ComplexPropertyCollection<GroupMembe
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.InternalRemoveAt(index);

@@ -170,7 +170,7 @@ public sealed class DayOfTheWeekCollection : ComplexProperty, IEnumerable<DayOfT
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.items.RemoveAt(index);

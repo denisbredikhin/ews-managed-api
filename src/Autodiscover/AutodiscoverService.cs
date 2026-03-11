@@ -880,8 +880,8 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         List<string> smtpAddresses,
         List<UserSettingName> settings)
     {
-        EwsUtilities.ValidateParam(smtpAddresses, "smtpAddresses");
-        EwsUtilities.ValidateParam(settings, "settings");
+        EwsUtilities.ValidateParam(smtpAddresses, nameof(smtpAddresses));
+        EwsUtilities.ValidateParam(settings, nameof(settings));
 
         return this.GetSettings<GetUserSettingsResponseCollection, UserSettingName>(
             smtpAddresses,
@@ -1120,8 +1120,8 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         List<DomainSettingName> settings,
         ExchangeVersion? requestedVersion)
     {
-        EwsUtilities.ValidateParam(domains, "domains");
-        EwsUtilities.ValidateParam(settings, "settings");
+        EwsUtilities.ValidateParam(domains, nameof(domains));
+        EwsUtilities.ValidateParam(settings, nameof(settings));
 
         return this.GetSettings<GetDomainSettingsResponseCollection, DomainSettingName>(
             domains,
@@ -1664,7 +1664,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     internal AutodiscoverService(Uri url, string domain)
         : base()
     {
-        EwsUtilities.ValidateDomainNameAllowNull(domain, "domain");
+        EwsUtilities.ValidateDomainNameAllowNull(domain, nameof(domain));
 
         this.url = url;
         this.domain = domain;
@@ -1683,7 +1683,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         ExchangeVersion requestedServerVersion)
         : base(requestedServerVersion)
     {
-        EwsUtilities.ValidateDomainNameAllowNull(domain, "domain");
+        EwsUtilities.ValidateDomainNameAllowNull(domain, nameof(domain));
 
         this.url = url;
         this.domain = domain;
@@ -1815,7 +1815,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     public async Task<Tuple<bool, ExchangeCredentials, Uri>> TryGetPartnerAccess(
         string targetTenantDomain)
     {
-        EwsUtilities.ValidateNonBlankStringParam(targetTenantDomain, "targetTenantDomain");
+        EwsUtilities.ValidateNonBlankStringParam(targetTenantDomain, nameof(targetTenantDomain));
 
         // the user should set the url to its own tenant's autodiscover url.
         // 

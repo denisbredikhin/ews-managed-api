@@ -235,7 +235,7 @@ internal class MapiTypeConverter
     /// <returns>Array of objects.</returns>
     internal static Array ConvertToValue(MapiPropertyType mapiPropType, IEnumerable<string> strings)
     {
-        EwsUtilities.ValidateParam(strings, "strings");
+        EwsUtilities.ValidateParam(strings, nameof(strings));
 
         MapiTypeConverterMapEntry typeConverter = MapiTypeConverterMap[mapiPropType];
         Array array = Array.CreateInstance(typeConverter.Type, strings.Count<string>());
@@ -282,7 +282,7 @@ internal class MapiTypeConverter
     /// <returns>Compatible value.</returns>
     internal static object ChangeType(MapiPropertyType mapiType, object value)
     {
-        EwsUtilities.ValidateParam(value, "value");
+        EwsUtilities.ValidateParam(value, nameof(value));
 
         return MapiTypeConverterMap[mapiType].ChangeType(value);
     }

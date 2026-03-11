@@ -243,7 +243,7 @@ public class EmailMessage : Item
     /// <param name="destinationFolderId">The Id of the folder in which to save the copy.</param>
     public System.Threading.Tasks.Task SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.InternalSend(destinationFolderId, MessageDisposition.SendAndSaveCopy, token);
     }

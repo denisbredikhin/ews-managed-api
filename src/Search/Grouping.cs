@@ -64,8 +64,8 @@ public sealed class Grouping : ISelfValidate
         AggregateType aggregateType)
         : this()
     {
-        EwsUtilities.ValidateParam(groupOn, "groupOn");
-        EwsUtilities.ValidateParam(aggregateOn, "aggregateOn");
+        EwsUtilities.ValidateParam(groupOn, nameof(groupOn));
+        EwsUtilities.ValidateParam(aggregateOn, nameof(aggregateOn));
 
         this.groupOn = groupOn;
         this.sortDirection = sortDirection;

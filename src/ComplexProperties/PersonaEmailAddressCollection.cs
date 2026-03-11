@@ -143,7 +143,7 @@ public sealed class PersonaEmailAddressCollection : ComplexPropertyCollection<Pe
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.InternalRemoveAt(index);
@@ -156,7 +156,7 @@ public sealed class PersonaEmailAddressCollection : ComplexPropertyCollection<Pe
     /// <returns>Whether removed from the collection</returns>
     public bool Remove(PersonaEmailAddress personaEmailAddress)
     {
-        EwsUtilities.ValidateParam(personaEmailAddress, "personaEmailAddress");
+        EwsUtilities.ValidateParam(personaEmailAddress, nameof(personaEmailAddress));
 
         return this.InternalRemove(personaEmailAddress);
     }

@@ -52,7 +52,7 @@ public sealed class AttributedStringCollection : ComplexPropertyCollection<Attri
     internal AttributedStringCollection(string collectionItemXmlElementName)
         : base()
     {
-        EwsUtilities.ValidateParam(collectionItemXmlElementName, "collectionItemXmlElementName"); 
+        EwsUtilities.ValidateParam(collectionItemXmlElementName, nameof(collectionItemXmlElementName)); 
         this.collectionItemXmlElementName = collectionItemXmlElementName;
     }
 
@@ -124,7 +124,7 @@ public sealed class AttributedStringCollection : ComplexPropertyCollection<Attri
     /// <returns>Whether succeeded</returns>
     public bool Remove(AttributedString attributedString)
     {
-        EwsUtilities.ValidateParam(attributedString, "attributedString");
+        EwsUtilities.ValidateParam(attributedString, nameof(attributedString));
 
         return this.InternalRemove(attributedString);
     }
@@ -136,7 +136,7 @@ public sealed class AttributedStringCollection : ComplexPropertyCollection<Attri
     /// <returns>An AttributedString object</returns>
     internal override AttributedString CreateComplexProperty(string xmlElementName)
     {
-        EwsUtilities.ValidateParam(xmlElementName, "xmlElementName");
+        EwsUtilities.ValidateParam(xmlElementName, nameof(xmlElementName));
         if (xmlElementName == this.collectionItemXmlElementName)
         {
             return new AttributedString();

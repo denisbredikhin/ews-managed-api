@@ -100,7 +100,7 @@ public abstract partial class Recurrence
                 EwsUtilities.ValidatePropertyVersion(
                     (ExchangeService) writer.Service,
                     ExchangeVersion.Exchange2010_SP1,
-                    "FirstDayOfWeek");
+                    nameof(FirstDayOfWeek));
                 
                 writer.WriteElementValue(
                     XmlNamespace.Types,

@@ -78,7 +78,7 @@ public class MessageBody : ComplexProperty
     /// <returns>A string containing the text of the MessageBody.</returns>
     public static implicit operator string(MessageBody messageBody)
     {
-        EwsUtilities.ValidateParam(messageBody, "messageBody");
+        EwsUtilities.ValidateParam(messageBody, nameof(messageBody));
 
         return messageBody.Text;
     }

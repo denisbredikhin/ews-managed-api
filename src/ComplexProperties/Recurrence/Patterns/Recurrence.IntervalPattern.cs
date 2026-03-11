@@ -58,7 +58,7 @@ public abstract partial class Recurrence
         {
             if (interval < 1)
             {
-                throw new ArgumentOutOfRangeException("interval", Strings.IntervalMustBeGreaterOrEqualToOne);
+                throw new ArgumentOutOfRangeException(nameof(interval), Strings.IntervalMustBeGreaterOrEqualToOne);
             }
 
             this.Interval = interval;
@@ -116,7 +116,7 @@ public abstract partial class Recurrence
             {
                 if (value < 1)
                 {
-                    throw new ArgumentOutOfRangeException("value", Strings.IntervalMustBeGreaterOrEqualToOne);
+                    throw new ArgumentOutOfRangeException(nameof(value), Strings.IntervalMustBeGreaterOrEqualToOne);
                 }
 
                 this.SetFieldValue<int>(ref this.interval, value);

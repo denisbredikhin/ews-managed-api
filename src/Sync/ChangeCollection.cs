@@ -79,7 +79,7 @@ public sealed class ChangeCollection<TChange> : IEnumerable<TChange>
         {
             if (index < 0 || index >= this.Count)
             {
-                throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
             }
 
             return this.changes[index];

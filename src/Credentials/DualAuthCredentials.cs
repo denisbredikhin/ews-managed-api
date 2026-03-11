@@ -48,7 +48,7 @@ public sealed class DualAuthCredentials : ExchangeCredentials
     /// <param name="password">The password.</param>
     public DualAuthCredentials(X509CertificateCollection clientCertificates, string userName, string password)
     {
-        EwsUtilities.ValidateParam(clientCertificates, "clientCertificates");
+        EwsUtilities.ValidateParam(clientCertificates, nameof(clientCertificates));
 
         this.clientCertificates = clientCertificates;
         this.credentials = new NetworkCredential(userName, password);

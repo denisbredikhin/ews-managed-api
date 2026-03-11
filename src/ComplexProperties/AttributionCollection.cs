@@ -52,7 +52,7 @@ public sealed class AttributionCollection : ComplexPropertyCollection<Attributio
     internal AttributionCollection(string collectionItemXmlElementName)
         : base()
     {
-        EwsUtilities.ValidateParam(collectionItemXmlElementName, "collectionItemXmlElementName");
+        EwsUtilities.ValidateParam(collectionItemXmlElementName, nameof(collectionItemXmlElementName));
         this.collectionItemXmlElementName = collectionItemXmlElementName;
     }
 
@@ -95,7 +95,7 @@ public sealed class AttributionCollection : ComplexPropertyCollection<Attributio
     /// <returns>The attribution object created</returns>
     internal override Attribution CreateComplexProperty(string xmlElementName)
     {
-        EwsUtilities.ValidateParam(xmlElementName, "xmlElementName");
+        EwsUtilities.ValidateParam(xmlElementName, nameof(xmlElementName));
         if (xmlElementName == this.collectionItemXmlElementName)
         {
             return new Attribution();

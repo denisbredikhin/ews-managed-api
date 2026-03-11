@@ -52,8 +52,8 @@ public sealed class UnifiedMessaging
     /// <returns>An object providing status for the phone call.</returns>
     public async Task<PhoneCall> PlayOnPhone(ItemId itemId, string dialString, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(itemId, "itemId");
-        EwsUtilities.ValidateParam(dialString, "dialString");
+        EwsUtilities.ValidateParam(itemId, nameof(itemId));
+        EwsUtilities.ValidateParam(dialString, nameof(dialString));
 
         PlayOnPhoneRequest request = new(service)
         {

@@ -63,7 +63,7 @@ public sealed class AttributedString : ComplexProperty
     public AttributedString(string value)
         : this()
     {
-        EwsUtilities.ValidateParam(value, "value");
+        EwsUtilities.ValidateParam(value, nameof(value));
         this.Value = value;
     }
 
@@ -77,12 +77,12 @@ public sealed class AttributedString : ComplexProperty
     {
         if (attributions == null)
         {
-            throw new ArgumentNullException("attributions");
+            throw new ArgumentNullException(nameof(attributions));
         }
 
         foreach (string s in attributions)
         {
-            EwsUtilities.ValidateParam(s, "attributions");
+            EwsUtilities.ValidateParam(s, nameof(attributions));
         }
 
         this.Attributions = attributions;

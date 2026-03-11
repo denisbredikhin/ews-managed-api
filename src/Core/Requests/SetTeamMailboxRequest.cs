@@ -61,12 +61,12 @@ internal sealed class SetTeamMailboxRequest : SimpleServiceRequestBase
     {
         if (emailAddress == null)
         {
-            throw new ArgumentNullException("emailAddress");
+            throw new ArgumentNullException(nameof(emailAddress));
         }
 
         if (sharePointSiteUrl == null)
         {
-            throw new ArgumentNullException("sharePointSiteUrl");
+            throw new ArgumentNullException(nameof(sharePointSiteUrl));
         }
 
         this.emailAddress = emailAddress;

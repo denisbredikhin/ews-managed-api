@@ -43,7 +43,7 @@ public sealed class ClientCertificateCredentials : ExchangeCredentials
     /// <param name="clientCertificates">The client certificates.</param>
     public ClientCertificateCredentials(X509CertificateCollection clientCertificates)
     {
-        EwsUtilities.ValidateParam(clientCertificates, "clientCertificates");
+        EwsUtilities.ValidateParam(clientCertificates, nameof(clientCertificates));
 
         this.clientCertificates = clientCertificates;
     }

@@ -96,7 +96,7 @@ public sealed class PersonInsightCollection : ComplexPropertyCollection<PersonIn
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.InternalRemoveAt(index);
@@ -109,7 +109,7 @@ public sealed class PersonInsightCollection : ComplexPropertyCollection<PersonIn
     /// <returns>Whether removed from the collection</returns>
     public bool Remove(PersonInsight insight)
     {
-        EwsUtilities.ValidateParam(insight, "insight");
+        EwsUtilities.ValidateParam(insight, nameof(insight));
 
         return this.InternalRemove(insight);
     }

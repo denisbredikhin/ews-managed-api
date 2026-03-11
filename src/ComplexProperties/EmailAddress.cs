@@ -148,7 +148,7 @@ public class EmailAddress : ComplexProperty, ISearchStringProvider
     internal EmailAddress(EmailAddress mailbox)
         : this()
     {
-        EwsUtilities.ValidateParam(mailbox, "mailbox");
+        EwsUtilities.ValidateParam(mailbox, nameof(mailbox));
 
         this.Name = mailbox.Name;
         this.Address = mailbox.Address;

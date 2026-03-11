@@ -162,7 +162,7 @@ public sealed class StringList : ComplexProperty, IEnumerable<string>
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.items.RemoveAt(index);
@@ -207,7 +207,7 @@ public sealed class StringList : ComplexProperty, IEnumerable<string>
         {
             if (index < 0 || index >= this.Count)
             {
-                throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
             }
 
             return this.items[index];
@@ -217,7 +217,7 @@ public sealed class StringList : ComplexProperty, IEnumerable<string>
         {
             if (index < 0 || index >= this.Count)
             {
-                throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
             }
 
             if (this.items[index] != value)

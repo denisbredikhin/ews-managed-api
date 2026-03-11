@@ -96,7 +96,7 @@ public sealed class AttendeeCollection : ComplexPropertyCollection<Attendee>
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.InternalRemoveAt(index);
@@ -109,7 +109,7 @@ public sealed class AttendeeCollection : ComplexPropertyCollection<Attendee>
     /// <returns>True if the attendee was successfully removed from the collection, false otherwise.</returns>
     public bool Remove(Attendee attendee)
     {
-        EwsUtilities.ValidateParam(attendee, "attendee");
+        EwsUtilities.ValidateParam(attendee, nameof(attendee));
 
         return this.InternalRemove(attendee);
     }

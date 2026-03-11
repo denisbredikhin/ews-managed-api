@@ -47,7 +47,7 @@ public abstract class ServiceId : ComplexProperty
     internal ServiceId(string uniqueId)
         : this()
     {
-        EwsUtilities.ValidateParam(uniqueId, "uniqueId");
+        EwsUtilities.ValidateParam(uniqueId, nameof(uniqueId));
 
         this.uniqueId = uniqueId;
     }

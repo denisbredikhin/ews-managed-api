@@ -48,8 +48,8 @@ internal sealed class PartnerTokenCredentials : WSSecurityBasedCredentials
     internal PartnerTokenCredentials(string securityToken, string securityTokenReference)
         : base(securityToken, true /* addTimestamp */)
     {
-        EwsUtilities.ValidateParam(securityToken, "securityToken");
-        EwsUtilities.ValidateParam(securityTokenReference, "securityTokenReference");
+        EwsUtilities.ValidateParam(securityToken, nameof(securityToken));
+        EwsUtilities.ValidateParam(securityTokenReference, nameof(securityTokenReference));
 
         SafeXmlDocument doc = new()
         {

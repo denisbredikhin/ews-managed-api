@@ -65,7 +65,7 @@ public sealed class OAuthCredentials : ExchangeCredentials
     /// <param name="verbatim"></param>
     internal OAuthCredentials(string token, bool verbatim)
     {
-        EwsUtilities.ValidateParam(token, "token");
+        EwsUtilities.ValidateParam(token, nameof(token));
 
         string rawToken;
         if (verbatim)
@@ -106,7 +106,7 @@ public sealed class OAuthCredentials : ExchangeCredentials
     /// <param name="credentials">Credentials to use.</param>
     public OAuthCredentials(ICredentials credentials)
     {
-        EwsUtilities.ValidateParam(credentials, "credentials");
+        EwsUtilities.ValidateParam(credentials, nameof(credentials));
 
         this.credentials = credentials;
     }

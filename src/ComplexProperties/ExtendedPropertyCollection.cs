@@ -117,7 +117,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
     /// <returns>True if the property matching the extended property definition was successfully removed from the collection, false otherwise.</returns>
     internal bool RemoveExtendedProperty(ExtendedPropertyDefinition propertyDefinition)
     {
-        EwsUtilities.ValidateParam(propertyDefinition, "propertyDefinition");
+        EwsUtilities.ValidateParam(propertyDefinition, nameof(propertyDefinition));
 
         ExtendedProperty extendedProperty;
         if (this.TryGetProperty(propertyDefinition, out extendedProperty))
@@ -161,7 +161,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
                     Strings.PropertyDefinitionTypeMismatch,
                     EwsUtilities.GetPrintableTypeName(propertyDefinition.Type),
                     EwsUtilities.GetPrintableTypeName(typeof(T)));
-                throw new ArgumentException(errorMessage, "propertyDefinition");
+                throw new ArgumentException(errorMessage, nameof(propertyDefinition));
             }
 
             propertyValue = (T)extendedProperty.Value;

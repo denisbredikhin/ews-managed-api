@@ -192,7 +192,7 @@ public abstract class ServiceObject
     /// <param name="service">EWS service to which this object belongs.</param>
     internal ServiceObject(ExchangeService service)
     {
-        EwsUtilities.ValidateParam(service, "service");
+        EwsUtilities.ValidateParam(service, nameof(service));
         EwsUtilities.ValidateServiceObjectVersion(this, service.RequestedServerVersion);
 
         this.service = service;

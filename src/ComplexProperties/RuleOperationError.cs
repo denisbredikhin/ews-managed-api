@@ -83,7 +83,7 @@ public sealed class RuleOperationError : ComplexProperty, IEnumerable<RuleError>
         {
             if (index < 0 || index >= this.Count)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             return this.ruleErrors[index];

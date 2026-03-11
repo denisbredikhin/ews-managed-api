@@ -173,7 +173,7 @@ public class GroupMember : ComplexProperty
     internal GroupMember(GroupMember member)
         : this()
     {
-        EwsUtilities.ValidateParam(member, "member");
+        EwsUtilities.ValidateParam(member, nameof(member));
         this.AddressInformation = new EmailAddress(member.AddressInformation);
     }
 
@@ -185,7 +185,7 @@ public class GroupMember : ComplexProperty
     public GroupMember(Contact contact, EmailAddressKey emailAddressKey)
         : this()
     {
-        EwsUtilities.ValidateParam(contact, "contact");
+        EwsUtilities.ValidateParam(contact, nameof(contact));
 
         EmailAddress emailAddress = contact.EmailAddresses[emailAddressKey];
 

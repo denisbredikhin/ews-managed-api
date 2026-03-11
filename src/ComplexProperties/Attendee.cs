@@ -50,7 +50,7 @@ public sealed class Attendee : EmailAddress
     public Attendee(string smtpAddress)
         : base(smtpAddress)
     {
-        EwsUtilities.ValidateParam(smtpAddress, "smtpAddress");
+        EwsUtilities.ValidateParam(smtpAddress, nameof(smtpAddress));
     }
 
     /// <summary>

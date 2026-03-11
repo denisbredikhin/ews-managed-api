@@ -221,7 +221,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     {
         if (index < 0 || index >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("index", Strings.IndexIsOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), Strings.IndexIsOutOfRange);
         }
 
         this.InternalRemoveAt(index);
@@ -234,7 +234,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// <returns>True if the attachment was successfully removed from the collection, false otherwise.</returns>
     public bool Remove(Attachment attachment)
     {
-        EwsUtilities.ValidateParam(attachment, "attachment");
+        EwsUtilities.ValidateParam(attachment, nameof(attachment));
 
         return this.InternalRemove(attachment);
     }

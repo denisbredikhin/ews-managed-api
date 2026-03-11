@@ -115,7 +115,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// <returns>A TMessage that represents the response.</returns>
     public async Task<TMessage> Save(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return (await this.InternalCreate(destinationFolderId, MessageDisposition.SaveOnly, token).ConfigureAwait(false))[0] as TMessage;
     }
@@ -153,7 +153,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// <param name="destinationFolderId">The Id of the folder in which to save the copy of the message.</param>
     public System.Threading.Tasks.Task SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
     {
-        EwsUtilities.ValidateParam(destinationFolderId, "destinationFolderId");
+        EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
         return this.InternalCreate(destinationFolderId, MessageDisposition.SendAndSaveCopy, token);
     }

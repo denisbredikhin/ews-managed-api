@@ -50,7 +50,7 @@ public sealed class ExtendedProperty : ComplexProperty
     internal ExtendedProperty(ExtendedPropertyDefinition propertyDefinition)
         : this()
     {
-        EwsUtilities.ValidateParam(propertyDefinition, "propertyDefinition");
+        EwsUtilities.ValidateParam(propertyDefinition, nameof(propertyDefinition));
 
         this.propertyDefinition = propertyDefinition;
     }
@@ -142,7 +142,7 @@ public sealed class ExtendedProperty : ComplexProperty
 
         set
         {
-            EwsUtilities.ValidateParam(value, "value");
+            EwsUtilities.ValidateParam(value, nameof(value));
             this.SetFieldValue<object>(
                 ref this.value,
                 MapiTypeConverter.ChangeType(this.PropertyDefinition.MapiType, value));
