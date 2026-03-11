@@ -125,15 +125,9 @@ internal sealed class MeetingTimeZone : ComplexProperty
                 EwsUtilities.TimeSpanToXSDuration(this.BaseOffset.Value));
         }
 
-        if (this.Standard != null)
-        {
-            this.Standard.WriteToXml(writer, XmlElementNames.Standard);
-        }
+        this.Standard?.WriteToXml(writer, XmlElementNames.Standard);
 
-        if (this.Daylight != null)
-        {
-            this.Daylight.WriteToXml(writer, XmlElementNames.Daylight);
-        }
+        this.Daylight?.WriteToXml(writer, XmlElementNames.Daylight);
     }
 
     /// <summary>

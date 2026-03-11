@@ -461,10 +461,7 @@ public sealed class RuleActions : ComplexProperty
             emailCollection.WriteToXml(writer, XmlElementNames.SendSMSAlertToRecipients);
         }
 
-        if (this.ServerReplyWithMessage != null)
-        {
-            this.ServerReplyWithMessage.WriteToXml(writer, XmlElementNames.ServerReplyWithMessage);
-        }
+        this.ServerReplyWithMessage?.WriteToXml(writer, XmlElementNames.ServerReplyWithMessage);
 
         if (this.StopProcessingRules != false)
         {

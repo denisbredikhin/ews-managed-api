@@ -58,10 +58,7 @@ internal abstract class RecurrenceRange : ComplexProperty
     /// </summary>
     internal override void Changed()
     {
-        if (this.Recurrence != null)
-        {
-            this.Recurrence.Changed();
-        }
+        this.Recurrence?.Changed();
     }
 
     /// <summary>

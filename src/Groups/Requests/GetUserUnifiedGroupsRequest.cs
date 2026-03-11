@@ -90,10 +90,7 @@ internal sealed class GetUserUnifiedGroupsRequest : SimpleServiceRequestBase
     {
         writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.RequestedGroupsSets);
 
-        if (this.RequestedUnifiedGroupsSets != null)
-        { 
-            this.RequestedUnifiedGroupsSets.ForEach((unifiedGroupsSet) => unifiedGroupsSet.WriteToXml(writer, XmlElementNames.RequestedUnifiedGroupsSetItem));
-        }
+        this.RequestedUnifiedGroupsSets?.ForEach((unifiedGroupsSet) => unifiedGroupsSet.WriteToXml(writer, XmlElementNames.RequestedUnifiedGroupsSetItem));
 
         writer.WriteEndElement();
 

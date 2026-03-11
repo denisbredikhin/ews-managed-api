@@ -120,10 +120,7 @@ public sealed class SearchFolderParameters : ComplexProperty
         }
 
         // Validate the search filter
-        if (this.SearchFilter != null)
-        {
-            this.SearchFilter.InternalValidate();
-        }
+        this.SearchFilter?.InternalValidate();
     }
 
     /// <summary>
@@ -156,17 +153,11 @@ public sealed class SearchFolderParameters : ComplexProperty
 
         set
         {
-            if (this.searchFilter != null)
-            {
-                this.searchFilter.OnChange -= this.PropertyChanged;
-            }
+            this.searchFilter?.OnChange -= this.PropertyChanged;
 
             this.SetFieldValue<SearchFilter>(ref this.searchFilter, value);
 
-            if (this.searchFilter != null)
-            {
-                this.searchFilter.OnChange += this.PropertyChanged;
-            }
+            this.searchFilter?.OnChange += this.PropertyChanged;
         }
     }
 }

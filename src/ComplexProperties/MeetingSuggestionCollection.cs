@@ -48,10 +48,7 @@ public sealed class MeetingSuggestionCollection : ComplexPropertyCollection<Meet
     /// <param name="collection">The collection of objects to include.</param>
     internal MeetingSuggestionCollection(IEnumerable<MeetingSuggestion> collection)
     {
-        if (collection != null)
-        {
-            collection.ForEach(this.InternalAdd);
-        }
+        collection?.ForEach(this.InternalAdd);
     }
 
     /// <summary>

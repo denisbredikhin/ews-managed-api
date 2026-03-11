@@ -48,10 +48,7 @@ public sealed class UrlEntityCollection : ComplexPropertyCollection<UrlEntity>
     /// <param name="collection">The collection of objects to include.</param>
     internal UrlEntityCollection(IEnumerable<UrlEntity> collection)
     {
-        if (collection != null)
-        {
-            collection.ForEach(this.InternalAdd);
-        }
+        collection?.ForEach(this.InternalAdd);
     }
 
     /// <summary>

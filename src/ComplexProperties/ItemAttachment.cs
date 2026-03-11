@@ -72,15 +72,9 @@ public class ItemAttachment : Attachment
         {
             this.ThrowIfThisIsNotNew();
 
-            if (this.item != null)
-            {
-                this.item.OnChange -= this.ItemChanged;
-            }
+            this.item?.OnChange -= this.ItemChanged;
             this.item = value;
-            if (this.item != null)
-            {
-                this.item.OnChange += this.ItemChanged;
-            }
+            this.item?.OnChange += this.ItemChanged;
         }
     }
 
@@ -90,10 +84,7 @@ public class ItemAttachment : Attachment
     /// <param name="serviceObject">The service object that triggered the OnChange event.</param>
     private void ItemChanged(ServiceObject serviceObject)
     {
-        if (this.Owner != null)
-        {
-            this.Owner.PropertyBag.Changed();
-        }
+        this.Owner?.PropertyBag.Changed();
     }
 
     /// <summary>
@@ -118,10 +109,7 @@ public class ItemAttachment : Attachment
         {
             this.item = EwsUtilities.CreateItemFromXmlElementName(this, reader.LocalName);
 
-            if (this.item != null)
-            {
-                this.item.LoadFromXml(reader, true /* clearPropertyBag */);
-            }
+            this.item?.LoadFromXml(reader, true /* clearPropertyBag */);
         }
 
         return result;

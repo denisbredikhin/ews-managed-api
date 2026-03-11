@@ -242,10 +242,7 @@ internal sealed class FindConversationRequest : SimpleServiceRequestBase
 
         if (this.Service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
         {
-            if (this.View.PropertySet != null)
-            {
-                this.View.PropertySet.WriteToXml(writer, ServiceObjectType.Conversation);
-            }
+            this.View.PropertySet?.WriteToXml(writer, ServiceObjectType.Conversation);
         }
     }
 

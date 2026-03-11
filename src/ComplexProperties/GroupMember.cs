@@ -217,17 +217,11 @@ public class GroupMember : ComplexProperty
 
         internal set
         {
-            if (this.addressInformation != null)
-            {
-                this.addressInformation.OnChange -= this.AddressInformationChanged;
-            }
+            this.addressInformation?.OnChange -= this.AddressInformationChanged;
 
             this.addressInformation = value;
 
-            if (this.addressInformation != null)
-            {
-                this.addressInformation.OnChange += this.AddressInformationChanged;
-            }
+            this.addressInformation?.OnChange += this.AddressInformationChanged;
         }
     }
 

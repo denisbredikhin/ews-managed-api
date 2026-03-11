@@ -70,10 +70,7 @@ public sealed class GetAttachmentResponse : ServiceResponse
                 }
             }
 
-            if (this.attachment != null)
-            {
-                this.attachment.LoadFromXml(reader, reader.LocalName);
-            }
+            this.attachment?.LoadFromXml(reader, reader.LocalName);
 
             reader.ReadEndElement(XmlNamespace.Messages, XmlElementNames.Attachments);
         }

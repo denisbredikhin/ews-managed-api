@@ -43,10 +43,7 @@ internal sealed class SendItemRequest : MultiResponseServiceRequest<ServiceRespo
         base.Validate();
         EwsUtilities.ValidateParam(this.Items, "Items");
 
-        if (this.SavedCopyDestinationFolderId != null)
-        {
-            this.SavedCopyDestinationFolderId.Validate(this.Service.RequestedServerVersion);
-        }
+        this.SavedCopyDestinationFolderId?.Validate(this.Service.RequestedServerVersion);
     }
 
     /// <summary>

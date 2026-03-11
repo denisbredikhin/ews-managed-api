@@ -168,10 +168,7 @@ internal sealed class RecurrencePropertyDefinition : PropertyDefinition
     {
         Recurrence value = (Recurrence)propertyBag[this];
 
-        if (value != null)
-        {
-            value.WriteToXml(writer, XmlElementNames.Recurrence);
-        }
+        value?.WriteToXml(writer, XmlElementNames.Recurrence);
     }
 
     /// <summary>

@@ -55,10 +55,7 @@ internal abstract class CreateRequest<TServiceObject, TResponse> : MultiResponse
     internal override void Validate()
     {
         base.Validate();
-        if (this.ParentFolderId != null)
-        {
-            this.ParentFolderId.Validate(this.Service.RequestedServerVersion);
-        }
+        this.ParentFolderId?.Validate(this.Service.RequestedServerVersion);
     }
 
     /// <summary>

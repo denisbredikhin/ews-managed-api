@@ -58,10 +58,7 @@ public sealed class EmailAddressEntry : DictionaryEntryProperty<EmailAddressKey>
     {
         this.emailAddress = emailAddress;
 
-        if (this.emailAddress != null)
-        {
-            this.emailAddress.OnChange += this.EmailAddressChanged;
-        }
+        this.emailAddress?.OnChange += this.EmailAddressChanged;
     }
 
     /// <summary>
@@ -137,10 +134,7 @@ public sealed class EmailAddressEntry : DictionaryEntryProperty<EmailAddressKey>
         {
             this.SetFieldValue<EmailAddress>(ref this.emailAddress, value);
 
-            if (this.emailAddress != null)
-            {
-                this.emailAddress.OnChange += this.EmailAddressChanged;
-            }
+            this.emailAddress?.OnChange += this.EmailAddressChanged;
         }
     }
 

@@ -186,10 +186,7 @@ internal class HangingTraceStream : Stream
                 logMessage);
         }
 
-        if (this.responseCopy != null)
-        {
-            this.responseCopy.Write(buffer, offset, retVal);
-        }
+        this.responseCopy?.Write(buffer, offset, retVal);
 
         return retVal;
     }

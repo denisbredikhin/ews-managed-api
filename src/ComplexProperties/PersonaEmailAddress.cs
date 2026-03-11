@@ -226,10 +226,7 @@ public sealed class PersonaEmailAddress : ComplexProperty, ISearchStringProvider
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.OriginalDisplayName, this.OriginalDisplayName);
         }
 
-        if (this.Id != null)
-        {
-            this.Id.WriteToXml(writer, XmlElementNames.ItemId);
-        }
+        this.Id?.WriteToXml(writer, XmlElementNames.ItemId);
     }
 
     #region ISearchStringProvider methods

@@ -406,17 +406,11 @@ public sealed class FolderPermission : ComplexProperty
 
         set
         {
-            if (this.userId != null)
-            {
-                this.userId.OnChange -= this.PropertyChanged;
-            }
+            this.userId?.OnChange -= this.PropertyChanged;
 
             this.SetFieldValue<UserId>(ref this.userId, value);
 
-            if (this.userId != null)
-            {
-                this.userId.OnChange += this.PropertyChanged;
-            }
+            this.userId?.OnChange += this.PropertyChanged;
         }
     }
 
@@ -683,10 +677,7 @@ public sealed class FolderPermission : ComplexProperty
     /// <param name="isCalendarFolder">If true, this permission is for a calendar folder.</param>
     internal void WriteElementsToXml(EwsServiceXmlWriter writer, bool isCalendarFolder)
     {
-        if (this.UserId != null)
-        {
-            this.UserId.WriteToXml(writer, XmlElementNames.UserId);
-        }
+        this.UserId?.WriteToXml(writer, XmlElementNames.UserId);
 
         if (this.PermissionLevel == FolderPermissionLevel.Custom)
         {

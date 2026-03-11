@@ -94,13 +94,10 @@ internal class ExpandGroupRequest : MultiResponseServiceRequest<ExpandGroupRespo
     /// <param name="writer">The writer.</param>
     internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
     {
-        if (this.EmailAddress != null)
-        {
-            this.EmailAddress.WriteToXml(
+        this.EmailAddress?.WriteToXml(
                                     writer, 
                                     XmlNamespace.Messages, 
                                     XmlElementNames.Mailbox);
-        }
     }
 
     /// <summary>

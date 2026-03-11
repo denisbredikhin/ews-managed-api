@@ -86,10 +86,7 @@ internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItem
             }
         }
 
-        if (this.SavedItemsDestinationFolder != null)
-        {
-            this.SavedItemsDestinationFolder.Validate(this.Service.RequestedServerVersion);
-        }
+        this.SavedItemsDestinationFolder?.Validate(this.Service.RequestedServerVersion);
 
         // Validate each item.
         foreach (Item item in this.Items)

@@ -121,10 +121,7 @@ internal class ComplexPropertyDefinition<TComplexProperty> : ComplexPropertyDefi
         TComplexProperty complexProperty = this.propertyCreationDelegate();
         IOwnedProperty ownedProperty = complexProperty as IOwnedProperty;
 
-        if (ownedProperty != null)
-        {
-            ownedProperty.Owner = owner;
-        }
+        ownedProperty?.Owner = owner;
         
         return complexProperty;
     }

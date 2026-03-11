@@ -295,10 +295,7 @@ internal abstract class ServiceRequestBase
 
         writer.WriteStartElement(XmlNamespace.Soap, XmlElementNames.SOAPHeaderElementName);
 
-        if (this.Service.Credentials != null)
-        {
-            this.Service.Credentials.EmitExtraSoapHeaderNamespaceAliases(writer.InternalWriter);
-        }
+        this.Service.Credentials?.EmitExtraSoapHeaderNamespaceAliases(writer.InternalWriter);
 
         // Emit the RequestServerVersion header
         if (!this.Service.SuppressXmlVersionHeader)
@@ -354,15 +351,12 @@ internal abstract class ServiceRequestBase
         {
             this.Service.PrivilegedUserId.WriteToXml(writer, this.Service.RequestedServerVersion);
         }
-        else if (this.Service.ManagementRoles != null)
+        else
         {
-            this.Service.ManagementRoles.WriteToXml(writer);
+            this.Service.ManagementRoles?.WriteToXml(writer);
         }
 
-        if (this.Service.Credentials != null)
-        {
-            this.Service.Credentials.SerializeExtraSoapHeaders(writer.InternalWriter, this.GetXmlElementName());
-        }
+        this.Service.Credentials?.SerializeExtraSoapHeaders(writer.InternalWriter, this.GetXmlElementName());
 
         this.Service.DoOnSerializeCustomSoapHeaders(writer.InternalWriter);
 
@@ -768,16 +762,14 @@ internal abstract class ServiceRequestBase
             {
                 await this.ProcessEwsHttpClientException(ex);
             }
-            if (request != null)
-                request.Dispose();
+            request?.Dispose();
 
             // Wrap exception if the above code block didn't throw
             throw new ServiceRequestException(string.Format(Strings.ServiceRequestFailed, ex.Message), ex);
         }
         catch (IOException e)
         {
-            if (request != null)
-                request.Dispose();
+            request?.Dispose();
             // Wrap exception.
             throw new ServiceRequestException(string.Format(Strings.ServiceRequestFailed, e.Message), e);
         }

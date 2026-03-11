@@ -292,10 +292,7 @@ public class EmailAddress : ComplexProperty, ISearchStringProvider
         writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.RoutingType, this.RoutingType);
         writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.MailboxType, this.MailboxType);
 
-        if (this.Id != null)
-        {
-            this.Id.WriteToXml(writer, XmlElementNames.ItemId);
-        }
+        this.Id?.WriteToXml(writer, XmlElementNames.ItemId);
     }
 
     #region ISearchStringProvider methods

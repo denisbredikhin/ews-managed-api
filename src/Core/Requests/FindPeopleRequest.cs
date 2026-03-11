@@ -174,10 +174,7 @@ internal sealed class FindPeopleRequest : SimpleServiceRequestBase
 
         if (this.Service.RequestedServerVersion >= this.GetMinimumRequiredServerVersion())
         {
-            if (this.View.PropertySet != null)
-            {
-                this.View.PropertySet.WriteToXml(writer, ServiceObjectType.Persona);
-            }
+            this.View.PropertySet?.WriteToXml(writer, ServiceObjectType.Persona);
         }
     }
 

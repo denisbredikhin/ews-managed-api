@@ -71,9 +71,6 @@ public sealed class SetClientExtensionAction : ComplexProperty
     /// <param name="writer">The writer.</param>
     internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
     {
-        if (null != this.clientExtension)
-        {
-            this.clientExtension.WriteToXml(writer, XmlNamespace.Types, XmlElementNames.ClientExtension);
-        }
+        this.clientExtension?.WriteToXml(writer, XmlNamespace.Types, XmlElementNames.ClientExtension);
     }
 }

@@ -198,10 +198,7 @@ internal sealed class TimeChange : ComplexProperty
                 EwsUtilities.TimeSpanToXSDuration(this.Offset.Value));
         }
 
-        if (this.Recurrence != null)
-        {
-            this.Recurrence.WriteToXml(writer, XmlElementNames.RelativeYearlyRecurrence);
-        }
+        this.Recurrence?.WriteToXml(writer, XmlElementNames.RelativeYearlyRecurrence);
 
         if (this.AbsoluteDate.HasValue)
         {

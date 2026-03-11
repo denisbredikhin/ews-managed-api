@@ -373,10 +373,7 @@ internal class PropertyBag
                 {
                     complexProperty = currentValue as ComplexProperty;
 
-                    if (complexProperty != null)
-                    {
-                        complexProperty.OnChange -= this.PropertyChanged;
-                    }
+                    complexProperty?.OnChange -= this.PropertyChanged;
                 }
 
                 // If the property was to be deleted, the deletion becomes an update.
@@ -477,10 +474,7 @@ internal class PropertyBag
 
             ComplexProperty complexProperty = propertyValue as ComplexProperty;
 
-            if (complexProperty != null)
-            {
-                complexProperty.OnChange -= this.PropertyChanged;
-            }
+            complexProperty?.OnChange -= this.PropertyChanged;
         }
     }
 
@@ -508,10 +502,7 @@ internal class PropertyBag
         {
             ComplexProperty complexProperty = keyValuePair.Value as ComplexProperty;
 
-            if (complexProperty != null)
-            {
-                complexProperty.ClearChangeLog();
-            }
+            complexProperty?.ClearChangeLog();
         }
 
         this.isDirty = false;
@@ -668,10 +659,7 @@ internal class PropertyBag
 
             IOwnedProperty ownedProperty = complexProperty as IOwnedProperty;
 
-            if (ownedProperty != null)
-            {
-                ownedProperty.Owner = this.Owner;
-            }
+            ownedProperty?.Owner = this.Owner;
         }
     }
 
@@ -773,10 +761,7 @@ internal class PropertyBag
         if (this.TryGetProperty(propertyDefinition, out object propertyValue))
         {
             ISelfValidate validatingValue = propertyValue as ISelfValidate;
-            if (validatingValue != null)
-            {
-                validatingValue.Validate();
-            }
+            validatingValue?.Validate();
         }
     }
 }

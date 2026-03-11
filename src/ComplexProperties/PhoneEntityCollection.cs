@@ -48,10 +48,7 @@ public sealed class PhoneEntityCollection : ComplexPropertyCollection<PhoneEntit
     /// <param name="collection">The collection of objects to include.</param>
     internal PhoneEntityCollection(IEnumerable<PhoneEntity> collection)
     {
-        if (collection != null)
-        {
-            collection.ForEach(this.InternalAdd);
-        }
+        collection?.ForEach(this.InternalAdd);
     }
 
     /// <summary>

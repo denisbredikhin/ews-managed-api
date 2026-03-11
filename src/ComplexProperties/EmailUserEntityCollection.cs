@@ -48,10 +48,7 @@ public sealed class EmailUserEntityCollection : ComplexPropertyCollection<EmailU
     /// <param name="collection">The collection of objects to include.</param>
     internal EmailUserEntityCollection(IEnumerable<EmailUserEntity> collection)
     {
-        if (collection != null)
-        {
-            collection.ForEach(this.InternalAdd);
-        }
+        collection?.ForEach(this.InternalAdd);
     }
 
     /// <summary>

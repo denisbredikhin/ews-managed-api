@@ -112,10 +112,7 @@ public sealed class SeekToConditionItemView : ViewBase
     /// <param name="groupBy">The group by.</param>
     internal override void InternalWriteSearchSettingsToXml(EwsServiceXmlWriter writer, Grouping groupBy)
     {
-        if (groupBy != null)
-        {
-            groupBy.WriteToXml(writer);
-        }
+        groupBy?.WriteToXml(writer);
     }
 
     /// <summary>

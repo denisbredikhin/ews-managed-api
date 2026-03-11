@@ -131,10 +131,7 @@ public sealed class EnhancedLocation : ComplexProperty
         {
             if (!this.personaPostalAddress.Equals(value))
             {
-                if (this.personaPostalAddress != null)
-                {
-                    this.personaPostalAddress.OnChange -= new ComplexPropertyChangedDelegate(PersonaPostalAddress_OnChange);
-                }
+                this.personaPostalAddress?.OnChange -= new ComplexPropertyChangedDelegate(PersonaPostalAddress_OnChange);
 
                 this.SetFieldValue<PersonaPostalAddress>(ref this.personaPostalAddress, value);
 

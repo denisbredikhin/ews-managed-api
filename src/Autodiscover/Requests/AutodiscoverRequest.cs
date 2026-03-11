@@ -392,10 +392,7 @@ internal abstract class AutodiscoverRequest
 
         writer.WriteStartElement(XmlNamespace.Soap, XmlElementNames.SOAPHeaderElementName);
 
-        if (this.Service.Credentials != null)
-        {
-            this.Service.Credentials.EmitExtraSoapHeaderNamespaceAliases(writer.InternalWriter);
-        }
+        this.Service.Credentials?.EmitExtraSoapHeaderNamespaceAliases(writer.InternalWriter);
 
         writer.WriteElementValue(
             XmlNamespace.Autodiscover,
@@ -414,10 +411,7 @@ internal abstract class AutodiscoverRequest
 
         this.WriteExtraCustomSoapHeadersToXml(writer);
 
-        if (this.Service.Credentials != null)
-        {
-            this.Service.Credentials.SerializeWSSecurityHeaders(writer.InternalWriter);
-        }
+        this.Service.Credentials?.SerializeWSSecurityHeaders(writer.InternalWriter);
 
         this.Service.DoOnSerializeCustomSoapHeaders(writer.InternalWriter);
 

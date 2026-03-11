@@ -272,11 +272,8 @@ internal abstract class HangingServiceRequestBase : ServiceRequestBase
             }
             finally
             {
-                if (responseCopy != null)
-                {
-                    responseCopy.Dispose();
-                    responseCopy = null;
-                }
+                responseCopy?.Dispose();
+                responseCopy = null;
             }
         }
         catch (ServiceLocalException exception)

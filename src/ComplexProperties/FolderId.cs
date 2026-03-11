@@ -93,10 +93,7 @@ public sealed class FolderId : ServiceId
         {
             writer.WriteAttributeValue(XmlAttributeNames.Id, this.FolderName.Value.ToString().ToLowerInvariant());
 
-            if (this.Mailbox != null)
-            {
-                this.Mailbox.WriteToXml(writer, XmlElementNames.Mailbox);
-            }
+            this.Mailbox?.WriteToXml(writer, XmlElementNames.Mailbox);
         }
         else
         {

@@ -48,10 +48,7 @@ public sealed class ContactEntityCollection : ComplexPropertyCollection<ContactE
     /// <param name="collection">The collection of objects to include.</param>
     internal ContactEntityCollection(IEnumerable<ContactEntity> collection)
     {
-        if (collection != null)
-        {
-            collection.ForEach(this.InternalAdd);
-        }
+        collection?.ForEach(this.InternalAdd);
     }
 
     /// <summary>

@@ -359,10 +359,7 @@ internal class EwsServiceXmlWriter : IDisposable
     /// <param name="xmlNode">The XML node.</param>
     public void WriteNode(XmlNode xmlNode)
     {
-        if (xmlNode != null)
-        {
-            xmlNode.WriteTo(this.xmlWriter);
-        }
+        xmlNode?.WriteTo(this.xmlWriter);
     }
 
     /// <summary>

@@ -137,10 +137,7 @@ internal abstract class SimpleServiceRequestBase : ServiceRequestBase
         }
         finally
         {
-            if (response != null)
-            {
-                response.Close();
-            }
+            response?.Close();
         }
 
         return serviceResponse;

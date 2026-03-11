@@ -97,10 +97,7 @@ internal class SyncFolderHierarchyRequest : MultiResponseServiceRequest<SyncFold
     {
         base.Validate();
         EwsUtilities.ValidateParam(this.PropertySet, "PropertySet");
-        if (this.SyncFolderId != null)
-        {
-            this.SyncFolderId.Validate(this.Service.RequestedServerVersion);
-        }
+        this.SyncFolderId?.Validate(this.Service.RequestedServerVersion);
 
         this.PropertySet.ValidateForRequest(this, false /*summaryPropertiesOnly*/);
     }

@@ -50,10 +50,7 @@ public abstract partial class SearchFilter : ComplexProperty
 
         SearchFilter searchFilter = GetSearchFilterInstance(localName);
 
-        if (searchFilter != null)
-        {
-            searchFilter.LoadFromXml(reader, reader.LocalName);
-        }
+        searchFilter?.LoadFromXml(reader, reader.LocalName);
 
         return searchFilter;
     }

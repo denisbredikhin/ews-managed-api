@@ -46,10 +46,7 @@ public class InsightValueCollection : ComplexPropertyCollection<InsightValue>
     /// <param name="collection">The collection of objects to include.</param>
     internal InsightValueCollection(IEnumerable<InsightValue> collection)
     {
-        if (collection != null)
-        {
-            collection.ForEach(this.InternalAdd);
-        }
+        collection?.ForEach(this.InternalAdd);
     }
 
     /// <summary>

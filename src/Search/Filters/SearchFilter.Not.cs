@@ -117,17 +117,11 @@ public abstract partial class SearchFilter
 
             set
             {
-                if (this.searchFilter != null)
-                {
-                    this.searchFilter.OnChange -= this.SearchFilterChanged;
-                }
+                this.searchFilter?.OnChange -= this.SearchFilterChanged;
 
                 this.SetFieldValue<SearchFilter>(ref this.searchFilter, value);
 
-                if (this.searchFilter != null)
-                {
-                    this.searchFilter.OnChange += this.SearchFilterChanged;
-                }
+                this.searchFilter?.OnChange += this.SearchFilterChanged;
             }
         }
     }

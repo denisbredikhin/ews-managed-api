@@ -129,10 +129,7 @@ public class SearchFolder : Folder
     {
         base.Validate();
 
-        if (this.SearchParameters != null)
-        {
-            this.SearchParameters.Validate();
-        }
+        this.SearchParameters?.Validate();
     }
 
     /// <summary>

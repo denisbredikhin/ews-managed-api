@@ -49,10 +49,7 @@ public sealed class FolderIdCollection : ComplexPropertyCollection<FolderId>
     /// <param name="folderIds">The folder ids to include.</param>
     internal FolderIdCollection(IEnumerable<FolderId> folderIds)
     {
-        if (folderIds != null)
-        {
-            folderIds.ForEach((folderId) => this.InternalAdd(folderId));
-        }
+        folderIds?.ForEach((folderId) => this.InternalAdd(folderId));
     }
 
     /// <summary>

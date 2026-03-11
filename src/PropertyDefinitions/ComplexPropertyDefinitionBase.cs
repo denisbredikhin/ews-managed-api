@@ -160,9 +160,6 @@ internal abstract class ComplexPropertyDefinitionBase : PropertyDefinition
     {
         ComplexProperty complexProperty = (ComplexProperty)propertyBag[this];
 
-        if (complexProperty != null)
-        {
-            complexProperty.WriteToXml(writer, this.XmlElementName);
-        }
+        complexProperty?.WriteToXml(writer, this.XmlElementName);
     }
 }

@@ -78,10 +78,7 @@ internal class MeetingTimeZonePropertyDefinition : PropertyDefinition
     {
         MeetingTimeZone value = (MeetingTimeZone)propertyBag[this];
 
-        if (value != null)
-        {
-            value.WriteToXml(writer, this.XmlElementName);
-        }
+        value?.WriteToXml(writer, this.XmlElementName);
     }
 
     /// <summary>
