@@ -309,7 +309,7 @@ public abstract class ServiceObject
     /// Loads the specified set of properties. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="propertySet">The properties to load.</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> Load(PropertySet propertySet, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> Load(PropertySet propertySet, CancellationToken token = default)
     {
         return this.InternalLoad(propertySet, token);
     }
@@ -317,7 +317,7 @@ public abstract class ServiceObject
     /// <summary>
     /// Loads the first class properties. Calling this method results in a call to EWS.
     /// </summary>
-    public Task<ServiceResponseCollection<ServiceResponse>> Load(CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> Load(CancellationToken token = default)
     {
         return this.InternalLoad(PropertySet.FirstClassProperties, token);
     }
@@ -381,7 +381,7 @@ public abstract class ServiceObject
         }
         else
         {
-            propertyValue = default(T);
+            propertyValue = default;
             return false;
         }
     }

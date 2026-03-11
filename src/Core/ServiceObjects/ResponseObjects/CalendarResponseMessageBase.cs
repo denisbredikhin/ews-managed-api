@@ -54,7 +54,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> Save(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> Save(FolderId destinationFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -69,7 +69,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> Save(WellKnownFolderName destinationFolderName, CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> Save(WellKnownFolderName destinationFolderName, CancellationToken token = default)
     {
         return new CalendarActionResults(await this.InternalCreate(new FolderId(destinationFolderName), MessageDisposition.SaveOnly, token).ConfigureAwait(false));
     }
@@ -81,7 +81,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> Save(CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> Save(CancellationToken token = default)
     {
         return new CalendarActionResults(await this.InternalCreate(null, MessageDisposition.SaveOnly, token).ConfigureAwait(false));
     }
@@ -93,7 +93,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> Send(CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> Send(CancellationToken token = default)
     {
         return new CalendarActionResults(await this.InternalCreate(null, MessageDisposition.SendOnly, token).ConfigureAwait(false));
     }
@@ -106,7 +106,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -121,7 +121,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> SendAndSaveCopy(WellKnownFolderName destinationFolderName, CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> SendAndSaveCopy(WellKnownFolderName destinationFolderName, CancellationToken token = default)
     {
         return new CalendarActionResults(await this.InternalCreate(new FolderId(destinationFolderName), MessageDisposition.SendAndSaveCopy, token).ConfigureAwait(false));
     }
@@ -133,7 +133,7 @@ public abstract class CalendarResponseMessageBase<TMessage> : ResponseObject<TMe
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public new async Task<CalendarActionResults> SendAndSaveCopy(CancellationToken token = default(CancellationToken))
+    public new async Task<CalendarActionResults> SendAndSaveCopy(CancellationToken token = default)
     {
         return new CalendarActionResults(await this.InternalCreate(null, MessageDisposition.SendAndSaveCopy, token).ConfigureAwait(false));
     }

@@ -263,7 +263,7 @@ public class UserConfiguration
         string name,
         FolderId parentFolderId,
         UserConfigurationProperties properties,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         UserConfiguration result = await service.GetUserConfiguration(
             name,
@@ -303,7 +303,7 @@ public class UserConfiguration
     /// </summary>
     /// <param name="name">The name of the user configuration.</param>
     /// <param name="parentFolderId">The Id of the folder in which to save the user configuration.</param>
-    public async System.Threading.Tasks.Task Save(string name, FolderId parentFolderId, CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Save(string name, FolderId parentFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(name, nameof(name));
         EwsUtilities.ValidateParam(parentFolderId, nameof(parentFolderId));
@@ -339,7 +339,7 @@ public class UserConfiguration
     /// Updates the user configuration by applying local changes to the Exchange server.
     /// Calling this method results in a call to EWS.
     /// </summary>
-    public async System.Threading.Tasks.Task Update(CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Update(CancellationToken token = default)
     {
         if (this.isNew)
         {
@@ -359,7 +359,7 @@ public class UserConfiguration
     /// <summary>
     /// Deletes the user configuration. Calling this method results in a call to EWS.
     /// </summary>
-    public async System.Threading.Tasks.Task Delete(CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Delete(CancellationToken token = default)
     {
         if (this.isNew)
         {
@@ -375,7 +375,7 @@ public class UserConfiguration
     /// Loads the specified properties on the user configuration. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="properties">The properties to load.</param>
-    public System.Threading.Tasks.Task Load(UserConfigurationProperties properties, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Load(UserConfigurationProperties properties, CancellationToken token = default)
     {
         this.InitializeProperties(properties);
 

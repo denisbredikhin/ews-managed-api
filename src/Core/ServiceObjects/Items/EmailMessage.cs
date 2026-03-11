@@ -66,7 +66,7 @@ public class EmailMessage : Item
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<EmailMessage>(id, propertySet, token);
     }
@@ -230,7 +230,7 @@ public class EmailMessage : Item
     /// <summary>
     /// Sends this e-mail message. Calling this method results in at least one call to EWS.
     /// </summary>
-    public System.Threading.Tasks.Task Send(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Send(CancellationToken token = default)
     {
         return this.InternalSend(null, MessageDisposition.SendOnly, token);
     }
@@ -241,7 +241,7 @@ public class EmailMessage : Item
     /// results in a call to EWS.
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to save the copy.</param>
-    public System.Threading.Tasks.Task SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -254,7 +254,7 @@ public class EmailMessage : Item
     /// results in a call to EWS.
     /// </summary>
     /// <param name="destinationFolderName">The name of the folder in which to save the copy.</param>
-    public System.Threading.Tasks.Task SendAndSaveCopy(WellKnownFolderName destinationFolderName, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SendAndSaveCopy(WellKnownFolderName destinationFolderName, CancellationToken token = default)
     {
         return this.InternalSend(new FolderId(destinationFolderName), MessageDisposition.SendAndSaveCopy, token);
     }
@@ -264,7 +264,7 @@ public class EmailMessage : Item
     /// message has unsaved attachments. In that case, the message must first be saved and then sent. Calling this method
     /// results in a call to EWS.
     /// </summary>
-    public System.Threading.Tasks.Task SendAndSaveCopy(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SendAndSaveCopy(CancellationToken token = default)
     {
         return this.InternalSend(new FolderId(WellKnownFolderName.SentItems), MessageDisposition.SendAndSaveCopy, token);
     }
@@ -272,7 +272,7 @@ public class EmailMessage : Item
     /// <summary>
     /// Suppresses the read receipt on the message. Calling this method results in a call to EWS.
     /// </summary>
-    public System.Threading.Tasks.Task SuppressReadReceipt(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SuppressReadReceipt(CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
 

@@ -305,7 +305,7 @@ internal static class EwsUtilities
         }
         else
         {
-            return default(TServiceObject);
+            return default;
         }
     }
 
@@ -714,7 +714,7 @@ internal static class EwsUtilities
         //// Catch all exceptions here, we're not interested in the reason why TryParse failed.
         catch (Exception)
         {
-            result = default(T);
+            result = default;
 
             return false;
         }

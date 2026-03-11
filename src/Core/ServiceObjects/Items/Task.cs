@@ -66,7 +66,7 @@ public class Task : Item
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<Task>(id, propertySet, token);
     }
@@ -123,7 +123,7 @@ public class Task : Item
     /// values of the task. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="deleteMode">The deletion mode.</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> DeleteCurrentOccurrence(DeleteMode deleteMode, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> DeleteCurrentOccurrence(DeleteMode deleteMode, CancellationToken token = default)
     {
         return this.InternalDelete(
             deleteMode,
@@ -142,7 +142,7 @@ public class Task : Item
     /// a Task object representing the current occurrence if the task is recurring and the uypdate changed its recurrence
     /// pattern; or null in every other case.
     /// </returns>
-    public new async Task<Task> Update(ConflictResolutionMode conflictResolutionMode, CancellationToken token = default(CancellationToken))
+    public new async Task<Task> Update(ConflictResolutionMode conflictResolutionMode, CancellationToken token = default)
     {
         return (Task)await this.InternalUpdate(
             null /* parentFolder */,

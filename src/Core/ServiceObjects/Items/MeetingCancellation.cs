@@ -65,7 +65,7 @@ public class MeetingCancellation : MeetingMessage
         ExchangeService service,
         ItemId id, 
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<MeetingCancellation>(id, propertySet, token);
     }
@@ -101,7 +101,7 @@ public class MeetingCancellation : MeetingMessage
     /// A CalendarActionResults object containing the various items that were created or modified as a
     /// results of this operation.
     /// </returns>
-    public async Task<CalendarActionResults> RemoveMeetingFromCalendar(CancellationToken token = default(CancellationToken))
+    public async Task<CalendarActionResults> RemoveMeetingFromCalendar(CancellationToken token = default)
     {
         return new CalendarActionResults(await new RemoveFromCalendar(this).InternalCreate(null, null, token).ConfigureAwait(false));
     }

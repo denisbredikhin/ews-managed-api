@@ -79,7 +79,7 @@ public class Persona : Item
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<Persona>(id, propertySet, token);
     }

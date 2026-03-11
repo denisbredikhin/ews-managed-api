@@ -63,7 +63,7 @@ public sealed class GetUserSettingsResponse : AutodiscoverResponse
         }
         else
         {
-            value = default(T);
+            value = default;
             return false;
         }
     }

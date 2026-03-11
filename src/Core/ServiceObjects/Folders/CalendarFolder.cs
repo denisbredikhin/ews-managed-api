@@ -46,7 +46,7 @@ public class CalendarFolder : Folder
         ExchangeService service,
         FolderId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToFolder<CalendarFolder>(id, propertySet, token);
     }
@@ -58,7 +58,7 @@ public class CalendarFolder : Folder
     /// <param name="service">The service to use to bind to the calendar folder.</param>
     /// <param name="id">The Id of the calendar folder to bind to.</param>
     /// <returns>A CalendarFolder instance representing the calendar folder corresponding to the specified Id.</returns>
-    public static new Task<CalendarFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default(CancellationToken))
+    public static new Task<CalendarFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default)
     {
         return CalendarFolder.Bind(
             service,
@@ -79,7 +79,7 @@ public class CalendarFolder : Folder
         ExchangeService service,
         WellKnownFolderName name,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return CalendarFolder.Bind(
             service,
@@ -95,7 +95,7 @@ public class CalendarFolder : Folder
     /// <param name="service">The service to use to bind to the calendar folder.</param>
     /// <param name="name">The name of the calendar folder to bind to.</param>
     /// <returns>A CalendarFolder instance representing the calendar folder with the specified name.</returns>
-    public static new Task<CalendarFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default(CancellationToken))
+    public static new Task<CalendarFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default)
     {
         return CalendarFolder.Bind(
             service,
@@ -119,7 +119,7 @@ public class CalendarFolder : Folder
     /// </summary>
     /// <param name="view">The view controlling the range of appointments returned.</param>
     /// <returns>An object representing the results of the search operation.</returns>
-    public async Task<FindItemsResults<Appointment>> FindAppointments(CalendarView view, CancellationToken token = default(CancellationToken))
+    public async Task<FindItemsResults<Appointment>> FindAppointments(CalendarView view, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(view, nameof(view));
 

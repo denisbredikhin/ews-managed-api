@@ -55,7 +55,7 @@ public class TasksFolder : Folder
         ExchangeService service,
         FolderId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToFolder<TasksFolder>(id, propertySet, token);
     }
@@ -67,7 +67,7 @@ public class TasksFolder : Folder
     /// <param name="service">The service to use to bind to the tasks folder.</param>
     /// <param name="id">The Id of the tasks folder to bind to.</param>
     /// <returns>A TasksFolder instance representing the task folder corresponding to the specified Id.</returns>
-    public static new Task<TasksFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default(CancellationToken))
+    public static new Task<TasksFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default)
     {
         return TasksFolder.Bind(
             service,
@@ -88,7 +88,7 @@ public class TasksFolder : Folder
         ExchangeService service,
         WellKnownFolderName name,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return TasksFolder.Bind(
             service,
@@ -104,7 +104,7 @@ public class TasksFolder : Folder
     /// <param name="service">The service to use to bind to the tasks folder.</param>
     /// <param name="name">The name of the tasks folder to bind to.</param>
     /// <returns>A TasksFolder instance representing the tasks folder with the specified name.</returns>
-    public static new Task<TasksFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default(CancellationToken))
+    public static new Task<TasksFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default)
     {
         return TasksFolder.Bind(
             service,

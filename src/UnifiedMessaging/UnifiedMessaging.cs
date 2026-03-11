@@ -50,7 +50,7 @@ public sealed class UnifiedMessaging
     /// <param name="itemId">The Id of the message to read.</param>
     /// <param name="dialString">The full dial string used to call the phone.</param>
     /// <returns>An object providing status for the phone call.</returns>
-    public async Task<PhoneCall> PlayOnPhone(ItemId itemId, string dialString, CancellationToken token = default(CancellationToken))
+    public async Task<PhoneCall> PlayOnPhone(ItemId itemId, string dialString, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(itemId, nameof(itemId));
         EwsUtilities.ValidateParam(dialString, nameof(dialString));

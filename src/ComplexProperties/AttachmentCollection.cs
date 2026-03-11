@@ -283,7 +283,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// <summary>
     /// Saves this collection by creating new attachment and deleting removed ones.
     /// </summary>
-    internal async System.Threading.Tasks.Task Save(CancellationToken token = default(CancellationToken))
+    internal async System.Threading.Tasks.Task Save(CancellationToken token = default)
     {
         List<Attachment> attachments = new();
 

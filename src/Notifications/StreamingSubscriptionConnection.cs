@@ -203,7 +203,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// This results in a long-standing call to EWS.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when Open is called while connected.</exception>
-    public void Open(CancellationToken token = default(CancellationToken))
+    public void Open(CancellationToken token = default)
     {
         lock (this.lockObject)
         {

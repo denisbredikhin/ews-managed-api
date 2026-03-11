@@ -55,7 +55,7 @@ public sealed class StreamingSubscription : SubscriptionBase
     /// <summary>
     /// Unsubscribes from the streaming subscription.
     /// </summary>
-    public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default)
     {
         return this.Service.Unsubscribe(this.Id, token);
     }

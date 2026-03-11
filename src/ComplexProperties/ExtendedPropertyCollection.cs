@@ -166,7 +166,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
         }
         else
         {
-            propertyValue = default(T);
+            propertyValue = default;
             return false;
         }
     }

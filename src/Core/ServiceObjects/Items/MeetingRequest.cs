@@ -65,7 +65,7 @@ public class MeetingRequest : MeetingMessage, ICalendarActionProvider
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<MeetingRequest>(id, propertySet, token);
     }

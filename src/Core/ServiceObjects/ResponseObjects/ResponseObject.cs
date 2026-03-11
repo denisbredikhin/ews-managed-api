@@ -113,7 +113,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to save the response.</param>
     /// <returns>A TMessage that represents the response.</returns>
-    public async Task<TMessage> Save(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public async Task<TMessage> Save(FolderId destinationFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -125,7 +125,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// </summary>
     /// <param name="destinationFolderName">The name of the folder in which to save the response.</param>
     /// <returns>A TMessage that represents the response.</returns>
-    public async Task<TMessage> Save(WellKnownFolderName destinationFolderName, CancellationToken token = default(CancellationToken))
+    public async Task<TMessage> Save(WellKnownFolderName destinationFolderName, CancellationToken token = default)
     {
         return (await this.InternalCreate(new FolderId(destinationFolderName), MessageDisposition.SaveOnly, token).ConfigureAwait(false))[0] as TMessage;
     }
@@ -134,7 +134,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// Saves the response in the Drafts folder. Calling this method results in a call to EWS.
     /// </summary>
     /// <returns>A TMessage that represents the response.</returns>
-    public async Task<TMessage> Save(CancellationToken token = default(CancellationToken))
+    public async Task<TMessage> Save(CancellationToken token = default)
     {
         return (await this.InternalCreate(null, MessageDisposition.SaveOnly, token).ConfigureAwait(false))[0] as TMessage;
     }
@@ -142,7 +142,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// <summary>
     /// Sends this response without saving a copy. Calling this method results in a call to EWS.
     /// </summary>
-    public System.Threading.Tasks.Task Send(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Send(CancellationToken token = default)
     {
         return this.InternalCreate(null, MessageDisposition.SendOnly, token);
     }
@@ -151,7 +151,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// Sends this response and saves a copy in the specified folder. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to save the copy of the message.</param>
-    public System.Threading.Tasks.Task SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SendAndSaveCopy(FolderId destinationFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -162,7 +162,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// Sends this response and saves a copy in the specified folder. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="destinationFolderName">The name of the folder in which to save the copy of the message.</param>
-    public System.Threading.Tasks.Task SendAndSaveCopy(WellKnownFolderName destinationFolderName, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SendAndSaveCopy(WellKnownFolderName destinationFolderName, CancellationToken token = default)
     {
         return this.InternalCreate(new FolderId(destinationFolderName), MessageDisposition.SendAndSaveCopy, token);
     }
@@ -170,7 +170,7 @@ public abstract class ResponseObject<TMessage> : ServiceObject
     /// <summary>
     /// Sends this response and saves a copy in the Sent Items folder. Calling this method results in a call to EWS.
     /// </summary>
-    public System.Threading.Tasks.Task SendAndSaveCopy(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task SendAndSaveCopy(CancellationToken token = default)
     {
         return this.InternalCreate(
             null,

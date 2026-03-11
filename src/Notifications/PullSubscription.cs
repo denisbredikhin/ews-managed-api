@@ -49,7 +49,7 @@ public sealed class PullSubscription : SubscriptionBase
     /// in time defined by the Watermark property. When GetEvents succeeds, Watermark is updated.
     /// </summary>
     /// <returns>Returns a collection of events that occurred since the last watermark.</returns>
-    public async Task<GetEventsResults> GetEvents(CancellationToken token = default(CancellationToken))
+    public async Task<GetEventsResults> GetEvents(CancellationToken token = default)
     {
         GetEventsResults results = await this.Service.GetEvents(this.Id, this.Watermark, token);
 
@@ -62,7 +62,7 @@ public sealed class PullSubscription : SubscriptionBase
     /// <summary>
     /// Unsubscribes from the pull subscription.
     /// </summary>
-    public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Unsubscribe(CancellationToken token = default)
     {
         return this.Service.Unsubscribe(this.Id, token);
     }

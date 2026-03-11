@@ -54,7 +54,7 @@ public class ContactsFolder : Folder
         ExchangeService service,
         FolderId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToFolder<ContactsFolder>(id, propertySet, token);
     }
@@ -65,7 +65,7 @@ public class ContactsFolder : Folder
     /// <param name="service">The service to use to bind to the contacts folder.</param>
     /// <param name="id">The Id of the contacts folder to bind to.</param>
     /// <returns>A ContactsFolder instance representing the contacts folder corresponding to the specified Id.</returns>
-    public static new Task<ContactsFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default(CancellationToken))
+    public static new Task<ContactsFolder> Bind(ExchangeService service, FolderId id, CancellationToken token = default)
     {
         return ContactsFolder.Bind(
             service,
@@ -85,7 +85,7 @@ public class ContactsFolder : Folder
         ExchangeService service,
         WellKnownFolderName name,
         PropertySet propertySet, 
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return ContactsFolder.Bind(
             service,
@@ -100,7 +100,7 @@ public class ContactsFolder : Folder
     /// <param name="service">The service to use to bind to the contacts folder.</param>
     /// <param name="name">The name of the contacts folder to bind to.</param>
     /// <returns>A ContactsFolder instance representing the contacts folder with the specified name.</returns>
-    public static new Task<ContactsFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default(CancellationToken))
+    public static new Task<ContactsFolder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default)
     {
         return ContactsFolder.Bind(
             service,

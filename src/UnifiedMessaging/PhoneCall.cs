@@ -74,7 +74,7 @@ public sealed class PhoneCall : ComplexProperty
     /// <summary>
     /// Refreshes the state of this phone call.
     /// </summary>
-    public async System.Threading.Tasks.Task Refresh(CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Refresh(CancellationToken token = default)
     {
         PhoneCall phoneCall = await service.UnifiedMessaging.GetPhoneCallInformation(this.id, token).ConfigureAwait(false);
         this.state = phoneCall.State;
@@ -86,7 +86,7 @@ public sealed class PhoneCall : ComplexProperty
     /// <summary>
     /// Disconnects this phone call.
     /// </summary>
-    public async System.Threading.Tasks.Task Disconnect(CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Disconnect(CancellationToken token = default)
     {
         // If call is already disconnected, throw exception
         //

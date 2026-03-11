@@ -75,7 +75,7 @@ public class Item : ServiceObject
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<Item>(id, propertySet, token);
     }
@@ -341,7 +341,7 @@ public class Item : ServiceObject
     /// </summary>
     /// <param name="deleteMode">The deletion mode.</param>
     /// <param name="suppressReadReceipts">Whether to suppress read receipts</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> Delete(DeleteMode deleteMode, bool suppressReadReceipts, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> Delete(DeleteMode deleteMode, bool suppressReadReceipts, CancellationToken token = default)
     {
         return this.InternalDelete(deleteMode, null, null, suppressReadReceipts, token);
     }
@@ -351,7 +351,7 @@ public class Item : ServiceObject
     /// Mutliple calls to EWS might be made if attachments have been added.
     /// </summary>
     /// <param name="parentFolderId">The Id of the folder in which to save this item.</param>
-    public System.Threading.Tasks.Task Save(FolderId parentFolderId, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Save(FolderId parentFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(parentFolderId, nameof(parentFolderId));
 
@@ -367,7 +367,7 @@ public class Item : ServiceObject
     /// Mutliple calls to EWS might be made if attachments have been added.
     /// </summary>
     /// <param name="parentFolderName">The name of the folder in which to save this item.</param>
-    public System.Threading.Tasks.Task Save(WellKnownFolderName parentFolderName, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Save(WellKnownFolderName parentFolderName, CancellationToken token = default)
     {
         return this.InternalCreate(
             new FolderId(parentFolderName),
@@ -380,7 +380,7 @@ public class Item : ServiceObject
     /// Saves this item in the default folder based on the item's type (for example, an e-mail message is saved to the Drafts folder).
     /// Calling this method results in at least one call to EWS. Mutliple calls to EWS might be made if attachments have been added.
     /// </summary>
-    public System.Threading.Tasks.Task Save(CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Save(CancellationToken token = default)
     {
         return this.InternalCreate(
             null,
@@ -394,7 +394,7 @@ public class Item : ServiceObject
     /// Mutliple calls to EWS might be made if attachments have been added or removed.
     /// </summary>
     /// <param name="conflictResolutionMode">The conflict resolution mode.</param>
-    public Task<Item> Update(ConflictResolutionMode conflictResolutionMode, CancellationToken token = default(CancellationToken))
+    public Task<Item> Update(ConflictResolutionMode conflictResolutionMode, CancellationToken token = default)
     {
         return this.Update(conflictResolutionMode, false, token);
     }
@@ -405,7 +405,7 @@ public class Item : ServiceObject
     /// </summary>
     /// <param name="conflictResolutionMode">The conflict resolution mode.</param>
     /// <param name="suppressReadReceipts">Whether to suppress read receipts</param>
-    public Task<Item> Update(ConflictResolutionMode conflictResolutionMode, bool suppressReadReceipts, CancellationToken token = default(CancellationToken))
+    public Task<Item> Update(ConflictResolutionMode conflictResolutionMode, bool suppressReadReceipts, CancellationToken token = default)
     {
         return this.InternalUpdate(
             null /* parentFolder */,
@@ -425,7 +425,7 @@ public class Item : ServiceObject
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to create a copy of this item.</param>
     /// <returns>The copy of this item.</returns>
-    public Task<Item> Copy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public Task<Item> Copy(FolderId destinationFolderId, CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
         this.ThrowIfThisIsAttachment();
@@ -458,7 +458,7 @@ public class Item : ServiceObject
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder to which to move this item.</param>
     /// <returns>The moved copy of this item.</returns>
-    public Task<Item> Move(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public Task<Item> Move(FolderId destinationFolderId, CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
         this.ThrowIfThisIsAttachment();

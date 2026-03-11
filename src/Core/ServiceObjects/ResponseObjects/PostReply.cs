@@ -128,7 +128,7 @@ public sealed class PostReply : ServiceObject
     /// Saves the post reply in the same folder as the original post item. Calling this method results in a call to EWS.
     /// </summary>
     /// <returns>A PostItem representing the posted reply.</returns>
-    public async Task<PostItem> Save(CancellationToken token = default(CancellationToken))
+    public async Task<PostItem> Save(CancellationToken token = default)
     {
         return (PostItem)await this.InternalCreate(null, null, token).ConfigureAwait(false);
     }
@@ -138,7 +138,7 @@ public sealed class PostReply : ServiceObject
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to save the post reply.</param>
     /// <returns>A PostItem representing the posted reply.</returns>
-    public async Task<PostItem> Save(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public async Task<PostItem> Save(FolderId destinationFolderId, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -150,7 +150,7 @@ public sealed class PostReply : ServiceObject
     /// </summary>
     /// <param name="destinationFolderName">The name of the folder in which to save the post reply.</param>
     /// <returns>A PostItem representing the posted reply.</returns>
-    public async Task<PostItem> Save(WellKnownFolderName destinationFolderName, CancellationToken token = default(CancellationToken))
+    public async Task<PostItem> Save(WellKnownFolderName destinationFolderName, CancellationToken token = default)
     {
         return (PostItem)await this.InternalCreate(new FolderId(destinationFolderName), null, token).ConfigureAwait(false);
     }

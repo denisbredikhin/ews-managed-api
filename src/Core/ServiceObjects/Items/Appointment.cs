@@ -85,7 +85,7 @@ public class Appointment : Item, ICalendarActionProvider
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<Appointment>(id, propertySet, token);
     }
@@ -355,7 +355,7 @@ public class Appointment : Item, ICalendarActionProvider
     /// </summary>
     /// <param name="destinationFolderName">The name of the folder in which to save this appointment.</param>
     /// <param name="sendInvitationsMode">Specifies if and how invitations should be sent if this appointment is a meeting.</param>
-    public System.Threading.Tasks.Task Save(WellKnownFolderName destinationFolderName, SendInvitationsMode sendInvitationsMode, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Save(WellKnownFolderName destinationFolderName, SendInvitationsMode sendInvitationsMode, CancellationToken token = default)
     {
         return this.InternalCreate(
             new FolderId(destinationFolderName),
@@ -370,7 +370,7 @@ public class Appointment : Item, ICalendarActionProvider
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to save this appointment.</param>
     /// <param name="sendInvitationsMode">Specifies if and how invitations should be sent if this appointment is a meeting.</param>
-    public System.Threading.Tasks.Task Save(FolderId destinationFolderId, SendInvitationsMode sendInvitationsMode, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Save(FolderId destinationFolderId, SendInvitationsMode sendInvitationsMode, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(destinationFolderId, nameof(destinationFolderId));
 
@@ -386,7 +386,7 @@ public class Appointment : Item, ICalendarActionProvider
     /// Mutliple calls to EWS might be made if attachments have been added.
     /// </summary>
     /// <param name="sendInvitationsMode">Specifies if and how invitations should be sent if this appointment is a meeting.</param>
-    public System.Threading.Tasks.Task Save(SendInvitationsMode sendInvitationsMode, CancellationToken token = default(CancellationToken))
+    public System.Threading.Tasks.Task Save(SendInvitationsMode sendInvitationsMode, CancellationToken token = default)
     {
         return this.InternalCreate(
             null,
@@ -404,7 +404,7 @@ public class Appointment : Item, ICalendarActionProvider
     public Task<Item> Update(
         ConflictResolutionMode conflictResolutionMode,
         SendInvitationsOrCancellationsMode sendInvitationsOrCancellationsMode,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return this.InternalUpdate(
             null,
@@ -419,7 +419,7 @@ public class Appointment : Item, ICalendarActionProvider
     /// </summary>
     /// <param name="deleteMode">The deletion mode.</param>
     /// <param name="sendCancellationsMode">Specifies if and how cancellations should be sent if this appointment is a meeting.</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> Delete(DeleteMode deleteMode, SendCancellationsMode sendCancellationsMode, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> Delete(DeleteMode deleteMode, SendCancellationsMode sendCancellationsMode, CancellationToken token = default)
     {
         return this.InternalDelete(
             deleteMode,

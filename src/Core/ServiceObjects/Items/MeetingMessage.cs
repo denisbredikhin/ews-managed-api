@@ -67,7 +67,7 @@ public class MeetingMessage : EmailMessage
         ExchangeService service,
         ItemId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToItem<MeetingMessage>(id, propertySet, token);
     }

@@ -217,7 +217,7 @@ internal class PropertyBag
 
         bool result = this.TryGetProperty(propertyDefinition, out object value);
 
-        propertyValue = result ? (T)value : default(T);
+        propertyValue = result ? (T)value : default;
 
         return result;
     }

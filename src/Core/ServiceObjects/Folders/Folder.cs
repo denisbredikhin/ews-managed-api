@@ -55,7 +55,7 @@ public class Folder : ServiceObject
         ExchangeService service,
         FolderId id,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return service.BindToFolder<Folder>(id, propertySet, token);
     }
@@ -67,7 +67,7 @@ public class Folder : ServiceObject
     /// <param name="service">The service to use to bind to the folder.</param>
     /// <param name="id">The Id of the folder to bind to.</param>
     /// <returns>A Folder instance representing the folder corresponding to the specified Id.</returns>
-    public static Task<Folder> Bind(ExchangeService service, FolderId id, CancellationToken token = default(CancellationToken))
+    public static Task<Folder> Bind(ExchangeService service, FolderId id, CancellationToken token = default)
     {
         return Folder.Bind(
             service,
@@ -88,7 +88,7 @@ public class Folder : ServiceObject
         ExchangeService service,
         WellKnownFolderName name,
         PropertySet propertySet,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         return Folder.Bind(
             service,
@@ -104,7 +104,7 @@ public class Folder : ServiceObject
     /// <param name="service">The service to use to bind to the folder.</param>
     /// <param name="name">The name of the folder to bind to.</param>
     /// <returns>A Folder instance representing the folder with the specified name.</returns>
-    public static Task<Folder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default(CancellationToken))
+    public static Task<Folder> Bind(ExchangeService service, WellKnownFolderName name, CancellationToken token = default)
     {
         return Folder.Bind(
             service,
@@ -204,7 +204,7 @@ public class Folder : ServiceObject
     /// Deletes the folder. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="deleteMode">Deletion mode.</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> Delete(DeleteMode deleteMode, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> Delete(DeleteMode deleteMode, CancellationToken token = default)
     {
         return this.InternalDelete(deleteMode, null, null, token);
     }
@@ -217,7 +217,7 @@ public class Folder : ServiceObject
     public Task<ServiceResponseCollection<ServiceResponse>> Empty(
         DeleteMode deleteMode,
         bool deleteSubFolders,
-        CancellationToken token = default(CancellationToken))
+        CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
         return this.Service.EmptyFolder(
@@ -231,7 +231,7 @@ public class Folder : ServiceObject
     /// Marks all items in folder as read. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="suppressReadReceipts">If true, suppress sending read receipts for items.</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> MarkAllItemsAsRead(bool suppressReadReceipts, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> MarkAllItemsAsRead(bool suppressReadReceipts, CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
         return this.Service.MarkAllItemsAsRead(
@@ -245,7 +245,7 @@ public class Folder : ServiceObject
     /// Marks all items in folder as read. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="suppressReadReceipts">If true, suppress sending read receipts for items.</param>
-    public Task<ServiceResponseCollection<ServiceResponse>> MarkAllItemsAsUnread(bool suppressReadReceipts, CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<ServiceResponse>> MarkAllItemsAsUnread(bool suppressReadReceipts, CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
         return this.Service.MarkAllItemsAsRead(
@@ -259,7 +259,7 @@ public class Folder : ServiceObject
     /// Saves this folder in a specific folder. Calling this method results in a call to EWS.
     /// </summary>
     /// <param name="parentFolderId">The Id of the folder in which to save this folder.</param>
-    public async System.Threading.Tasks.Task Save(FolderId parentFolderId, CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Save(FolderId parentFolderId, CancellationToken token = default)
     {
         this.ThrowIfThisIsNotNew();
 
@@ -283,7 +283,7 @@ public class Folder : ServiceObject
     /// <summary>
     /// Applies the local changes that have been made to this folder. Calling this method results in a call to EWS.
     /// </summary>
-    public async System.Threading.Tasks.Task Update(CancellationToken token = default(CancellationToken))
+    public async System.Threading.Tasks.Task Update(CancellationToken token = default)
     {
         if (this.IsDirty)
         {
@@ -299,7 +299,7 @@ public class Folder : ServiceObject
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to copy this folder.</param>
     /// <returns>A Folder representing the copy of this folder.</returns>
-    public Task<Folder> Copy(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public Task<Folder> Copy(FolderId destinationFolderId, CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
 
@@ -323,7 +323,7 @@ public class Folder : ServiceObject
     /// </summary>
     /// <param name="destinationFolderId">The Id of the folder in which to move this folder.</param>
     /// <returns>A new folder representing this folder in its new location. After Move completes, this folder does not exist anymore.</returns>
-    public Task<Folder> Move(FolderId destinationFolderId, CancellationToken token = default(CancellationToken))
+    public Task<Folder> Move(FolderId destinationFolderId, CancellationToken token = default)
     {
         this.ThrowIfThisIsNew();
 
@@ -406,7 +406,7 @@ public class Folder : ServiceObject
     /// SearchFilter.SearchFilterCollection</param>
     /// <param name="view">The view controlling the number of items returned.</param>
     /// <returns>An object representing the results of the search operation.</returns>
-    public async Task<FindItemsResults<Item>> FindItems(SearchFilter searchFilter, ItemView view, CancellationToken token = default(CancellationToken))
+    public async Task<FindItemsResults<Item>> FindItems(SearchFilter searchFilter, ItemView view, CancellationToken token = default)
     {
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
@@ -425,7 +425,7 @@ public class Folder : ServiceObject
     /// <param name="queryString">query string to be used for indexed search</param>
     /// <param name="view">The view controlling the number of items returned.</param>
     /// <returns>An object representing the results of the search operation.</returns>
-    public async Task<FindItemsResults<Item>> FindItems(string queryString, ItemView view, CancellationToken token = default(CancellationToken))
+    public async Task<FindItemsResults<Item>> FindItems(string queryString, ItemView view, CancellationToken token = default)
     {
         EwsUtilities.ValidateParamAllowNull(queryString, nameof(queryString));
 
@@ -439,7 +439,7 @@ public class Folder : ServiceObject
     /// </summary>
     /// <param name="view">The view controlling the number of items returned.</param>
     /// <returns>An object representing the results of the search operation.</returns>
-    public async Task<FindItemsResults<Item>> FindItems(ItemView view, CancellationToken token = default(CancellationToken))
+    public async Task<FindItemsResults<Item>> FindItems(ItemView view, CancellationToken token = default)
     {
         ServiceResponseCollection<FindItemResponse<Item>> responses = await this.InternalFindItems<Item>(
             (SearchFilter)null,
@@ -458,7 +458,7 @@ public class Folder : ServiceObject
     /// <param name="view">The view controlling the number of items returned.</param>
     /// <param name="groupBy">The grouping criteria.</param>
     /// <returns>A collection of grouped items representing the contents of this folder.</returns>
-    public async Task<GroupedFindItemsResults<Item>> FindItems(SearchFilter searchFilter, ItemView view, Grouping groupBy, CancellationToken token = default(CancellationToken))
+    public async Task<GroupedFindItemsResults<Item>> FindItems(SearchFilter searchFilter, ItemView view, Grouping groupBy, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(groupBy, nameof(groupBy));
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
@@ -479,7 +479,7 @@ public class Folder : ServiceObject
     /// <param name="view">The view controlling the number of items returned.</param>
     /// <param name="groupBy">The grouping criteria.</param>
     /// <returns>A collection of grouped items representing the contents of this folder.</returns>
-    public async Task<GroupedFindItemsResults<Item>> FindItems(string queryString, ItemView view, Grouping groupBy, CancellationToken token = default(CancellationToken))
+    public async Task<GroupedFindItemsResults<Item>> FindItems(string queryString, ItemView view, Grouping groupBy, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(groupBy, nameof(groupBy));
 

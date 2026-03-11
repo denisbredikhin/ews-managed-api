@@ -418,7 +418,7 @@ internal class EwsXmlReader
             this.ReadStartElement(xmlNamespace, localName);
         }
 
-        T value = default(T);
+        T value = default;
 
         if (!this.IsEmptyElement)
         {
@@ -440,7 +440,7 @@ internal class EwsXmlReader
         string namespacePrefix = this.NamespacePrefix;
         string localName = this.LocalName;
 
-        T value = default(T);
+        T value = default;
 
         if (!this.IsEmptyElement)
         {

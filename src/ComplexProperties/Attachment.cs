@@ -325,7 +325,7 @@ public abstract class Attachment : ComplexProperty
     /// <summary>
     /// Loads the attachment. Calling this method results in a call to EWS.
     /// </summary>
-    public Task<ServiceResponseCollection<GetAttachmentResponse>> Load(CancellationToken token = default(CancellationToken))
+    public Task<ServiceResponseCollection<GetAttachmentResponse>> Load(CancellationToken token = default)
     {
         return this.InternalLoad(null, null, token);
     }
