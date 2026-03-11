@@ -58,29 +58,20 @@ jobs:
     - name: Build and analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SOLUTION_PATH: Microsoft.Exchange.WebServices.Core.slnx
       shell: powershell
       run: |
-        ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"denisbredikhin_ews-managed-api" /o:"denisbredikhin" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-        dotnet build
+        ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"denisbredikhin_ews-managed-api" /o:"denisbredikhin" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml"
+        dotnet build "$env:SOLUTION_PATH"
+        dotnet test --configuration Release --no-restore `
+          --solution "$env:SOLUTION_PATH" `
+          --results-directory ./TestResults `
+          --report-trx `
+          --report-trx-filename test-results.trx `
+          --coverage `
+          --coverage-output-format opencover `
+          --coverage-output coverage.opencover.xml
         ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-    - name: Restore .NET dependencies
-      env:
-        SOLUTION_PATH: Microsoft.Exchange.WebServices.Core.slnx
-      run: dotnet restore "$SOLUTION_PATH"
-
-    - name: Run unit tests
-      env:
-        SOLUTION_PATH: Microsoft.Exchange.WebServices.Core.slnx
-      run: |
-        dotnet test --configuration Release --no-restore \
-          --solution "$SOLUTION_PATH" \
-          --results-directory ./TestResults \
-          --report-trx \
-          --report-trx-filename test-results.trx \
-          --coverage \
-          --coverage-output-format cobertura \
-          --coverage-output coverage.cobertura.xml
 
     - name: Upload unit test and coverage artifacts
       if: ${{ always() }}
@@ -89,7 +80,7 @@ jobs:
         name: test-results-ci-${{ github.run_id }}
         path: |
           **/TestResults/**/*.trx
-          **/TestResults/**/coverage.cobertura.xml
+          **/TestResults/**/coverage.opencover.xml
         if-no-files-found: warn
 
     - name: Check TRX files
@@ -126,7 +117,7 @@ jobs:
       id: coverage_files
       run: |
         shopt -s globstar nullglob
-        files=(**/TestResults/**/coverage.cobertura.xml)
+        files=(**/TestResults/**/coverage.opencover.xml)
         if [ ${#files[@]} -gt 0 ]; then
           echo "has_coverage=true" >> "$GITHUB_OUTPUT"
         else
@@ -137,7 +128,7 @@ jobs:
       if: ${{ always() && steps.coverage_files.outputs.has_coverage == 'true' }}
       uses: danielpalme/ReportGenerator-GitHub-Action@5.5.1
       with:
-        reports: '**/TestResults/**/coverage.cobertura.xml'
+        reports: '**/TestResults/**/coverage.opencover.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline;MarkdownSummaryGithub'
 
@@ -160,10 +151,3 @@ jobs:
         path: coveragereport
         if-no-files-found: warn
 
-    - name: Build .NET projects
-      env:
-        SOLUTION_PATH: Microsoft.Exchange.WebServices.Core.slnx
-      run: |
-        dotnet build --configuration Release \
-          --no-restore \
-          "$SOLUTION_PATH"
