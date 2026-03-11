@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal sealed class FindItemRequest<TItem> : FindRequest<FindItemResponse<TItem>>
     where TItem : Item
 {
-    private Grouping groupBy;
+    private Grouping? groupBy;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FindItemRequest&lt;TItem&gt;"/> class.
@@ -103,7 +103,7 @@ internal sealed class FindItemRequest<TItem> : FindRequest<FindItemResponse<TIte
     /// Gets or sets the group by.
     /// </summary>
     /// <value>The group by.</value>
-    public Grouping GroupBy
+    public Grouping? GroupBy
     {
         get { return this.groupBy; }
         set { this.groupBy = value; }

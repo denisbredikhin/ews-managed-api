@@ -35,8 +35,8 @@ internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TRe
     where TResponse : ServiceResponse
 {
     private readonly FolderIdWrapperList parentFolderIds = new();
-    private SearchFilter searchFilter;
-    private string queryString;
+    private SearchFilter? searchFilter;
+    private string? queryString;
     private bool returnHighlightTerms;
     private ViewBase view;
 
@@ -182,7 +182,7 @@ internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TRe
     /// SearchFilter.ContainsSubstring and SearchFilter.SearchFilterCollection. If SearchFilter
     /// is null, no search filters are applied.
     /// </summary>
-    public SearchFilter SearchFilter
+    public SearchFilter? SearchFilter
     {
         get { return this.searchFilter; }
         set { this.searchFilter = value; }
@@ -191,7 +191,7 @@ internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TRe
     /// <summary>
     /// Gets or sets the query string for indexed search.
     /// </summary>
-    public string QueryString
+    public string? QueryString
     {
         get { return this.queryString; }
         set { this.queryString = value; }

@@ -951,13 +951,15 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParamAllowNull(queryString, nameof(queryString));
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
-        FindItemRequest<TItem> request = new(this, errorHandlingMode);
+        FindItemRequest<TItem> request = new(this, errorHandlingMode)
+        {
+            SearchFilter = searchFilter,
+            QueryString = queryString,
+            View = view,
+            GroupBy = groupBy
+        };
 
         request.ParentFolderIds.AddRange(parentFolderIds);
-        request.SearchFilter = searchFilter;
-        request.QueryString = queryString;
-        request.View = view;
-        request.GroupBy = groupBy;
 
         return request.ExecuteAsync(token);
     }
