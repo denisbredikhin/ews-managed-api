@@ -97,9 +97,8 @@ internal abstract class ComplexPropertyDefinitionBase : PropertyDefinition
     /// <param name="propertyBag">The property bag.</param>
     internal virtual void InternalLoadFromXml(EwsServiceXmlReader reader, PropertyBag propertyBag)
     {
-        object complexProperty;
 
-        bool justCreated = GetPropertyInstance(propertyBag, out complexProperty);
+        bool justCreated = GetPropertyInstance(propertyBag, out object complexProperty);
 
         if (!justCreated && this.HasFlag(PropertyDefinitionFlags.UpdateCollectionItems, propertyBag.Owner.Service.RequestedServerVersion))
         {

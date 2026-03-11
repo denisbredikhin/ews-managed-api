@@ -223,11 +223,9 @@ public class Appointment : Item, ICalendarActionProvider
             {
                 // If both StartTimeZone and EndTimeZone have been set or updated and are the same as the service's
                 // time zone, we emit the time zone header and StartTimeZone and EndTimeZone are not emitted.
-                TimeZoneInfo startTimeZone;
-                TimeZoneInfo endTimeZone;
 
-                this.PropertyBag.TryGetProperty<TimeZoneInfo>(AppointmentSchema.StartTimeZone, out startTimeZone);
-                this.PropertyBag.TryGetProperty<TimeZoneInfo>(AppointmentSchema.EndTimeZone, out endTimeZone);
+                this.PropertyBag.TryGetProperty<TimeZoneInfo>(AppointmentSchema.StartTimeZone, out TimeZoneInfo startTimeZone);
+                this.PropertyBag.TryGetProperty<TimeZoneInfo>(AppointmentSchema.EndTimeZone, out TimeZoneInfo endTimeZone);
 
                 return startTimeZone == this.Service.TimeZone || endTimeZone == this.Service.TimeZone;
             }

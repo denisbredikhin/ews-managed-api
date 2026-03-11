@@ -124,9 +124,8 @@ public sealed class DelegatePermissions : ComplexProperty
     /// <returns>Returns true if element was read.</returns>
     internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
     {
-        DelegateFolderPermission delegateFolderPermission = null;
 
-        if (this.delegateFolderPermissions.TryGetValue(reader.LocalName, out delegateFolderPermission))
+        if (this.delegateFolderPermissions.TryGetValue(reader.LocalName, out DelegateFolderPermission delegateFolderPermission))
         {
             delegateFolderPermission.Initialize(reader.ReadElementValue<DelegateFolderPermissionLevel>());
         }

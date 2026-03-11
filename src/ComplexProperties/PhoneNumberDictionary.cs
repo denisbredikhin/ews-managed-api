@@ -71,9 +71,8 @@ public sealed class PhoneNumberDictionary : DictionaryProperty<PhoneNumberKey, P
             }
             else
             {
-                PhoneNumberEntry entry;
 
-                if (this.Entries.TryGetValue(key, out entry))
+                if (this.Entries.TryGetValue(key, out PhoneNumberEntry entry))
                 {
                     entry.PhoneNumber = value;
                     this.Changed();
@@ -100,9 +99,8 @@ public sealed class PhoneNumberDictionary : DictionaryProperty<PhoneNumberKey, P
     /// </returns>
     public bool TryGetValue(PhoneNumberKey key, out string phoneNumber)
     {
-        PhoneNumberEntry entry = null;
 
-        if (this.Entries.TryGetValue(key, out entry))
+        if (this.Entries.TryGetValue(key, out PhoneNumberEntry entry))
         {
             phoneNumber = entry.PhoneNumber;
 

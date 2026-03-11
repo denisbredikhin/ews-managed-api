@@ -332,7 +332,6 @@ public abstract class ServiceObject
     {
         get
         {
-            object propertyValue;
 
             PropertyDefinition propDef = propertyDefinition as PropertyDefinition;
             if (propDef != null)
@@ -344,7 +343,7 @@ public abstract class ServiceObject
                 ExtendedPropertyDefinition extendedPropDef = propertyDefinition as ExtendedPropertyDefinition;
                 if (extendedPropDef != null)
                 {
-                    if (this.TryGetExtendedProperty(extendedPropDef, out propertyValue))
+                    if (this.TryGetExtendedProperty(extendedPropDef, out object propertyValue))
                     {
                         return propertyValue;
                     }

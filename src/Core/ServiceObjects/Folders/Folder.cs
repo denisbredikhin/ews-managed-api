@@ -696,9 +696,8 @@ public class Folder : ServiceObject
     {
         get
         {
-            WellKnownFolderName result;
 
-            if (EwsUtilities.TryParse<WellKnownFolderName>(this.WellKnownFolderNameAsString, out result))
+            if (EwsUtilities.TryParse<WellKnownFolderName>(this.WellKnownFolderNameAsString, out WellKnownFolderName result))
             {
                 return result;
             }

@@ -147,8 +147,7 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
                 // a Uri, like ExtendedProperties. Ignore them.
                 if (!string.IsNullOrEmpty(propertyDefinition.Uri))
                 {
-                    PropertyDefinitionBase existingPropertyDefinition;
-                    if (propDefDictionary.TryGetValue(propertyDefinition.Uri, out existingPropertyDefinition))
+                    if (propDefDictionary.TryGetValue(propertyDefinition.Uri, out PropertyDefinitionBase existingPropertyDefinition))
                     {
                         EwsUtilities.Assert(
                             existingPropertyDefinition == propertyDefinition,

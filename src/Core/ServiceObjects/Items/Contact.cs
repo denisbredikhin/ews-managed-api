@@ -210,8 +210,7 @@ public class Contact : Item
     {
         base.Validate();
 
-        object fileAsMapping;
-        if (this.TryGetProperty(ContactSchema.FileAsMapping, out fileAsMapping))
+        if (this.TryGetProperty(ContactSchema.FileAsMapping, out object fileAsMapping))
         {
             // FileAsMapping is extended by 5 new values in 2010 mode. Validate that they are used according the version.
             EwsUtilities.ValidateEnumVersionValue((FileAsMapping)fileAsMapping, this.Service.RequestedServerVersion);

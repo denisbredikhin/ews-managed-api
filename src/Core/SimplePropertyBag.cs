@@ -68,9 +68,8 @@ internal class SimplePropertyBag<TKey> : IEnumerable<KeyValuePair<TKey, object>>
     /// <param name="key">The key.</param>
     private void InternalRemoveItem(TKey key)
     {
-        object value;
 
-        if (this.TryGetValue(key, out value))
+        if (this.TryGetValue(key, out object value))
         {
             this.items.Remove(key);
             this.removedItems.Add(key);
@@ -154,9 +153,8 @@ internal class SimplePropertyBag<TKey> : IEnumerable<KeyValuePair<TKey, object>>
     {
         get
         {
-            object value;
 
-            if (this.TryGetValue(key, out value))
+            if (this.TryGetValue(key, out object value))
             {
                 return value;
             }

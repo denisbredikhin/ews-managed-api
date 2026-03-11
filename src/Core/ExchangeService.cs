@@ -4674,13 +4674,12 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>EWS URL.</returns>
     private Uri GetEwsUrlFromResponse(GetUserSettingsResponse response, bool isExternal)
     {
-        string uriString;
 
         // Figure out which URL to use: Internal or External.
         // AutoDiscover may not return an external protocol. First try external, then internal.
         // Either protocol may be returned without a configured URL.
         if ((isExternal &&
-            response.TryGetSettingValue<string>(UserSettingName.ExternalEwsUrl, out uriString)) &&
+            response.TryGetSettingValue<string>(UserSettingName.ExternalEwsUrl, out string uriString)) &&
             !string.IsNullOrEmpty(uriString))
         {
             return new Uri(uriString);

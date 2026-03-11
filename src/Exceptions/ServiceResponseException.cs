@@ -79,13 +79,10 @@ public class ServiceResponseException : ServiceRemoteException
             // stack trace information, include it in the exception message.
             if (this.Response.ErrorCode == ServiceError.ErrorInternalServerError)
             {
-                string exceptionClass;
-                string exceptionMessage;
-                string stackTrace;
 
-                if (this.Response.ErrorDetails.TryGetValue(ExceptionClassKey, out exceptionClass) &&
-                    this.Response.ErrorDetails.TryGetValue(ExceptionMessageKey, out exceptionMessage) &&
-                    this.Response.ErrorDetails.TryGetValue(StackTraceKey, out stackTrace))
+                if (this.Response.ErrorDetails.TryGetValue(ExceptionClassKey, out string exceptionClass) &&
+                    this.Response.ErrorDetails.TryGetValue(ExceptionMessageKey, out string exceptionMessage) &&
+                    this.Response.ErrorDetails.TryGetValue(StackTraceKey, out string stackTrace))
                 {
                     return string.Format(
                         Strings.ServerErrorAndStackTraceDetails,

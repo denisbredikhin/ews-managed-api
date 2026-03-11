@@ -121,9 +121,8 @@ public sealed class GetEventsResults
             if (reader.IsStartElement())
             {
                 string eventElementName = reader.LocalName;
-                EventType eventType;
 
-                if (xmlElementNameToEventTypeMap.Member.TryGetValue(eventElementName, out eventType))
+                if (xmlElementNameToEventTypeMap.Member.TryGetValue(eventElementName, out EventType eventType))
                 {
                     this.newWatermark = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Watermark);
 

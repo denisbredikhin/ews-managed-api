@@ -90,8 +90,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
     /// <returns>ExtendedProperty.</returns>
     private ExtendedProperty GetOrAddExtendedProperty(ExtendedPropertyDefinition propertyDefinition)
     {
-        ExtendedProperty extendedProperty;
-        if (!this.TryGetProperty(propertyDefinition, out extendedProperty))
+        if (!this.TryGetProperty(propertyDefinition, out ExtendedProperty extendedProperty))
         {
             extendedProperty = new ExtendedProperty(propertyDefinition);
             this.InternalAdd(extendedProperty);
@@ -119,8 +118,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
     {
         EwsUtilities.ValidateParam(propertyDefinition, nameof(propertyDefinition));
 
-        ExtendedProperty extendedProperty;
-        if (this.TryGetProperty(propertyDefinition, out extendedProperty))
+        if (this.TryGetProperty(propertyDefinition, out ExtendedProperty extendedProperty))
         {
             return this.InternalRemove(extendedProperty);
         }
@@ -151,8 +149,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
     /// <returns>True if property exists in collection.</returns>
     internal bool TryGetValue<T>(ExtendedPropertyDefinition propertyDefinition, out T propertyValue)
     {
-        ExtendedProperty extendedProperty;
-        if (this.TryGetProperty(propertyDefinition, out extendedProperty))
+        if (this.TryGetProperty(propertyDefinition, out ExtendedProperty extendedProperty))
         {
             // Verify that the type parameter and property definition's type are compatible.
             if (!typeof(T).GetTypeInfo().IsAssignableFrom(propertyDefinition.Type.GetTypeInfo()))

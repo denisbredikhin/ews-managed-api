@@ -390,9 +390,8 @@ public abstract class ExchangeServiceBase
             foreach (var item in headers)
             {
                 var key = item.Key;
-                string existingValue;
 
-                if (this.httpResponseHeaders.TryGetValue(key, out existingValue))
+                if (this.httpResponseHeaders.TryGetValue(key, out string existingValue))
                 {
                     this.httpResponseHeaders[key] = existingValue + "," + string.Join(",", item.Value);
                 }

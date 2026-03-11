@@ -191,8 +191,7 @@ internal class PropertyBag
     /// <returns>True if property was retrieved.</returns>
     internal bool TryGetProperty(PropertyDefinition propertyDefinition, out object propertyValue)
     {
-        ServiceLocalException serviceException;
-        propertyValue = this.GetPropertyValueOrException(propertyDefinition, out serviceException);
+        propertyValue = this.GetPropertyValueOrException(propertyDefinition, out ServiceLocalException serviceException);
         return serviceException == null;
     }
 
@@ -215,9 +214,8 @@ internal class PropertyBag
             throw new ArgumentException(errorMessage, nameof(propertyDefinition));
         }
 
-        object value;
 
-        bool result = this.TryGetProperty(propertyDefinition, out value);
+        bool result = this.TryGetProperty(propertyDefinition, out object value);
 
         propertyValue = result ? (T)value : default(T);
 
@@ -232,7 +230,6 @@ internal class PropertyBag
     /// <returns>Propert value. May be null.</returns>
     private object GetPropertyValueOrException(PropertyDefinition propertyDefinition, out ServiceLocalException exception)
     {
-        object propertyValue = null;
         exception = null;
 
         if (propertyDefinition.Version > this.Owner.Service.RequestedServerVersion)
@@ -245,7 +242,7 @@ internal class PropertyBag
             return null;
         }
 
-        if (this.TryGetValue(propertyDefinition, out propertyValue))
+        if (this.TryGetValue(propertyDefinition, out object propertyValue))
         {
             // If the requested property is in the bag, return it.
             return propertyValue;
@@ -308,8 +305,7 @@ internal class PropertyBag
     {
         get
         {
-            ServiceLocalException serviceException;
-            object propertyValue = this.GetPropertyValueOrException(propertyDefinition, out serviceException);
+            object propertyValue = this.GetPropertyValueOrException(propertyDefinition, out ServiceLocalException serviceException);
             if (serviceException == null)
             {
                 return propertyValue;
@@ -372,9 +368,8 @@ internal class PropertyBag
             else
             {
                 ComplexProperty complexProperty;
-                object currentValue;
 
-                if (this.properties.TryGetValue(propertyDefinition, out currentValue))
+                if (this.properties.TryGetValue(propertyDefinition, out object currentValue))
                 {
                     complexProperty = currentValue as ComplexProperty;
 
@@ -473,9 +468,8 @@ internal class PropertyBag
     {
         if (!this.deletedProperties.ContainsKey(propertyDefinition))
         {
-            object propertyValue;
 
-            this.properties.TryGetValue(propertyDefinition, out propertyValue);
+            this.properties.TryGetValue(propertyDefinition, out object propertyValue);
 
             this.properties.Remove(propertyDefinition);
             this.modifiedProperties.Remove(propertyDefinition);
@@ -556,9 +550,8 @@ internal class PropertyBag
 
                 if (reader.NodeType == XmlNodeType.Element)
                 {
-                    PropertyDefinition propertyDefinition;
 
-                    if (this.Owner.Schema.TryGetPropertyDefinition(reader.LocalName, out propertyDefinition))
+                    if (this.Owner.Schema.TryGetPropertyDefinition(reader.LocalName, out PropertyDefinition propertyDefinition))
                     {
                         propertyDefinition.LoadPropertyValueFromXml(reader, this);
 
@@ -777,8 +770,7 @@ internal class PropertyBag
     /// <param name="propertyDefinition">The property definition.</param>
     private void ValidatePropertyValue(PropertyDefinition propertyDefinition)
     {
-        object propertyValue;
-        if (this.TryGetProperty(propertyDefinition, out propertyValue))
+        if (this.TryGetProperty(propertyDefinition, out object propertyValue))
         {
             ISelfValidate validatingValue = propertyValue as ISelfValidate;
             if (validatingValue != null)

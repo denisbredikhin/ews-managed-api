@@ -298,8 +298,7 @@ internal class MapiTypeConverter
     /// <returns>Integer value or the original string if the value could not be parsed as such.</returns>
     internal static object ParseMapiIntegerValue(string s)
     {
-        int intValue;
-        if (Int32.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out intValue))
+        if (Int32.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue))
         {
             return intValue;
         }

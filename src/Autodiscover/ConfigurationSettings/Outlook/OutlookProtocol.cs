@@ -407,8 +407,7 @@ internal sealed class OutlookProtocol
     /// <returns>OutlookProtocolType</returns>
     private static OutlookProtocolType ProtocolNameToType(string protocolName)
     {
-        OutlookProtocolType protocolType;
-        if (!protocolNameToTypeMap.Member.TryGetValue(protocolName, out protocolType))
+        if (!protocolNameToTypeMap.Member.TryGetValue(protocolName, out OutlookProtocolType protocolType))
         {
             protocolType = OutlookProtocolType.Unknown;
         }

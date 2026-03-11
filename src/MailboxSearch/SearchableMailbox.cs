@@ -81,13 +81,11 @@ public sealed class SearchableMailbox
             Guid = new Guid(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Guid)),
             SmtpAddress = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.PrimarySmtpAddress)
         };
-        bool isExternalMailbox = false;
-        bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsExternalMailbox), out isExternalMailbox);
+        bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsExternalMailbox), out bool isExternalMailbox);
         searchableMailbox.IsExternalMailbox = isExternalMailbox;
         searchableMailbox.ExternalEmailAddress = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ExternalEmailAddress);
         searchableMailbox.DisplayName = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.DisplayName);
-        bool isMembershipGroup = false;
-        bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsMembershipGroup), out isMembershipGroup);
+        bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsMembershipGroup), out bool isMembershipGroup);
         searchableMailbox.IsMembershipGroup = isMembershipGroup;
         searchableMailbox.ReferenceId = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ReferenceId);
 

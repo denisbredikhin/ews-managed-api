@@ -205,8 +205,7 @@ internal class EwsServiceXmlWriter : IDisposable
     /// <param name="value">The value.</param>
     public void WriteAttributeValue(string localName, bool alwaysWriteEmptyString, object value)
     {
-        string stringValue;
-        if (this.TryConvertObjectToString(value, out stringValue))
+        if (this.TryConvertObjectToString(value, out string stringValue))
         {
             if ((stringValue != null) &&
                 (alwaysWriteEmptyString || (stringValue.Length != 0)))
@@ -232,8 +231,7 @@ internal class EwsServiceXmlWriter : IDisposable
         string localName,
         object value)
     {
-        string stringValue;
-        if (this.TryConvertObjectToString(value, out stringValue))
+        if (this.TryConvertObjectToString(value, out string stringValue))
         {
             if (!string.IsNullOrEmpty(stringValue))
             {
@@ -330,8 +328,7 @@ internal class EwsServiceXmlWriter : IDisposable
     /// <param name="value">The value.</param>
     internal void WriteElementValue(XmlNamespace xmlNamespace, string localName, string displayName, object value)
     {
-        string stringValue;
-        if (this.TryConvertObjectToString(value, out stringValue))
+        if (this.TryConvertObjectToString(value, out string stringValue))
         {
             //  PS # 205106: The code here used to check IsNullOrEmpty on stringValue instead of just null.
             //  Unfortunately, that meant that if someone really needed to update a string property to be the

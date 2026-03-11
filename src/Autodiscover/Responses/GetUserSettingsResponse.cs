@@ -56,8 +56,7 @@ public sealed class GetUserSettingsResponse : AutodiscoverResponse
     /// <returns>True if setting was available.</returns>
     public bool TryGetSettingValue<T>(UserSettingName setting, out T value)
     {
-        object objValue;
-        if (this.Settings.TryGetValue(setting, out objValue))
+        if (this.Settings.TryGetValue(setting, out object objValue))
         {
             value = (T)objValue;
             return true;

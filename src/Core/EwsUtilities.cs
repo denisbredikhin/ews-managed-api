@@ -290,13 +290,11 @@ internal static class EwsUtilities
     internal static TServiceObject CreateEwsObjectFromXmlElementName<TServiceObject>(ExchangeService service, string xmlElementName)
         where TServiceObject : ServiceObject
     {
-        Type itemClass;
 
-        if (EwsUtilities.serviceObjectInfo.Member.XmlElementNameToServiceObjectClassMap.TryGetValue(xmlElementName, out itemClass))
+        if (EwsUtilities.serviceObjectInfo.Member.XmlElementNameToServiceObjectClassMap.TryGetValue(xmlElementName, out Type itemClass))
         {
-            CreateServiceObjectWithServiceParam creationDelegate;
 
-            if (EwsUtilities.serviceObjectInfo.Member.ServiceObjectConstructorsWithServiceParam.TryGetValue(itemClass, out creationDelegate))
+            if (EwsUtilities.serviceObjectInfo.Member.ServiceObjectConstructorsWithServiceParam.TryGetValue(itemClass, out CreateServiceObjectWithServiceParam creationDelegate))
             {
                 return (TServiceObject)creationDelegate(service);
             }
@@ -323,9 +321,8 @@ internal static class EwsUtilities
         Type itemClass,
         bool isNew)
     {
-        CreateServiceObjectWithAttachmentParam creationDelegate;
 
-        if (EwsUtilities.serviceObjectInfo.Member.ServiceObjectConstructorsWithAttachmentParam.TryGetValue(itemClass, out creationDelegate))
+        if (EwsUtilities.serviceObjectInfo.Member.ServiceObjectConstructorsWithAttachmentParam.TryGetValue(itemClass, out CreateServiceObjectWithAttachmentParam creationDelegate))
         {
             return (Item)creationDelegate(itemAttachment, isNew);
         }
@@ -343,9 +340,8 @@ internal static class EwsUtilities
     /// <returns>New Item.</returns>
     internal static Item CreateItemFromXmlElementName(ItemAttachment itemAttachment, string xmlElementName)
     {
-        Type itemClass;
 
-        if (EwsUtilities.serviceObjectInfo.Member.XmlElementNameToServiceObjectClassMap.TryGetValue(xmlElementName, out itemClass))
+        if (EwsUtilities.serviceObjectInfo.Member.XmlElementNameToServiceObjectClassMap.TryGetValue(xmlElementName, out Type itemClass))
         {
             return CreateItemFromItemClass(itemAttachment, itemClass, false);
         }
@@ -362,8 +358,7 @@ internal static class EwsUtilities
     /// <returns></returns>
     internal static Type GetItemTypeFromXmlElementName(string xmlElementName)
     {
-        Type itemClass = null;
-        EwsUtilities.serviceObjectInfo.Member.XmlElementNameToServiceObjectClassMap.TryGetValue(xmlElementName, out itemClass);
+        EwsUtilities.serviceObjectInfo.Member.XmlElementNameToServiceObjectClassMap.TryGetValue(xmlElementName, out Type itemClass);
         return itemClass;
     }
 
@@ -661,10 +656,8 @@ internal static class EwsUtilities
     /// <returns>String representation of enum to be used in the protocol</returns>
     internal static string SerializeEnum(Enum value)
     {
-        Dictionary<Enum, string> enumToStringDict;
-        string strValue;
-        if (enumToSchemaDictionaries.Member.TryGetValue(value.GetType(), out enumToStringDict) &&
-            enumToStringDict.TryGetValue(value, out strValue))
+        if (enumToSchemaDictionaries.Member.TryGetValue(value.GetType(), out Dictionary<Enum, string> enumToStringDict) &&
+            enumToStringDict.TryGetValue(value, out string strValue))
         {
             return strValue;
         }
@@ -684,10 +677,8 @@ internal static class EwsUtilities
     {
         if (typeof(T).GetTypeInfo().IsEnum)
         {
-            Dictionary<string, Enum> stringToEnumDict;
-            Enum enumValue;
-            if (schemaToEnumDictionaries.Member.TryGetValue(typeof(T), out stringToEnumDict) &&
-                stringToEnumDict.TryGetValue(value, out enumValue))
+            if (schemaToEnumDictionaries.Member.TryGetValue(typeof(T), out Dictionary<string, Enum> stringToEnumDict) &&
+                stringToEnumDict.TryGetValue(value, out Enum enumValue))
             {
                 // This double-casting is ugly, but necessary. By this point, we know that T is an Enum
                 // (same as returned by the dictionary), but the compiler can't prove it. Thus, the 
@@ -1090,8 +1081,7 @@ internal static class EwsUtilities
     private static string GetSimplifiedTypeName(string typeName)
     {
         // If type has a shortname (e.g. int for Int32) map to the short name.
-        string name;
-        return typeNameToShortNameMap.Member.TryGetValue(typeName, out name) ? name : typeName;
+        return typeNameToShortNameMap.Member.TryGetValue(typeName, out string name) ? name : typeName;
     }
 
     #endregion

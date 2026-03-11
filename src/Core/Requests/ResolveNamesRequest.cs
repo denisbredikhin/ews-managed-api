@@ -126,9 +126,8 @@ internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveN
             XmlAttributeNames.ReturnFullContactData,
             this.ReturnFullContactData);
 
-        string searchScope = null;
 
-        searchScopeMap.Member.TryGetValue(this.SearchLocation, out searchScope);
+        searchScopeMap.Member.TryGetValue(this.SearchLocation, out string searchScope);
 
         EwsUtilities.Assert(
             !string.IsNullOrEmpty(searchScope),

@@ -158,9 +158,8 @@ public abstract class DictionaryProperty<TKey, TEntry> : ComplexProperty, ICusto
     /// <param name="entry">The entry.</param>
     internal void InternalAddOrReplace(TEntry entry)
     {
-        TEntry oldEntry;
 
-        if (this.entries.TryGetValue(entry.Key, out oldEntry))
+        if (this.entries.TryGetValue(entry.Key, out TEntry oldEntry))
         {
             oldEntry.OnChange -= this.EntryChanged;
 
@@ -188,9 +187,8 @@ public abstract class DictionaryProperty<TKey, TEntry> : ComplexProperty, ICusto
     /// <param name="key">The key.</param>
     internal void InternalRemove(TKey key)
     {
-        TEntry entry;
 
-        if (this.entries.TryGetValue(key, out entry))
+        if (this.entries.TryGetValue(key, out TEntry entry))
         {
             entry.OnChange -= this.EntryChanged;
 

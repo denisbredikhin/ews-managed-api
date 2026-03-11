@@ -89,9 +89,8 @@ internal sealed class GetStreamingEventsResults
                 if (reader.IsStartElement())
                 {
                     string eventElementName = reader.LocalName;
-                    EventType eventType;
 
-                    if (GetEventsResults.XmlElementNameToEventTypeMap.TryGetValue(eventElementName, out eventType))
+                    if (GetEventsResults.XmlElementNameToEventTypeMap.TryGetValue(eventElementName, out EventType eventType))
                     {
                         if (eventType == EventType.Status)
                         {
@@ -103,7 +102,7 @@ internal sealed class GetStreamingEventsResults
                             this.LoadNotificationEventFromXml(
                                 reader,
                                 eventElementName,
-                                eventType, 
+                                eventType,
                                 notifications);
                         }
                     }

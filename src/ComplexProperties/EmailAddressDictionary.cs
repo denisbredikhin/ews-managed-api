@@ -71,9 +71,8 @@ public sealed class EmailAddressDictionary : DictionaryProperty<EmailAddressKey,
             }
             else
             {
-                EmailAddressEntry entry;
 
-                if (this.Entries.TryGetValue(key, out entry))
+                if (this.Entries.TryGetValue(key, out EmailAddressEntry entry))
                 {
                     entry.EmailAddress = value;
                     this.Changed();
@@ -100,9 +99,8 @@ public sealed class EmailAddressDictionary : DictionaryProperty<EmailAddressKey,
     /// </returns>
     public bool TryGetValue(EmailAddressKey key, out EmailAddress emailAddress)
     {
-        EmailAddressEntry entry = null;
 
-        if (this.Entries.TryGetValue(key, out entry))
+        if (this.Entries.TryGetValue(key, out EmailAddressEntry entry))
         {
             emailAddress = entry.EmailAddress;
 

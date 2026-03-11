@@ -522,8 +522,7 @@ public class Item : ServiceObject
 
         // Flag parameter is only valid for Exchange2013 or higher
         //
-        Flag flag;
-        if (this.TryGetProperty<Flag>(ItemSchema.Flag, out flag) && flag != null)
+        if (this.TryGetProperty<Flag>(ItemSchema.Flag, out Flag flag) && flag != null)
         {
             if (this.Service.RequestedServerVersion < ExchangeVersion.Exchange2013)
             {

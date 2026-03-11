@@ -219,8 +219,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
 
         using var client = this.PrepareHttpClient();
         using IEwsHttpWebResponse webResponse = new EwsHttpWebResponse(client.SendAsync(request).Result);
-        Uri redirectUrl;
-        if (this.TryGetRedirectionResponse(webResponse, out redirectUrl))
+        if (this.TryGetRedirectionResponse(webResponse, out Uri redirectUrl))
         {
             settings.MakeRedirectionResponse(redirectUrl);
             return settings;
@@ -309,8 +308,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         {
             using (response)
             {
-                Uri redirectUrl;
-                if (this.TryGetRedirectionResponse(response, out redirectUrl))
+                if (this.TryGetRedirectionResponse(response, out Uri redirectUrl))
                 {
                     return redirectUrl;
                 }
@@ -426,8 +424,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     {
         string domainName = EwsUtilities.DomainFromEmailAddress(emailAddress);
 
-        int scpUrlCount;
-        List<Uri> urls = this.GetAutodiscoverServiceUrls(domainName, out scpUrlCount);
+        List<Uri> urls = this.GetAutodiscoverServiceUrls(domainName, out int scpUrlCount);
 
         if (urls.Count == 0)
         {
@@ -530,8 +527,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
                 if (ex.Response != null)
                 {
                     IEwsHttpWebResponse response = this.HttpWebRequestFactory.CreateExceptionResponse(ex);
-                    Uri redirectUrl;
-                    if (this.TryGetRedirectionResponse(response, out redirectUrl))
+                    if (this.TryGetRedirectionResponse(response, out Uri redirectUrl))
                     {
                         this.TraceMessage(
                             TraceFlags.AutodiscoverConfiguration,
@@ -954,8 +950,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
             Uri autodiscoverUrl;
 
             string domainName = getDomainMethod();
-            int scpHostCount;
-            List<string> hosts = this.GetAutodiscoverServiceHosts(domainName, out scpHostCount);
+            List<string> hosts = this.GetAutodiscoverServiceHosts(domainName, out int scpHostCount);
 
             if (hosts.Count == 0)
             {
@@ -1171,9 +1166,8 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <returns></returns>
     private Uri GetAutodiscoverEndpointUrl(string host)
     {
-        Uri autodiscoverUrl;
 
-        if (this.TryGetAutodiscoverEndpointUrl(host, out autodiscoverUrl))
+        if (this.TryGetAutodiscoverEndpointUrl(host, out Uri autodiscoverUrl))
         {
             return autodiscoverUrl;
         }
@@ -1193,8 +1187,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     {
         url = null;
 
-        AutodiscoverEndpoints endpoints;
-        if (this.TryGetEnabledEndpointsForHost(ref host, out endpoints))
+        if (this.TryGetEnabledEndpointsForHost(ref host, out AutodiscoverEndpoints endpoints))
         {
             url = new Uri(string.Format(AutodiscoverSoapHttpsUrl, host));
 
@@ -1379,8 +1372,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
             {
                 using (response)
                 {
-                    Uri redirectUrl;
-                    if (this.TryGetRedirectionResponse(response, out redirectUrl))
+                    if (this.TryGetRedirectionResponse(response, out Uri redirectUrl))
                     {
                         this.TraceMessage(
                             TraceFlags.AutodiscoverConfiguration,

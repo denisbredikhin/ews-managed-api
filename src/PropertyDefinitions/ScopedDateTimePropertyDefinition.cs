@@ -114,9 +114,8 @@ internal class ScopedDateTimePropertyDefinition : DateTimePropertyDefinition
             // Appointment, however, requires a custom scoping mechanism which is based on an
             // associated time zone property.
             PropertyDefinition timeZoneProperty = this.GetTimeZoneProperty(service.RequestedServerVersion);
-            object timeZonePropertyValue = null;
 
-            bool timeZonePropertyIsSet = propertyBag.TryGetProperty(timeZoneProperty, out timeZonePropertyValue);
+            bool timeZonePropertyIsSet = propertyBag.TryGetProperty(timeZoneProperty, out object timeZonePropertyValue);
 
             if (timeZonePropertyValue != null && propertyBag.IsPropertyUpdated(timeZoneProperty))
             {

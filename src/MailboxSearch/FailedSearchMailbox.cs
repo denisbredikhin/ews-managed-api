@@ -95,11 +95,9 @@ public sealed class FailedSearchMailbox
             if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.FailedMailbox))
             {
                 string mailbox = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.Mailbox);
-                int errorCode = 0;
-                int.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ErrorCode), out errorCode);
+                int.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ErrorCode), out int errorCode);
                 string errorMessage = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ErrorMessage);
-                bool isArchive = false;
-                bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsArchive), out isArchive);
+                bool.TryParse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.IsArchive), out bool isArchive);
 
                 failedMailboxes.Add(new FailedSearchMailbox(mailbox, errorCode, errorMessage, isArchive));
             }

@@ -71,9 +71,8 @@ public sealed class ImAddressDictionary : DictionaryProperty<ImAddressKey, ImAdd
             }
             else
             {
-                ImAddressEntry entry;
 
-                if (this.Entries.TryGetValue(key, out entry))
+                if (this.Entries.TryGetValue(key, out ImAddressEntry entry))
                 {
                     entry.ImAddress = value;
                     this.Changed();
@@ -100,9 +99,8 @@ public sealed class ImAddressDictionary : DictionaryProperty<ImAddressKey, ImAdd
     /// </returns>
     public bool TryGetValue(ImAddressKey key, out string imAddress)
     {
-        ImAddressEntry entry = null;
 
-        if (this.Entries.TryGetValue(key, out entry))
+        if (this.Entries.TryGetValue(key, out ImAddressEntry entry))
         {
             imAddress = entry.ImAddress;
 
