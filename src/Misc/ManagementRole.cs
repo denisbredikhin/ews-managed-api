@@ -74,12 +74,12 @@ public sealed class ManagementRoles
     {
         if (userRoles != null)
         {
-            this.userRoles = userRoles.ToArray();
+            this.userRoles = [.. userRoles];
         }
 
         if (applicationRoles != null)
         {
-            this.applicationRoles = applicationRoles.ToArray();
+            this.applicationRoles = [.. applicationRoles];
         }
     }
 

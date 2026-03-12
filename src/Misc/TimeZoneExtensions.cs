@@ -11,11 +11,11 @@ public static class TimeZoneExtensions
         string daylightDisplayName, AdjustmentRule[] adjustmentRule)
     {
         return TimeZoneInfo.CreateCustomTimeZone(id, baseOffsetToUtc, name, standardDisplayName,
-            daylightDisplayName, adjustmentRule.Select(y => y.Origin).ToArray());
+            daylightDisplayName, [.. adjustmentRule.Select(y => y.Origin)]);
     }
 
     public static AdjustmentRule[] GetAdjustmentRulesEx(this TimeZoneInfo tz)
     {
-        return tz.GetAdjustmentRules().Select( y => new AdjustmentRule(y)).ToArray();
+        return [.. tz.GetAdjustmentRules().Select( y => new AdjustmentRule(y))];
     }
 }

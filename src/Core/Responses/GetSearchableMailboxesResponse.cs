@@ -78,7 +78,7 @@ public sealed class GetSearchableMailboxesResponse : ServiceResponse
     /// </summary>
     public SearchableMailbox[] SearchableMailboxes
     {
-        get { return this.searchableMailboxes.ToArray(); }
+        get { return [.. this.searchableMailboxes]; }
     }
 
     /// <summary>

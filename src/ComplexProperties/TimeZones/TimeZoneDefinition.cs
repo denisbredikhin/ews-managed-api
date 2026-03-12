@@ -508,7 +508,7 @@ public class TimeZoneDefinition : ComplexProperty
                 this.Name,
                 creationParams.StandardDisplayName,
                 creationParams.DaylightDisplayName,
-                adjustmentRules.ToArray());
+                [.. adjustmentRules]);
         }
 
         return result;

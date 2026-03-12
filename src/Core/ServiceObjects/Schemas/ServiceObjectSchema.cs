@@ -120,7 +120,7 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     /// <param name="propFieldDelegate">The property field delegate.</param>
     internal static void ForeachPublicStaticPropertyFieldInType(Type type, PropertyFieldInfoDelegate propFieldDelegate)
     {
-        FieldInfo[] fieldInfos = type.GetRuntimeFields().ToArray();
+        FieldInfo[] fieldInfos = [.. type.GetRuntimeFields()];
 
         foreach (FieldInfo fieldInfo in fieldInfos)
         {

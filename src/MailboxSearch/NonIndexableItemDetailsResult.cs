@@ -62,7 +62,7 @@ public sealed class NonIndexableItemDetailsResult
                     }
                     while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Items));
 
-                    nonIndexableItemDetailsResult.Items = nonIndexableItems.ToArray();
+                    nonIndexableItemDetailsResult.Items = [.. nonIndexableItems];
                 }
             }
 

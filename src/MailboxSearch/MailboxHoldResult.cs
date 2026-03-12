@@ -113,7 +113,7 @@ public sealed class MailboxHoldResult
         }
         while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.MailboxHoldResult));
 
-        holdResult.Statuses = statuses.Count == 0 ? null : statuses.ToArray();
+        holdResult.Statuses = statuses.Count == 0 ? null : [.. statuses];
 
         return holdResult;
     }

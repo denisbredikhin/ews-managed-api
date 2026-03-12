@@ -1803,7 +1803,7 @@ public sealed class ExchangeService : ExchangeServiceBase
 
         PeopleQueryResults results = new()
         {
-            Personas = response.Personas.ToList(),
+            Personas = [.. response.Personas],
             TransactionId = response.TransactionId
         };
 
@@ -3120,7 +3120,7 @@ public sealed class ExchangeService : ExchangeServiceBase
             MailboxScope = mailboxScope,
             MaxItemsToReturn = maxItemsToReturn,
             AnchorMailbox = anchorMailbox,
-            Conversations = conversations.ToList()
+            Conversations = [.. conversations]
         };
 
         return request.ExecuteAsync(token);

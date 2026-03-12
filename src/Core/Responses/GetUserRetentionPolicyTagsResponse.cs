@@ -73,6 +73,6 @@ public sealed class GetUserRetentionPolicyTagsResponse : ServiceResponse
     /// </summary>
     public RetentionPolicyTag[] RetentionPolicyTags
     {
-        get { return this.retentionPolicyTags.ToArray(); }
+        get { return [.. this.retentionPolicyTags]; }
     }
 }

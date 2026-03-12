@@ -1048,7 +1048,7 @@ internal static class EwsUtilities
             StringBuilder nameBuilder = new(genericPrefix);
 
             // Note: building array of generic parameters is done recursively. Each parameter could be any type.
-            string[] genericArgs = type.GetGenericArguments().ToList<Type>().Select(t => GetPrintableTypeName(t)).ToArray<string>();
+            string[] genericArgs = [.. type.GetGenericArguments().ToList<Type>().Select(t => GetPrintableTypeName(t))];
 
             nameBuilder.Append("<");
             nameBuilder.Append(string.Join(",", genericArgs));

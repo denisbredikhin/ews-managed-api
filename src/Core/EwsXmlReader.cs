@@ -494,7 +494,7 @@ internal class EwsXmlReader
         }
         Func<char, bool> filteredChar = (x) => x != '\r' && x != '\n' && char.IsControl(x);
         if (result.Any(filteredChar))
-            result = new string(result.Where(c => !filteredChar(c)).ToArray());
+            result = new string([.. result.Where(c => !filteredChar(c))]);
         return result;
     }
 

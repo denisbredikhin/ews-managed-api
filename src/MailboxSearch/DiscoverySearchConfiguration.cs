@@ -132,7 +132,7 @@ public sealed class DiscoverySearchConfiguration
         }
         while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.DiscoverySearchConfiguration));
 
-        configuration.SearchableMailboxes = mailboxes.Count == 0 ? null : mailboxes.ToArray();
+        configuration.SearchableMailboxes = mailboxes.Count == 0 ? null : [.. mailboxes];
 
         return configuration;
     }

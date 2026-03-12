@@ -42,7 +42,7 @@ public sealed class ByteArrayArray : ComplexProperty
     /// </summary>
     public byte[][] Content
     {
-        get { return this.content.ToArray(); }
+        get { return [.. this.content]; }
     }
 
     #endregion

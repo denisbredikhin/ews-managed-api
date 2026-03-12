@@ -104,6 +104,6 @@ public sealed class FailedSearchMailbox
         }
         while (!reader.IsEndElement(rootXmlNamespace, XmlElementNames.FailedMailboxes));
 
-        return failedMailboxes.Count == 0 ? null : failedMailboxes.ToArray();
+        return failedMailboxes.Count == 0 ? null : [.. failedMailboxes];
     }
 }

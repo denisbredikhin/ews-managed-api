@@ -73,6 +73,6 @@ public sealed class GetDiscoverySearchConfigurationResponse : ServiceResponse
     /// </summary>
     public DiscoverySearchConfiguration[] DiscoverySearchConfigurations
     {
-        get { return this.configurations.ToArray(); }
+        get { return [.. this.configurations]; }
     }
 }

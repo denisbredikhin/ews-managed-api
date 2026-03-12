@@ -67,12 +67,12 @@ public sealed class SearchMailboxesResult
                 }
                 while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.MailboxSearchScopes));
                 reader.ReadEndElementIfNecessary(XmlNamespace.Types, XmlElementNames.MailboxSearchScopes);
-                searchQueries.Add(new MailboxQuery(query, mailboxSearchScopes.ToArray()));
+                searchQueries.Add(new MailboxQuery(query, [.. mailboxSearchScopes]));
             }
         }
         while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.SearchQueries));
         reader.ReadEndElementIfNecessary(XmlNamespace.Types, XmlElementNames.SearchQueries);
-        searchResult.SearchQueries = searchQueries.ToArray();
+        searchResult.SearchQueries = [.. searchQueries];
 
         searchResult.ResultType = (SearchResultType)Enum.Parse(typeof(SearchResultType), reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ResultType));
         searchResult.ItemCount = int.Parse(reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.ItemCount));
@@ -112,7 +112,7 @@ public sealed class SearchMailboxesResult
                 while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Refiners));
                 if (refiners.Count > 0)
                 {
-                    searchResult.Refiners = refiners.ToArray();
+                    searchResult.Refiners = [.. refiners];
                 }
             }
 
@@ -130,7 +130,7 @@ public sealed class SearchMailboxesResult
                 while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.MailboxStats));
                 if (mailboxStats.Count > 0)
                 {
-                    searchResult.MailboxStats = mailboxStats.ToArray();
+                    searchResult.MailboxStats = [.. mailboxStats];
                 }
             }
         }
@@ -165,7 +165,7 @@ public sealed class SearchMailboxesResult
         }
         while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.KeywordStats));
 
-        return keywordStats.Count == 0 ? null : keywordStats.ToArray();
+        return keywordStats.Count == 0 ? null : [.. keywordStats];
     }
 
     /// <summary>
@@ -281,7 +281,7 @@ public sealed class SearchMailboxesResult
         }
         while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Items));
 
-        return previewItems.Count == 0 ? null : previewItems.ToArray();
+        return previewItems.Count == 0 ? null : [.. previewItems];
     }
 
     /// <summary>
@@ -304,7 +304,7 @@ public sealed class SearchMailboxesResult
         }
         while (!reader.IsEndElement(XmlNamespace.Types, elementName));
 
-        return toRecipients.Count == 0 ? null : toRecipients.ToArray();
+        return toRecipients.Count == 0 ? null : [.. toRecipients];
     }
 
     /// <summary>
