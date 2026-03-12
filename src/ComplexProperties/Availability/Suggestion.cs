@@ -36,7 +36,7 @@ public sealed class Suggestion : ComplexProperty
 {
     private DateTime date;
     private SuggestionQuality quality;
-    private readonly Collection<TimeSuggestion> timeSuggestions = new();
+    private readonly Collection<TimeSuggestion> timeSuggestions = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Suggestion"/> class.

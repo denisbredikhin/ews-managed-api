@@ -39,11 +39,11 @@ internal class PropertyBag
     private bool isDirty;
     private bool loading;
     private bool onlySummaryPropertiesRequested;
-    private readonly List<PropertyDefinition> loadedProperties = new();
-    private readonly Dictionary<PropertyDefinition, object> properties = new();
-    private readonly Dictionary<PropertyDefinition, object> deletedProperties = new();
-    private readonly List<PropertyDefinition> modifiedProperties = new();
-    private readonly List<PropertyDefinition> addedProperties = new();
+    private readonly List<PropertyDefinition> loadedProperties = [];
+    private readonly Dictionary<PropertyDefinition, object> properties = [];
+    private readonly Dictionary<PropertyDefinition, object> deletedProperties = [];
+    private readonly List<PropertyDefinition> modifiedProperties = [];
+    private readonly List<PropertyDefinition> addedProperties = [];
     private PropertySet requestedPropertySet;
 
     /// <summary>
@@ -628,11 +628,12 @@ internal class PropertyBag
     /// <returns>True if an UpdateItem/UpdateFolder call is necessary, false otherwise.</returns>
     internal bool GetIsUpdateCallNecessary()
     {
-        List<PropertyDefinition> propertyDefinitions = new();
-
-        propertyDefinitions.AddRange(this.addedProperties);
-        propertyDefinitions.AddRange(this.modifiedProperties);
-        propertyDefinitions.AddRange(this.deletedProperties.Keys);
+        List<PropertyDefinition> propertyDefinitions =
+        [
+            .. this.addedProperties,
+            .. this.modifiedProperties,
+            .. this.deletedProperties.Keys,
+        ];
 
         foreach (PropertyDefinition propertyDefinition in propertyDefinitions)
         {

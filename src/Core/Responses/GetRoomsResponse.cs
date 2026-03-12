@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal sealed class GetRoomsResponse : ServiceResponse
 {
-    private readonly Collection<EmailAddress> rooms = new();
+    private readonly Collection<EmailAddress> rooms = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetRoomsResponse"/> class.

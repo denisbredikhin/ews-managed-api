@@ -29,7 +29,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal sealed class DeleteFolderRequest : DeleteRequest<ServiceResponse>
 {
-    private readonly FolderIdWrapperList folderIds = new();
+    private readonly FolderIdWrapperList folderIds = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DeleteFolderRequest"/> class.

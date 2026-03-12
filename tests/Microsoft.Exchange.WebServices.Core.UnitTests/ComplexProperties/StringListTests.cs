@@ -57,8 +57,10 @@ public class StringListTests
     [Fact]
     public void Add_IncreasesCount()
     {
-        var list = new StringList();
-        list.Add("item");
+        var list = new StringList
+        {
+            "item"
+        };
 
         list.Count.Should().Be(1);
     }
@@ -66,8 +68,10 @@ public class StringListTests
     [Fact]
     public void Add_ItemIsRetrievable()
     {
-        var list = new StringList();
-        list.Add("hello");
+        var list = new StringList
+        {
+            "hello"
+        };
 
         list[0].Should().Be("hello");
     }
@@ -160,9 +164,10 @@ public class StringListTests
     [Fact]
     public void Indexer_Set_UpdatesItem()
     {
-        var list = new StringList(["a", "b"]);
-
-        list[0] = "updated";
+        var list = new StringList(["a", "b"])
+        {
+            [0] = "updated"
+        };
 
         list[0].Should().Be("updated");
     }

@@ -272,7 +272,7 @@ public class ContactSchema : ItemSchema
             FieldUris.Children,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the Companies property.
@@ -284,7 +284,7 @@ public class ContactSchema : ItemSchema
             FieldUris.Companies,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the ContactSource property.
@@ -567,7 +567,7 @@ public class ContactSchema : ItemSchema
             FieldUris.DirectReports,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     #endregion
 

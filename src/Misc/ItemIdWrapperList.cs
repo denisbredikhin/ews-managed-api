@@ -35,7 +35,7 @@ internal class ItemIdWrapperList : IEnumerable<AbstractItemIdWrapper>
     /// <summary>
     /// List of <see cref="Microsoft.Exchange.WebServices.Data.Item"/>.
     /// </summary>
-    private readonly List<AbstractItemIdWrapper> itemIds = new();
+    private readonly List<AbstractItemIdWrapper> itemIds = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ItemIdWrapperList"/> class.

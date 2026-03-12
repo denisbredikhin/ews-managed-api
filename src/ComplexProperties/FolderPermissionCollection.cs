@@ -34,7 +34,7 @@ using System.Collections.ObjectModel;
 public sealed class FolderPermissionCollection : ComplexPropertyCollection<FolderPermission>
 {
     private readonly bool isCalendarFolder;
-    private readonly Collection<string> unknownEntries = new();
+    private readonly Collection<string> unknownEntries = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FolderPermissionCollection"/> class.

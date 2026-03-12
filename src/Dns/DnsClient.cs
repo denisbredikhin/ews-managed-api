@@ -46,8 +46,10 @@ internal class DnsClient
     private static readonly LazyMember<Dictionary<Type, DnsRecordType>> typeToDnsTypeMap = new(
         delegate()
         {
-            Dictionary<Type, DnsRecordType> result = new();
-            result.Add(typeof(DnsSrvRecord), DnsRecordType.SRV);
+            Dictionary<Type, DnsRecordType> result = new()
+            {
+                { typeof(DnsSrvRecord), DnsRecordType.SRV }
+            };
             return result;
         });
 
@@ -60,7 +62,7 @@ internal class DnsClient
     /// <returns>The DNS record list (never null but may be empty).</returns>
     internal static List<T> DnsQuery<T>(string domain, IPAddress dnsServerAddress) where T : DnsRecord, new()
     {
-        List<T> dnsRecordList = new();
+        List<T> dnsRecordList = [];
 
         // Each strongly-typed DnsRecord type maps to a DnsRecordType enum.
         DnsRecordType dnsRecordTypeToQuery = typeToDnsTypeMap.Member[typeof(T)];

@@ -115,7 +115,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
         }
 
         this.session = service;
-        this.subscriptions = new Dictionary<string, StreamingSubscription>();
+        this.subscriptions = [];
         this.connectionTimeout = lifetime;
     }
 
@@ -146,7 +146,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     {
         get
         {
-            List<StreamingSubscription> result = new();
+            List<StreamingSubscription> result = [];
             lock (this.lockObject)
             {
                 result.AddRange(this.subscriptions.Values);

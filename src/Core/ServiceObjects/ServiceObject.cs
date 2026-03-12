@@ -429,11 +429,7 @@ public abstract class ServiceObject
     /// <returns>Collection of property definitions.</returns>
     public Collection<PropertyDefinitionBase> GetLoadedPropertyDefinitions()
     {
-        Collection<PropertyDefinitionBase> propDefs = new();
-        foreach (PropertyDefinition propDef in this.PropertyBag.Properties.Keys)
-        {
-            propDefs.Add(propDef);
-        }
+        Collection<PropertyDefinitionBase> propDefs = [.. this.PropertyBag.Properties.Keys];
 
         if (this.GetExtendedProperties() != null)
         {

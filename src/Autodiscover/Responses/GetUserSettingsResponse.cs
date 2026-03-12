@@ -44,7 +44,7 @@ public sealed class GetUserSettingsResponse : AutodiscoverResponse
     {
         this.SmtpAddress = string.Empty;
         this.Settings = new Dictionary<UserSettingName, object>();
-        this.UserSettingErrors = new Collection<UserSettingError>();
+        this.UserSettingErrors = [];
     }
 
     /// <summary>

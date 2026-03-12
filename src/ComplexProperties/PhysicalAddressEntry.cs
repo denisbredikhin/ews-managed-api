@@ -157,17 +157,7 @@ public sealed class PhysicalAddressEntry : DictionaryEntryProperty<PhysicalAddre
         ServiceObject ewsObject,
         string ownerDictionaryXmlElementName)
     {
-        List<string> fieldsToSet = new();
-
-        foreach (string xmlElementName in this.propertyBag.AddedItems)
-        {
-            fieldsToSet.Add(xmlElementName);
-        }
-
-        foreach (string xmlElementName in this.propertyBag.ModifiedItems)
-        {
-            fieldsToSet.Add(xmlElementName);
-        }
+        List<string> fieldsToSet = [.. this.propertyBag.AddedItems, .. this.propertyBag.ModifiedItems];
 
         foreach (string xmlElementName in fieldsToSet)
         {
@@ -285,12 +275,7 @@ public sealed class PhysicalAddressEntry : DictionaryEntryProperty<PhysicalAddre
         private static readonly LazyMember<List<string>> xmlElementNames = new(
             delegate()
             {
-                List<string> result = new();
-                result.Add(Street);
-                result.Add(City);
-                result.Add(State);
-                result.Add(CountryOrRegion);
-                result.Add(PostalCode);
+                List<string> result = [Street, City, State, CountryOrRegion, PostalCode];
                 return result;
             });
 

@@ -47,9 +47,9 @@ internal class ServiceObjectInfo
     /// </summary>
     internal ServiceObjectInfo()
     {
-        this.xmlElementNameToServiceObjectClassMap = new Dictionary<string, Type>();
-        this.serviceObjectConstructorsWithServiceParam = new Dictionary<Type, CreateServiceObjectWithServiceParam>();
-        this.serviceObjectConstructorsWithAttachmentParam = new Dictionary<Type, CreateServiceObjectWithAttachmentParam>();
+        this.xmlElementNameToServiceObjectClassMap = [];
+        this.serviceObjectConstructorsWithServiceParam = [];
+        this.serviceObjectConstructorsWithAttachmentParam = [];
 
         this.InitializeServiceObjectClassMap();
     }

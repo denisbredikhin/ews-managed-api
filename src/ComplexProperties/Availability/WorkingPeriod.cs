@@ -33,7 +33,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal sealed class WorkingPeriod : ComplexProperty
 {
-    private readonly Collection<DayOfTheWeek> daysOfWeek = new();
+    private readonly Collection<DayOfTheWeek> daysOfWeek = [];
     private TimeSpan startTime;
     private TimeSpan endTime;
 

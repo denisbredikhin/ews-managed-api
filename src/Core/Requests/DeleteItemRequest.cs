@@ -29,7 +29,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal sealed class DeleteItemRequest : DeleteRequest<ServiceResponse>
 {
-    private readonly ItemIdWrapperList itemIds = new();
+    private readonly ItemIdWrapperList itemIds = [];
     private AffectedTaskOccurrence? affectedTaskOccurrences;
     private SendCancellationsMode? sendCancellationsMode;
 

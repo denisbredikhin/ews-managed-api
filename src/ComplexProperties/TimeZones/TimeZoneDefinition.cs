@@ -41,9 +41,9 @@ public class TimeZoneDefinition : ComplexProperty
 
     private string name;
     private string id;
-    private readonly Dictionary<string, TimeZonePeriod> periods = new();
-    private readonly Dictionary<string, TimeZoneTransitionGroup> transitionGroups = new();
-    private readonly List<TimeZoneTransition> transitions = new();
+    private readonly Dictionary<string, TimeZonePeriod> periods = [];
+    private readonly Dictionary<string, TimeZoneTransitionGroup> transitionGroups = [];
+    private readonly List<TimeZoneTransition> transitions = [];
 
     /// <summary>
     /// Compares the transitions.
@@ -447,7 +447,7 @@ public class TimeZoneDefinition : ComplexProperty
         TimeZoneTransitionGroup.CustomTimeZoneCreateParams creationParams =
             this.transitions[this.transitions.Count - 1].TargetGroup.GetCustomTimeZoneCreationParams();
 
-        List<AdjustmentRule> adjustmentRules = new();
+        List<AdjustmentRule> adjustmentRules = [];
 
         DateTime startDate = DateTime.MinValue;
         DateTime endDate;

@@ -53,28 +53,30 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     private static readonly SchemaTypeList allSchemaTypes = new(
         delegate()
         {
-            List<Type> typeList = new();
-            typeList.Add(typeof(AppointmentSchema));
-            typeList.Add(typeof(CalendarResponseObjectSchema));
-            typeList.Add(typeof(CancelMeetingMessageSchema));
-            typeList.Add(typeof(ContactGroupSchema));
-            typeList.Add(typeof(ContactSchema));
-            typeList.Add(typeof(ConversationSchema));
-            typeList.Add(typeof(EmailMessageSchema));
-            typeList.Add(typeof(FolderSchema));
-            typeList.Add(typeof(ItemSchema));
-            typeList.Add(typeof(MeetingMessageSchema));
-            typeList.Add(typeof(MeetingRequestSchema));
-            typeList.Add(typeof(MeetingCancellationSchema));
-            typeList.Add(typeof(MeetingResponseSchema));
-            typeList.Add(typeof(PersonaSchema));
-            typeList.Add(typeof(PostItemSchema));
-            typeList.Add(typeof(PostReplySchema));
-            typeList.Add(typeof(ResponseMessageSchema));
-            typeList.Add(typeof(ResponseObjectSchema));
-            typeList.Add(typeof(ServiceObjectSchema));
-            typeList.Add(typeof(SearchFolderSchema));
-            typeList.Add(typeof(TaskSchema));
+            List<Type> typeList =
+            [
+                typeof(AppointmentSchema),
+                typeof(CalendarResponseObjectSchema),
+                typeof(CancelMeetingMessageSchema),
+                typeof(ContactGroupSchema),
+                typeof(ContactSchema),
+                typeof(ConversationSchema),
+                typeof(EmailMessageSchema),
+                typeof(FolderSchema),
+                typeof(ItemSchema),
+                typeof(MeetingMessageSchema),
+                typeof(MeetingRequestSchema),
+                typeof(MeetingCancellationSchema),
+                typeof(MeetingResponseSchema),
+                typeof(PersonaSchema),
+                typeof(PostItemSchema),
+                typeof(PostReplySchema),
+                typeof(ResponseMessageSchema),
+                typeof(ResponseObjectSchema),
+                typeof(ServiceObjectSchema),
+                typeof(SearchFolderSchema),
+                typeof(TaskSchema),
+            ];
 
 #if DEBUG
             // Verify that all Schema types in the Managed API assembly have been included.
@@ -96,7 +98,7 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
     private static readonly PropertyDefinitionDictionary allSchemaProperties = new(
         delegate()
         {
-            Dictionary<string, PropertyDefinitionBase> propDefDictionary = new();
+            Dictionary<string, PropertyDefinitionBase> propDefDictionary = [];
             foreach (Type type in ServiceObjectSchema.allSchemaTypes.Member)
             {
                 ServiceObjectSchema.AddSchemaPropertiesToDictionary(type, propDefDictionary);
@@ -230,11 +232,11 @@ public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
             ExchangeVersion.Exchange2007_SP1,
             delegate() { return new ExtendedPropertyCollection(); });
 
-    private readonly Dictionary<string, PropertyDefinition> properties = new();
-    private readonly List<PropertyDefinition> visibleProperties = new();
-    private readonly List<PropertyDefinition> firstClassProperties = new();
-    private readonly List<PropertyDefinition> firstClassSummaryProperties = new();
-    private readonly List<IndexedPropertyDefinition> indexedProperties = new();
+    private readonly Dictionary<string, PropertyDefinition> properties = [];
+    private readonly List<PropertyDefinition> visibleProperties = [];
+    private readonly List<PropertyDefinition> firstClassProperties = [];
+    private readonly List<PropertyDefinition> firstClassSummaryProperties = [];
+    private readonly List<IndexedPropertyDefinition> indexedProperties = [];
 
     /// <summary>
     /// Registers a schema property.

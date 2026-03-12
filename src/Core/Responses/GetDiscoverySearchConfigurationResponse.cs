@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 public sealed class GetDiscoverySearchConfigurationResponse : ServiceResponse
 {
-    readonly List<DiscoverySearchConfiguration> configurations = new();
+    readonly List<DiscoverySearchConfiguration> configurations = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetDiscoverySearchConfigurationResponse"/> class.

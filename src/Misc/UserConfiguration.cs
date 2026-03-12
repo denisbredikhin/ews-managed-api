@@ -598,7 +598,7 @@ public class UserConfiguration
     private void InitializeProperties(UserConfigurationProperties requestedProperties)
     {
         this.itemId = null;
-        this.dictionary = new UserConfigurationDictionary();
+        this.dictionary = [];
         this.xmlData = null;
         this.binaryData = null;
         this.propertiesAvailableForAccess = requestedProperties;

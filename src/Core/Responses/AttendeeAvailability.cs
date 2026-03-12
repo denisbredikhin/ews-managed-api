@@ -33,8 +33,8 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class AttendeeAvailability : ServiceResponse
 {
-    private readonly Collection<CalendarEvent> calendarEvents = new();
-    private readonly Collection<LegacyFreeBusyStatus> mergedFreeBusyStatus = new();
+    private readonly Collection<CalendarEvent> calendarEvents = [];
+    private readonly Collection<LegacyFreeBusyStatus> mergedFreeBusyStatus = [];
     private FreeBusyViewType viewType;
     private WorkingHours workingHours;
 

@@ -37,7 +37,7 @@ public sealed class PeopleQueryResults : IPeopleQueryResults
     /// </summary>
     internal PeopleQueryResults()
     {
-        this.Personas = new List<Persona>();
+        this.Personas = [];
     }
 
     /// <summary>

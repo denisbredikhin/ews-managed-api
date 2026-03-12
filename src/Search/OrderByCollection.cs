@@ -42,7 +42,7 @@ public sealed class OrderByCollection : IEnumerable<PropertyDefinitionSortDirect
     /// </summary>
     internal OrderByCollection()
     {
-        this.propDefSortOrderPairList = new List<PropertyDefinitionSortDirectionPair>();
+        this.propDefSortOrderPairList = [];
     }
 
     /// <summary>

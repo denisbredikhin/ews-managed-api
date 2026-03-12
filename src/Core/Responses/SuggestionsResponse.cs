@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 internal sealed class SuggestionsResponse : ServiceResponse
 {
-    private readonly Collection<Suggestion> daySuggestions = new();
+    private readonly Collection<Suggestion> daySuggestions = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SuggestionsResponse"/> class.

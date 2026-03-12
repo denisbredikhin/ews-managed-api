@@ -35,7 +35,7 @@ internal sealed class GetUserUnifiedGroupsResponse : ServiceResponse
     /// <summary>
     /// The UnifiedGroups Sets associated with this response
     /// </summary>
-    private readonly Collection<UnifiedGroupsSet> groupsSets = new();
+    private readonly Collection<UnifiedGroupsSet> groupsSets = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetUserUnifiedGroupsResponse"/> class.

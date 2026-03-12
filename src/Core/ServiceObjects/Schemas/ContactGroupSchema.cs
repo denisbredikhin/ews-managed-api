@@ -57,7 +57,7 @@ public class ContactGroupSchema : ItemSchema
             FieldUris.Members,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate,
             ExchangeVersion.Exchange2010,
-            delegate() { return new GroupMemberCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// This must be declared after the property definitions.

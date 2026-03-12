@@ -36,7 +36,7 @@ public sealed class TimeSuggestion : ComplexProperty
     private DateTime meetingTime;
     private bool isWorkTime;
     private SuggestionQuality quality;
-    private readonly Collection<Conflict> conflicts = new();
+    private readonly Collection<Conflict> conflicts = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TimeSuggestion"/> class.

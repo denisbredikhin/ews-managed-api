@@ -38,8 +38,8 @@ public sealed class FindItemsResults<TItem> : IEnumerable<TItem>
     private int totalCount;
     private int? nextPageOffset;
     private bool moreAvailable;
-    private readonly Collection<TItem> items = new();
-    private readonly Collection<HighlightTerm> highlightTerms = new();
+    private readonly Collection<TItem> items = [];
+    private readonly Collection<HighlightTerm> highlightTerms = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FindItemsResults&lt;T&gt;"/> class.

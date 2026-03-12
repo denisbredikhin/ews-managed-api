@@ -255,7 +255,7 @@ public class PersonaSchema : ItemSchema
             FieldUris.EmailAddresses,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2013_SP1,
-            delegate() { return new PersonaEmailAddressCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the ImAddress property.
@@ -323,7 +323,7 @@ public class PersonaSchema : ItemSchema
             FieldUris.Attributions,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2013_SP1,
-            delegate() { return new AttributionCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the OfficeLocations property.
@@ -335,7 +335,7 @@ public class PersonaSchema : ItemSchema
             FieldUris.OfficeLocations,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2013_SP1,
-            delegate() { return new AttributedStringCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the ImAddresses property.
@@ -347,7 +347,7 @@ public class PersonaSchema : ItemSchema
             FieldUris.ImAddresses,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2013_SP1,
-            delegate() { return new AttributedStringCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the Departments property.
@@ -359,7 +359,7 @@ public class PersonaSchema : ItemSchema
             FieldUris.Departments,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2013_SP1,
-            delegate() { return new AttributedStringCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the ThirdPartyPhotoUrls property.
@@ -371,7 +371,7 @@ public class PersonaSchema : ItemSchema
             FieldUris.ThirdPartyPhotoUrls,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2013_SP1,
-            delegate() { return new AttributedStringCollection(); });
+            delegate() { return []; });
 
     // This must be declared after the property definitions
     internal static new readonly PersonaSchema Instance = new();

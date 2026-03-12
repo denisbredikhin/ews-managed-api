@@ -398,7 +398,7 @@ public class Person : ComplexProperty
                 this.CompanyProfile.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.CompanyProfile);
                 break;
             case XmlElementNames.Insights:
-                this.Insights = new PersonInsightCollection();
+                this.Insights = [];
                 this.Insights.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.Insights);
                 break;
             case XmlElementNames.UserProfilePicture:

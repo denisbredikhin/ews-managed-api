@@ -52,7 +52,7 @@ internal sealed class OutlookAccount
     /// </summary>
     internal OutlookAccount()
     {
-        this.protocols = new Dictionary<OutlookProtocolType, OutlookProtocol>();
+        this.protocols = [];
         this.alternateMailboxes = new AlternateMailboxCollection();
     }
 

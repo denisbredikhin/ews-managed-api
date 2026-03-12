@@ -54,7 +54,7 @@ public sealed class NonIndexableItemStatistic
     /// <returns>List of non indexable item statistic object</returns>
     internal static List<NonIndexableItemStatistic> LoadFromXml(EwsServiceXmlReader reader)
     {
-        List<NonIndexableItemStatistic> results = new();
+        List<NonIndexableItemStatistic> results = [];
 
         reader.Read();
         if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.NonIndexableItemStatistics))

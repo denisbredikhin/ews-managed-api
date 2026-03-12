@@ -37,7 +37,7 @@ internal class ArchiveItemRequest : MultiResponseServiceRequest<ArchiveItemRespo
     /// <summary>
     /// Items
     /// </summary>
-    private readonly ItemIdWrapperList ids = new();
+    private readonly ItemIdWrapperList ids = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ArchiveItemRequest"/> class.

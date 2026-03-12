@@ -37,7 +37,7 @@ public abstract class SyncResponse<TServiceObject, TChange> : ServiceResponse
     where TServiceObject : ServiceObject
     where TChange : Change
 {
-    private readonly ChangeCollection<TChange> changes = new();
+    private readonly ChangeCollection<TChange> changes = [];
     private readonly PropertySet propertySet;
 
     /// <summary>

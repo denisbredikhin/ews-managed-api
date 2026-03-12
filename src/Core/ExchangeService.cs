@@ -1786,7 +1786,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(view, nameof(view));
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2015, "FindPeople");
 
-        context ??= new Dictionary<string, string>();
+        context ??= [];
 
         queryMode ??= PeopleQueryMode.Auto;
 
@@ -3170,8 +3170,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                                             ConversationSortOrder? sortOrder,
                                             CancellationToken token = default)
     {
-        List<ConversationRequest> conversations = new();
-        conversations.Add(new ConversationRequest(conversationId, syncState));
+        List<ConversationRequest> conversations = [new ConversationRequest(conversationId, syncState)];
 
         return (await this.InternalGetConversationItems(
                             conversations,
@@ -3210,8 +3209,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(anchorMailbox, nameof(anchorMailbox));
 
-        List<ConversationRequest> conversations = new();
-        conversations.Add(new ConversationRequest(conversationId, syncState));
+        List<ConversationRequest> conversations = [new ConversationRequest(conversationId, syncState)];
 
         return (await this.InternalGetConversationItems(
                             conversations,
@@ -4703,7 +4701,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     public Task<ServiceResponseCollection<GetClientAccessTokenResponse>> GetClientAccessToken(IEnumerable<KeyValuePair<string, ClientAccessTokenType>> idAndTypes)
     {
         GetClientAccessTokenRequest request = new(this, ServiceErrorHandling.ReturnErrors);
-        List<ClientAccessTokenRequest> requestList = new();
+        List<ClientAccessTokenRequest> requestList = [];
         foreach (KeyValuePair<string, ClientAccessTokenType> idAndType in idAndTypes)
         {
             ClientAccessTokenRequest clientAccessTokenRequest = new(idAndType.Key, idAndType.Value);

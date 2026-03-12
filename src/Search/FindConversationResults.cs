@@ -37,8 +37,8 @@ public sealed class FindConversationResults
     /// </summary>
     internal FindConversationResults()
     {
-        this.Conversations = new Collection<Conversation>();
-        this.HighlightTerms = new Collection<HighlightTerm>();
+        this.Conversations = [];
+        this.HighlightTerms = [];
         this.TotalCount = null;
    }
 

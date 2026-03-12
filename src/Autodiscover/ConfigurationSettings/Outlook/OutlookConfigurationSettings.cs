@@ -42,10 +42,12 @@ internal sealed class OutlookConfigurationSettings : ConfigurationSettingsBase
     private static readonly LazyMember<List<UserSettingName>> allOutlookProviderSettings = new(
         () =>
         {
-            List<UserSettingName> results = new();
-            results.AddRange(OutlookUser.AvailableUserSettings);
-            results.AddRange(OutlookProtocol.AvailableUserSettings);
-            results.Add(UserSettingName.AlternateMailboxes);
+            List<UserSettingName> results =
+            [
+                .. OutlookUser.AvailableUserSettings,
+                .. OutlookProtocol.AvailableUserSettings,
+                UserSettingName.AlternateMailboxes,
+            ];
             return results;
         });
     #endregion

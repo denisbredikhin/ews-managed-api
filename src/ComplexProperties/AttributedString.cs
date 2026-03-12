@@ -127,7 +127,7 @@ public sealed class AttributedString : ComplexProperty
         if (!reader.IsEmptyElement)
         {
             string localName = reader.LocalName;
-            this.attributionList = new List<string>();
+            this.attributionList = [];
 
             do
             {

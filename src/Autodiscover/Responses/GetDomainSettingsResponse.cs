@@ -47,8 +47,8 @@ public sealed class GetDomainSettingsResponse : AutodiscoverResponse
         : base()
     {
         this.domain = string.Empty;
-        this.settings = new Dictionary<DomainSettingName, object>();
-        this.domainSettingErrors = new Collection<DomainSettingError>();
+        this.settings = [];
+        this.domainSettingErrors = [];
     }
 
     /// <summary>

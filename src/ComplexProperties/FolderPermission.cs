@@ -37,7 +37,7 @@ public sealed class FolderPermission : ComplexProperty
     private static readonly LazyMember<Dictionary<FolderPermissionLevel, FolderPermission>> defaultPermissions = new(
         delegate()
         {
-            Dictionary<FolderPermissionLevel, FolderPermission> result = new();
+            Dictionary<FolderPermissionLevel, FolderPermission> result = [];
 
             FolderPermission permission = new()
             {
@@ -204,7 +204,7 @@ public sealed class FolderPermission : ComplexProperty
     private static readonly LazyMember<List<FolderPermission>> levelVariants = new(
         delegate()
         {
-            List<FolderPermission> results = new();
+            List<FolderPermission> results = [];
 
             FolderPermission permissionNone = FolderPermission.defaultPermissions.Member[FolderPermissionLevel.None];
             FolderPermission permissionOwner = FolderPermission.defaultPermissions.Member[FolderPermissionLevel.Owner];

@@ -37,7 +37,7 @@ public sealed class FindPeopleResults
     /// </summary>
     internal FindPeopleResults()
     {
-        this.Personas = new Collection<Persona>();
+        this.Personas = [];
     }
 
     /// <summary>

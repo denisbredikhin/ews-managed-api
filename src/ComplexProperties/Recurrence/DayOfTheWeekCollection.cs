@@ -33,7 +33,7 @@ using System.Collections.Generic;
 /// </summary>
 public sealed class DayOfTheWeekCollection : ComplexProperty, IEnumerable<DayOfTheWeek>
 {
-    private readonly List<DayOfTheWeek> items = new();
+    private readonly List<DayOfTheWeek> items = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DayOfTheWeekCollection"/> class.

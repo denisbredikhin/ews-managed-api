@@ -187,10 +187,7 @@ public sealed class ExtendedPropertyCollection : ComplexPropertyCollection<Exten
         ServiceObject ewsObject,
         PropertyDefinition propertyDefinition)
     {
-        List<ExtendedProperty> propertiesToSet = new();
-
-        propertiesToSet.AddRange(this.AddedItems);
-        propertiesToSet.AddRange(this.ModifiedItems);
+        List<ExtendedProperty> propertiesToSet = [.. this.AddedItems, .. this.ModifiedItems];
 
         foreach (ExtendedProperty extendedProperty in propertiesToSet)
         {

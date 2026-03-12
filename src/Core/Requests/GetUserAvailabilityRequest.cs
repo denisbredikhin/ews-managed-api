@@ -139,7 +139,7 @@ internal sealed class GetUserAvailabilityRequest : SimpleServiceRequestBase
 
         if (this.IsFreeBusyViewRequested)
         {
-            serviceResponse.AttendeesAvailability = new ServiceResponseCollection<AttendeeAvailability>();
+            serviceResponse.AttendeesAvailability = [];
 
             reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.FreeBusyResponseArray);
 

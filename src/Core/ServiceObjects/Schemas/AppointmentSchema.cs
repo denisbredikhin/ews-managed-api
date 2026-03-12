@@ -292,7 +292,7 @@ public class AppointmentSchema : ItemSchema
             FieldUris.RequiredAttendees,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new AttendeeCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the OptionalAttendees property.
@@ -304,7 +304,7 @@ public class AppointmentSchema : ItemSchema
             FieldUris.OptionalAttendees,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new AttendeeCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the Resources property.
@@ -316,7 +316,7 @@ public class AppointmentSchema : ItemSchema
             FieldUris.Resources,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new AttendeeCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the ConflictingMeetingCount property.

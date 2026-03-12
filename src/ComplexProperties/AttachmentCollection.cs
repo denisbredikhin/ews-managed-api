@@ -285,7 +285,7 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// </summary>
     internal async System.Threading.Tasks.Task Save(CancellationToken token = default)
     {
-        List<Attachment> attachments = new();
+        List<Attachment> attachments = [];
 
         // Retrieve a list of attachments that have to be deleted.
         foreach (Attachment attachment in this.RemovedItems)

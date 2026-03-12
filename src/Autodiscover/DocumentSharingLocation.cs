@@ -262,7 +262,7 @@ public sealed class DocumentSharingLocation
                         break;
 
                     case XmlElementNames.SupportedFileExtensions:
-                        List<string> fileExtensions = new();
+                        List<string> fileExtensions = [];
                         reader.Read();
                         while (reader.IsStartElement(XmlNamespace.Autodiscover, XmlElementNames.FileExtension))
                         {                                

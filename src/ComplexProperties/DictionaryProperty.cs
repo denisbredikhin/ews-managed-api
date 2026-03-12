@@ -37,10 +37,10 @@ using System.ComponentModel;
 public abstract class DictionaryProperty<TKey, TEntry> : ComplexProperty, ICustomUpdateSerializer
     where TEntry : DictionaryEntryProperty<TKey>
 {
-    private readonly Dictionary<TKey, TEntry> entries = new();
-    private readonly Dictionary<TKey, TEntry> removedEntries = new();
-    private readonly List<TKey> addedEntries = new();
-    private readonly List<TKey> modifiedEntries = new();
+    private readonly Dictionary<TKey, TEntry> entries = [];
+    private readonly Dictionary<TKey, TEntry> removedEntries = [];
+    private readonly List<TKey> addedEntries = [];
+    private readonly List<TKey> modifiedEntries = [];
 
     /// <summary>
     /// Entry was changed.
@@ -306,7 +306,7 @@ public abstract class DictionaryProperty<TKey, TEntry> : ComplexProperty, ICusto
         ServiceObject ewsObject,
         PropertyDefinition propertyDefinition)
     {
-        List<TEntry> tempEntries = new();
+        List<TEntry> tempEntries = [];
 
         foreach (TKey key in this.addedEntries)
         {

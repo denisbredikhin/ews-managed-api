@@ -87,19 +87,19 @@ internal class DirectoryHelper
         {
             this.TraceMessage(
                 string.Format("LDAP call failed, exception: {0}", e.ToString()));
-            scpUrlList = new List<string>();
+            scpUrlList = [];
         }
         catch (NotSupportedException e)
         {
             this.TraceMessage(
                 string.Format("LDAP call failed, exception: {0}", e.ToString()));
-            scpUrlList = new List<string>();
+            scpUrlList = [];
         }
         catch (COMException e)
         {
             this.TraceMessage(
                 string.Format("LDAP call failed, exception: {0}", e.ToString()));
-            scpUrlList = new List<string>();
+            scpUrlList = [];
         }
 
         return scpUrlList;
@@ -132,7 +132,7 @@ internal class DirectoryHelper
         string configPath = null;
 
         // The list of SCP URLs.
-        List<string> scpUrlList = new();
+        List<string> scpUrlList = [];
 
         // Get the LDAP root path.
         rootDsePath = (ldapPath == null) ? "LDAP://RootDSE" : ldapPath + "/RootDSE";
@@ -229,7 +229,7 @@ internal class DirectoryHelper
                 // Search for SCP entries.
                 string sitePrefix = "Site=";
                 string siteMatch = sitePrefix + computerSiteName;
-                List<string> scpListNoSiteMatch = new();
+                List<string> scpListNoSiteMatch = [];
 
                 this.TraceMessage(
                     string.Format("Scanning for SCP urls for the current computer {0}", siteMatch));

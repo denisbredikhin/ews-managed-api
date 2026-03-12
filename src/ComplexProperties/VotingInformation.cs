@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class VotingInformation : ComplexProperty
 {
-    private readonly Collection<VotingOptionData> userOptions = new();
+    private readonly Collection<VotingOptionData> userOptions = [];
     private string votingResponse;
 
     /// <summary>

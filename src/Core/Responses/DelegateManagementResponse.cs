@@ -57,7 +57,7 @@ internal class DelegateManagementResponse : ServiceResponse
     {
         if (this.ErrorCode == ServiceError.NoError)
         {
-            this.delegateUserResponses = new Collection<DelegateUserResponse>();
+            this.delegateUserResponses = [];
 
             reader.Read();
 

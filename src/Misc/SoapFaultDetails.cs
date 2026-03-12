@@ -76,7 +76,7 @@ internal class SoapFaultDetails
     /// a few cases where SOAP faults may include MessageXml details (e.g. CASOverBudgetException includes
     /// BackoffTime value).
     /// </summary>
-    private Dictionary<string, string> errorDetails = new();
+    private Dictionary<string, string> errorDetails = [];
 
     #endregion
 

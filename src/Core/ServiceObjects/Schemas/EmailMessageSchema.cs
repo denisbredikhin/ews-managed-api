@@ -69,7 +69,7 @@ public class EmailMessageSchema : ItemSchema
             FieldUris.ToRecipients,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the BccRecipients property.
@@ -81,7 +81,7 @@ public class EmailMessageSchema : ItemSchema
             FieldUris.BccRecipients,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the CcRecipients property.
@@ -93,7 +93,7 @@ public class EmailMessageSchema : ItemSchema
             FieldUris.CcRecipients,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the ConversationIndex property.
@@ -207,7 +207,7 @@ public class EmailMessageSchema : ItemSchema
             FieldUris.ReplyTo,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the Sender property.
@@ -280,7 +280,7 @@ public class EmailMessageSchema : ItemSchema
             FieldUris.Likers,
             PropertyDefinitionFlags.AutoInstantiateOnRead,
             ExchangeVersion.Exchange2015,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     // This must be after the declaration of property definitions
     internal static new readonly EmailMessageSchema Instance = new();

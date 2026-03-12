@@ -42,7 +42,7 @@ public sealed class ExpandGroupResults : IEnumerable<EmailAddress>
     /// <summary>
     /// DL members.
     /// </summary>
-    private readonly Collection<EmailAddress> members = new();
+    private readonly Collection<EmailAddress> members = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ExpandGroupResults"/> class.

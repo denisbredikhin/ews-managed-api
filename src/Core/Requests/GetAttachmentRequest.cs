@@ -33,9 +33,9 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class GetAttachmentRequest : MultiResponseServiceRequest<GetAttachmentResponse>
 {
-    private readonly List<Attachment> attachments = new();
-    private readonly List<string> attachmentIds = new();
-    private readonly List<PropertyDefinitionBase> additionalProperties = new();
+    private readonly List<Attachment> attachments = [];
+    private readonly List<string> attachmentIds = [];
+    private readonly List<PropertyDefinitionBase> additionalProperties = [];
     private BodyType? bodyType;
 
     /// <summary>

@@ -36,7 +36,7 @@ internal class TimeZoneTransitionGroup : ComplexProperty
 {
     private readonly TimeZoneDefinition timeZoneDefinition;
     private string id;
-    private readonly List<TimeZoneTransition> transitions = new();
+    private readonly List<TimeZoneTransition> transitions = [];
     private TimeZoneTransition transitionToStandard;
     private TimeZoneTransition transitionToDaylight;
 

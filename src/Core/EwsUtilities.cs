@@ -1387,7 +1387,7 @@ internal static class EwsUtilities
     /// <returns>Dictionary of enum values to versions.</returns>
     private static Dictionary<Enum, ExchangeVersion> BuildEnumDict(Type enumType)
     {
-        Dictionary<Enum, ExchangeVersion> dict = new();
+        Dictionary<Enum, ExchangeVersion> dict = [];
         string[] names = Enum.GetNames(enumType);
         foreach (string name in names)
         {
@@ -1430,7 +1430,7 @@ internal static class EwsUtilities
     /// <returns>The mapping from enum to schema name</returns>
     private static Dictionary<string, Enum> BuildSchemaToEnumDict(Type enumType)
     {
-        Dictionary<string, Enum> dict = new();
+        Dictionary<string, Enum> dict = [];
         string[] names = Enum.GetNames(enumType);
         foreach (string name in names)
         {
@@ -1452,7 +1452,7 @@ internal static class EwsUtilities
     /// <returns>The mapping from enum to schema name</returns>
     private static Dictionary<Enum, string> BuildEnumToSchemaDict(Type enumType)
     {
-        Dictionary<Enum, string> dict = new();
+        Dictionary<Enum, string> dict = [];
         string[] names = Enum.GetNames(enumType);
         foreach (string name in names)
         {

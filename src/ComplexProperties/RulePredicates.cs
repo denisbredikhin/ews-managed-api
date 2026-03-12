@@ -206,17 +206,17 @@ public sealed class RulePredicates : ComplexProperty
     internal RulePredicates()
         : base()
     {
-        this.categories = new StringList();
-        this.containsBodyStrings = new StringList();
-        this.containsHeaderStrings = new StringList();
-        this.containsRecipientStrings = new StringList();
-        this.containsSenderStrings = new StringList();
-        this.containsSubjectOrBodyStrings = new StringList();
-        this.containsSubjectStrings = new StringList();
+        this.categories = [];
+        this.containsBodyStrings = [];
+        this.containsHeaderStrings = [];
+        this.containsRecipientStrings = [];
+        this.containsSenderStrings = [];
+        this.containsSubjectOrBodyStrings = [];
+        this.containsSubjectStrings = [];
         this.fromAddresses = new EmailAddressCollection(XmlElementNames.Address);
-        this.fromConnectedAccounts = new StringList();
-        this.itemClasses = new StringList();
-        this.messageClassifications = new StringList();
+        this.fromConnectedAccounts = [];
+        this.itemClasses = [];
+        this.messageClassifications = [];
         this.sentToAddresses = new EmailAddressCollection(XmlElementNames.Address);
         this.withinDateRange = new RulePredicateDateRange();
         this.withinSizeRange = new RulePredicateSizeRange();

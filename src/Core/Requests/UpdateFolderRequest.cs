@@ -33,7 +33,7 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class UpdateFolderRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    private readonly List<Folder> folders = new();
+    private readonly List<Folder> folders = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UpdateFolderRequest"/> class.

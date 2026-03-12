@@ -105,7 +105,7 @@ internal sealed class FindItemResponse<TItem> : ServiceResponse
                     {
                         string groupIndex = reader.ReadElementValue(XmlNamespace.Types, XmlElementNames.GroupIndex);
 
-                        List<TItem> itemList = new();
+                        List<TItem> itemList = [];
                         InternalReadItemsFromXml(
                             reader,
                             this.propertySet,

@@ -35,7 +35,7 @@ using System.Collections.ObjectModel;
 public sealed class WorkingHours : ComplexProperty
 {
     private TimeZoneInfo timeZone;
-    private readonly Collection<DayOfTheWeek> daysOfTheWeek = new();
+    private readonly Collection<DayOfTheWeek> daysOfTheWeek = [];
     private TimeSpan startTime;
     private TimeSpan endTime;
 
@@ -64,7 +64,7 @@ public sealed class WorkingHours : ComplexProperty
                 
                 return true;
             case XmlElementNames.WorkingPeriodArray:
-                List<WorkingPeriod> workingPeriods = new();
+                List<WorkingPeriod> workingPeriods = [];
 
                 do
                 {

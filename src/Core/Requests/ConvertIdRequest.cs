@@ -33,7 +33,7 @@ using System.Collections.Generic;
 internal sealed class ConvertIdRequest : MultiResponseServiceRequest<ConvertIdResponse>
 {
     private IdFormat destinationFormat = IdFormat.EwsId;
-    private readonly List<AlternateIdBase> ids = new();
+    private readonly List<AlternateIdBase> ids = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConvertIdRequest"/> class.

@@ -54,9 +54,11 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     private static readonly DefaultPropertySetDictionary defaultPropertySetMap = new(
         delegate()
         {
-            Dictionary<BasePropertySet, string> result = new();
-            result.Add(BasePropertySet.IdOnly, "IdOnly");
-            result.Add(BasePropertySet.FirstClassProperties, "AllProperties");
+            Dictionary<BasePropertySet, string> result = new()
+            {
+                { BasePropertySet.IdOnly, "IdOnly" },
+                { BasePropertySet.FirstClassProperties, "AllProperties" }
+            };
             return result;
         });
 
@@ -68,7 +70,7 @@ public sealed class PropertySet : ISelfValidate, IEnumerable<PropertyDefinitionB
     /// <summary>
     /// The list of additional properties included in this property set.
     /// </summary>
-    private readonly List<PropertyDefinitionBase> additionalProperties = new();
+    private readonly List<PropertyDefinitionBase> additionalProperties = [];
 
     /// <summary>
     /// The requested body type for get and find operations. If null, the "best body" is returned.

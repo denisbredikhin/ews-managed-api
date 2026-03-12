@@ -35,12 +35,13 @@ internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveN
     private static readonly LazyMember<Dictionary<ResolveNameSearchLocation, string>> searchScopeMap = new(
         delegate
         {
-            Dictionary<ResolveNameSearchLocation, string> map = new();
-
-            map.Add(ResolveNameSearchLocation.DirectoryOnly, "ActiveDirectory");
-            map.Add(ResolveNameSearchLocation.DirectoryThenContacts, "ActiveDirectoryContacts");
-            map.Add(ResolveNameSearchLocation.ContactsOnly, "Contacts");
-            map.Add(ResolveNameSearchLocation.ContactsThenDirectory, "ContactsActiveDirectory");
+            Dictionary<ResolveNameSearchLocation, string> map = new()
+            {
+                { ResolveNameSearchLocation.DirectoryOnly, "ActiveDirectory" },
+                { ResolveNameSearchLocation.DirectoryThenContacts, "ActiveDirectoryContacts" },
+                { ResolveNameSearchLocation.ContactsOnly, "Contacts" },
+                { ResolveNameSearchLocation.ContactsThenDirectory, "ContactsActiveDirectory" }
+            };
 
             return map;
         });
@@ -49,7 +50,7 @@ internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveN
     private bool returnFullContactData;
     private ResolveNameSearchLocation searchLocation;
     private PropertySet? contactDataPropertySet;
-    private readonly FolderIdWrapperList parentFolderIds = new();
+    private readonly FolderIdWrapperList parentFolderIds = [];
 
     /// <summary>
     /// Asserts the valid.

@@ -42,7 +42,7 @@ public sealed class GroupedFindItemsResults<TItem> : IEnumerable<ItemGroup<TItem
     /// <summary>
     /// List of ItemGroups.
     /// </summary>
-    private readonly Collection<ItemGroup<TItem>> itemGroups = new();
+    private readonly Collection<ItemGroup<TItem>> itemGroups = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GroupedFindItemsResults&lt;TItem&gt;"/> class.

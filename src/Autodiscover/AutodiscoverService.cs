@@ -400,7 +400,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         {
             // No Url or Domain specified, need to figure out which endpoint to use.
             int currentHop = 1;
-            List<string> redirectionEmailAddresses = new();
+            List<string> redirectionEmailAddresses = [];
             return (await this.InternalGetLegacyUserSettings<TSettings>(
                 emailAddress,
                 redirectionEmailAddresses,
@@ -660,7 +660,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     {
         TSettings settings = null;
 
-        List<string> redirectionEmailAddresses = new();
+        List<string> redirectionEmailAddresses = [];
 
         // Bug 60274: Performing a non-SSL HTTP GET to retrieve a redirection URL is potentially unsafe. We allow the caller 
         // to specify delegate to be called to determine whether we are allowed to use the redirection URL. 
@@ -811,11 +811,9 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <returns></returns>
     internal async Task<GetUserSettingsResponse> InternalGetSoapUserSettings(string smtpAddress, List<UserSettingName> requestedSettings)
     {
-        List<string> smtpAddresses = new();
-        smtpAddresses.Add(smtpAddress);
+        List<string> smtpAddresses = [smtpAddress];
 
-        List<string> redirectionEmailAddresses = new();
-        redirectionEmailAddresses.Add(smtpAddress.ToLowerInvariant());
+        List<string> redirectionEmailAddresses = [smtpAddress.ToLowerInvariant()];
 
         for (int currentHop = 0; currentHop < AutodiscoverService.AutodiscoverMaxRedirections; currentHop++)
         {
@@ -1290,7 +1288,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <returns>List of Autodiscover URLs.</returns>
     internal List<Uri> GetAutodiscoverServiceUrls(string domainName, out int scpHostCount)
     {
-        List<Uri> urls = new();
+        List<Uri> urls = [];
 
         if (this.enableScpLookup)
         {
@@ -1320,7 +1318,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <returns>List of host names.</returns>
     internal List<string> GetAutodiscoverServiceHosts(string domainName, out int scpHostCount)
     {
-        List<string> serviceHosts = new();
+        List<string> serviceHosts = [];
         foreach (Uri url in this.GetAutodiscoverServiceUrls(domainName, out scpHostCount))
         {
             serviceHosts.Add(url.Host);
@@ -1762,8 +1760,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         ExchangeVersion? requestedVersion,
         params DomainSettingName[] domainSettingNames)
     {
-        List<string> domains = new(1);
-        domains.Add(domain);
+        List<string> domains = [domain];
         List<DomainSettingName> settings = new(domainSettingNames);
         return (await this.GetDomainSettings(domains, settings, requestedVersion))[0];
     }

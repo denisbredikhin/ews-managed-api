@@ -47,11 +47,13 @@ internal sealed class OutlookUser
     private static readonly LazyMember<ConverterDictionary> converterDictionary = new(
         delegate()
         {
-            var results = new ConverterDictionary();
-            results.Add(UserSettingName.UserDisplayName,            u => u.displayName);
-            results.Add(UserSettingName.UserDN,                     u => u.legacyDN);
-            results.Add(UserSettingName.UserDeploymentId,           u => u.deploymentId);
-            results.Add(UserSettingName.AutoDiscoverSMTPAddress,    u => u.autodiscoverAMTPAddress);
+            var results = new ConverterDictionary
+            {
+                { UserSettingName.UserDisplayName, u => u.displayName },
+                { UserSettingName.UserDN, u => u.legacyDN },
+                { UserSettingName.UserDeploymentId, u => u.deploymentId },
+                { UserSettingName.AutoDiscoverSMTPAddress, u => u.autodiscoverAMTPAddress }
+            };
             return results;
         });
 

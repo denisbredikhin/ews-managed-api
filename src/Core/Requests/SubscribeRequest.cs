@@ -158,8 +158,8 @@ internal abstract class SubscribeRequest<TSubscription> : MultiResponseServiceRe
     internal SubscribeRequest(ExchangeService service)
         : base(service, ServiceErrorHandling.ThrowOnError)
     {
-        this.FolderIds = new FolderIdWrapperList();
-        this.EventTypes = new List<EventType>();
+        this.FolderIds = [];
+        this.EventTypes = [];
     }
 
     /// <summary>

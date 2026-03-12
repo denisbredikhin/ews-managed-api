@@ -36,7 +36,7 @@ public sealed class SeekToConditionItemView : ViewBase
     private ItemTraversal traversal;
     private SearchFilter condition;
     private OffsetBasePoint offsetBasePoint = OffsetBasePoint.Beginning;
-    private readonly OrderByCollection orderBy = new();
+    private readonly OrderByCollection orderBy = [];
     private ServiceObjectType serviceObjType;
 
     /// <summary>

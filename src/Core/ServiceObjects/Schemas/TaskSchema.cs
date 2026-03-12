@@ -118,7 +118,7 @@ public class TaskSchema : ItemSchema
             FieldUris.Companies,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the CompleteDate property.
@@ -142,7 +142,7 @@ public class TaskSchema : ItemSchema
             FieldUris.Contacts,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the DelegationState property.

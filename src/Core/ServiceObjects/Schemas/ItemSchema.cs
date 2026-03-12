@@ -223,7 +223,7 @@ public class ItemSchema : ServiceObjectSchema
             FieldUris.Categories,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2007_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the Importance property.
@@ -654,7 +654,7 @@ public class ItemSchema : ServiceObjectSchema
             FieldUris.Hashtags,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2015,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the Mentions property.
@@ -666,7 +666,7 @@ public class ItemSchema : ServiceObjectSchema
             FieldUris.Mentions,
             PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
             ExchangeVersion.Exchange2015,
-            delegate() { return new EmailAddressCollection(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the MentionedMe property.

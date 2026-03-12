@@ -32,7 +32,7 @@ using System.Collections.ObjectModel;
 /// </summary>
 public sealed class GetClientExtensionResponse : ServiceResponse
 {
-    private readonly Collection<ClientExtension> clientExtension = new();
+    private readonly Collection<ClientExtension> clientExtension = [];
 
     private string rawMasterTableXml;
 

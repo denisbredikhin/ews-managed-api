@@ -58,7 +58,7 @@ internal sealed class GetStreamingEventsResponse : ServiceResponse
     internal GetStreamingEventsResponse(HangingServiceRequestBase request)
         : base()
     {
-        this.ErrorSubscriptionIds = new List<string>();
+        this.ErrorSubscriptionIds = [];
         this.request = request;
     }
 

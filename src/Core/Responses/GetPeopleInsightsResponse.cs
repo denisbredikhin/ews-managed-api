@@ -39,7 +39,7 @@ internal sealed class GetPeopleInsightsResponse : ServiceResponse
     public GetPeopleInsightsResponse()
         : base()
     {
-        this.People = new Collection<Person>();
+        this.People = [];
     }
 
     /// <summary>

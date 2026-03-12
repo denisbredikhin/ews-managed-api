@@ -35,7 +35,7 @@ internal class FolderIdWrapperList : IEnumerable<AbstractFolderIdWrapper>
     /// <summary>
     /// List of <see cref="Microsoft.Exchange.WebServices.Data.AbstractFolderIdWrapper"/>.
     /// </summary>
-    private readonly List<AbstractFolderIdWrapper> ids = new();
+    private readonly List<AbstractFolderIdWrapper> ids = [];
 
     /// <summary>
     /// Adds the specified folder.

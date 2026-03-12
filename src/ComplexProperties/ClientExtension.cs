@@ -258,7 +258,7 @@ public sealed class ClientExtension : ComplexProperty
                 return true;
             
             case XmlElementNames.ClientExtensionSpecificUsers:
-                this.SpecificUsers = new StringList();
+                this.SpecificUsers = [];
                 this.SpecificUsers.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.ClientExtensionSpecificUsers);
                 return true;
             

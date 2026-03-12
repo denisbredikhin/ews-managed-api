@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal class RemoveDelegateRequest : DelegateManagementRequestBase<DelegateManagementResponse>
 {
-    private readonly List<UserId> userIds = new();
+    private readonly List<UserId> userIds = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RemoveDelegateRequest"/> class.

@@ -68,7 +68,7 @@ public sealed class MailboxSearchScope
     {
         this.Mailbox = mailbox;
         this.searchScope = searchScope;
-        this.ExtendedAttributes = new ExtendedAttributes();
+        this.ExtendedAttributes = [];
     }
 
     /// <summary>

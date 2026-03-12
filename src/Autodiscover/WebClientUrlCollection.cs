@@ -41,7 +41,7 @@ public sealed class WebClientUrlCollection
     /// </summary>
     internal WebClientUrlCollection()
     {
-        this.urls = new List<WebClientUrl>();
+        this.urls = [];
     }
 
     /// <summary>

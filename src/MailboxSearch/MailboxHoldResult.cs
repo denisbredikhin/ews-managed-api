@@ -81,7 +81,7 @@ public sealed class MailboxHoldResult
     /// <returns>Mailbox hold object</returns>
     internal static MailboxHoldResult LoadFromXml(EwsServiceXmlReader reader)
     {
-        List<MailboxHoldStatus> statuses = new();
+        List<MailboxHoldStatus> statuses = [];
 
         reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.MailboxHoldResult);
 

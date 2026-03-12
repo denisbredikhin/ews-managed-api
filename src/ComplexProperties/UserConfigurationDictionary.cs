@@ -47,7 +47,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     internal UserConfigurationDictionary() 
                 : base()
     {
-        this.dictionary = new Dictionary<object, object>();
+        this.dictionary = [];
     }
 
     /// <summary>
@@ -487,7 +487,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
     /// <returns></returns>
     private static List<string> GetObjectValue(object[] valueArray)
     {
-        List<string> stringArray = new();
+        List<string> stringArray = [];
 
         foreach (object value in valueArray)
         {
@@ -530,7 +530,7 @@ public sealed class UserConfigurationDictionary : ComplexProperty, IEnumerable
             "UserConfigurationDictionary.LoadFromXml",
             "reader is null");
 
-        List<string> values = new();
+        List<string> values = [];
 
         reader.ReadStartElement(this.Namespace, XmlElementNames.Value);
 

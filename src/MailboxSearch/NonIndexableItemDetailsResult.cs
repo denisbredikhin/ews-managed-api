@@ -48,7 +48,7 @@ public sealed class NonIndexableItemDetailsResult
 
             if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.Items))
             {
-                List<NonIndexableItem> nonIndexableItems = new();
+                List<NonIndexableItem> nonIndexableItems = [];
                 if (!reader.IsEmptyElement)
                 {
                     do

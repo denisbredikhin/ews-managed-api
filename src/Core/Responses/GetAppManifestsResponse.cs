@@ -36,12 +36,12 @@ internal sealed class GetAppManifestsResponse : ServiceResponse
     /// <summary>
     /// List of manifests returned in the response.
     /// </summary>
-    private readonly Collection<XmlDocument> manifests = new();
+    private readonly Collection<XmlDocument> manifests = [];
 
     /// <summary>
     /// List of extensions returned in the response.
     /// </summary>
-    private readonly Collection<ClientApp> apps = new();
+    private readonly Collection<ClientApp> apps = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetAppManifestsResponse"/> class.

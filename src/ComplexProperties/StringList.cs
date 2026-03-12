@@ -33,7 +33,7 @@ using System.Collections.Generic;
 /// </summary>
 public sealed class StringList : ComplexProperty, IEnumerable<string>
 {
-    private readonly List<string> items = new();
+    private readonly List<string> items = [];
     private readonly string itemXmlElementName = XmlElementNames.String;
 
     /// <summary>

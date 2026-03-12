@@ -48,15 +48,17 @@ internal class MapiTypeConverter
     private static readonly LazyMember<MapiTypeConverterMap> mapiTypeConverterMap = new(
         delegate()
         {
-            MapiTypeConverterMap map = new();
-
-            map.Add(
-                MapiPropertyType.ApplicationTime,
-                new MapiTypeConverterMapEntry(typeof(double)));
-
-            map.Add(
-                MapiPropertyType.ApplicationTimeArray,
-                new MapiTypeConverterMapEntry(typeof(double)) { IsArray = true });
+            MapiTypeConverterMap map = new()
+            {
+                {
+                    MapiPropertyType.ApplicationTime,
+                    new MapiTypeConverterMapEntry(typeof(double))
+                },
+                {
+                    MapiPropertyType.ApplicationTimeArray,
+                    new MapiTypeConverterMapEntry(typeof(double)) { IsArray = true }
+                }
+            };
 
             var byteConverter = new MapiTypeConverterMapEntry(typeof(byte[]))
                 {

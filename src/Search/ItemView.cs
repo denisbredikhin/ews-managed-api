@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 public sealed class ItemView : PagedView
 {
     private ItemTraversal traversal;
-    private readonly OrderByCollection orderBy = new();
+    private readonly OrderByCollection orderBy = [];
 
     /// <summary>
     /// Gets the name of the view XML element.

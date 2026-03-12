@@ -51,7 +51,7 @@ internal class WSSecurityUtilityIdSignedXml : SignedXml
         : base(document)
     {
         this.document = document;
-        this.ids = new Dictionary<string, XmlElement>();
+        this.ids = [];
     }
 
     /// <summary>

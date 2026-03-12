@@ -108,11 +108,11 @@ public sealed class RuleActions : ComplexProperty
     internal RuleActions()
         : base()
     {
-        this.assignCategories = new StringList();
+        this.assignCategories = [];
         this.forwardAsAttachmentToRecipients = new EmailAddressCollection(XmlElementNames.Address);
         this.forwardToRecipients = new EmailAddressCollection(XmlElementNames.Address);
         this.redirectToRecipients = new EmailAddressCollection(XmlElementNames.Address);
-        this.sendSMSAlertToRecipients = new Collection<MobilePhone>();
+        this.sendSMSAlertToRecipients = [];
     }
 
     /// <summary>
@@ -494,7 +494,7 @@ public sealed class RuleActions : ComplexProperty
     /// <returns>A MobilePhone collection object containing all SMS recipient in MobilePhone type. </returns>
     private static Collection<MobilePhone> ConvertSMSRecipientsFromEmailAddressCollectionToMobilePhoneCollection(EmailAddressCollection emailCollection)
     {
-        Collection<MobilePhone> mobilePhoneCollection = new();
+        Collection<MobilePhone> mobilePhoneCollection = [];
         foreach (EmailAddress emailAddress in emailCollection)
         {
             mobilePhoneCollection.Add(new MobilePhone(emailAddress.Name, emailAddress.Address));

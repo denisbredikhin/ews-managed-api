@@ -44,16 +44,17 @@ public sealed class GetEventsResults
     private static readonly LazyMember<Dictionary<string, EventType>> xmlElementNameToEventTypeMap = new(
         delegate()
         {
-            Dictionary<string, EventType> result = new();
-
-            result.Add(XmlElementNames.CopiedEvent, EventType.Copied);
-            result.Add(XmlElementNames.CreatedEvent, EventType.Created);
-            result.Add(XmlElementNames.DeletedEvent, EventType.Deleted);
-            result.Add(XmlElementNames.ModifiedEvent, EventType.Modified);
-            result.Add(XmlElementNames.MovedEvent, EventType.Moved);
-            result.Add(XmlElementNames.NewMailEvent, EventType.NewMail);
-            result.Add(XmlElementNames.StatusEvent, EventType.Status);
-            result.Add(XmlElementNames.FreeBusyChangedEvent, EventType.FreeBusyChanged);
+            Dictionary<string, EventType> result = new()
+            {
+                { XmlElementNames.CopiedEvent, EventType.Copied },
+                { XmlElementNames.CreatedEvent, EventType.Created },
+                { XmlElementNames.DeletedEvent, EventType.Deleted },
+                { XmlElementNames.ModifiedEvent, EventType.Modified },
+                { XmlElementNames.MovedEvent, EventType.Moved },
+                { XmlElementNames.NewMailEvent, EventType.NewMail },
+                { XmlElementNames.StatusEvent, EventType.Status },
+                { XmlElementNames.FreeBusyChangedEvent, EventType.FreeBusyChanged }
+            };
 
             return result;
         });
@@ -93,7 +94,7 @@ public sealed class GetEventsResults
     /// <summary>
     /// Collection of notification events.
     /// </summary>
-    private readonly Collection<NotificationEvent> events = new();
+    private readonly Collection<NotificationEvent> events = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GetEventsResults"/> class.

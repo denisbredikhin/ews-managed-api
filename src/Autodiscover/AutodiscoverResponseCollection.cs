@@ -43,7 +43,7 @@ public abstract class AutodiscoverResponseCollection<TResponse> : AutodiscoverRe
     /// </summary>
     internal AutodiscoverResponseCollection()
     {
-        this.responses = new List<TResponse>();
+        this.responses = [];
     }
     
     /// <summary>

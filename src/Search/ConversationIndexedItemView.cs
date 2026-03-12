@@ -29,7 +29,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 public sealed class ConversationIndexedItemView : PagedView
 {
-    private readonly OrderByCollection orderBy = new();
+    private readonly OrderByCollection orderBy = [];
     private ConversationQueryTraversal? traversal;
     private ViewFilter? viewFilter;
 

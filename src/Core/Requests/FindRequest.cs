@@ -34,7 +34,7 @@ using System;
 internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TResponse>
     where TResponse : ServiceResponse
 {
-    private readonly FolderIdWrapperList parentFolderIds = new();
+    private readonly FolderIdWrapperList parentFolderIds = [];
     private SearchFilter? searchFilter;
     private string? queryString;
     private bool returnHighlightTerms;

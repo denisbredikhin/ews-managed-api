@@ -35,7 +35,7 @@ using System.Collections.Generic;
 public sealed class ChangeCollection<TChange> : IEnumerable<TChange>
     where TChange : Change
 {
-    private readonly List<TChange> changes = new();
+    private readonly List<TChange> changes = [];
     private string syncState;
     private bool moreChangesAvailable;
 

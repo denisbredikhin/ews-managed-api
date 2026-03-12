@@ -41,18 +41,19 @@ internal class MapiTypeConverterMapEntry
     private static readonly LazyMember<TypeToDefaultValueMap> defaultValueMap = new(
         () =>
         {
-            TypeToDefaultValueMap map = new();
-
-            map.Add(typeof(bool), false);
-            map.Add(typeof(byte[]), null);
-            map.Add(typeof(Int16), (Int16)0);
-            map.Add(typeof(Int32), (Int32)0);
-            map.Add(typeof(Int64), (Int64)0);
-            map.Add(typeof(float), (float)0.0);
-            map.Add(typeof(double), (double)0.0);
-            map.Add(typeof(DateTime), DateTime.MinValue);
-            map.Add(typeof(Guid), Guid.Empty);
-            map.Add(typeof(string), null);
+            TypeToDefaultValueMap map = new()
+            {
+                { typeof(bool), false },
+                { typeof(byte[]), null },
+                { typeof(Int16), (Int16)0 },
+                { typeof(Int32), (Int32)0 },
+                { typeof(Int64), (Int64)0 },
+                { typeof(float), (float)0.0 },
+                { typeof(double), (double)0.0 },
+                { typeof(DateTime), DateTime.MinValue },
+                { typeof(Guid), Guid.Empty },
+                { typeof(string), null }
+            };
 
             return map;
         });

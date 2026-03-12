@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal abstract class MoveCopyFolderRequest<TResponse> : MoveCopyRequest<Folder, TResponse>
     where TResponse : ServiceResponse
 {
-    private readonly FolderIdWrapperList folderIds = new();
+    private readonly FolderIdWrapperList folderIds = [];
 
     /// <summary>
     /// Validates request.

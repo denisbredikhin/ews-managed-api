@@ -39,7 +39,7 @@ public sealed class AlternateMailboxCollection
     /// </summary>
     internal AlternateMailboxCollection()
     {
-        this.Entries = new List<AlternateMailbox>();
+        this.Entries = [];
     }
 
     /// <summary>

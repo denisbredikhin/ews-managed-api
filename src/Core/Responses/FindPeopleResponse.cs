@@ -40,7 +40,7 @@ internal sealed class FindPeopleResponse : ServiceResponse
         : base()
     {
         this.Results = new FindPeopleResults();
-        this.Sources = new List<string>();
+        this.Sources = [];
     }
 
     /// <summary>

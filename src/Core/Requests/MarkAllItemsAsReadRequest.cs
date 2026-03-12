@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 /// </summary>
 internal sealed class MarkAllItemsAsReadRequest : MultiResponseServiceRequest<ServiceResponse>
 {
-    private readonly FolderIdWrapperList folderIds = new();
+    private readonly FolderIdWrapperList folderIds = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MarkAllItemsAsReadRequest"/> class.

@@ -39,7 +39,7 @@ public sealed class DocumentSharingLocationCollection
     /// </summary>
     internal DocumentSharingLocationCollection()
     {
-        this.Entries = new List<DocumentSharingLocation>();
+        this.Entries = [];
     }
 
     /// <summary>

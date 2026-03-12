@@ -37,7 +37,7 @@ public abstract partial class Recurrence
     /// </summary>
     public sealed class WeeklyPattern : IntervalPattern
     {
-        private readonly DayOfTheWeekCollection daysOfTheWeek = new();
+        private readonly DayOfTheWeekCollection daysOfTheWeek = [];
         private DayOfWeek? firstDayOfWeek;
 
         /// <summary>

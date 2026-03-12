@@ -50,7 +50,7 @@ public sealed class RuleCollection : ComplexProperty, IEnumerable<Rule>
     internal RuleCollection()
         : base()
     {
-        this.rules = new List<Rule>();
+        this.rules = [];
     }
 
     /// <summary>

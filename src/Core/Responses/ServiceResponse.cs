@@ -37,8 +37,8 @@ public class ServiceResponse
     private ServiceResult result;
     private ServiceError errorCode;
     private string errorMessage;
-    private readonly Dictionary<string, string> errorDetails = new();
-    private readonly Collection<PropertyDefinitionBase> errorProperties = new();
+    private readonly Dictionary<string, string> errorDetails = [];
+    private readonly Collection<PropertyDefinitionBase> errorProperties = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ServiceResponse"/> class.

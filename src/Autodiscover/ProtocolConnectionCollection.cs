@@ -41,7 +41,7 @@ public sealed class ProtocolConnectionCollection
     /// </summary>
     internal ProtocolConnectionCollection()
     {
-        this.connections = new List<ProtocolConnection>();
+        this.connections = [];
     }
 
     /// <summary>

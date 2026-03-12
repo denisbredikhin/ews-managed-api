@@ -36,7 +36,7 @@ public class UnifiedGroupsSet : ComplexProperty
     /// <summary>
     /// The list of unifiedGroups in this set.
     /// </summary>
-    private readonly List<UnifiedGroup> unifiedGroups = new();
+    private readonly List<UnifiedGroup> unifiedGroups = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UnifiedGroupsSet"/> class.

@@ -222,10 +222,12 @@ public abstract class ExchangeServiceBase
 
         if (((WebCredentials)serviceCredentials).Credentials is NetworkCredential networkCredentials)
         {
-            CredentialCache credentialCache = new();
-            credentialCache.Add(url, "NTLM", networkCredentials);
-            credentialCache.Add(url, "Digest", networkCredentials);
-            credentialCache.Add(url, "Basic", networkCredentials);
+            CredentialCache credentialCache = new()
+            {
+                { url, "NTLM", networkCredentials },
+                { url, "Digest", networkCredentials },
+                { url, "Basic", networkCredentials }
+            };
 
             serviceCredentials = credentialCache;
         }

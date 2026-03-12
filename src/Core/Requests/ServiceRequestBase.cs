@@ -79,7 +79,7 @@ internal abstract class ServiceRequestBase
     /// <summary>
     /// Maintains the collection of client side statistics for requests already completed
     /// </summary>
-    private static readonly List<string> clientStatisticsCache = new();
+    private static readonly List<string> clientStatisticsCache = [];
 
     private readonly ExchangeService service;
 

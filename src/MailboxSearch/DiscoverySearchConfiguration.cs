@@ -69,7 +69,7 @@ public sealed class DiscoverySearchConfiguration
     /// <returns>Discovery search configuration object</returns>
     internal static DiscoverySearchConfiguration LoadFromXml(EwsServiceXmlReader reader)
     {
-        List<SearchableMailbox> mailboxes = new();
+        List<SearchableMailbox> mailboxes = [];
 
         reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.DiscoverySearchConfiguration);
 

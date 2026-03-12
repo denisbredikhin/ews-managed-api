@@ -32,7 +32,7 @@ using System.Collections.Generic;
 /// </summary>
 internal sealed class DeleteAttachmentRequest : MultiResponseServiceRequest<DeleteAttachmentResponse>
 {
-    private readonly List<Attachment> attachments = new();
+    private readonly List<Attachment> attachments = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DeleteAttachmentRequest"/> class.

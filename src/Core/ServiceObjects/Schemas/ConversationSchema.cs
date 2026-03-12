@@ -109,7 +109,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.UniqueRecipients,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the GlobalUniqueRecipients property.
@@ -121,7 +121,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.GlobalUniqueRecipients,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the UniqueUnreadSenders property.
@@ -133,7 +133,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.UniqueUnreadSenders,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the GlobalUniqueUnreadSenders property.
@@ -145,7 +145,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.GlobalUniqueUnreadSenders,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the UniqueSenders property.
@@ -157,7 +157,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.UniqueSenders,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the GlobalUniqueSenders property.
@@ -169,7 +169,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.GlobalUniqueSenders,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the LastDeliveryTime property.
@@ -203,7 +203,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.Categories,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the GlobalCategories property.
@@ -215,7 +215,7 @@ public class ConversationSchema : ServiceObjectSchema
             FieldUris.GlobalCategories,
             PropertyDefinitionFlags.CanFind,
             ExchangeVersion.Exchange2010_SP1,
-            delegate() { return new StringList(); });
+            delegate() { return []; });
 
     /// <summary>
     /// Defines the FlagStatus property.

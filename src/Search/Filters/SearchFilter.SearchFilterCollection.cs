@@ -39,7 +39,7 @@ public abstract partial class SearchFilter
     /// </summary>
     public sealed class SearchFilterCollection : SearchFilter, IEnumerable<SearchFilter>
     {
-        private readonly List<SearchFilter> searchFilters = new();
+        private readonly List<SearchFilter> searchFilters = [];
         private LogicalOperator logicalOperator = LogicalOperator.And;
 
         /// <summary>

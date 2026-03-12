@@ -41,7 +41,7 @@ internal sealed class GetPeopleInsightsRequest : SimpleServiceRequestBase
     internal GetPeopleInsightsRequest(ExchangeService service)
         : base(service)
     {
-        this.Emailaddresses = new List<string>();
+        this.Emailaddresses = [];
     }
 
     /// <summary>

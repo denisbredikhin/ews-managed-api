@@ -55,20 +55,22 @@ internal sealed class OutlookProtocol
     private static readonly LazyMember<ConverterDictionary> commonProtocolSettings = new(
         () =>
         {
-            var results = new ConverterDictionary();
-            results.Add(UserSettingName.EcpDeliveryReportUrlFragment,        p => p.ecpUrlMt);
-            results.Add(UserSettingName.EcpEmailSubscriptionsUrlFragment,    p => p.ecpUrlAggr);
-            results.Add(UserSettingName.EcpPublishingUrlFragment,            p => p.ecpUrlPublish);
-            results.Add(UserSettingName.EcpPhotoUrlFragment,                 p => p.ecpUrlPhoto);
-            results.Add(UserSettingName.EcpRetentionPolicyTagsUrlFragment,   p => p.ecpUrlRet);
-            results.Add(UserSettingName.EcpTextMessagingUrlFragment,         p => p.ecpUrlSms);
-            results.Add(UserSettingName.EcpVoicemailUrlFragment,             p => p.ecpUrlUm);
-            results.Add(UserSettingName.EcpConnectUrlFragment,               p => p.ecpUrlConnect);
-            results.Add(UserSettingName.EcpTeamMailboxUrlFragment,           p => p.ecpUrlTm);
-            results.Add(UserSettingName.EcpTeamMailboxCreatingUrlFragment,   p => p.ecpUrlTmCreating);
-            results.Add(UserSettingName.EcpTeamMailboxEditingUrlFragment,    p => p.ecpUrlTmEditing);
-            results.Add(UserSettingName.EcpExtensionInstallationUrlFragment, p => p.ecpUrlExtInstall);
-            results.Add(UserSettingName.SiteMailboxCreationURL,              p => p.siteMailboxCreationURL);
+            var results = new ConverterDictionary
+            {
+                { UserSettingName.EcpDeliveryReportUrlFragment, p => p.ecpUrlMt },
+                { UserSettingName.EcpEmailSubscriptionsUrlFragment, p => p.ecpUrlAggr },
+                { UserSettingName.EcpPublishingUrlFragment, p => p.ecpUrlPublish },
+                { UserSettingName.EcpPhotoUrlFragment, p => p.ecpUrlPhoto },
+                { UserSettingName.EcpRetentionPolicyTagsUrlFragment, p => p.ecpUrlRet },
+                { UserSettingName.EcpTextMessagingUrlFragment, p => p.ecpUrlSms },
+                { UserSettingName.EcpVoicemailUrlFragment, p => p.ecpUrlUm },
+                { UserSettingName.EcpConnectUrlFragment, p => p.ecpUrlConnect },
+                { UserSettingName.EcpTeamMailboxUrlFragment, p => p.ecpUrlTm },
+                { UserSettingName.EcpTeamMailboxCreatingUrlFragment, p => p.ecpUrlTmCreating },
+                { UserSettingName.EcpTeamMailboxEditingUrlFragment, p => p.ecpUrlTmEditing },
+                { UserSettingName.EcpExtensionInstallationUrlFragment, p => p.ecpUrlExtInstall },
+                { UserSettingName.SiteMailboxCreationURL, p => p.siteMailboxCreationURL }
+            };
             return results;
         });
 
@@ -79,32 +81,34 @@ internal sealed class OutlookProtocol
     private static readonly LazyMember<ConverterDictionary> internalProtocolSettings = new(
         () =>
         {
-            var results = new ConverterDictionary();
-            results.Add(UserSettingName.ActiveDirectoryServer,             p => p.activeDirectoryServer);
-            results.Add(UserSettingName.CrossOrganizationSharingEnabled,   p => p.sharingEnabled.ToString());
-            results.Add(UserSettingName.InternalEcpUrl,                    p => p.ecpUrl);
-            results.Add(UserSettingName.InternalEcpDeliveryReportUrl,      p => p.ConvertEcpFragmentToUrl(p.ecpUrlMt));
-            results.Add(UserSettingName.InternalEcpEmailSubscriptionsUrl,  p => p.ConvertEcpFragmentToUrl(p.ecpUrlAggr));
-            results.Add(UserSettingName.InternalEcpPublishingUrl,          p => p.ConvertEcpFragmentToUrl(p.ecpUrlPublish));
-            results.Add(UserSettingName.InternalEcpPhotoUrl,               p => p.ConvertEcpFragmentToUrl(p.ecpUrlPhoto));
-            results.Add(UserSettingName.InternalEcpRetentionPolicyTagsUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlRet));
-            results.Add(UserSettingName.InternalEcpTextMessagingUrl,       p => p.ConvertEcpFragmentToUrl(p.ecpUrlSms));
-            results.Add(UserSettingName.InternalEcpVoicemailUrl,           p => p.ConvertEcpFragmentToUrl(p.ecpUrlUm));
-            results.Add(UserSettingName.InternalEcpConnectUrl,             p => p.ConvertEcpFragmentToUrl(p.ecpUrlConnect));
-            results.Add(UserSettingName.InternalEcpTeamMailboxUrl,         p => p.ConvertEcpFragmentToUrl(p.ecpUrlTm));
-            results.Add(UserSettingName.InternalEcpTeamMailboxCreatingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmCreating));
-            results.Add(UserSettingName.InternalEcpTeamMailboxEditingUrl,  p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmEditing));
-            results.Add(UserSettingName.InternalEcpTeamMailboxHidingUrl,   p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmHiding));
-            results.Add(UserSettingName.InternalEcpExtensionInstallationUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlExtInstall)); 
-            results.Add(UserSettingName.InternalEwsUrl, p => p.exchangeWebServicesUrl ?? p.availabilityServiceUrl);
-            results.Add(UserSettingName.InternalEmwsUrl, p => p.exchangeManagementWebServicesUrl);
-            results.Add(UserSettingName.InternalMailboxServerDN, p => p.serverDN);
-            results.Add(UserSettingName.InternalRpcClientServer,           p => p.server);
-            results.Add(UserSettingName.InternalOABUrl,                    p => p.offlineAddressBookUrl);
-            results.Add(UserSettingName.InternalUMUrl,                     p => p.unifiedMessagingUrl);
-            results.Add(UserSettingName.MailboxDN,                         p => p.mailboxDN);
-            results.Add(UserSettingName.PublicFolderServer,                p => p.publicFolderServer);
-            results.Add(UserSettingName.InternalServerExclusiveConnect,    p => p.serverExclusiveConnect);
+            var results = new ConverterDictionary
+            {
+                { UserSettingName.ActiveDirectoryServer, p => p.activeDirectoryServer },
+                { UserSettingName.CrossOrganizationSharingEnabled, p => p.sharingEnabled.ToString() },
+                { UserSettingName.InternalEcpUrl, p => p.ecpUrl },
+                { UserSettingName.InternalEcpDeliveryReportUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlMt) },
+                { UserSettingName.InternalEcpEmailSubscriptionsUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlAggr) },
+                { UserSettingName.InternalEcpPublishingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlPublish) },
+                { UserSettingName.InternalEcpPhotoUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlPhoto) },
+                { UserSettingName.InternalEcpRetentionPolicyTagsUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlRet) },
+                { UserSettingName.InternalEcpTextMessagingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlSms) },
+                { UserSettingName.InternalEcpVoicemailUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlUm) },
+                { UserSettingName.InternalEcpConnectUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlConnect) },
+                { UserSettingName.InternalEcpTeamMailboxUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTm) },
+                { UserSettingName.InternalEcpTeamMailboxCreatingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmCreating) },
+                { UserSettingName.InternalEcpTeamMailboxEditingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmEditing) },
+                { UserSettingName.InternalEcpTeamMailboxHidingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmHiding) },
+                { UserSettingName.InternalEcpExtensionInstallationUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlExtInstall) },
+                { UserSettingName.InternalEwsUrl, p => p.exchangeWebServicesUrl ?? p.availabilityServiceUrl },
+                { UserSettingName.InternalEmwsUrl, p => p.exchangeManagementWebServicesUrl },
+                { UserSettingName.InternalMailboxServerDN, p => p.serverDN },
+                { UserSettingName.InternalRpcClientServer, p => p.server },
+                { UserSettingName.InternalOABUrl, p => p.offlineAddressBookUrl },
+                { UserSettingName.InternalUMUrl, p => p.unifiedMessagingUrl },
+                { UserSettingName.MailboxDN, p => p.mailboxDN },
+                { UserSettingName.PublicFolderServer, p => p.publicFolderServer },
+                { UserSettingName.InternalServerExclusiveConnect, p => p.serverExclusiveConnect }
+            };
             return results;
         });
 
@@ -115,33 +119,35 @@ internal sealed class OutlookProtocol
     private static readonly LazyMember<ConverterDictionary> externalProtocolSettings = new(
         () =>
         {
-            var results = new ConverterDictionary();
-            results.Add(UserSettingName.ExternalEcpDeliveryReportUrl,               p => p.ConvertEcpFragmentToUrl(p.ecpUrlRet));
-            results.Add(UserSettingName.ExternalEcpEmailSubscriptionsUrl,           p => p.ConvertEcpFragmentToUrl(p.ecpUrlAggr));
-            results.Add(UserSettingName.ExternalEcpPublishingUrl,                   p => p.ConvertEcpFragmentToUrl(p.ecpUrlPublish));
-            results.Add(UserSettingName.ExternalEcpPhotoUrl,                        p => p.ConvertEcpFragmentToUrl(p.ecpUrlPhoto));
-            results.Add(UserSettingName.ExternalEcpRetentionPolicyTagsUrl,          p => p.ConvertEcpFragmentToUrl(p.ecpUrlRet));
-            results.Add(UserSettingName.ExternalEcpTextMessagingUrl,                p => p.ConvertEcpFragmentToUrl(p.ecpUrlSms));
-            results.Add(UserSettingName.ExternalEcpUrl,                             p => p.ecpUrl);
-            results.Add(UserSettingName.ExternalEcpVoicemailUrl,                    p => p.ConvertEcpFragmentToUrl(p.ecpUrlUm));
-            results.Add(UserSettingName.ExternalEcpConnectUrl,                      p => p.ConvertEcpFragmentToUrl(p.ecpUrlConnect));
-            results.Add(UserSettingName.ExternalEcpTeamMailboxUrl,                  p => p.ConvertEcpFragmentToUrl(p.ecpUrlTm));
-            results.Add(UserSettingName.ExternalEcpTeamMailboxCreatingUrl,          p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmCreating));
-            results.Add(UserSettingName.ExternalEcpTeamMailboxEditingUrl,           p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmEditing));
-            results.Add(UserSettingName.ExternalEcpTeamMailboxHidingUrl,            p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmHiding));
-            results.Add(UserSettingName.ExternalEcpExtensionInstallationUrl,        p => p.ConvertEcpFragmentToUrl(p.ecpUrlExtInstall));
-            results.Add(UserSettingName.ExternalEwsUrl,                             p => p.exchangeWebServicesUrl ?? p.availabilityServiceUrl);
-            results.Add(UserSettingName.ExternalEmwsUrl,                            p => p.exchangeManagementWebServicesUrl);
-            results.Add(UserSettingName.ExternalMailboxServer,                      p => p.server);
-            results.Add(UserSettingName.ExternalMailboxServerAuthenticationMethods, p => p.authPackage);
-            results.Add(UserSettingName.ExternalMailboxServerRequiresSSL,           p => p.sslEnabled.ToString());
-            results.Add(UserSettingName.ExternalOABUrl,                             p => p.offlineAddressBookUrl);
-            results.Add(UserSettingName.ExternalUMUrl,                              p => p.unifiedMessagingUrl);
-            results.Add(UserSettingName.ExchangeRpcUrl,                             p => p.exchangeRpcUrl);
-            results.Add(UserSettingName.EwsPartnerUrl,                              p => p.exchangeWebServicesPartnerUrl);
-            results.Add(UserSettingName.ExternalServerExclusiveConnect,             p => p.serverExclusiveConnect.ToString());
-            results.Add(UserSettingName.CertPrincipalName,                          p => p.certPrincipalName);
-            results.Add(UserSettingName.GroupingInformation,                        p => p.groupingInformation);
+            var results = new ConverterDictionary
+            {
+                { UserSettingName.ExternalEcpDeliveryReportUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlRet) },
+                { UserSettingName.ExternalEcpEmailSubscriptionsUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlAggr) },
+                { UserSettingName.ExternalEcpPublishingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlPublish) },
+                { UserSettingName.ExternalEcpPhotoUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlPhoto) },
+                { UserSettingName.ExternalEcpRetentionPolicyTagsUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlRet) },
+                { UserSettingName.ExternalEcpTextMessagingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlSms) },
+                { UserSettingName.ExternalEcpUrl, p => p.ecpUrl },
+                { UserSettingName.ExternalEcpVoicemailUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlUm) },
+                { UserSettingName.ExternalEcpConnectUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlConnect) },
+                { UserSettingName.ExternalEcpTeamMailboxUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTm) },
+                { UserSettingName.ExternalEcpTeamMailboxCreatingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmCreating) },
+                { UserSettingName.ExternalEcpTeamMailboxEditingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmEditing) },
+                { UserSettingName.ExternalEcpTeamMailboxHidingUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlTmHiding) },
+                { UserSettingName.ExternalEcpExtensionInstallationUrl, p => p.ConvertEcpFragmentToUrl(p.ecpUrlExtInstall) },
+                { UserSettingName.ExternalEwsUrl, p => p.exchangeWebServicesUrl ?? p.availabilityServiceUrl },
+                { UserSettingName.ExternalEmwsUrl, p => p.exchangeManagementWebServicesUrl },
+                { UserSettingName.ExternalMailboxServer, p => p.server },
+                { UserSettingName.ExternalMailboxServerAuthenticationMethods, p => p.authPackage },
+                { UserSettingName.ExternalMailboxServerRequiresSSL, p => p.sslEnabled.ToString() },
+                { UserSettingName.ExternalOABUrl, p => p.offlineAddressBookUrl },
+                { UserSettingName.ExternalUMUrl, p => p.unifiedMessagingUrl },
+                { UserSettingName.ExchangeRpcUrl, p => p.exchangeRpcUrl },
+                { UserSettingName.EwsPartnerUrl, p => p.exchangeWebServicesPartnerUrl },
+                { UserSettingName.ExternalServerExclusiveConnect, p => p.serverExclusiveConnect.ToString() },
+                { UserSettingName.CertPrincipalName, p => p.certPrincipalName },
+                { UserSettingName.GroupingInformation, p => p.groupingInformation }
+            };
             return results;
         });
 
@@ -178,9 +184,11 @@ internal sealed class OutlookProtocol
     private static readonly LazyMember<ConverterDictionary> webProtocolConverterDictionary = new(
         () =>
         {
-            var results = new ConverterDictionary();
-            results.Add(UserSettingName.InternalWebClientUrls, p => p.internalOutlookWebAccessUrls);
-            results.Add(UserSettingName.ExternalWebClientUrls, p => p.externalOutlookWebAccessUrls);
+            var results = new ConverterDictionary
+            {
+                { UserSettingName.InternalWebClientUrls, p => p.internalOutlookWebAccessUrls },
+                { UserSettingName.ExternalWebClientUrls, p => p.externalOutlookWebAccessUrls }
+            };
             return results;
         });
 
@@ -204,10 +212,12 @@ internal sealed class OutlookProtocol
     private static readonly LazyMember<Dictionary<string, OutlookProtocolType>> protocolNameToTypeMap = new(
         delegate()
         {
-            Dictionary<string, OutlookProtocolType> results = new();
-            results.Add(OutlookProtocol.EXCH, OutlookProtocolType.Rpc);
-            results.Add(OutlookProtocol.EXPR, OutlookProtocolType.RpcOverHttp);
-            results.Add(OutlookProtocol.WEB, OutlookProtocolType.Web);
+            Dictionary<string, OutlookProtocolType> results = new()
+            {
+                { OutlookProtocol.EXCH, OutlookProtocolType.Rpc },
+                { OutlookProtocol.EXPR, OutlookProtocolType.RpcOverHttp },
+                { OutlookProtocol.WEB, OutlookProtocolType.Web }
+            };
             return results;
         });
     #endregion
