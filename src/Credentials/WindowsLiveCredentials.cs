@@ -73,15 +73,9 @@ internal sealed class WindowsLiveCredentials : WSSecurityBasedCredentials
     /// <param name="password">The password.</param>
     public WindowsLiveCredentials(string windowsLiveId, string password)
     {
-        if (windowsLiveId == null)
-        {
-            throw new ArgumentNullException(nameof(windowsLiveId));
-        }
-        if (password == null)
-        {
-            throw new ArgumentNullException(nameof(password));
-        }
-        
+        ArgumentNullException.ThrowIfNull(windowsLiveId);
+        ArgumentNullException.ThrowIfNull(password);
+
         this.windowsLiveId = windowsLiveId;
         this.password = password;
         this.windowsLiveUrl = WindowsLiveCredentials.DefaultWindowsLiveUrl;

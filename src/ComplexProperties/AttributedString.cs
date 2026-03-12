@@ -75,10 +75,7 @@ public sealed class AttributedString : ComplexProperty
     public AttributedString(string value, IList<string> attributions)
         : this(value)
     {
-        if (attributions == null)
-        {
-            throw new ArgumentNullException(nameof(attributions));
-        }
+        ArgumentNullException.ThrowIfNull(attributions);
 
         foreach (string s in attributions)
         {

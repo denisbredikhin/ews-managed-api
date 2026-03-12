@@ -1062,7 +1062,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// SearchFilter.SearchFilterCollection</param>
     /// <param name="view">The view controlling the number of items returned.</param>
     /// <returns>An object representing the results of the search operation.</returns>
-    public async Task<FindItemsResults<Item>> FindItems(FolderId parentFolderId, SearchFilter searchFilter, ViewBase view, CancellationToken token = default)
+    public async Task<FindItemsResults<Item>> FindItems(FolderId parentFolderId, SearchFilter? searchFilter, ViewBase view, CancellationToken token = default)
     {
         EwsUtilities.ValidateParamAllowNull(searchFilter, nameof(searchFilter));
 
@@ -1137,7 +1137,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         return this.FindItems(
             new FolderId(parentFolderName),
-            (SearchFilter)null,
+            (SearchFilter?)null,
             view,
             token);
     }
@@ -2012,7 +2012,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A collection of name resolutions whose names match the one passed as a parameter.</returns>
     public Task<NameResolutionCollection> ResolveName(
         string nameToResolve,
-        IEnumerable<FolderId> parentFolderIds,
+        IEnumerable<FolderId>? parentFolderIds,
         ResolveNameSearchLocation searchScope,
         bool returnContactDetails)
     {
@@ -2501,15 +2501,9 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013, "SetTeamMailbox");
 
-        if (emailAddress == null)
-        {
-            throw new ArgumentNullException(nameof(emailAddress));
-        }
+        ArgumentNullException.ThrowIfNull(emailAddress);
 
-        if (sharePointSiteUrl == null)
-        {
-            throw new ArgumentNullException(nameof(sharePointSiteUrl));
-        }
+        ArgumentNullException.ThrowIfNull(sharePointSiteUrl);
 
         SetTeamMailboxRequest request = new(this, emailAddress, sharePointSiteUrl, state);
         return request.Execute(token);
@@ -2523,10 +2517,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013, "UnpinTeamMailbox");
 
-        if (emailAddress == null)
-        {
-            throw new ArgumentNullException(nameof(emailAddress));
-        }
+        ArgumentNullException.ThrowIfNull(emailAddress);
 
         UnpinTeamMailboxRequest request = new(this, emailAddress);
         return request.Execute(token);

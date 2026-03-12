@@ -225,10 +225,7 @@ public sealed class SeekToConditionItemView : ViewBase
 
         set 
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException("Condition");
-            }
+            ArgumentNullException.ThrowIfNull(value);
 
             this.condition = value; 
         }

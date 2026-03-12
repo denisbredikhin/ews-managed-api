@@ -168,10 +168,7 @@ public abstract partial class SearchFilter
         /// <param name="searchFilter">The search filter to add. Available search filter classes include SearchFilter.IsEqualTo, SearchFilter.ContainsSubstring and SearchFilter.SearchFilterCollection.</param>
         public void Add(SearchFilter searchFilter)
         {
-            if (searchFilter == null)
-            {
-                throw new ArgumentNullException(nameof(searchFilter));
-            }
+            ArgumentNullException.ThrowIfNull(searchFilter);
 
             searchFilter.OnChange += this.SearchFilterChanged;
             this.searchFilters.Add(searchFilter);
@@ -184,10 +181,7 @@ public abstract partial class SearchFilter
         /// <param name="searchFilters">The search filters to add. Available search filter classes include SearchFilter.IsEqualTo, SearchFilter.ContainsSubstring and SearchFilter.SearchFilterCollection.</param>
         public void AddRange(IEnumerable<SearchFilter> searchFilters)
         {
-            if (searchFilters == null)
-            {
-                throw new ArgumentNullException(nameof(searchFilters));
-            }
+            ArgumentNullException.ThrowIfNull(searchFilters);
 
             foreach (SearchFilter searchFilter in searchFilters)
             {
@@ -229,10 +223,7 @@ public abstract partial class SearchFilter
         /// <param name="searchFilter">The search filter to remove.</param>
         public void Remove(SearchFilter searchFilter)
         {
-            if (searchFilter == null)
-            {
-                throw new ArgumentNullException(nameof(searchFilter));
-            }
+            ArgumentNullException.ThrowIfNull(searchFilter);
 
             if (this.Contains(searchFilter))
             {

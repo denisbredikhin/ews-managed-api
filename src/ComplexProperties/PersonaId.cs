@@ -57,10 +57,7 @@ public sealed class PersonaId : ServiceId
     /// <returns>A PersonaId initialized with the specified unique Id.</returns>
     public static implicit operator String(PersonaId PersonaId)
     {
-        if (PersonaId == null)
-        {
-            throw new ArgumentNullException(nameof(PersonaId));
-        }
+        ArgumentNullException.ThrowIfNull(PersonaId);
 
         if (String.IsNullOrEmpty(PersonaId.UniqueId))
         {

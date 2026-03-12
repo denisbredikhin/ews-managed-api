@@ -47,10 +47,7 @@ internal sealed class UnpinTeamMailboxRequest : SimpleServiceRequestBase
     public UnpinTeamMailboxRequest(ExchangeService service, EmailAddress emailAddress)
         : base(service)
     {
-        if (emailAddress == null)
-        {
-            throw new ArgumentNullException(nameof(emailAddress));
-        }
+        ArgumentNullException.ThrowIfNull(emailAddress);
 
         this.emailAddress = emailAddress;
     }

@@ -59,15 +59,9 @@ internal sealed class SetTeamMailboxRequest : SimpleServiceRequestBase
     internal SetTeamMailboxRequest(ExchangeService service, EmailAddress emailAddress, Uri sharePointSiteUrl, TeamMailboxLifecycleState state)
         : base(service)
     {
-        if (emailAddress == null)
-        {
-            throw new ArgumentNullException(nameof(emailAddress));
-        }
+        ArgumentNullException.ThrowIfNull(emailAddress);
 
-        if (sharePointSiteUrl == null)
-        {
-            throw new ArgumentNullException(nameof(sharePointSiteUrl));
-        }
+        ArgumentNullException.ThrowIfNull(sharePointSiteUrl);
 
         this.emailAddress = emailAddress;
         this.sharePointSiteUrl = sharePointSiteUrl;

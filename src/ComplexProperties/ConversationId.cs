@@ -57,10 +57,7 @@ public class ConversationId : ServiceId
     /// <returns>A ConversationId initialized with the specified unique Id.</returns>
     public static implicit operator String(ConversationId conversationId)
     {
-        if (conversationId == null)
-        {
-            throw new ArgumentNullException(nameof(conversationId));
-        }
+        ArgumentNullException.ThrowIfNull(conversationId);
 
         if (String.IsNullOrEmpty(conversationId.UniqueId))
         {

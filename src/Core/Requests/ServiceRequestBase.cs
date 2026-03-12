@@ -242,10 +242,7 @@ internal abstract class ServiceRequestBase
     /// <param name="service">The service.</param>
     internal ServiceRequestBase(ExchangeService service)
     {
-        if (service == null)
-        {
-            throw new ArgumentNullException(nameof(service));
-        }
+        ArgumentNullException.ThrowIfNull(service);
 
         this.service = service;
         this.ThrowIfNotSupportedByRequestedServerVersion();
