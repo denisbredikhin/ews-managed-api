@@ -643,10 +643,7 @@ public abstract class ExchangeServiceBase
     {
         get
         {
-            if (this.timeZoneDefinition == null)
-            {
-                this.timeZoneDefinition = new TimeZoneDefinition(this.TimeZone);
-            }
+            this.timeZoneDefinition ??= new TimeZoneDefinition(this.TimeZone);
 
             return this.timeZoneDefinition;
         }

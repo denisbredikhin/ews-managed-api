@@ -56,14 +56,11 @@ internal class GetUserConfigurationRequest : MultiResponseServiceRequest<GetUser
     internal override GetUserConfigurationResponse CreateServiceResponse(ExchangeService service, int responseIndex)
     {
         // In the case of UserConfiguration.Load(), this.userConfiguration is set.
-        if (this.userConfiguration == null)
-        {
-            this.userConfiguration = new UserConfiguration(service, this.properties)
+        this.userConfiguration ??= new UserConfiguration(service, this.properties)
             {
                 Name = this.name,
                 ParentFolderId = this.parentFolderId
             };
-        }
 
         return new GetUserConfigurationResponse(this.userConfiguration);
     }

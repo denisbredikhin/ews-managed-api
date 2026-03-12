@@ -53,10 +53,7 @@ public sealed class DelegateUserResponse : ServiceResponse
     {
         if (this.readDelegateUser)
         {
-            if (this.delegateUser == null)
-            {
-                this.delegateUser = new DelegateUser();
-            }
+            this.delegateUser ??= new DelegateUser();
 
             reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.DelegateUser);
 

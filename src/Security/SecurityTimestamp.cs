@@ -116,19 +116,13 @@ internal sealed class SecurityTimestamp
 
     internal char[] GetCreationTimeChars()
     {
-        if (this.computedCreationTimeUtc == null)
-        {
-            this.computedCreationTimeUtc = ToChars(ref this.creationTimeUtc);
-        }
+        this.computedCreationTimeUtc ??= ToChars(ref this.creationTimeUtc);
         return this.computedCreationTimeUtc;
     }
 
     internal char[] GetExpiryTimeChars()
     {
-        if (this.computedExpiryTimeUtc == null)
-        {
-            this.computedExpiryTimeUtc = ToChars(ref this.expiryTimeUtc);
-        }
+        this.computedExpiryTimeUtc ??= ToChars(ref this.expiryTimeUtc);
         return this.computedExpiryTimeUtc;
     }
 

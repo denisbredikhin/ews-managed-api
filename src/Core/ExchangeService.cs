@@ -1786,15 +1786,9 @@ public sealed class ExchangeService : ExchangeServiceBase
         EwsUtilities.ValidateParam(view, nameof(view));
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2015, "FindPeople");
 
-        if (context == null)
-        {
-            context = new Dictionary<string, string>();
-        }
+        context ??= new Dictionary<string, string>();
 
-        if (queryMode == null)
-        {
-            queryMode = PeopleQueryMode.Auto;
-        }
+        queryMode ??= PeopleQueryMode.Auto;
 
         FindPeopleRequest request = new(this)
         {
@@ -5403,10 +5397,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         get
         {
-            if (this.unifiedMessaging == null)
-            {
-                this.unifiedMessaging = new UnifiedMessaging(this);
-            }
+            this.unifiedMessaging ??= new UnifiedMessaging(this);
 
             return this.unifiedMessaging;
         }
