@@ -52,17 +52,17 @@ public sealed class ExchangeService : ExchangeServiceBase
 
     #region Fields
 
-    private Uri url;
-    private CultureInfo preferredCulture;
+    private Uri? url;
+    private CultureInfo? preferredCulture;
     private DateTimePrecision dateTimePrecision = DateTimePrecision.Default;
-    private ImpersonatedUserId impersonatedUserId;
-    private PrivilegedUserId privilegedUserId;
-    private ManagementRoles managementRoles;
-    private IFileAttachmentContentHandler fileAttachmentContentHandler;
-    private UnifiedMessaging unifiedMessaging;
+    private ImpersonatedUserId? impersonatedUserId;
+    private PrivilegedUserId? privilegedUserId;
+    private ManagementRoles? managementRoles;
+    private IFileAttachmentContentHandler? fileAttachmentContentHandler;
+    private UnifiedMessaging? unifiedMessaging;
     private bool enableScpLookup = true;
     private bool traceEnablePrettyPrinting = true;
-    private string targetServerVersion = null;
+    private string? targetServerVersion = null;
 
     #endregion
 
@@ -184,7 +184,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>Collection of service responses.</returns>
     private Task<ServiceResponseCollection<FindFolderResponse>> InternalFindFolders(
         IEnumerable<FolderId> parentFolderIds,
-        SearchFilter searchFilter,
+        SearchFilter? searchFilter,
         FolderView view,
         ServiceErrorHandling errorHandlingMode,
         CancellationToken token)
@@ -576,7 +576,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A ServiceResponseCollection providing update results for each of the specified items.</returns>
     private Task<ServiceResponseCollection<UpdateItemResponse>> InternalUpdateItems(
         IEnumerable<Item> items,
-        FolderId savedItemsDestinationFolderId,
+        FolderId? savedItemsDestinationFolderId,
         ConflictResolutionMode conflictResolution,
         MessageDisposition? messageDisposition,
         SendInvitationsOrCancellationsMode? sendInvitationsOrCancellationsMode,
@@ -1391,7 +1391,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     private Task<ServiceResponseCollection<GetItemResponse>> InternalBindToItems(
         IEnumerable<ItemId> itemIds,
         PropertySet propertySet,
-        string anchorMailbox,
+        string? anchorMailbox,
         ServiceErrorHandling errorHandling,
         CancellationToken token)
     {
@@ -1741,7 +1741,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="view">The view which defines the number of personas being returned</param>
     /// <param name="context">The context for this query. See PeopleQueryContextKeys for keys</param>
     /// <returns>A collection of personas matching the query string</returns>
-    public Task<IPeopleQueryResults> BrowsePeople(ViewBase view, Dictionary<string, string> context, CancellationToken token = default)
+    public Task<IPeopleQueryResults> BrowsePeople(ViewBase view, Dictionary<string, string>? context, CancellationToken token = default)
     {
         return this.PerformPeopleQuery(view, string.Empty, context, null, token);
     }
@@ -1766,7 +1766,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="context">The context for this query. See PeopleQueryContextKeys for keys</param>
     /// <param name="queryMode">The scope of the query.</param>
     /// <returns>A collection of personas matching the query string</returns>
-    public Task<IPeopleQueryResults> SearchPeople(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode, CancellationToken token = default)
+    public Task<IPeopleQueryResults> SearchPeople(ViewBase view, string queryString, Dictionary<string, string>? context, PeopleQueryMode? queryMode, CancellationToken token = default)
     {
         EwsUtilities.ValidateParam(queryString, nameof(queryString));
 
@@ -1781,7 +1781,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="context">The context for this query</param>
     /// <param name="queryMode">The scope of the query.</param>
     /// <returns></returns>
-    private async Task<IPeopleQueryResults> PerformPeopleQuery(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode, CancellationToken token)
+    private async Task<IPeopleQueryResults> PerformPeopleQuery(ViewBase view, string queryString, Dictionary<string, string>? context, PeopleQueryMode? queryMode, CancellationToken token)
     {
         EwsUtilities.ValidateParam(view, nameof(view));
         EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2015, "FindPeople");
@@ -2042,10 +2042,10 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A collection of name resolutions whose names match the one passed as a parameter.</returns>
     public async Task<NameResolutionCollection> ResolveName(
         string nameToResolve,
-        IEnumerable<FolderId> parentFolderIds,
+        IEnumerable<FolderId>? parentFolderIds,
         ResolveNameSearchLocation searchScope,
         bool returnContactDetails,
-        PropertySet contactDataPropertySet,
+        PropertySet? contactDataPropertySet,
         CancellationToken token = default)
     {
         if (contactDataPropertySet != null)
@@ -2064,7 +2064,10 @@ public sealed class ExchangeService : ExchangeServiceBase
             NameToResolve = nameToResolve,
             ReturnFullContactData = returnContactDetails
         };
-        request.ParentFolderIds.AddRange(parentFolderIds);
+        if (parentFolderIds != null)
+        {
+            request.ParentFolderIds.AddRange(parentFolderIds);
+        }
         request.SearchLocation = searchScope;
         request.ContactDataPropertySet = contactDataPropertySet;
 
@@ -2256,7 +2259,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="eventTypes">The event types to subscribe to.</param>
     /// <returns>A request to subscribe to pull notifications in the authenticated user's mailbox. </returns>
     private SubscribeToPullNotificationsRequest BuildSubscribeToPullNotificationsRequest(
-        IEnumerable<FolderId> folderIds,
+        IEnumerable<FolderId>? folderIds,
         int timeout,
         string watermark,
         EventType[] eventTypes)
@@ -2547,12 +2550,12 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="eventTypes">The event types to subscribe to.</param>
     /// <returns>A request to request to subscribe to push notifications in the authenticated user's mailbox.</returns>
     private SubscribeToPushNotificationsRequest BuildSubscribeToPushNotificationsRequest(
-        IEnumerable<FolderId> folderIds,
+        IEnumerable<FolderId>? folderIds,
         Uri url,
         int frequency,
         string watermark,
-        string callerData,
-        string anchorMailbox,
+        string? callerData,
+        string? anchorMailbox,
         EventType[] eventTypes)
     {
         EwsUtilities.ValidateParam(url, nameof(url));
@@ -2628,7 +2631,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="eventTypes">The event types to subscribe to.</param>
     /// <returns>A request to subscribe to streaming notifications in the authenticated user's mailbox. </returns>
     private SubscribeToStreamingNotificationsRequest BuildSubscribeToStreamingNotificationsRequest(
-        IEnumerable<FolderId> folderIds,
+        IEnumerable<FolderId>? folderIds,
         EventType[] eventTypes)
     {
         EwsUtilities.ValidateParamCollection(eventTypes, nameof(eventTypes));
@@ -2756,7 +2759,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="syncState">The optional sync state representing the point in time when to start the synchronization.</param>
     /// <returns>A ChangeCollection containing a list of changes that occurred in the specified folder.</returns>
     public async Task<ChangeCollection<FolderChange>> SyncFolderHierarchy(
-        FolderId syncFolderId,
+        FolderId? syncFolderId,
         PropertySet propertySet,
         string syncState,
         CancellationToken token = default)
@@ -2789,7 +2792,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="syncState">The optional sync state representing the point in time when to start the synchronization.</param>
     /// <returns>A request to synchronize the specified folder hierarchy of the mailbox this Service is connected to.</returns>
     private SyncFolderHierarchyRequest BuildSyncFolderHierarchyRequest(
-        FolderId syncFolderId,
+        FolderId? syncFolderId,
         PropertySet propertySet,
         string syncState)
     {
@@ -3103,7 +3106,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                         ConversationSortOrder? sortOrder,
                         MailboxSearchLocation? mailboxScope,
                         int? maxItemsToReturn,
-                        string anchorMailbox,
+                        string? anchorMailbox,
                         ServiceErrorHandling errorHandling,
                         CancellationToken token)
     {
@@ -3277,9 +3280,9 @@ public sealed class ExchangeService : ExchangeServiceBase
             ConversationActionType actionType,
             IEnumerable<ConversationId> conversationIds,
             bool processRightAway,
-            StringList categories,
+            StringList? categories,
             bool enableAlwaysDelete,
-            FolderId destinationFolderId,
+            FolderId? destinationFolderId,
             ServiceErrorHandling errorHandlingMode,
             CancellationToken token)
     {
@@ -3335,8 +3338,8 @@ public sealed class ExchangeService : ExchangeServiceBase
     private Task<ServiceResponseCollection<ServiceResponse>> ApplyConversationOneTimeAction(
         ConversationActionType actionType,
         IEnumerable<KeyValuePair<ConversationId, DateTime?>> idTimePairs,
-        FolderId contextFolderId,
-        FolderId destinationFolderId,
+        FolderId? contextFolderId,
+        FolderId? destinationFolderId,
         DeleteMode? deleteType,
         bool? isRead,
         RetentionType? retentionPolicyType,
@@ -4074,10 +4077,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     internal System.Threading.Tasks.Task LoadPropertiesForUserConfiguration(UserConfiguration userConfiguration, UserConfigurationProperties properties,
         CancellationToken token)
     {
-        EwsUtilities.Assert(
-            userConfiguration != null,
-            "ExchangeService.LoadPropertiesForUserConfiguration",
-            "userConfiguration is null");
+        ArgumentNullException.ThrowIfNull(userConfiguration, nameof(userConfiguration));
 
         GetUserConfigurationRequest request = new(this)
         {
@@ -4397,7 +4397,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="pageItemReference">Page item reference</param>
     /// <param name="pageDirection">Page direction</param>
     /// <returns>Service response object</returns>
-    public Task<GetNonIndexableItemDetailsResponse> GetNonIndexableItemDetails(string[] mailboxes, int? pageSize, string pageItemReference, SearchPageDirection? pageDirection)
+    public Task<GetNonIndexableItemDetailsResponse> GetNonIndexableItemDetails(string[] mailboxes, int? pageSize, string? pageItemReference, SearchPageDirection? pageDirection)
     {
         GetNonIndexableItemDetailsParameters parameters = new()
         {
@@ -4797,7 +4797,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="sendWelcomeEmail">Whether to send welcome email for the addin</param>
     /// <returns>True if the app was not already installed. False if it was not installed. Null if it is not a user mailbox.</returns>
     /// <remarks>Exception will be thrown for errors. </remarks>
-    internal async Task<bool?> InternalInstallApp(Stream manifestStream, string marketplaceAssetId, string marketplaceContentMarket, bool sendWelcomeEmail, CancellationToken token)
+    internal async Task<bool?> InternalInstallApp(Stream manifestStream, string? marketplaceAssetId, string? marketplaceContentMarket, bool sendWelcomeEmail, CancellationToken token)
     {
         EwsUtilities.ValidateParam(manifestStream, nameof(manifestStream));
 
@@ -4869,7 +4869,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="apiVersionSupported">The api version supported by the client.</param>
     /// <param name="schemaVersionSupported">The schema version supported by the client.</param>
     /// <remarks>Exception will be thrown for errors. </remarks>
-    public async Task<string> GetAppMarketplaceUrl(string apiVersionSupported, string schemaVersionSupported, CancellationToken token = default)
+    public async Task<string> GetAppMarketplaceUrl(string? apiVersionSupported, string? schemaVersionSupported, CancellationToken token = default)
     {
         GetAppMarketplaceUrlRequest request = new(this)
         {
@@ -4998,7 +4998,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>UserUnified groups.</returns>
     private async Task<Collection<UnifiedGroupsSet>> GetUserUnifiedGroupsInternal(
                         IEnumerable<RequestedUnifiedGroupsSet> requestedUnifiedGroupsSets,
-                        string userSmtpAddress, CancellationToken token)
+                        string? userSmtpAddress, CancellationToken token)
     {
         GetUserUnifiedGroupsRequest request = new(this);
 
@@ -5106,7 +5106,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     ///   X-EWS-TargetVersion: 2.4
     ///   X-EWS_TargetVersion: 2.9; minimum=2.4
     /// </remarks>
-    internal static void ValidateTargetVersion(string version)
+    internal static void ValidateTargetVersion(string? version)
     {
         const char ParameterSeparator = ';';
         const string LegacyVersionPrefix = "Exchange20";
@@ -5279,7 +5279,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// </returns>
     internal IEwsHttpWebRequest PrepareHttpWebRequest(string methodName)
     {
-        Uri endpoint = this.Url;
+        Uri endpoint = this.Url ?? throw new ServiceLocalException(Strings.ServiceUrlMustBeSet);
         this.RegisterCustomBasicAuthModule();
 
         endpoint = this.AdjustServiceUriFromCredentials(endpoint);
@@ -5328,7 +5328,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// Gets or sets the URL of the Exchange Web Services. 
     /// </summary>
-    public Uri Url
+    public Uri? Url
     {
         get { return this.url; }
         set { this.url = value; }
@@ -5337,7 +5337,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// Gets or sets the Id of the user that EWS should impersonate. 
     /// </summary>
-    public ImpersonatedUserId ImpersonatedUserId
+    public ImpersonatedUserId? ImpersonatedUserId
     {
         get { return this.impersonatedUserId; }
         set { this.impersonatedUserId = value; }
@@ -5346,7 +5346,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// Gets or sets the Id of the user that EWS should open his/her mailbox with privileged logon type. 
     /// </summary>
-    internal PrivilegedUserId PrivilegedUserId
+    internal PrivilegedUserId? PrivilegedUserId
     {
         get { return this.privilegedUserId; }
         set { this.privilegedUserId = value; }
@@ -5355,7 +5355,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// 
     /// </summary>
-    public ManagementRoles ManagementRoles
+    public ManagementRoles? ManagementRoles
     {
         get { return this.managementRoles; }
         set { this.managementRoles = value; }
@@ -5364,7 +5364,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// Gets or sets the preferred culture for messages returned by the Exchange Web Services.
     /// </summary>
-    public CultureInfo PreferredCulture
+    public CultureInfo? PreferredCulture
     {
         get { return this.preferredCulture; }
         set { this.preferredCulture = value; }
@@ -5382,7 +5382,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// Gets or sets a file attachment content handler.
     /// </summary>
-    public IFileAttachmentContentHandler FileAttachmentContentHandler
+    public IFileAttachmentContentHandler? FileAttachmentContentHandler
     {
         get { return this.fileAttachmentContentHandler; }
         set { this.fileAttachmentContentHandler = value; }
@@ -5453,7 +5453,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <summary>
     /// Gets or sets the target server version string (newer than Exchange2013).
     /// </summary>
-    internal string TargetServerVersion
+    internal string? TargetServerVersion
     {
         get
         {

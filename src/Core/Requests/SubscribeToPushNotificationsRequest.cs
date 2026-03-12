@@ -34,7 +34,7 @@ internal class SubscribeToPushNotificationsRequest : SubscribeRequest<PushSubscr
 {
     private int frequency = 30;
     private Uri url;
-    private string callerData;
+    private string? callerData;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SubscribeToPushNotificationsRequest"/> class.
@@ -137,7 +137,7 @@ internal class SubscribeToPushNotificationsRequest : SubscribeRequest<PushSubscr
     /// Gets or sets the URL.
     /// </summary>
     /// <value>The URL.</value>
-    public string CallerData
+    public string? CallerData
     {
         get { return this.callerData; }
         set { this.callerData = value; }

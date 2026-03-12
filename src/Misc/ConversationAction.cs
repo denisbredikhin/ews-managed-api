@@ -88,12 +88,12 @@ internal class ConversationAction
     /// <summary>
     /// Gets or sets folder id ContextFolder
     /// </summary>
-    internal FolderIdWrapper ContextFolderId { get; set; }
+    internal FolderIdWrapper? ContextFolderId { get; set; }
 
     /// <summary>
     /// Gets or sets folder id for Move action
     /// </summary>
-    internal FolderIdWrapper DestinationFolderId { get; set; }
+    internal FolderIdWrapper? DestinationFolderId { get; set; }
 
     /// <summary>
     /// Gets or sets the retention policy type.

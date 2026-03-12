@@ -48,7 +48,7 @@ internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveN
     private string nameToResolve;
     private bool returnFullContactData;
     private ResolveNameSearchLocation searchLocation;
-    private PropertySet contactDataPropertySet;
+    private PropertySet? contactDataPropertySet;
     private readonly FolderIdWrapperList parentFolderIds = new();
 
     /// <summary>
@@ -212,7 +212,7 @@ internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveN
     /// Gets or sets the PropertySet for Contact Data
     /// </summary>
     /// <value>The PropertySet</value>
-    public PropertySet ContactDataPropertySet
+    public PropertySet? ContactDataPropertySet
     {
         get { return this.contactDataPropertySet; }
         set { this.contactDataPropertySet = value; }

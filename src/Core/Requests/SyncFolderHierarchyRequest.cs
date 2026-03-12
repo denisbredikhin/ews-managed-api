@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data;
 internal class SyncFolderHierarchyRequest : MultiResponseServiceRequest<SyncFolderHierarchyResponse>
 {
     private PropertySet propertySet;
-    private FolderId syncFolderId;
+    private FolderId? syncFolderId;
     private string syncState;
 
     /// <summary>
@@ -146,7 +146,7 @@ internal class SyncFolderHierarchyRequest : MultiResponseServiceRequest<SyncFold
     /// Gets or sets the sync folder id.
     /// </summary>
     /// <value>The sync folder id.</value>
-    public FolderId SyncFolderId
+    public FolderId? SyncFolderId
     {
         get { return this.syncFolderId; }
         set { this.syncFolderId = value; }

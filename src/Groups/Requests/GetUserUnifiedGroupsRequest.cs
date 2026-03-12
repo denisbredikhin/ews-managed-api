@@ -50,7 +50,7 @@ internal sealed class GetUserUnifiedGroupsRequest : SimpleServiceRequestBase
     /// <summary>
     /// Gets or sets the UserSmptAddress
     /// </summary>
-    public string UserSmtpAddress { get; set; }
+    public string? UserSmtpAddress { get; set; }
 
     /// <summary>
     /// Gets the name of the response XML element.

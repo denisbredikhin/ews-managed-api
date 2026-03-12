@@ -34,7 +34,7 @@ using System.Collections.Generic;
 internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>
 {
     private readonly List<Item> items = new();
-    private FolderId savedItemsDestinationFolder;
+    private FolderId? savedItemsDestinationFolder;
     private ConflictResolutionMode conflictResolutionMode;
     private MessageDisposition? messageDisposition;
     private SendInvitationsOrCancellationsMode? sendInvitationsOrCancellationsMode;
@@ -264,7 +264,7 @@ internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItem
     /// Gets or sets the saved items destination folder.
     /// </summary>
     /// <value>The saved items destination folder.</value>
-    public FolderId SavedItemsDestinationFolder
+    public FolderId? SavedItemsDestinationFolder
     {
         get { return this.savedItemsDestinationFolder; }
         set { this.savedItemsDestinationFolder = value; }

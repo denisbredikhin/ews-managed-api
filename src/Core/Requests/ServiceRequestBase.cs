@@ -70,7 +70,7 @@ internal abstract class ServiceRequestBase
     /// will route the request directly to the mailbox server against which the request
     /// is to be executed.
     /// </remarks>
-    internal string AnchorMailbox
+    internal string? AnchorMailbox
     {
        get;
        set;

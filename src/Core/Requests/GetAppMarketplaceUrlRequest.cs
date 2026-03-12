@@ -47,7 +47,7 @@ internal sealed class GetAppMarketplaceUrlRequest : SimpleServiceRequestBase
     /// This is used by EWS to generate a market place url with the correct version filter.
     /// </summary>
     /// <value>The Api version supported.</value>
-    internal string ApiVersionSupported
+    internal string? ApiVersionSupported
     {
         get;
         set;
@@ -58,7 +58,7 @@ internal sealed class GetAppMarketplaceUrlRequest : SimpleServiceRequestBase
     /// This is used by EWS to generate a market place url with the correct version filter.
     /// </summary>
     /// <value>The schema version supported.</value>
-    internal string SchemaVersionSupported
+    internal string? SchemaVersionSupported
     {
         get;
         set;

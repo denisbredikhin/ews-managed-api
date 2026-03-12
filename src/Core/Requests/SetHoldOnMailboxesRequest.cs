@@ -164,7 +164,7 @@ internal sealed class SetHoldOnMailboxesRequest : SimpleServiceRequestBase
     /// <summary>
     /// Collection of mailboxes to be held/unheld
     /// </summary>
-    public string[] Mailboxes { get; set; }
+    public string[]? Mailboxes { get; set; }
 
     /// <summary>
     /// Query language
@@ -174,7 +174,7 @@ internal sealed class SetHoldOnMailboxesRequest : SimpleServiceRequestBase
     /// <summary>
     /// InPlaceHold Identity
     /// </summary>
-    public string InPlaceHoldIdentity { get; set; }
+    public string? InPlaceHoldIdentity { get; set; }
 
     /// <summary>
     /// Item hold period

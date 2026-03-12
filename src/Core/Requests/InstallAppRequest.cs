@@ -42,7 +42,7 @@ internal sealed class InstallAppRequest : SimpleServiceRequestBase
     /// <param name="marketplaceAssetId">The asset id of the addin in marketpalce</param>
     /// <param name="marketplaceContentMarket">The target market for the content</param>
     /// <param name="sendWelcomeEmail">Whether to send email on installation</param>
-    internal InstallAppRequest(ExchangeService service, Stream manifestStream, string marketplaceAssetId, string marketplaceContentMarket, bool sendWelcomeEmail)
+    internal InstallAppRequest(ExchangeService service, Stream manifestStream, string? marketplaceAssetId, string? marketplaceContentMarket, bool sendWelcomeEmail)
         : base(service)
     {
         this.manifestStream = manifestStream;
@@ -134,12 +134,12 @@ internal sealed class InstallAppRequest : SimpleServiceRequestBase
     /// <summary>
     /// The asset id of the addin in marketplace
     /// </summary>
-    private readonly string marketplaceAssetId;
+    private readonly string? marketplaceAssetId;
 
     /// <summary>
     /// The target market for content
     /// </summary>
-    private readonly string marketplaceContentMarket;
+    private readonly string? marketplaceContentMarket;
 
     /// <summary>
     /// Whether to send welcome email or not
