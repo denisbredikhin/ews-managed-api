@@ -3136,7 +3136,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                             conversations,
                             propertySet,
                             foldersToIgnore,
-                            null,               /* sortOrder */
+                            sortOrder,               /* sortOrder */
                             null,               /* mailboxScope */
                             null,               /* maxItemsToReturn*/
                             null, /* anchorMailbox */
