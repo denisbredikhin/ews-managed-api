@@ -3106,7 +3106,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         GetConversationItemsRequest request = new(this, errorHandling)
         {
             ItemProperties = propertySet,
-            FoldersToIgnore = new FolderIdCollection(foldersToIgnore),
+            FoldersToIgnore = [.. foldersToIgnore],
             SortOrder = sortOrder,
             MailboxScope = mailboxScope,
             MaxItemsToReturn = maxItemsToReturn,
@@ -3393,7 +3393,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                     ConversationActionType.AlwaysCategorize,
                     conversationId,
                     processSynchronously,
-                    new StringList(categories),
+                    [.. categories],
                     false,
                     null,
                     ServiceErrorHandling.ReturnErrors,

@@ -74,7 +74,7 @@ public sealed class PeopleQueryMode
     {
         EwsUtilities.ValidateParam(sources, nameof(sources));
 
-        this.Sources = new HashSet<string>(sources);
+        this.Sources = [.. sources];
 
         // The call should either be auto or a list of real sources, so disallow this constructor from passing Auto
         if (this.Sources.Contains(AutoSourceString))

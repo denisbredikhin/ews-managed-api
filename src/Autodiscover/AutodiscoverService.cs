@@ -1704,7 +1704,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         string userSmtpAddress,
         params UserSettingName[] userSettingNames)
     {
-        List<UserSettingName> requestedSettings = new(userSettingNames);
+        List<UserSettingName> requestedSettings = [.. userSettingNames];
 
         if (string.IsNullOrEmpty(userSmtpAddress))
         {
@@ -1742,8 +1742,8 @@ public sealed class AutodiscoverService : ExchangeServiceBase
                 string.Format(Strings.AutodiscoverServiceIncompatibleWithRequestVersion, MinimumRequestVersionForAutoDiscoverSoapService));
         }
 
-        List<string> smtpAddresses = new(userSmtpAddresses);
-        List<UserSettingName> settings = new(userSettingNames);
+        List<string> smtpAddresses = [.. userSmtpAddresses];
+        List<UserSettingName> settings = [.. userSettingNames];
 
         return this.GetUserSettings(smtpAddresses, settings);
     }
@@ -1761,7 +1761,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         params DomainSettingName[] domainSettingNames)
     {
         List<string> domains = [domain];
-        List<DomainSettingName> settings = new(domainSettingNames);
+        List<DomainSettingName> settings = [.. domainSettingNames];
         return (await this.GetDomainSettings(domains, settings, requestedVersion))[0];
     }
 
@@ -1777,9 +1777,9 @@ public sealed class AutodiscoverService : ExchangeServiceBase
         ExchangeVersion? requestedVersion,
         params DomainSettingName[] domainSettingNames)
     {
-        List<DomainSettingName> settings = new(domainSettingNames);
+        List<DomainSettingName> settings = [.. domainSettingNames];
 
-        return this.GetDomainSettings(new List<string>(domains), settings, requestedVersion);
+        return this.GetDomainSettings([.. domains], settings, requestedVersion);
     }
 
     /// <summary>
