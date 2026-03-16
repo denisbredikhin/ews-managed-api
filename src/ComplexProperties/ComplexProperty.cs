@@ -59,10 +59,7 @@ public abstract class ComplexProperty : ISelfValidate
     /// </summary>
     internal virtual void Changed()
     {
-        if (this.OnChange != null)
-        {
-            this.OnChange(this);
-        }
+        this.OnChange?.Invoke(this);
     }
 
     /// <summary>

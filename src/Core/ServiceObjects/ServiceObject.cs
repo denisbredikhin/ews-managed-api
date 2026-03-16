@@ -46,10 +46,7 @@ public abstract class ServiceObject
     /// </summary>
     internal void Changed()
     {
-        if (this.OnChange != null)
-        {
-            this.OnChange(this);
-        }
+        this.OnChange?.Invoke(this);
     }
 
     /// <summary>

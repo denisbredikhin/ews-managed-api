@@ -52,7 +52,7 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// The binary secret.
     /// </summary>
-    private static byte[] binarySecret;
+    private static byte[]? binarySecret;
     #endregion
 
     #region Static members
@@ -91,7 +91,6 @@ public abstract class ExchangeServiceBase
     private ExchangeServerInfo serverInfo;
     private IWebProxy webProxy;
     private readonly IDictionary<string, string> httpHeaders = new Dictionary<string, string>();
-    private readonly IDictionary<string, string> httpResponseHeaders = new Dictionary<string, string>();
     private IEwsHttpWebRequestFactory ewsHttpWebRequestFactory = new EwsHttpWebRequestFactory();  
     #endregion
 
@@ -108,10 +107,7 @@ public abstract class ExchangeServiceBase
             "ExchangeService.DoOnSerializeCustomSoapHeaders",
             "writer is null");
 
-        if (this.OnSerializeCustomSoapHeaders != null)
-        {
-            this.OnSerializeCustomSoapHeaders(writer);
-        }
+        this.OnSerializeCustomSoapHeaders?.Invoke(writer);
     }
 
     #endregion
@@ -197,9 +193,9 @@ public abstract class ExchangeServiceBase
                 serviceCredentials.PrepareWebRequest(request);
             }
 
-            lock (this.httpResponseHeaders)
+            lock (HttpResponseHeaders)
             {
-                this.httpResponseHeaders.Clear();
+                HttpResponseHeaders.Clear();
             }
 
             return request;
@@ -381,29 +377,26 @@ public abstract class ExchangeServiceBase
     /// <param name="headers">The response headers</param>
     private void SaveHttpResponseHeaders(HttpResponseHeaders headers)
     {
-        lock (this.httpResponseHeaders)
+        lock (HttpResponseHeaders)
         {
-            this.httpResponseHeaders.Clear();
+            HttpResponseHeaders.Clear();
 
             foreach (var item in headers)
             {
                 var key = item.Key;
 
-                if (this.httpResponseHeaders.TryGetValue(key, out string existingValue))
+                if (HttpResponseHeaders.TryGetValue(key, out string existingValue))
                 {
-                    this.httpResponseHeaders[key] = existingValue + "," + string.Join(",", item.Value);
+                    HttpResponseHeaders[key] = existingValue + "," + string.Join(",", item.Value);
                 }
                 else
                 {
-                    this.httpResponseHeaders.Add(key, string.Join(",", item.Value));
+                    HttpResponseHeaders.Add(key, string.Join(",", item.Value));
                 }
             }
         }
 
-        if (this.OnResponseHeadersCaptured != null)
-        {
-            this.OnResponseHeadersCaptured(headers);
-        }
+        this.OnResponseHeadersCaptured?.Invoke(headers);
     }
 
     /// <summary>
@@ -906,10 +899,7 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// Gets a collection of HTTP headers from the last response.
     /// </summary>
-    public IDictionary<string, string> HttpResponseHeaders
-    {
-        get { return this.httpResponseHeaders; }
-    }
+    public IDictionary<string, string> HttpResponseHeaders { get; } = new Dictionary<string, string>();
 
     /// <summary>
     /// Gets the session key.

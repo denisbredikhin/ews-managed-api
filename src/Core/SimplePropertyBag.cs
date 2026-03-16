@@ -56,10 +56,7 @@ internal class SimplePropertyBag<TKey> : IEnumerable<KeyValuePair<TKey, object>>
     /// </summary>
     private void Changed()
     {
-        if (this.OnChange != null)
-        {
-            this.OnChange();
-        }
+        this.OnChange?.Invoke();
     }
 
     /// <summary>

@@ -265,10 +265,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     {
         this.currentHangingRequest = null;
 
-        if (this.OnDisconnect != null)
-        {
-            this.OnDisconnect(this, new SubscriptionErrorEventArgs(null, ex));
-        }
+        this.OnDisconnect?.Invoke(this, new SubscriptionErrorEventArgs(null, ex));
     }
 
     /// <summary>
@@ -372,10 +369,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
                     subscription,
                     exception);
 
-                if (this.OnSubscriptionError != null)
-                {
-                    this.OnSubscriptionError(this, eventArgs);
-                }
+                this.OnSubscriptionError?.Invoke(this, eventArgs);
             }
 
             if (gseResponse.ErrorCode != ServiceError.ErrorMissedNotificationEvents)
@@ -403,10 +397,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
             null,
             new ServiceResponseException(gseResponse));
 
-        if (this.OnSubscriptionError != null)
-        {
-            this.OnSubscriptionError(this, eventArgs);
-        }
+        this.OnSubscriptionError?.Invoke(this, eventArgs);
     }
 
     /// <summary>
@@ -434,10 +425,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
                     subscription,
                     events.Events);
 
-                if (this.OnNotificationEvent != null)
-                {
-                    this.OnNotificationEvent(this, eventArgs);
-                }
+                this.OnNotificationEvent?.Invoke(this, eventArgs);
             }
         }
     }
