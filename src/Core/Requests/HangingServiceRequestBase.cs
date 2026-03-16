@@ -128,7 +128,7 @@ internal abstract class HangingServiceRequestBase : ServiceRequestBase
     /// <summary>
     /// lock object
     /// </summary>
-    private readonly object lockObject = new();
+    private readonly Lock lockObject = new();
 
     /// <summary>
     /// Delegate method to handle a hanging request disconnection.

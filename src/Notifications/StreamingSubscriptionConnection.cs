@@ -62,7 +62,7 @@ public sealed class StreamingSubscriptionConnection : IDisposable
     /// <summary>
     /// Lock object
     /// </summary>
-    private readonly object lockObject = new();
+    private readonly Lock lockObject = new();
 
     /// <summary>
     /// Represents a delegate that is invoked when notifications are received from the server

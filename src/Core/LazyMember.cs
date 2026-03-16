@@ -42,7 +42,7 @@ internal class LazyMember<T>
 {
     private T lazyMember;
     private readonly InitializeLazyMember<T> initializationDelegate;
-    private readonly object lockObject = new();
+    private readonly Lock lockObject = new();
     private bool initialized = false;
 
     /// <summary>

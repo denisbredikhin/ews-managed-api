@@ -41,7 +41,7 @@ using SchemaTypeList = LazyMember<System.Collections.Generic.List<System.Type>>;
 [EditorBrowsable(EditorBrowsableState.Never)]
 public abstract class ServiceObjectSchema : IEnumerable<PropertyDefinition>
 {
-    private static readonly object lockObject = new();
+    private static readonly Lock lockObject = new();
 
     /// <summary>
     /// List of all schema types.

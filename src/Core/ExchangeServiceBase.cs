@@ -31,9 +31,6 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
-#if NETSTANDARD2_0
-using System.Runtime.InteropServices;
-#endif
 using System.Security.Cryptography;
 using System.Xml;
 
@@ -43,7 +40,7 @@ using System.Xml;
 public abstract class ExchangeServiceBase
 {
     #region Const members
-    private static readonly object lockObj = new();
+    private static readonly Lock lockObj = new();
 
     private readonly ExchangeVersion requestedServerVersion = ExchangeVersion.Exchange2013_SP1;
 
