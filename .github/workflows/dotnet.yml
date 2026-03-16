@@ -61,7 +61,7 @@ jobs:
         SOLUTION_PATH: Microsoft.Exchange.WebServices.Core.slnx
       shell: powershell
       run: |
-        ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"denisbredikhin_ews-managed-api" /o:"denisbredikhin" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml"
+        ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"denisbredikhin_ews-managed-api" /o:"denisbredikhin" /d:sonar.token="$env:SONAR_TOKEN" /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml"
         dotnet build "$env:SOLUTION_PATH"
         dotnet test --configuration Release --no-restore `
           --solution "$env:SOLUTION_PATH" `
@@ -71,7 +71,7 @@ jobs:
           --coverage `
           --coverage-output-format opencover `
           --coverage-output coverage.opencover.xml
-        ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="$env:SONAR_TOKEN"
 
     - name: Upload unit test and coverage artifacts
       if: ${{ always() }}
