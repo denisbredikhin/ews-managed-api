@@ -52,7 +52,7 @@ internal class ConversationAction
     /// <summary>
     /// Gets or set conversation categories for Always Categorize action
     /// </summary>
-    internal StringList Categories { get; set; }
+    internal StringList? Categories { get; set; }
 
     /// <summary>
     /// Gets or sets Enable Always Delete value for Always Delete action
@@ -77,7 +77,7 @@ internal class ConversationAction
     /// <summary>
     /// Gets or sets the flag.
     /// </summary>
-    internal Flag Flag { get; set; }
+    internal Flag? Flag { get; set; }
 
     /// <summary>
     /// ConversationLastSyncTime is used in one time action to determine the items

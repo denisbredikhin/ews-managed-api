@@ -179,5 +179,5 @@ internal sealed class SetHoldOnMailboxesRequest : SimpleServiceRequestBase
     /// <summary>
     /// Item hold period
     /// </summary>
-    public string ItemHoldPeriod { get; set; }
+    public string? ItemHoldPeriod { get; set; }
 }

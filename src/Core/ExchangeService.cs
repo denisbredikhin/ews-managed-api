@@ -3235,7 +3235,7 @@ public sealed class ExchangeService : ExchangeServiceBase
                             conversations,
                             propertySet,
                             foldersToIgnore,
-                            null,               /* sortOrder */
+                            sortOrder,               /* sortOrder */
                             mailboxScope,
                             null,               /* maxItemsToReturn*/
                             null, /* anchorMailbox */
@@ -3327,7 +3327,7 @@ public sealed class ExchangeService : ExchangeServiceBase
         bool? isRead,
         RetentionType? retentionPolicyType,
         Guid? retentionPolicyTagId,
-        Flag flag,
+        Flag? flag,
         bool? suppressReadReceipts,
         ServiceErrorHandling errorHandlingMode,
         CancellationToken token)
@@ -3876,7 +3876,8 @@ public sealed class ExchangeService : ExchangeServiceBase
         return this.UpdateDelegates(
             mailbox,
             meetingRequestsDeliveryScope,
-            (IEnumerable<DelegateUser>)delegateUsers);
+            (IEnumerable<DelegateUser>)delegateUsers, 
+            token);
     }
 
     /// <summary>
@@ -3954,7 +3955,8 @@ public sealed class ExchangeService : ExchangeServiceBase
         return this.GetDelegates(
             mailbox,
             includePermissions,
-            (IEnumerable<UserId>)userIds);
+            (IEnumerable<UserId>)userIds,
+            token);
     }
 
     /// <summary>
@@ -4310,7 +4312,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <param name="inPlaceHoldIdentity">in-place hold identity</param>
     /// <param name="itemHoldPeriod">item hold period</param>
     /// <returns>Service response object</returns>
-    public Task<SetHoldOnMailboxesResponse> SetHoldOnMailboxes(string holdId, HoldAction actionType, string query, string inPlaceHoldIdentity, string itemHoldPeriod, CancellationToken token = default)
+    public Task<SetHoldOnMailboxesResponse> SetHoldOnMailboxes(string holdId, HoldAction actionType, string query, string inPlaceHoldIdentity, string? itemHoldPeriod, CancellationToken token = default)
     {
         SetHoldOnMailboxesRequest request = new(this)
         {
@@ -4691,7 +4693,6 @@ public sealed class ExchangeService : ExchangeServiceBase
     /// <returns>A ServiceResponseCollection providing token results for each of the specified id and types.</returns>
     public Task<ServiceResponseCollection<GetClientAccessTokenResponse>> GetClientAccessToken(IEnumerable<KeyValuePair<string, ClientAccessTokenType>> idAndTypes)
     {
-        GetClientAccessTokenRequest request = new(this, ServiceErrorHandling.ReturnErrors);
         List<ClientAccessTokenRequest> requestList = [];
         foreach (KeyValuePair<string, ClientAccessTokenType> idAndType in idAndTypes)
         {
@@ -4784,7 +4785,7 @@ public sealed class ExchangeService : ExchangeServiceBase
     {
         EwsUtilities.ValidateParam(manifestStream, nameof(manifestStream));
 
-        InstallAppRequest request = new(this, manifestStream, marketplaceAssetId, marketplaceContentMarket, false);
+        InstallAppRequest request = new(this, manifestStream, marketplaceAssetId, marketplaceContentMarket, sendWelcomeEmail);
 
         InstallAppResponse response = await request.Execute(token).ConfigureAwait(false);
 
