@@ -31,6 +31,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Xml;
 
@@ -69,9 +70,9 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// Occurs when the http response headers of a server call is captured.
     /// </summary>
-    public event ResponseHeadersCapturedHandler OnResponseHeadersCaptured;
-    
-    private ExchangeCredentials credentials;
+    public event ResponseHeadersCapturedHandler? OnResponseHeadersCaptured;
+
+    private ExchangeCredentials? credentials;
     private bool useDefaultCredentials;
     private int timeout = 100000;
     private bool traceEnabled;
@@ -82,14 +83,14 @@ public abstract class ExchangeServiceBase
     private string userAgent = ExchangeService.defaultUserAgent;
     private bool acceptGzipEncoding = true;
     private bool keepAlive = true;
-    private string connectionGroupName;
-    private string clientRequestId;
+    private string? connectionGroupName;
+    private string? clientRequestId;
     private bool returnClientRequestId;
     private CookieContainer cookieContainer = new();
     private readonly TimeZoneInfo timeZone;
-    private TimeZoneDefinition timeZoneDefinition;
-    private ExchangeServerInfo serverInfo;
-    private IWebProxy webProxy;
+    private TimeZoneDefinition? timeZoneDefinition = null;
+    private ExchangeServerInfo? serverInfo = null;
+    private IWebProxy? webProxy = null;
     private readonly IDictionary<string, string> httpHeaders = new Dictionary<string, string>();
     private IEwsHttpWebRequestFactory ewsHttpWebRequestFactory = new EwsHttpWebRequestFactory();  
     #endregion
@@ -107,7 +108,7 @@ public abstract class ExchangeServiceBase
             "ExchangeService.DoOnSerializeCustomSoapHeaders",
             "writer is null");
 
-        this.OnSerializeCustomSoapHeaders?.Invoke(writer);
+        this.OnSerializeCustomSoapHeaders?.Invoke(writer!);
     }
 
     #endregion
@@ -174,17 +175,12 @@ public abstract class ExchangeServiceBase
             request.UseDefaultCredentials = this.UseDefaultCredentials;
             if (!request.UseDefaultCredentials)
             {
-                ExchangeCredentials serviceCredentials = this.Credentials;
-                if (serviceCredentials == null)
-                {
-                    throw new ServiceLocalException(Strings.CredentialsRequired);
-                }
+                ExchangeCredentials serviceCredentials = this.Credentials ?? throw new ServiceLocalException(Strings.CredentialsRequired);
 
-#if NETSTANDARD2_0
-            // Temporary fix for authentication on Linux platform
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                // Temporary fix for authentication on Linux platform
+                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 serviceCredentials = AdjustLinuxAuthentication(url, serviceCredentials);
-#endif
+
 
                 // Make sure that credentials have been authenticated if required
                 serviceCredentials.PreAuthenticate();
@@ -209,7 +205,7 @@ public abstract class ExchangeServiceBase
 
     internal static ExchangeCredentials AdjustLinuxAuthentication(Uri url, ExchangeCredentials serviceCredentials)
     {
-        if (!(serviceCredentials is WebCredentials))
+        if (serviceCredentials is not WebCredentials)
             // Nothing to adjust
             return serviceCredentials;
 
@@ -264,7 +260,7 @@ public abstract class ExchangeServiceBase
         {
             string location = httpWebResponse.StatusDescription;
 
-            Uri accountUnlockUrl = null;
+            Uri? accountUnlockUrl = null;
             if (Uri.IsWellFormedUriString(location, UriKind.Absolute))
             {
                 accountUnlockUrl = new Uri(location);
@@ -385,7 +381,7 @@ public abstract class ExchangeServiceBase
             {
                 var key = item.Key;
 
-                if (HttpResponseHeaders.TryGetValue(key, out string existingValue))
+                if (HttpResponseHeaders.TryGetValue(key, out var existingValue))
                 {
                     HttpResponseHeaders[key] = existingValue + "," + string.Join(",", item.Value);
                 }
@@ -472,30 +468,18 @@ public abstract class ExchangeServiceBase
     /// <returns>String representation of DateTime.</returns>
     internal string ConvertDateTimeToUniversalDateTimeString(DateTime value)
     {
-        DateTime dateTime;
-
-        switch (value.Kind)
+        var dateTime = value.Kind switch
         {
-            case DateTimeKind.Unspecified:
-                dateTime = EwsUtilities.ConvertTime(
-                    value,
-                    this.TimeZone,
-                    TimeZoneInfo.Utc);
-
-                break;
-            case DateTimeKind.Local:
-                dateTime = EwsUtilities.ConvertTime(
-                    value,
-                    TimeZoneInfo.Local,
-                    TimeZoneInfo.Utc);
-
-                break;
-            default:
-                // The date is already in UTC, no need to convert it.
-                dateTime = value;
-
-                break;
-        }
+            DateTimeKind.Unspecified => EwsUtilities.ConvertTime(
+                                value,
+                                this.TimeZone,
+                                TimeZoneInfo.Utc),
+            DateTimeKind.Local => EwsUtilities.ConvertTime(
+                                value,
+                                TimeZoneInfo.Local,
+                                TimeZoneInfo.Utc),
+            _ => value,// The date is already in UTC, no need to convert it.
+        };
         return dateTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture);
     }
 
@@ -716,7 +700,7 @@ public abstract class ExchangeServiceBase
     /// Gets or sets the credentials used to authenticate with the Exchange Web Services. Setting the Credentials property
     /// automatically sets the UseDefaultCredentials to false.
     /// </summary>
-    public ExchangeCredentials Credentials
+    public ExchangeCredentials? Credentials
     {
         get
         {
@@ -822,7 +806,7 @@ public abstract class ExchangeServiceBase
     /// Gets information associated with the server that processed the last request.
     /// Will be null if no requests have been processed.
     /// </summary>
-    public ExchangeServerInfo ServerInfo
+    public ExchangeServerInfo? ServerInfo
     {
         get { return this.serverInfo; }
         internal set { this.serverInfo = value; }
@@ -832,7 +816,7 @@ public abstract class ExchangeServiceBase
     /// Gets or sets the web proxy that should be used when sending requests to EWS.
     /// Set this property to null to use the default web proxy.
     /// </summary>
-    public IWebProxy WebProxy
+    public IWebProxy? WebProxy
     {
         get { return this.webProxy; }
         set { this.webProxy = value; }
@@ -857,7 +841,7 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// Gets or sets the name of the connection group for the request. 
     /// </summary>
-    public string ConnectionGroupName
+    public string? ConnectionGroupName
     {
         get
         {
@@ -873,7 +857,7 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// Gets or sets the request id for the request.
     /// </summary>
-    public string ClientRequestId
+    public string? ClientRequestId
     {
         get { return this.clientRequestId; }
         set { this.clientRequestId = value; }
@@ -933,7 +917,7 @@ public abstract class ExchangeServiceBase
         set
         {
             // If new value is null, reset to default factory.
-            this.ewsHttpWebRequestFactory = (value == null) ? new EwsHttpWebRequestFactory() : value;
+            this.ewsHttpWebRequestFactory = value ?? new EwsHttpWebRequestFactory();
         }
     }
 
@@ -949,7 +933,7 @@ public abstract class ExchangeServiceBase
     /// <summary>
     /// Provides an event that applications can implement to emit custom SOAP headers in requests that are sent to Exchange.
     /// </summary>
-    public event CustomXmlSerializationDelegate OnSerializeCustomSoapHeaders;
+    public event CustomXmlSerializationDelegate? OnSerializeCustomSoapHeaders;
 
     #endregion
 }

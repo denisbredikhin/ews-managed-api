@@ -78,19 +78,11 @@ public class GroupMember : ComplexProperty
     public GroupMember(string address, string routingType, MailboxType mailboxType)
         : this()
     {
-        switch (mailboxType)
+        this.AddressInformation = mailboxType switch
         {
-            case MailboxType.PublicGroup:
-            case MailboxType.PublicFolder:
-            case MailboxType.Mailbox:
-            case MailboxType.Contact:
-            case MailboxType.OneOff:
-                this.AddressInformation = new EmailAddress(null, address, routingType, mailboxType);
-                break;
-
-            default:
-                throw new ServiceLocalException(Strings.InvalidMailboxType);
-        }
+            MailboxType.PublicGroup or MailboxType.PublicFolder or MailboxType.Mailbox or MailboxType.Contact or MailboxType.OneOff => new EmailAddress(null, address, routingType, mailboxType),
+            _ => throw new ServiceLocalException(Strings.InvalidMailboxType),
+        };
     }
 
     /// <summary>

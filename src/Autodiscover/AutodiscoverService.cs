@@ -1515,11 +1515,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
 
         if (!UseDefaultCredentials)
         {
-            ExchangeCredentials serviceCredentials = this.Credentials;
-            if (serviceCredentials == null)
-            {
-                throw new ServiceLocalException(Strings.CredentialsRequired);
-            }
+            ExchangeCredentials serviceCredentials = this.Credentials ?? throw new ServiceLocalException(Strings.CredentialsRequired);
 
 #if NETSTANDARD2_0
             // Temporary fix for authentication on Linux platform
@@ -1531,7 +1527,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
             serviceCredentials.PreAuthenticate();
 
             // TODO support different credentials
-            if (!(serviceCredentials is WebCredentials))
+            if (serviceCredentials is not WebCredentials)
                 throw new NotImplementedException();
             httpClientHandler.Credentials = (this.Credentials as WebCredentials)?.Credentials;
 
@@ -1556,9 +1552,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <returns>True if redirection should be followed.</returns>
     private bool CallRedirectionUrlValidationCallback(string redirectionUrl)
     {
-        AutodiscoverRedirectionUrlValidationCallback callback = (this.RedirectionUrlValidationCallback == null)
-                                                                    ? DefaultAutodiscoverRedirectionUrlValidationCallback
-                                                                    : this.RedirectionUrlValidationCallback;
+        AutodiscoverRedirectionUrlValidationCallback callback = this.RedirectionUrlValidationCallback ?? DefaultAutodiscoverRedirectionUrlValidationCallback;
         return callback(redirectionUrl);
     }
 

@@ -134,38 +134,19 @@ internal class ConversationAction
         try
         {
             string actionValue = String.Empty;
-            switch (this.Action)
+            actionValue = this.Action switch
             {
-                case ConversationActionType.AlwaysCategorize:
-                    actionValue = XmlElementNames.AlwaysCategorize;
-                    break;
-                case ConversationActionType.AlwaysDelete:
-                    actionValue = XmlElementNames.AlwaysDelete;
-                    break;
-                case ConversationActionType.AlwaysMove:
-                    actionValue = XmlElementNames.AlwaysMove;
-                    break;
-                case ConversationActionType.Delete:
-                    actionValue = XmlElementNames.Delete;
-                    break;
-                case ConversationActionType.Copy:
-                    actionValue = XmlElementNames.Copy;
-                    break;
-                case ConversationActionType.Move:
-                    actionValue = XmlElementNames.Move;
-                    break;
-                case ConversationActionType.SetReadState:
-                    actionValue = XmlElementNames.SetReadState;
-                    break;
-                case ConversationActionType.SetRetentionPolicy:
-                    actionValue = XmlElementNames.SetRetentionPolicy;
-                    break;
-                case ConversationActionType.Flag:
-                    actionValue = XmlElementNames.Flag;
-                    break;
-                default:
-                    throw new ArgumentException("ConversationAction");
-            }
+                ConversationActionType.AlwaysCategorize => XmlElementNames.AlwaysCategorize,
+                ConversationActionType.AlwaysDelete => XmlElementNames.AlwaysDelete,
+                ConversationActionType.AlwaysMove => XmlElementNames.AlwaysMove,
+                ConversationActionType.Delete => XmlElementNames.Delete,
+                ConversationActionType.Copy => XmlElementNames.Copy,
+                ConversationActionType.Move => XmlElementNames.Move,
+                ConversationActionType.SetReadState => XmlElementNames.SetReadState,
+                ConversationActionType.SetRetentionPolicy => XmlElementNames.SetRetentionPolicy,
+                ConversationActionType.Flag => XmlElementNames.Flag,
+                _ => throw new ArgumentException("ConversationAction"),
+            };
 
             // Emit the action element
             writer.WriteElementValue(

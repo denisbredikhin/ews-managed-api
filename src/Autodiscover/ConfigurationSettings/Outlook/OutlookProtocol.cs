@@ -509,17 +509,13 @@ internal sealed class OutlookProtocol
     {
         get
         {
-            switch (this.ProtocolType)
+            return this.ProtocolType switch
             {
-                case OutlookProtocolType.Rpc:
-                    return internalProtocolConverterDictionary.Member;
-                case OutlookProtocolType.RpcOverHttp:
-                    return externalProtocolConverterDictionary.Member;
-                case OutlookProtocolType.Web:
-                    return webProtocolConverterDictionary.Member;
-                default:
-                    return null;
-            }
+                OutlookProtocolType.Rpc => internalProtocolConverterDictionary.Member,
+                OutlookProtocolType.RpcOverHttp => externalProtocolConverterDictionary.Member,
+                OutlookProtocolType.Web => webProtocolConverterDictionary.Member,
+                _ => null,
+            };
         }
     }
 

@@ -76,22 +76,13 @@ internal sealed class OutlookAccount
                     case XmlElementNames.Action:
                         string xmlResponseType = reader.ReadElementValue();
 
-                        switch (xmlResponseType)
+                        this.ResponseType = xmlResponseType switch
                         {
-                            case OutlookAccount.Settings:
-                                this.ResponseType = AutodiscoverResponseType.Success;
-                                break;
-                            case OutlookAccount.RedirectUrl:
-                                this.ResponseType = AutodiscoverResponseType.RedirectUrl;
-                                break;
-                            case OutlookAccount.RedirectAddr:
-                                this.ResponseType = AutodiscoverResponseType.RedirectAddress;
-                                break;
-                            default:
-                                this.ResponseType = AutodiscoverResponseType.Error;
-                                break;
-                        }
-
+                            OutlookAccount.Settings => AutodiscoverResponseType.Success,
+                            OutlookAccount.RedirectUrl => AutodiscoverResponseType.RedirectUrl,
+                            OutlookAccount.RedirectAddr => AutodiscoverResponseType.RedirectAddress,
+                            _ => AutodiscoverResponseType.Error,
+                        };
                         break;
                     case XmlElementNames.Protocol:
                         OutlookProtocol protocol = new();

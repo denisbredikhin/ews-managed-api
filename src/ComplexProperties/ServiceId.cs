@@ -198,7 +198,7 @@ public abstract class ServiceId : ComplexProperty
     /// </returns>
     public override string ToString()
     {
-        return (this.uniqueId == null) ? string.Empty : this.uniqueId;
+        return this.uniqueId ?? string.Empty;
     }
     #endregion
 }

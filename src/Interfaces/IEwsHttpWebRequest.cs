@@ -198,7 +198,7 @@ internal interface IEwsHttpWebRequest : IDisposable
     /// <summary>
     /// Gets or sets the name of the connection group for the request. 
     /// </summary>
-    string ConnectionGroupName
+    string? ConnectionGroupName
     {
         get; set;
     }

@@ -38,7 +38,7 @@ public class AccountIsLockedException : ServiceRemoteException
     /// <param name="message">Error message text.</param>
     /// <param name="accountUnlockUrl">URL for client to visit to unlock account.</param>
     /// <param name="innerException">Inner exception.</param>
-    public AccountIsLockedException(string message, Uri accountUnlockUrl, Exception innerException)
+    public AccountIsLockedException(string message, Uri? accountUnlockUrl, Exception innerException)
         : base(message, innerException)
     {
         this.AccountUnlockUrl = accountUnlockUrl;
@@ -47,7 +47,7 @@ public class AccountIsLockedException : ServiceRemoteException
 		/// <summary>
 		/// Gets the URL of a web page where the user can navigate to unlock his or her account.
 		/// </summary>
-		public Uri AccountUnlockUrl
+		public Uri? AccountUnlockUrl
 		{
 			get;
 			private set;

@@ -89,22 +89,13 @@ internal sealed class RecurrencePropertyDefinition : PropertyDefinition
     /// <returns></returns>
     private static RecurrenceRange GetRecurrenceRange(string recurrenceRangeString)
     {
-        RecurrenceRange range;
-
-        switch (recurrenceRangeString)
+        RecurrenceRange range = recurrenceRangeString switch
         {
-            case XmlElementNames.NoEndRecurrence:
-                range = new NoEndRecurrenceRange();
-                break;
-            case XmlElementNames.EndDateRecurrence:
-                range = new EndDateRecurrenceRange();
-                break;
-            case XmlElementNames.NumberedRecurrence:
-                range = new NumberedRecurrenceRange();
-                break;
-            default:
-                throw new ServiceXmlDeserializationException(string.Format(Strings.InvalidRecurrenceRange, recurrenceRangeString));
-        }
+            XmlElementNames.NoEndRecurrence => new NoEndRecurrenceRange(),
+            XmlElementNames.EndDateRecurrence => new EndDateRecurrenceRange(),
+            XmlElementNames.NumberedRecurrence => new NumberedRecurrenceRange(),
+            _ => throw new ServiceXmlDeserializationException(string.Format(Strings.InvalidRecurrenceRange, recurrenceRangeString)),
+        };
         return range;
     }
 
@@ -117,41 +108,20 @@ internal sealed class RecurrencePropertyDefinition : PropertyDefinition
     {
         Recurrence recurrence = null;
 
-        switch (recurranceString)
+        recurrence = recurranceString switch
         {
-            case XmlElementNames.RelativeYearlyRecurrence:
-                recurrence = new Recurrence.RelativeYearlyPattern();
-                break;
-            case XmlElementNames.AbsoluteYearlyRecurrence:
-                recurrence = new Recurrence.YearlyPattern();
-                break;
-            case XmlElementNames.RelativeMonthlyRecurrence:
-                recurrence = new Recurrence.RelativeMonthlyPattern();
-                break;
-            case XmlElementNames.AbsoluteMonthlyRecurrence:
-                recurrence = new Recurrence.MonthlyPattern();
-                break;
-            case XmlElementNames.DailyRecurrence:
-                recurrence = new Recurrence.DailyPattern();
-                break;
-            case XmlElementNames.DailyRegeneration:
-                recurrence = new Recurrence.DailyRegenerationPattern();
-                break;
-            case XmlElementNames.WeeklyRecurrence:
-                recurrence = new Recurrence.WeeklyPattern();
-                break;
-            case XmlElementNames.WeeklyRegeneration:
-                recurrence = new Recurrence.WeeklyRegenerationPattern();
-                break;
-            case XmlElementNames.MonthlyRegeneration:
-                recurrence = new Recurrence.MonthlyRegenerationPattern();
-                break;
-            case XmlElementNames.YearlyRegeneration:
-                recurrence = new Recurrence.YearlyRegenerationPattern();
-                break;
-            default:
-                throw new ServiceXmlDeserializationException(string.Format(Strings.InvalidRecurrencePattern, recurranceString));
-        }
+            XmlElementNames.RelativeYearlyRecurrence => new Recurrence.RelativeYearlyPattern(),
+            XmlElementNames.AbsoluteYearlyRecurrence => new Recurrence.YearlyPattern(),
+            XmlElementNames.RelativeMonthlyRecurrence => new Recurrence.RelativeMonthlyPattern(),
+            XmlElementNames.AbsoluteMonthlyRecurrence => new Recurrence.MonthlyPattern(),
+            XmlElementNames.DailyRecurrence => new Recurrence.DailyPattern(),
+            XmlElementNames.DailyRegeneration => new Recurrence.DailyRegenerationPattern(),
+            XmlElementNames.WeeklyRecurrence => new Recurrence.WeeklyPattern(),
+            XmlElementNames.WeeklyRegeneration => new Recurrence.WeeklyRegenerationPattern(),
+            XmlElementNames.MonthlyRegeneration => new Recurrence.MonthlyRegenerationPattern(),
+            XmlElementNames.YearlyRegeneration => new Recurrence.YearlyRegenerationPattern(),
+            _ => throw new ServiceXmlDeserializationException(string.Format(Strings.InvalidRecurrencePattern, recurranceString)),
+        };
         return recurrence;
     }
 

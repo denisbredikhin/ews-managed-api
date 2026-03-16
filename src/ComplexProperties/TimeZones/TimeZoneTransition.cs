@@ -47,22 +47,17 @@ internal class TimeZoneTransition : ComplexProperty
     /// <returns>A TimeZonePeriodTransition instance.</returns>
     internal static TimeZoneTransition Create(TimeZoneDefinition timeZoneDefinition, string xmlElementName)
     {
-        switch (xmlElementName)
+        return xmlElementName switch
         {
-            case XmlElementNames.AbsoluteDateTransition:
-                return new AbsoluteDateTransition(timeZoneDefinition);
-            case XmlElementNames.RecurringDayTransition:
-                return new RelativeDayOfMonthTransition(timeZoneDefinition);
-            case XmlElementNames.RecurringDateTransition:
-                return new AbsoluteDayOfMonthTransition(timeZoneDefinition);
-            case XmlElementNames.Transition:
-                return new TimeZoneTransition(timeZoneDefinition);
-            default:
-                throw new ServiceLocalException(
-                    string.Format(
-                        Strings.UnknownTimeZonePeriodTransitionType,
-                        xmlElementName));
-        }
+            XmlElementNames.AbsoluteDateTransition => new AbsoluteDateTransition(timeZoneDefinition),
+            XmlElementNames.RecurringDayTransition => new RelativeDayOfMonthTransition(timeZoneDefinition),
+            XmlElementNames.RecurringDateTransition => new AbsoluteDayOfMonthTransition(timeZoneDefinition),
+            XmlElementNames.Transition => new TimeZoneTransition(timeZoneDefinition),
+            _ => throw new ServiceLocalException(
+                                string.Format(
+                                    Strings.UnknownTimeZonePeriodTransitionType,
+                                    xmlElementName)),
+        };
     }
 
     /// <summary>

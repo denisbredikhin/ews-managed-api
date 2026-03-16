@@ -94,20 +94,12 @@ internal class EwsServiceXmlWriter : IDisposable
             }
             else if (value is IConvertible convertible)
             {
-                switch (convertible.GetTypeCode())
+                strValue = convertible.GetTypeCode() switch
                 {
-                    case TypeCode.Boolean:
-                        strValue = EwsUtilities.BoolToXSBool((bool)value);
-                        break;
-
-                    case TypeCode.DateTime:
-                        strValue = this.Service.ConvertDateTimeToUniversalDateTimeString((DateTime)value);
-                        break;
-
-                    default:
-                        strValue = convertible.ToString(CultureInfo.InvariantCulture);
-                        break;
-                }
+                    TypeCode.Boolean => EwsUtilities.BoolToXSBool((bool)value),
+                    TypeCode.DateTime => this.Service.ConvertDateTimeToUniversalDateTimeString((DateTime)value),
+                    _ => convertible.ToString(CultureInfo.InvariantCulture),
+                };
             }
             else
             {

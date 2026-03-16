@@ -112,9 +112,7 @@ public sealed class AvailabilityOptions
                 XmlElementNames.MinimumSuggestionQuality,
                 this.MinimumSuggestionQuality);
 
-            TimeWindow timeWindowToSerialize = this.DetailedSuggestionsWindow == null ?
-                request.TimeWindow :
-                this.DetailedSuggestionsWindow;
+            TimeWindow timeWindowToSerialize = this.DetailedSuggestionsWindow ?? request.TimeWindow;
 
             timeWindowToSerialize.WriteToXmlUnscopedDatesOnly(writer, XmlElementNames.DetailedSuggestionsWindow);
 

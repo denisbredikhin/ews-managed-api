@@ -188,30 +188,19 @@ internal static class EwsUtilities
     /// <returns>Namespace prefix string.</returns>
     internal static string GetNamespacePrefix(XmlNamespace xmlNamespace)
     {
-        switch (xmlNamespace)
+        return xmlNamespace switch
         {
-            case XmlNamespace.Types:
-                return EwsTypesNamespacePrefix;
-            case XmlNamespace.Messages:
-                return EwsMessagesNamespacePrefix;
-            case XmlNamespace.Errors:
-                return EwsErrorsNamespacePrefix;
-            case XmlNamespace.Soap:
-            case XmlNamespace.Soap12:
-                return EwsSoapNamespacePrefix;
-            case XmlNamespace.XmlSchemaInstance:
-                return EwsXmlSchemaInstanceNamespacePrefix;
-            case XmlNamespace.PassportSoapFault:
-                return PassportSoapFaultNamespacePrefix;
-            case XmlNamespace.WSTrustFebruary2005:
-                return WSTrustFebruary2005NamespacePrefix;
-            case XmlNamespace.WSAddressing:
-                return WSAddressingNamespacePrefix;
-            case XmlNamespace.Autodiscover:
-                return AutodiscoverSoapNamespacePrefix;
-            default:
-                return string.Empty;
-        }
+            XmlNamespace.Types => EwsTypesNamespacePrefix,
+            XmlNamespace.Messages => EwsMessagesNamespacePrefix,
+            XmlNamespace.Errors => EwsErrorsNamespacePrefix,
+            XmlNamespace.Soap or XmlNamespace.Soap12 => EwsSoapNamespacePrefix,
+            XmlNamespace.XmlSchemaInstance => EwsXmlSchemaInstanceNamespacePrefix,
+            XmlNamespace.PassportSoapFault => PassportSoapFaultNamespacePrefix,
+            XmlNamespace.WSTrustFebruary2005 => WSTrustFebruary2005NamespacePrefix,
+            XmlNamespace.WSAddressing => WSAddressingNamespacePrefix,
+            XmlNamespace.Autodiscover => AutodiscoverSoapNamespacePrefix,
+            _ => string.Empty,
+        };
     }
 
     /// <summary>
@@ -221,31 +210,20 @@ internal static class EwsUtilities
     /// <returns>Uri as string</returns>
     internal static string GetNamespaceUri(XmlNamespace xmlNamespace)
     {
-        switch (xmlNamespace)
+        return xmlNamespace switch
         {
-            case XmlNamespace.Types:
-                return EwsTypesNamespace;
-            case XmlNamespace.Messages:
-                return EwsMessagesNamespace;
-            case XmlNamespace.Errors:
-                return EwsErrorsNamespace;
-            case XmlNamespace.Soap:
-                return EwsSoapNamespace;
-            case XmlNamespace.Soap12:
-                return EwsSoap12Namespace;
-            case XmlNamespace.XmlSchemaInstance:
-                return EwsXmlSchemaInstanceNamespace;
-            case XmlNamespace.PassportSoapFault:
-                return PassportSoapFaultNamespace;
-            case XmlNamespace.WSTrustFebruary2005:
-                return WSTrustFebruary2005Namespace;
-            case XmlNamespace.WSAddressing:
-                return WSAddressingNamespace;
-            case XmlNamespace.Autodiscover:
-                return AutodiscoverSoapNamespace;
-            default:
-                return string.Empty;
-        }
+            XmlNamespace.Types => EwsTypesNamespace,
+            XmlNamespace.Messages => EwsMessagesNamespace,
+            XmlNamespace.Errors => EwsErrorsNamespace,
+            XmlNamespace.Soap => EwsSoapNamespace,
+            XmlNamespace.Soap12 => EwsSoap12Namespace,
+            XmlNamespace.XmlSchemaInstance => EwsXmlSchemaInstanceNamespace,
+            XmlNamespace.PassportSoapFault => PassportSoapFaultNamespace,
+            XmlNamespace.WSTrustFebruary2005 => WSTrustFebruary2005Namespace,
+            XmlNamespace.WSAddressing => WSAddressingNamespace,
+            XmlNamespace.Autodiscover => AutodiscoverSoapNamespace,
+            _ => string.Empty,
+        };
     }
 
     /// <summary>
@@ -255,29 +233,19 @@ internal static class EwsUtilities
     /// <returns>XmlNamespace enum value.</returns>
     internal static XmlNamespace GetNamespaceFromUri(string namespaceUri)
     {
-        switch (namespaceUri)
+        return namespaceUri switch
         {
-            case EwsErrorsNamespace:
-                return XmlNamespace.Errors;
-            case EwsTypesNamespace:
-                return XmlNamespace.Types;
-            case EwsMessagesNamespace:
-                return XmlNamespace.Messages;
-            case EwsSoapNamespace:
-                return XmlNamespace.Soap;
-            case EwsSoap12Namespace:
-                return XmlNamespace.Soap12;
-            case EwsXmlSchemaInstanceNamespace:
-                return XmlNamespace.XmlSchemaInstance;
-            case PassportSoapFaultNamespace:
-                return XmlNamespace.PassportSoapFault;
-            case WSTrustFebruary2005Namespace:
-                return XmlNamespace.WSTrustFebruary2005;
-            case WSAddressingNamespace:
-                return XmlNamespace.WSAddressing;
-            default:
-                return XmlNamespace.NotSpecified;
-        }
+            EwsErrorsNamespace => XmlNamespace.Errors,
+            EwsTypesNamespace => XmlNamespace.Types,
+            EwsMessagesNamespace => XmlNamespace.Messages,
+            EwsSoapNamespace => XmlNamespace.Soap,
+            EwsSoap12Namespace => XmlNamespace.Soap12,
+            EwsXmlSchemaInstanceNamespace => XmlNamespace.XmlSchemaInstance,
+            PassportSoapFaultNamespace => XmlNamespace.PassportSoapFault,
+            WSTrustFebruary2005Namespace => XmlNamespace.WSTrustFebruary2005,
+            WSAddressingNamespace => XmlNamespace.WSAddressing,
+            _ => XmlNamespace.NotSpecified,
+        };
     }
 
     /// <summary>
@@ -800,21 +768,13 @@ internal static class EwsUtilities
         // translate dates from one culture to another (e.g. Gregorian to Lunar).  The server
         // however, considers all dates to be in Gregorian, so using the InvariantCulture will
         // ensure this.
-        string format;
-
-        switch (date.Kind)
+        string format = date.Kind switch
         {
-            case DateTimeKind.Utc:
-                format = "yyyy-MM-ddZ";
-                break;
-            case DateTimeKind.Unspecified:
-                format = "yyyy-MM-dd";
-                break;
-            default: // DateTimeKind.Local is remaining
-                format = "yyyy-MM-ddzzz";
-                break;
-        }
-
+            DateTimeKind.Utc => "yyyy-MM-ddZ",
+            DateTimeKind.Unspecified => "yyyy-MM-dd",
+            // DateTimeKind.Local is remaining
+            _ => "yyyy-MM-ddzzz",
+        };
         return date.ToString(format, CultureInfo.InvariantCulture);
     }
 

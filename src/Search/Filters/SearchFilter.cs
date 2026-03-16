@@ -62,49 +62,22 @@ public abstract partial class SearchFilter : ComplexProperty
     /// <returns></returns>
     private static SearchFilter GetSearchFilterInstance(string localName)
     {
-        SearchFilter searchFilter;
-        switch (localName)
+        SearchFilter searchFilter = localName switch
         {
-            case XmlElementNames.Exists:
-                searchFilter = new Exists();
-                break;
-            case XmlElementNames.Contains:
-                searchFilter = new ContainsSubstring();
-                break;
-            case XmlElementNames.Excludes:
-                searchFilter = new ExcludesBitmask();
-                break;
-            case XmlElementNames.Not:
-                searchFilter = new Not();
-                break;
-            case XmlElementNames.And:
-                searchFilter = new SearchFilterCollection(LogicalOperator.And);
-                break;
-            case XmlElementNames.Or:
-                searchFilter = new SearchFilterCollection(LogicalOperator.Or);
-                break;
-            case XmlElementNames.IsEqualTo:
-                searchFilter = new IsEqualTo();
-                break;
-            case XmlElementNames.IsNotEqualTo:
-                searchFilter = new IsNotEqualTo();
-                break;
-            case XmlElementNames.IsGreaterThan:
-                searchFilter = new IsGreaterThan();
-                break;
-            case XmlElementNames.IsGreaterThanOrEqualTo:
-                searchFilter = new IsGreaterThanOrEqualTo();
-                break;
-            case XmlElementNames.IsLessThan:
-                searchFilter = new IsLessThan();
-                break;
-            case XmlElementNames.IsLessThanOrEqualTo:
-                searchFilter = new IsLessThanOrEqualTo();
-                break;
-            default:
-                searchFilter = null;
-                break;
-        }
+            XmlElementNames.Exists => new Exists(),
+            XmlElementNames.Contains => new ContainsSubstring(),
+            XmlElementNames.Excludes => new ExcludesBitmask(),
+            XmlElementNames.Not => new Not(),
+            XmlElementNames.And => new SearchFilterCollection(LogicalOperator.And),
+            XmlElementNames.Or => new SearchFilterCollection(LogicalOperator.Or),
+            XmlElementNames.IsEqualTo => new IsEqualTo(),
+            XmlElementNames.IsNotEqualTo => new IsNotEqualTo(),
+            XmlElementNames.IsGreaterThan => new IsGreaterThan(),
+            XmlElementNames.IsGreaterThanOrEqualTo => new IsGreaterThanOrEqualTo(),
+            XmlElementNames.IsLessThan => new IsLessThan(),
+            XmlElementNames.IsLessThanOrEqualTo => new IsLessThanOrEqualTo(),
+            _ => null,
+        };
         return searchFilter;
     }
 

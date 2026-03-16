@@ -246,17 +246,13 @@ public sealed class AttachmentCollection : ComplexPropertyCollection<Attachment>
     /// <returns>An Attachment instance.</returns>
     internal override Attachment CreateComplexProperty(string xmlElementName)
     {
-        switch (xmlElementName)
+        return xmlElementName switch
         {
-            case XmlElementNames.FileAttachment:
-                return new FileAttachment(this.owner);
-            case XmlElementNames.ItemAttachment:
-                return new ItemAttachment(this.owner);
-            case XmlElementNames.ReferenceAttachment:
-                return new ReferenceAttachment(this.owner);
-            default:
-                return null;
-        }
+            XmlElementNames.FileAttachment => new FileAttachment(this.owner),
+            XmlElementNames.ItemAttachment => new ItemAttachment(this.owner),
+            XmlElementNames.ReferenceAttachment => new ReferenceAttachment(this.owner),
+            _ => null,
+        };
     }
 
     /// <summary>

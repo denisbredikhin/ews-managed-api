@@ -149,7 +149,7 @@ public class MessageBody : ComplexProperty
     /// </returns>
     public override string ToString()
     {
-        return (this.Text == null) ? string.Empty : this.Text;
+        return this.Text ?? string.Empty;
     }
     #endregion
 }
