@@ -55,7 +55,7 @@ public sealed class ServiceResponseCollection<TResponse> : IEnumerable<TResponse
             "EwsResponseList.Add",
             "response is null");
 
-        if (response.Result > this.overallResult)
+        if (response!.Result > this.overallResult)
         {
             this.overallResult = response.Result;
         }
