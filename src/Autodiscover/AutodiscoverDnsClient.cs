@@ -89,11 +89,11 @@ internal class AutodiscoverDnsClient
     /// </remarks>
     /// <param name="domain">The domain.</param>
     /// <returns>Autodiscover hostname (will be null if lookup failed).</returns>
-    internal string FindAutodiscoverHostFromSrv(string domain)
+    internal string? FindAutodiscoverHostFromSrv(string domain)
     {
         string domainToMatch = AutoDiscoverSrvPrefix + domain;
 
-        DnsSrvRecord dnsSrvRecord = this.FindBestMatchingSrvRecord(domainToMatch);
+        DnsSrvRecord? dnsSrvRecord = this.FindBestMatchingSrvRecord(domainToMatch);
 
         if ((dnsSrvRecord == null) || string.IsNullOrEmpty(dnsSrvRecord.NameTarget))
         {
@@ -117,7 +117,7 @@ internal class AutodiscoverDnsClient
     /// </summary>
     /// <param name="domain">The domain.</param>
     /// <returns>DnsSrvRecord(will be null if lookup failed).</returns>
-    private DnsSrvRecord FindBestMatchingSrvRecord(string domain)
+    private DnsSrvRecord? FindBestMatchingSrvRecord(string domain)
     {
         List<DnsSrvRecord> dnsSrvRecordList;
         try

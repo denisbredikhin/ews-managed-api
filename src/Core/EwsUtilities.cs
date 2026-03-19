@@ -1302,7 +1302,7 @@ internal static class EwsUtilities
     /// </summary>
     /// <param name="domainName">Domain name.</param>
     /// <param name="paramName">Parameter name.</param>
-    internal static void ValidateDomainNameAllowNull(string domainName, string paramName)
+    internal static void ValidateDomainNameAllowNull(string? domainName, string paramName)
     {
         if (domainName != null)
         {

@@ -60,7 +60,7 @@ internal class DnsClient
     /// <param name="domain">The domain.</param>
     /// <param name="dnsServerAddress">IPAddress of DNS server to use (may be null).</param>
     /// <returns>The DNS record list (never null but may be empty).</returns>
-    internal static List<T> DnsQuery<T>(string domain, IPAddress dnsServerAddress) where T : DnsRecord, new()
+    internal static List<T> DnsQuery<T>(string domain, IPAddress? dnsServerAddress) where T : DnsRecord, new()
     {
         List<T> dnsRecordList = [];
 
