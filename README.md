@@ -1,6 +1,6 @@
 # Quick introduction
 
-This is a NET Standard 1.4 port of EWS API. Here are some tips to take into account.
+This is a .NET 10 port of EWS API. Here are some tips to take into account.
 
 - NET Framework version is as functional as original
 - Almost all functions involving HTTP requests are now async
