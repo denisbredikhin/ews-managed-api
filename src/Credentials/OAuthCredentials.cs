@@ -43,7 +43,8 @@ public sealed class OAuthCredentials : ExchangeCredentials
 
     private static readonly Regex validTokenPattern = new(
         @"^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]*$",
-        RegexOptions.Compiled);
+        RegexOptions.Compiled,
+        TimeSpan.FromSeconds(1));
 
     private readonly string token;
 

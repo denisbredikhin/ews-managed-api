@@ -887,7 +887,9 @@ internal static class EwsUtilities
             "(T" +
             "((?<hour>[0-9]+)H)?" +
             "((?<minute>[0-9]+)M)?" +
-            "((?<seconds>[0-9]+)(\\.(?<precision>[0-9]+))?S)?)?");
+            "((?<seconds>[0-9]+)(\\.(?<precision>[0-9]+))?S)?)?",
+            RegexOptions.None,
+            TimeSpan.FromSeconds(1));
 
         Match m = timeSpanParser.Match(xsDuration);
         if (!m.Success)
@@ -1306,7 +1308,7 @@ internal static class EwsUtilities
     {
         if (domainName != null)
         {
-            Regex regex = new(DomainRegex);
+            Regex regex = new(DomainRegex, RegexOptions.None, TimeSpan.FromSeconds(1));
 
             if (!regex.IsMatch(domainName))
             {

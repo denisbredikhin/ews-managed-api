@@ -103,7 +103,7 @@ public sealed class AutodiscoverService : ExchangeServiceBase
     /// <summary>
     /// Legacy path regular expression.
     /// </summary>
-    private static readonly Regex LegacyPathRegex = new(@"/autodiscover/([^/]+/)*autodiscover.xml", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex LegacyPathRegex = new(@"/autodiscover/([^/]+/)*autodiscover.xml", RegexOptions.Compiled | RegexOptions.IgnoreCase, TimeSpan.FromSeconds(1));
 
     /// <summary>
     /// Maximum number of Url (or address) redirections that will be followed by an Autodiscover call
