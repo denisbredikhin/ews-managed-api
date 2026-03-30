@@ -1,0 +1,65 @@
+name: Publish NuGet package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: windows-latest
+
+    permissions:
+      contents: write     # нужен для GitHub Release
+      packages: write     # нужен для GitHub Packages
+      id-token: write     # нужен для nuget.org Trusted Publishing
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+  
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack
+        run: >
+          dotnet pack
+          --configuration Release
+          --no-build
+          --output ./artifacts
+          /p:Version=${GITHUB_REF_NAME#v}
+          /p:ContinuousIntegrationBuild=true
+          /p:IncludeSymbols=true
+          /p:SymbolPackageFormat=snupkg
+      
+        # Get a short-lived NuGet API key
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: denisbredikhin 
+
+      - name: Publish to nuget.org
+        run: >
+          dotnet nuget push "./artifacts/*.nupkg"
+          --source https://api.nuget.org/v3/index.json --api-key ${{steps.login.outputs.NUGET_API_KEY}}
+          --skip-duplicate
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          gh release create "${GITHUB_REF_NAME}"
+          ./artifacts/*.nupkg
+          ./artifacts/*.snupkg
+          --generate-notes
+          --title "${GITHUB_REF_NAME}"
