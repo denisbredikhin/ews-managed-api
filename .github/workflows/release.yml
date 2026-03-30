@@ -13,6 +13,9 @@ jobs:
       contents: write     # нужен для GitHub Release
       packages: write     # нужен для GitHub Packages
       id-token: write     # нужен для nuget.org Trusted Publishing
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - uses: actions/checkout@v6
