@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>10.0.0</VersionPrefix>
     <AssemblyName>Microsoft.Exchange.WebServices.Core</AssemblyName>
     <PackageId>Microsoft.Exchange.WebServices.Core</PackageId>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
@@ -19,7 +18,6 @@
     <PackageProjectUrl>https://github.com/denisbredikhin/ews-managed-api</PackageProjectUrl>
     <Title>Microsoft.Exchange.WebServices.Core</Title>
     <Description>The Exchange Web Services (EWS) Managed API provides a managed interface for developing .NET client applications that use EWS. By using the EWS Managed API, you can access almost all the information stored in an Office 365, Exchange Online, or Exchange Server mailbox.</Description>
-    <Version>10.0.0-beta1</Version>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
 
