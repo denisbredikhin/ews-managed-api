@@ -39,10 +39,10 @@ jobs:
           --configuration Release
           --no-build
           --output ./artifacts
-          /p:Version=${GITHUB_REF_NAME#v}
-          /p:ContinuousIntegrationBuild=true
-          /p:IncludeSymbols=true
-          /p:SymbolPackageFormat=snupkg
+          -p:Version=${GITHUB_REF_NAME#v}
+          -p:ContinuousIntegrationBuild=true
+          -p:IncludeSymbols=true
+          -p:SymbolPackageFormat=snupkg
       
         # Get a short-lived NuGet API key
       - name: NuGet login (OIDC → temp API key)
