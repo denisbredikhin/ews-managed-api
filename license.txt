@@ -1,6 +1,8 @@
 Exchange Web Services Managed API
 
 Copyright (c) Microsoft Corporation
+Copyright (c) 2016 sherlock1982 and contributors (https://github.com/sherlock1982/ews-managed-api)
+Copyright (c) 2024 Denis Bredikhin and contributors (https://github.com/denisbredikhin/ews-managed-api)
 All rights reserved. 
 
 MIT License

@@ -1,57 +1,48 @@
-# Quick introduction
+# Exchange Web Services Managed API — .NET 10 Port
 
-This is a .NET 10 port of EWS API. Here are some tips to take into account.
+A community-maintained .NET 10 port of the Exchange Web Services (EWS) Managed API.
 
-- NET Framework version is as functional as original
-- Almost all functions involving HTTP requests are now async
-- Outdated async Begin/End functions were removed
-- NET Standard: LDAP Autodiscovery feature will not work
-- NET Standard on Linux: DNS Autodiscovery feature will not work
-- Nuget package can be found here: https://www.nuget.org/packages/Microsoft.Exchange.WebServices.NETStandard/
+## Fork lineage
 
-# Getting Started with the EWS Managed API
-[![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/OfficeDev/ews-managed-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This project is the third in a chain of forks:
 
-The Exchange Web Services (EWS) Managed API provides a managed interface for developing .NET client applications that use EWS.
-By using the EWS Managed API, you can access almost all the information stored in an Office 365, Exchange Online, or Exchange Server mailbox. However, this API is in sustaining mode, the recommended access pattern for Office 365 and Exchange online data is [Microsoft Graph](https://graph.microsoft.com)
+1. **[OfficeDev/ews-managed-api](https://github.com/OfficeDev/ews-managed-api)** — The original C# library published by Microsoft (archived, no longer maintained).
+2. **[sherlock1982/ews-managed-api](https://github.com/sherlock1982/ews-managed-api)** — Migrated to .NET Standard / async, removed legacy `Begin`/`End` async pattern.
+3. **This repo** — Migrated to .NET 10, updated dependencies, resolved warnings, and made general code improvements.
 
-## Support statement
+## What's different from the original
 
-Starting July 19th 2018, Exchange Web Services (EWS) will no longer receive feature updates. While the service will continue to receive security updates and certain non-security updates, product design and features will remain unchanged. This change also applies to the EWS SDKs for Java and .NET. More information here: https://developer.microsoft.com/en-us/graph/blogs/upcoming-changes-to-exchange-web-services-ews-api-for-office-365/
+- Targets **net10.0**
+- All HTTP-bound public API methods are **async** (`Task<T>` + optional `CancellationToken`)
+- Legacy `Begin`/`End` async pattern removed
+- Dependencies updated to latest .NET 10 packages
+- **LDAP Autodiscovery** does not work on .NET (non-Framework)
+- **DNS Autodiscovery** does not work on Linux
 
-## Download options
+## NuGet package
 
-Download EWS Managed API via [nuget](http://www.nuget.org/packages/Microsoft.Exchange.WebServices/).
+[![NuGet](https://img.shields.io/nuget/v/Microsoft.Exchange.WebServices.Core)](https://www.nuget.org/packages/Microsoft.Exchange.WebServices.Core/)
 
-## Getting started resources
-
-See the following articles to help you get started:
-- [Get started with EWS Managed API client applications](http://msdn.microsoft.com/en-us/library/office/dn567668(v=exchg.150).aspx)
-- [How to: Reference the EWS Managed API assembly](http://msdn.microsoft.com/en-us/library/office/dn528373(v=exchg.150).aspx)
-- [How to: Set the EWS service URL by using the EWS Managed API](http://msdn.microsoft.com/en-us/library/office/dn509511(v=exchg.150).aspx)
-- [How to: Communicate with EWS by using the EWS Managed API](http://msdn.microsoft.com/en-us/library/office/dn467891(v=exchg.150).aspx)
-- [How to: Trace requests and responses to troubleshoot EWS Managed API applications](http://msdn.microsoft.com/en-us/library/office/dn495632(v=exchg.150).aspx)
-
-## Documentation
-
-Documentation for the EWS Managed API is available in the [Web services](http://msdn.microsoft.com/en-us/library/office/dd877012(v=exchg.150).aspx) node of the [MSDN Library](http://msdn.microsoft.com/en-us/library/ms123401.aspx).
-In addition to the getting started links provided, you can find how to topics and code samples for the most frequently used EWS Managed API objects in the [Develop](http://msdn.microsoft.com/en-us/library/office/jj900166(v=exchg.150).aspx) node. All the latest information about the EWS Managed API, EWS, and related web services can be found under the [Explore the EWS Managed API, EWS, and web services in Exchange](http://msdn.microsoft.com/en-us/library/office/jj536567(v=exchg.150).aspx) topic on MSDN.
+```
+dotnet add package Microsoft.Exchange.WebServices.Core
+```
 
 ## Prerequisites
 
-You need the following to work with the EWS Managed API:
-- A C# compiler to build the DLL files. We recommend Visual Studio 2013.
-- A mailbox on Office 365 or an Exchange server that is running Exchange Online or a version of Exchange starting with Exchange Server 2007.
-- A version of the .NET Framework starting with the .NET Framework 3.5.
+- .NET 10 SDK or later
+- A mailbox on Exchange Server 2007 or later, or Exchange Online / Office 365
 
-## Additional resources
+> **Note:** EWS is in sustaining mode since July 2018 — no new features will be added. For new integrations with Exchange Online, [Microsoft Graph](https://graph.microsoft.com) is recommended.
 
-- [Exchange 101 code samples](http://code.msdn.microsoft.com/Exchange-2013-101-Code-3c38582c)
-- [EWS Managed API reference](http://msdn.microsoft.com/en-us/library/jj220535(v=exchg.80).aspx)
+## Getting started
 
-## Community
+See the original Microsoft documentation for API usage:
 
-Exchange has an active developer community that you can turn to when you need help. We recommend using the [Exchange Server Development forum on MSDN](http://social.msdn.microsoft.com/Forums/en-US/home?category=exchangeserver&filter=alltypes&sort=lastpostdesc), or using the [ews] tag on [StackOverflow](http://stackoverflow.com/questions/tagged/ews).
+- [Get started with EWS Managed API](https://docs.microsoft.com/en-us/exchange/client-developer/exchange-web-services/get-started-with-ews-managed-api-client-applications)
+- [EWS Managed API reference](https://docs.microsoft.com/en-us/dotnet/api/microsoft.exchange.webservices.data)
 
+## License
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+MIT — see [license.txt](license.txt).  
+Original code © Microsoft Corporation. See license file for full attribution.
+

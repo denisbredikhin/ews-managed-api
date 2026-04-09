@@ -10,7 +10,6 @@
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Denis Bredikhin</Authors>
     <RepositoryUrl>https://github.com/denisbredikhin/ews-managed-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

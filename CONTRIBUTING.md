@@ -1,8 +1,8 @@
-## Contributing to the EWS Managed API
+## Contributing to the EWS Managed API (.NET 10 Port)
 
 You can contribute to this project by doing any of the following:
 
-* Reporting bugs and features in the [issue tracker](https://github.com/officedev/ews-managed-api/issues).
+* Reporting bugs and requesting features in the [issue tracker](https://github.com/denisbredikhin/ews-managed-api/issues).
 * Submitting and reviewing pull requests
 * Helping with documentation
 * Helping with testing
@@ -10,13 +10,15 @@ You can contribute to this project by doing any of the following:
 GitHub supports [markdown](http://github.github.com/github-flavored-markdown/), so when filing bugs, make sure you check the formatting before you submit.
 
 ### Contributing code and content
-Before submitting a feature or substantial code contribution, please discuss it with the team and ensure that it follows the product roadmap.  
-You might also read these two blogs posts about contributing code:
+
+Before submitting a feature or substantial code contribution, please open an issue to discuss it first.  
+You might also read these two blog posts about contributing code:
 
 * [Open Source Contribution Etiquette](http://tirania.org/blog/archive/2010/Dec-31.html) by Miguel de Icaza.
 * [Don't "Push" Your Pull Requests](http://www.igvita.com/2011/12/19/dont-push-your-pull-requests/) by Ilya Grigorik.
 
 ### Pull requests
+
 If you don't know what a pull request is, read the "[Using pull requests](https://help.github.com/articles/using-pull-requests)" article.
 
 Some guidelines for pull requests:
